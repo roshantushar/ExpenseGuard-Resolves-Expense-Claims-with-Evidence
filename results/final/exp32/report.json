@@ -1,0 +1,669 @@
+{
+  "split": "FINAL_TEST",
+  "n": 40,
+  "currency_flagged_case_ids": [
+    "EXP-0083",
+    "EXP-0088",
+    "EXP-0092",
+    "EXP-0095"
+  ],
+  "challenge_case_ids": [
+    "EXP-0006",
+    "EXP-0009",
+    "EXP-0046",
+    "EXP-0066",
+    "EXP-0069",
+    "EXP-0081",
+    "EXP-0092",
+    "EXP-0094",
+    "EXP-0106",
+    "EXP-0108"
+  ],
+  "systems": {
+    "router (frozen system)": {
+      "all": {
+        "n": 40,
+        "correct": 38,
+        "correct_disposition_rate": 0.95,
+        "wilson95": [
+          0.835,
+          0.9862
+        ],
+        "false_approvals": 2,
+        "non_approvable": 35,
+        "false_approval_rate": 0.0571,
+        "human_review_rate": 0.075,
+        "over_escalation": 0,
+        "missed_escalation": 1,
+        "missing_field_exact_match": "8/15",
+        "by_family": {
+          "EVIDENCE_CONFLICT": "4/4",
+          "SELF_CONTAINED_POLICY": "6/6",
+          "TEMPORAL_POLICY_VERSION": "3/3",
+          "REGIONAL_PRECEDENCE": "2/2",
+          "MISSING_INFORMATION": "7/7",
+          "DUPLICATE_CHECK": "5/5",
+          "SPLIT_TRANSACTION": "2/3",
+          "FIXED_WORKFLOW": "4/5",
+          "DYNAMIC_AGENT_INVESTIGATION": "5/5"
+        },
+        "confusion": {
+          "REQUEST_INFORMATION->REQUEST_INFORMATION": 14,
+          "REJECT->REJECT": 16,
+          "APPROVE->APPROVE": 5,
+          "ESCALATE->ESCALATE": 3,
+          "REQUEST_INFORMATION->APPROVE": 1,
+          "ESCALATE->APPROVE": 1
+        },
+        "errors": 0,
+        "median_latency_ms": 0.06787449999989814,
+        "p95_latency_ms": 0.30279099999996895,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "total_cost_usd": 0.0
+      },
+      "challenge_set": {
+        "n": 10,
+        "correct": 9,
+        "correct_disposition_rate": 0.9,
+        "wilson95": [
+          0.5958,
+          0.9821
+        ],
+        "false_approvals": 1,
+        "non_approvable": 8,
+        "false_approval_rate": 0.125,
+        "human_review_rate": 0.1,
+        "over_escalation": 0,
+        "missed_escalation": 1,
+        "missing_field_exact_match": "2/3",
+        "by_family": {
+          "EVIDENCE_CONFLICT": "1/1",
+          "SELF_CONTAINED_POLICY": "1/1",
+          "MISSING_INFORMATION": "1/1",
+          "DUPLICATE_CHECK": "2/2",
+          "SPLIT_TRANSACTION": "1/1",
+          "FIXED_WORKFLOW": "1/2",
+          "DYNAMIC_AGENT_INVESTIGATION": "2/2"
+        },
+        "confusion": {
+          "REQUEST_INFORMATION->REQUEST_INFORMATION": 3,
+          "REJECT->REJECT": 3,
+          "APPROVE->APPROVE": 2,
+          "ESCALATE->APPROVE": 1,
+          "ESCALATE->ESCALATE": 1
+        },
+        "errors": 0,
+        "median_latency_ms": 0.11231249999998916,
+        "p95_latency_ms": 1.4001249999999743,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "total_cost_usd": 0.0
+      },
+      "currency_flagged": {
+        "n": 4,
+        "correct": 2,
+        "correct_disposition_rate": 0.5,
+        "wilson95": [
+          0.15,
+          0.85
+        ],
+        "false_approvals": 2,
+        "non_approvable": 3,
+        "false_approval_rate": 0.6667,
+        "human_review_rate": 0.25,
+        "over_escalation": 0,
+        "missed_escalation": 1,
+        "missing_field_exact_match": "0/1",
+        "by_family": {
+          "SPLIT_TRANSACTION": "1/2",
+          "FIXED_WORKFLOW": "1/2"
+        },
+        "confusion": {
+          "ESCALATE->ESCALATE": 1,
+          "REQUEST_INFORMATION->APPROVE": 1,
+          "ESCALATE->APPROVE": 1,
+          "APPROVE->APPROVE": 1
+        },
+        "errors": 0,
+        "median_latency_ms": 0.07564549999994341,
+        "p95_latency_ms": 0.09862500000012986,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "total_cost_usd": 0.0
+      },
+      "excluding_currency_flagged": {
+        "n": 36,
+        "correct": 36,
+        "correct_disposition_rate": 1.0,
+        "wilson95": [
+          0.9036,
+          1.0
+        ],
+        "false_approvals": 0,
+        "non_approvable": 32,
+        "false_approval_rate": 0.0,
+        "human_review_rate": 0.0556,
+        "over_escalation": 0,
+        "missed_escalation": 0,
+        "missing_field_exact_match": "8/14",
+        "by_family": {
+          "EVIDENCE_CONFLICT": "4/4",
+          "SELF_CONTAINED_POLICY": "6/6",
+          "TEMPORAL_POLICY_VERSION": "3/3",
+          "REGIONAL_PRECEDENCE": "2/2",
+          "MISSING_INFORMATION": "7/7",
+          "DUPLICATE_CHECK": "5/5",
+          "SPLIT_TRANSACTION": "1/1",
+          "FIXED_WORKFLOW": "3/3",
+          "DYNAMIC_AGENT_INVESTIGATION": "5/5"
+        },
+        "confusion": {
+          "REQUEST_INFORMATION->REQUEST_INFORMATION": 14,
+          "REJECT->REJECT": 16,
+          "APPROVE->APPROVE": 4,
+          "ESCALATE->ESCALATE": 2
+        },
+        "errors": 0,
+        "median_latency_ms": 0.06581249999992878,
+        "p95_latency_ms": 0.7698330000001086,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "total_cost_usd": 0.0
+      }
+    },
+    "rules only": {
+      "all": {
+        "n": 40,
+        "correct": 31,
+        "correct_disposition_rate": 0.775,
+        "wilson95": [
+          0.625,
+          0.8768
+        ],
+        "false_approvals": 4,
+        "non_approvable": 35,
+        "false_approval_rate": 0.1143,
+        "human_review_rate": 0.175,
+        "over_escalation": 5,
+        "missed_escalation": 2,
+        "missing_field_exact_match": "5/15",
+        "by_family": {
+          "EVIDENCE_CONFLICT": "4/4",
+          "SELF_CONTAINED_POLICY": "6/6",
+          "TEMPORAL_POLICY_VERSION": "3/3",
+          "REGIONAL_PRECEDENCE": "2/2",
+          "MISSING_INFORMATION": "7/7",
+          "DUPLICATE_CHECK": "5/5",
+          "SPLIT_TRANSACTION": "1/3",
+          "FIXED_WORKFLOW": "1/5",
+          "DYNAMIC_AGENT_INVESTIGATION": "2/5"
+        },
+        "confusion": {
+          "REQUEST_INFORMATION->REQUEST_INFORMATION": 13,
+          "REJECT->REJECT": 14,
+          "APPROVE->APPROVE": 2,
+          "ESCALATE->APPROVE": 2,
+          "REQUEST_INFORMATION->APPROVE": 2,
+          "REJECT->ESCALATE": 2,
+          "APPROVE->ESCALATE": 3,
+          "ESCALATE->ESCALATE": 2
+        },
+        "errors": 0,
+        "median_latency_ms": 0.01945849999995808,
+        "p95_latency_ms": 0.0759580000000426,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "total_cost_usd": 0.0
+      },
+      "challenge_set": {
+        "n": 10,
+        "correct": 7,
+        "correct_disposition_rate": 0.7,
+        "wilson95": [
+          0.3968,
+          0.8922
+        ],
+        "false_approvals": 2,
+        "non_approvable": 8,
+        "false_approval_rate": 0.25,
+        "human_review_rate": 0.2,
+        "over_escalation": 1,
+        "missed_escalation": 1,
+        "missing_field_exact_match": "1/3",
+        "by_family": {
+          "EVIDENCE_CONFLICT": "1/1",
+          "SELF_CONTAINED_POLICY": "1/1",
+          "MISSING_INFORMATION": "1/1",
+          "DUPLICATE_CHECK": "2/2",
+          "SPLIT_TRANSACTION": "1/1",
+          "FIXED_WORKFLOW": "0/2",
+          "DYNAMIC_AGENT_INVESTIGATION": "1/2"
+        },
+        "confusion": {
+          "REQUEST_INFORMATION->REQUEST_INFORMATION": 2,
+          "REJECT->REJECT": 3,
+          "APPROVE->APPROVE": 1,
+          "ESCALATE->APPROVE": 1,
+          "REQUEST_INFORMATION->APPROVE": 1,
+          "APPROVE->ESCALATE": 1,
+          "ESCALATE->ESCALATE": 1
+        },
+        "errors": 0,
+        "median_latency_ms": 0.0186875000001141,
+        "p95_latency_ms": 0.0759580000000426,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "total_cost_usd": 0.0
+      },
+      "currency_flagged": {
+        "n": 4,
+        "correct": 1,
+        "correct_disposition_rate": 0.25,
+        "wilson95": [
+          0.0456,
+          0.6994
+        ],
+        "false_approvals": 3,
+        "non_approvable": 3,
+        "false_approval_rate": 1.0,
+        "human_review_rate": 0.0,
+        "over_escalation": 0,
+        "missed_escalation": 2,
+        "missing_field_exact_match": "0/1",
+        "by_family": {
+          "SPLIT_TRANSACTION": "0/2",
+          "FIXED_WORKFLOW": "1/2"
+        },
+        "confusion": {
+          "ESCALATE->APPROVE": 2,
+          "REQUEST_INFORMATION->APPROVE": 1,
+          "APPROVE->APPROVE": 1
+        },
+        "errors": 0,
+        "median_latency_ms": 0.017500000000003624,
+        "p95_latency_ms": 0.04462499999990932,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "total_cost_usd": 0.0
+      },
+      "excluding_currency_flagged": {
+        "n": 36,
+        "correct": 30,
+        "correct_disposition_rate": 0.8333,
+        "wilson95": [
+          0.6811,
+          0.9213
+        ],
+        "false_approvals": 1,
+        "non_approvable": 32,
+        "false_approval_rate": 0.0312,
+        "human_review_rate": 0.1944,
+        "over_escalation": 5,
+        "missed_escalation": 0,
+        "missing_field_exact_match": "5/14",
+        "by_family": {
+          "EVIDENCE_CONFLICT": "4/4",
+          "SELF_CONTAINED_POLICY": "6/6",
+          "TEMPORAL_POLICY_VERSION": "3/3",
+          "REGIONAL_PRECEDENCE": "2/2",
+          "MISSING_INFORMATION": "7/7",
+          "DUPLICATE_CHECK": "5/5",
+          "SPLIT_TRANSACTION": "1/1",
+          "FIXED_WORKFLOW": "0/3",
+          "DYNAMIC_AGENT_INVESTIGATION": "2/5"
+        },
+        "confusion": {
+          "REQUEST_INFORMATION->REQUEST_INFORMATION": 13,
+          "REJECT->REJECT": 14,
+          "APPROVE->APPROVE": 1,
+          "REQUEST_INFORMATION->APPROVE": 1,
+          "REJECT->ESCALATE": 2,
+          "APPROVE->ESCALATE": 3,
+          "ESCALATE->ESCALATE": 2
+        },
+        "errors": 0,
+        "median_latency_ms": 0.019895500000033373,
+        "p95_latency_ms": 0.07624999999999993,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "total_cost_usd": 0.0
+      }
+    },
+    "gpt-4o-mini RAG + code facts": {
+      "all": {
+        "n": 40,
+        "correct": 25,
+        "correct_disposition_rate": 0.625,
+        "wilson95": [
+          0.4703,
+          0.7578
+        ],
+        "false_approvals": 1,
+        "non_approvable": 35,
+        "false_approval_rate": 0.0286,
+        "human_review_rate": 0.0,
+        "over_escalation": 0,
+        "missed_escalation": 4,
+        "missing_field_exact_match": "0/15",
+        "by_family": {
+          "EVIDENCE_CONFLICT": "4/4",
+          "SELF_CONTAINED_POLICY": "6/6",
+          "TEMPORAL_POLICY_VERSION": "3/3",
+          "REGIONAL_PRECEDENCE": "2/2",
+          "MISSING_INFORMATION": "3/7",
+          "DUPLICATE_CHECK": "4/5",
+          "SPLIT_TRANSACTION": "0/3",
+          "FIXED_WORKFLOW": "3/5",
+          "DYNAMIC_AGENT_INVESTIGATION": "0/5"
+        },
+        "confusion": {
+          "REQUEST_INFORMATION->REQUEST_INFORMATION": 9,
+          "REJECT->REJECT": 15,
+          "REQUEST_INFORMATION->REJECT": 6,
+          "REJECT->REQUEST_INFORMATION": 1,
+          "APPROVE->REJECT": 4,
+          "ESCALATE->REJECT": 3,
+          "ESCALATE->APPROVE": 1,
+          "APPROVE->APPROVE": 1
+        },
+        "errors": 0,
+        "median_latency_ms": 1677.0,
+        "p95_latency_ms": 2718,
+        "input_tokens": 58498,
+        "output_tokens": 2834,
+        "total_tokens": 61332,
+        "total_cost_usd": 0.010475
+      },
+      "challenge_set": {
+        "n": 10,
+        "correct": 5,
+        "correct_disposition_rate": 0.5,
+        "wilson95": [
+          0.2366,
+          0.7634
+        ],
+        "false_approvals": 1,
+        "non_approvable": 8,
+        "false_approval_rate": 0.125,
+        "human_review_rate": 0.0,
+        "over_escalation": 0,
+        "missed_escalation": 2,
+        "missing_field_exact_match": "0/3",
+        "by_family": {
+          "EVIDENCE_CONFLICT": "1/1",
+          "SELF_CONTAINED_POLICY": "1/1",
+          "MISSING_INFORMATION": "1/1",
+          "DUPLICATE_CHECK": "2/2",
+          "SPLIT_TRANSACTION": "0/1",
+          "FIXED_WORKFLOW": "0/2",
+          "DYNAMIC_AGENT_INVESTIGATION": "0/2"
+        },
+        "confusion": {
+          "REQUEST_INFORMATION->REQUEST_INFORMATION": 2,
+          "REJECT->REJECT": 3,
+          "APPROVE->REJECT": 2,
+          "ESCALATE->APPROVE": 1,
+          "REQUEST_INFORMATION->REJECT": 1,
+          "ESCALATE->REJECT": 1
+        },
+        "errors": 0,
+        "median_latency_ms": 2032.0,
+        "p95_latency_ms": 2479,
+        "input_tokens": 14739,
+        "output_tokens": 694,
+        "total_tokens": 15433,
+        "total_cost_usd": 0.002627
+      },
+      "currency_flagged": {
+        "n": 4,
+        "correct": 1,
+        "correct_disposition_rate": 0.25,
+        "wilson95": [
+          0.0456,
+          0.6994
+        ],
+        "false_approvals": 1,
+        "non_approvable": 3,
+        "false_approval_rate": 0.3333,
+        "human_review_rate": 0.0,
+        "over_escalation": 0,
+        "missed_escalation": 2,
+        "missing_field_exact_match": "0/1",
+        "by_family": {
+          "SPLIT_TRANSACTION": "0/2",
+          "FIXED_WORKFLOW": "1/2"
+        },
+        "confusion": {
+          "ESCALATE->REJECT": 1,
+          "REQUEST_INFORMATION->REJECT": 1,
+          "ESCALATE->APPROVE": 1,
+          "APPROVE->APPROVE": 1
+        },
+        "errors": 0,
+        "median_latency_ms": 1753.0,
+        "p95_latency_ms": 2556,
+        "input_tokens": 5502,
+        "output_tokens": 322,
+        "total_tokens": 5824,
+        "total_cost_usd": 0.001018
+      },
+      "excluding_currency_flagged": {
+        "n": 36,
+        "correct": 24,
+        "correct_disposition_rate": 0.6667,
+        "wilson95": [
+          0.5033,
+          0.7979
+        ],
+        "false_approvals": 0,
+        "non_approvable": 32,
+        "false_approval_rate": 0.0,
+        "human_review_rate": 0.0,
+        "over_escalation": 0,
+        "missed_escalation": 2,
+        "missing_field_exact_match": "0/14",
+        "by_family": {
+          "EVIDENCE_CONFLICT": "4/4",
+          "SELF_CONTAINED_POLICY": "6/6",
+          "TEMPORAL_POLICY_VERSION": "3/3",
+          "REGIONAL_PRECEDENCE": "2/2",
+          "MISSING_INFORMATION": "3/7",
+          "DUPLICATE_CHECK": "4/5",
+          "SPLIT_TRANSACTION": "0/1",
+          "FIXED_WORKFLOW": "2/3",
+          "DYNAMIC_AGENT_INVESTIGATION": "0/5"
+        },
+        "confusion": {
+          "REQUEST_INFORMATION->REQUEST_INFORMATION": 9,
+          "REJECT->REJECT": 15,
+          "REQUEST_INFORMATION->REJECT": 5,
+          "REJECT->REQUEST_INFORMATION": 1,
+          "APPROVE->REJECT": 4,
+          "ESCALATE->REJECT": 2
+        },
+        "errors": 0,
+        "median_latency_ms": 1677.0,
+        "p95_latency_ms": 3313,
+        "input_tokens": 52996,
+        "output_tokens": 2512,
+        "total_tokens": 55508,
+        "total_cost_usd": 0.009457
+      }
+    },
+    "llama3.2:3b RAG + code facts": {
+      "all": {
+        "n": 40,
+        "correct": 10,
+        "correct_disposition_rate": 0.25,
+        "wilson95": [
+          0.1419,
+          0.4019
+        ],
+        "false_approvals": 17,
+        "non_approvable": 35,
+        "false_approval_rate": 0.4857,
+        "human_review_rate": 0.0,
+        "over_escalation": 0,
+        "missed_escalation": 4,
+        "missing_field_exact_match": "0/15",
+        "by_family": {
+          "EVIDENCE_CONFLICT": "0/4",
+          "SELF_CONTAINED_POLICY": "1/6",
+          "TEMPORAL_POLICY_VERSION": "1/3",
+          "REGIONAL_PRECEDENCE": "0/2",
+          "MISSING_INFORMATION": "1/7",
+          "DUPLICATE_CHECK": "3/5",
+          "SPLIT_TRANSACTION": "1/3",
+          "FIXED_WORKFLOW": "3/5",
+          "DYNAMIC_AGENT_INVESTIGATION": "0/5"
+        },
+        "confusion": {
+          "REQUEST_INFORMATION->REJECT": 8,
+          "REJECT->APPROVE": 9,
+          "REJECT->REJECT": 7,
+          "REQUEST_INFORMATION->REQUEST_INFORMATION": 1,
+          "REQUEST_INFORMATION->APPROVE": 6,
+          "APPROVE->APPROVE": 2,
+          "ESCALATE->APPROVE": 2,
+          "APPROVE->REJECT": 3,
+          "ESCALATE->REJECT": 2
+        },
+        "errors": 0,
+        "median_latency_ms": 3114.5,
+        "p95_latency_ms": 3999,
+        "input_tokens": 59821,
+        "output_tokens": 4581,
+        "total_tokens": 64402,
+        "total_cost_usd": 0.0
+      },
+      "challenge_set": {
+        "n": 10,
+        "correct": 4,
+        "correct_disposition_rate": 0.4,
+        "wilson95": [
+          0.1682,
+          0.6873
+        ],
+        "false_approvals": 3,
+        "non_approvable": 8,
+        "false_approval_rate": 0.375,
+        "human_review_rate": 0.0,
+        "over_escalation": 0,
+        "missed_escalation": 2,
+        "missing_field_exact_match": "0/3",
+        "by_family": {
+          "EVIDENCE_CONFLICT": "0/1",
+          "SELF_CONTAINED_POLICY": "0/1",
+          "MISSING_INFORMATION": "1/1",
+          "DUPLICATE_CHECK": "2/2",
+          "SPLIT_TRANSACTION": "1/1",
+          "FIXED_WORKFLOW": "0/2",
+          "DYNAMIC_AGENT_INVESTIGATION": "0/2"
+        },
+        "confusion": {
+          "REQUEST_INFORMATION->REJECT": 1,
+          "REJECT->APPROVE": 1,
+          "REQUEST_INFORMATION->REQUEST_INFORMATION": 1,
+          "REJECT->REJECT": 2,
+          "APPROVE->APPROVE": 1,
+          "ESCALATE->APPROVE": 1,
+          "REQUEST_INFORMATION->APPROVE": 1,
+          "APPROVE->REJECT": 1,
+          "ESCALATE->REJECT": 1
+        },
+        "errors": 0,
+        "median_latency_ms": 3167.5,
+        "p95_latency_ms": 5009,
+        "input_tokens": 15067,
+        "output_tokens": 1127,
+        "total_tokens": 16194,
+        "total_cost_usd": 0.0
+      },
+      "currency_flagged": {
+        "n": 4,
+        "correct": 1,
+        "correct_disposition_rate": 0.25,
+        "wilson95": [
+          0.0456,
+          0.6994
+        ],
+        "false_approvals": 3,
+        "non_approvable": 3,
+        "false_approval_rate": 1.0,
+        "human_review_rate": 0.0,
+        "over_escalation": 0,
+        "missed_escalation": 2,
+        "missing_field_exact_match": "0/1",
+        "by_family": {
+          "SPLIT_TRANSACTION": "0/2",
+          "FIXED_WORKFLOW": "1/2"
+        },
+        "confusion": {
+          "ESCALATE->APPROVE": 2,
+          "REQUEST_INFORMATION->APPROVE": 1,
+          "APPROVE->APPROVE": 1
+        },
+        "errors": 0,
+        "median_latency_ms": 3799.0,
+        "p95_latency_ms": 3976,
+        "input_tokens": 5621,
+        "output_tokens": 583,
+        "total_tokens": 6204,
+        "total_cost_usd": 0.0
+      },
+      "excluding_currency_flagged": {
+        "n": 36,
+        "correct": 9,
+        "correct_disposition_rate": 0.25,
+        "wilson95": [
+          0.1375,
+          0.4107
+        ],
+        "false_approvals": 14,
+        "non_approvable": 32,
+        "false_approval_rate": 0.4375,
+        "human_review_rate": 0.0,
+        "over_escalation": 0,
+        "missed_escalation": 2,
+        "missing_field_exact_match": "0/14",
+        "by_family": {
+          "EVIDENCE_CONFLICT": "0/4",
+          "SELF_CONTAINED_POLICY": "1/6",
+          "TEMPORAL_POLICY_VERSION": "1/3",
+          "REGIONAL_PRECEDENCE": "0/2",
+          "MISSING_INFORMATION": "1/7",
+          "DUPLICATE_CHECK": "3/5",
+          "SPLIT_TRANSACTION": "1/1",
+          "FIXED_WORKFLOW": "2/3",
+          "DYNAMIC_AGENT_INVESTIGATION": "0/5"
+        },
+        "confusion": {
+          "REQUEST_INFORMATION->REJECT": 8,
+          "REJECT->APPROVE": 9,
+          "REJECT->REJECT": 7,
+          "REQUEST_INFORMATION->REQUEST_INFORMATION": 1,
+          "REQUEST_INFORMATION->APPROVE": 5,
+          "APPROVE->APPROVE": 1,
+          "APPROVE->REJECT": 3,
+          "ESCALATE->REJECT": 2
+        },
+        "errors": 0,
+        "median_latency_ms": 2990.5,
+        "p95_latency_ms": 4537,
+        "input_tokens": 54200,
+        "output_tokens": 3998,
+        "total_tokens": 58198,
+        "total_cost_usd": 0.0
+      }
+    }
+  }
+}

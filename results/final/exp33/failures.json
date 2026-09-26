@@ -1,0 +1,664 @@
+{
+  "router (frozen system)": {
+    "n_failures": 2,
+    "categories": {
+      "SPLIT_TRANSACTION_MISS": 1,
+      "FAILED_TO_ESCALATE": 1
+    },
+    "failures": [
+      {
+        "case_id": "EXP-0088",
+        "family": "SPLIT_TRANSACTION",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "APPROVE",
+        "category": "SPLIT_TRANSACTION_MISS",
+        "challenge": false,
+        "currency_flagged": true,
+        "false_approval": true,
+        "system_reason": "No rule triggered."
+      },
+      {
+        "case_id": "EXP-0092",
+        "family": "FIXED_WORKFLOW",
+        "expected": "ESCALATE",
+        "predicted": "APPROVE",
+        "category": "FAILED_TO_ESCALATE",
+        "challenge": true,
+        "currency_flagged": true,
+        "false_approval": true,
+        "system_reason": "Below the approval threshold."
+      }
+    ]
+  },
+  "rules only": {
+    "n_failures": 9,
+    "categories": {
+      "SPLIT_TRANSACTION_MISS": 2,
+      "FAILED_TO_ESCALATE": 1,
+      "MISSING_FIELD_ERROR": 1,
+      "OVER_ESCALATION": 5
+    },
+    "failures": [
+      {
+        "case_id": "EXP-0083",
+        "family": "SPLIT_TRANSACTION",
+        "expected": "ESCALATE",
+        "predicted": "APPROVE",
+        "category": "SPLIT_TRANSACTION_MISS",
+        "challenge": false,
+        "currency_flagged": true,
+        "false_approval": true,
+        "system_reason": "No rule triggered."
+      },
+      {
+        "case_id": "EXP-0088",
+        "family": "SPLIT_TRANSACTION",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "APPROVE",
+        "category": "SPLIT_TRANSACTION_MISS",
+        "challenge": false,
+        "currency_flagged": true,
+        "false_approval": true,
+        "system_reason": "No rule triggered."
+      },
+      {
+        "case_id": "EXP-0092",
+        "family": "FIXED_WORKFLOW",
+        "expected": "ESCALATE",
+        "predicted": "APPROVE",
+        "category": "FAILED_TO_ESCALATE",
+        "challenge": true,
+        "currency_flagged": true,
+        "false_approval": true,
+        "system_reason": "No rule triggered."
+      },
+      {
+        "case_id": "EXP-0094",
+        "family": "FIXED_WORKFLOW",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "APPROVE",
+        "category": "MISSING_FIELD_ERROR",
+        "challenge": true,
+        "currency_flagged": false,
+        "false_approval": true,
+        "system_reason": "No rule triggered."
+      },
+      {
+        "case_id": "EXP-0096",
+        "family": "FIXED_WORKFLOW",
+        "expected": "REJECT",
+        "predicted": "ESCALATE",
+        "category": "OVER_ESCALATION",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "Over hotel ceiling; conference/exception evidence needed."
+      },
+      {
+        "case_id": "EXP-0102",
+        "family": "FIXED_WORKFLOW",
+        "expected": "REJECT",
+        "predicted": "ESCALATE",
+        "category": "OVER_ESCALATION",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "Over hotel ceiling; conference/exception evidence needed."
+      },
+      {
+        "case_id": "EXP-0106",
+        "family": "DYNAMIC_AGENT_INVESTIGATION",
+        "expected": "APPROVE",
+        "predicted": "ESCALATE",
+        "category": "OVER_ESCALATION",
+        "challenge": true,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "Over hotel ceiling; conference/exception evidence needed."
+      },
+      {
+        "case_id": "EXP-0112",
+        "family": "DYNAMIC_AGENT_INVESTIGATION",
+        "expected": "APPROVE",
+        "predicted": "ESCALATE",
+        "category": "OVER_ESCALATION",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "Over hotel ceiling; conference/exception evidence needed."
+      },
+      {
+        "case_id": "EXP-0119",
+        "family": "DYNAMIC_AGENT_INVESTIGATION",
+        "expected": "APPROVE",
+        "predicted": "ESCALATE",
+        "category": "OVER_ESCALATION",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "Over hotel ceiling; conference/exception evidence needed."
+      }
+    ]
+  },
+  "gpt-4o-mini RAG + code facts": {
+    "n_failures": 15,
+    "categories": {
+      "MISSING_FIELD_ERROR": 5,
+      "DUPLICATE_FALSE_NEGATIVE": 1,
+      "SPLIT_TRANSACTION_MISS": 3,
+      "FAILED_TO_ESCALATE": 3,
+      "REASONING_ERROR": 3
+    },
+    "failures": [
+      {
+        "case_id": "EXP-0049",
+        "family": "MISSING_INFORMATION",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "REJECT",
+        "category": "MISSING_FIELD_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "The employee description lacks specificity and does not meet the requirement for a specific, auditable business purpose as per policy."
+      },
+      {
+        "case_id": "EXP-0057",
+        "family": "MISSING_INFORMATION",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "REJECT",
+        "category": "MISSING_FIELD_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "The expense of 4500 INR for office supplies does not meet the requirement for a specific business purpose as it is described generically. Additionally, the expe"
+      },
+      {
+        "case_id": "EXP-0061",
+        "family": "MISSING_INFORMATION",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "REJECT",
+        "category": "MISSING_FIELD_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "The employee description lacks specificity and does not meet the requirement for a named business purpose, violating the policy."
+      },
+      {
+        "case_id": "EXP-0064",
+        "family": "MISSING_INFORMATION",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "REJECT",
+        "category": "MISSING_FIELD_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "The expense includes a personal item, which is not reimbursable under the policy for purely personal purchases."
+      },
+      {
+        "case_id": "EXP-0072",
+        "family": "DUPLICATE_CHECK",
+        "expected": "REJECT",
+        "predicted": "REQUEST_INFORMATION",
+        "category": "DUPLICATE_FALSE_NEGATIVE",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "The claim is for a client meal, but the number of external attendees is not provided, which is required for reimbursement. Please provide the attendee count to "
+      },
+      {
+        "case_id": "EXP-0081",
+        "family": "SPLIT_TRANSACTION",
+        "expected": "APPROVE",
+        "predicted": "REJECT",
+        "category": "SPLIT_TRANSACTION_MISS",
+        "challenge": true,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "The claim is for office supplies, which is not an allowable expense under the current policy. Therefore, it cannot be approved for reimbursement."
+      },
+      {
+        "case_id": "EXP-0083",
+        "family": "SPLIT_TRANSACTION",
+        "expected": "ESCALATE",
+        "predicted": "REJECT",
+        "category": "SPLIT_TRANSACTION_MISS",
+        "challenge": false,
+        "currency_flagged": true,
+        "false_approval": false,
+        "system_reason": "The claim is rejected due to the potential violation of the split transaction policy, as it appears to be a split expense from a previous transaction with the s"
+      },
+      {
+        "case_id": "EXP-0088",
+        "family": "SPLIT_TRANSACTION",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "REJECT",
+        "category": "SPLIT_TRANSACTION_MISS",
+        "challenge": false,
+        "currency_flagged": true,
+        "false_approval": false,
+        "system_reason": "The claim is rejected due to the violation of the split transaction policy, as multiple same-merchant expenses close in time must not be split to avoid an appro"
+      },
+      {
+        "case_id": "EXP-0092",
+        "family": "FIXED_WORKFLOW",
+        "expected": "ESCALATE",
+        "predicted": "APPROVE",
+        "category": "FAILED_TO_ESCALATE",
+        "challenge": true,
+        "currency_flagged": true,
+        "false_approval": true,
+        "system_reason": "The software subscription claim is compliant as it has manager approval and is associated with an active project. The amount is below the approval threshold, an"
+      },
+      {
+        "case_id": "EXP-0094",
+        "family": "FIXED_WORKFLOW",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "REJECT",
+        "category": "MISSING_FIELD_ERROR",
+        "challenge": true,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "The hotel expense requires an approved business trip, which is not provided in the claim. Therefore, the claim cannot be reimbursed."
+      },
+      {
+        "case_id": "EXP-0106",
+        "family": "DYNAMIC_AGENT_INVESTIGATION",
+        "expected": "APPROVE",
+        "predicted": "REJECT",
+        "category": "REASONING_ERROR",
+        "challenge": true,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "The hotel expense exceeds the base nightly ceiling of 18500 INR for 2026, making it non-compliant with policy."
+      },
+      {
+        "case_id": "EXP-0108",
+        "family": "DYNAMIC_AGENT_INVESTIGATION",
+        "expected": "ESCALATE",
+        "predicted": "REJECT",
+        "category": "FAILED_TO_ESCALATE",
+        "challenge": true,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "The claimed hotel expense of 37760 JPY exceeds the 2026 base ceiling of 32000 JPY for Tokyo, which is a clear policy violation."
+      },
+      {
+        "case_id": "EXP-0112",
+        "family": "DYNAMIC_AGENT_INVESTIGATION",
+        "expected": "APPROVE",
+        "predicted": "REJECT",
+        "category": "REASONING_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "The claimed hotel expense of 21830 INR exceeds the 2026 base nightly ceiling of 18500 INR for India Tier-1, violating the policy."
+      },
+      {
+        "case_id": "EXP-0117",
+        "family": "DYNAMIC_AGENT_INVESTIGATION",
+        "expected": "ESCALATE",
+        "predicted": "REJECT",
+        "category": "FAILED_TO_ESCALATE",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "The hotel expense exceeds the 2026 base ceiling of 42000 JPY for Tokyo, as the claimed amount is 49560 JPY."
+      },
+      {
+        "case_id": "EXP-0119",
+        "family": "DYNAMIC_AGENT_INVESTIGATION",
+        "expected": "APPROVE",
+        "predicted": "REJECT",
+        "category": "REASONING_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "The hotel accommodation claim exceeds the base nightly ceiling of SGD 320 for 2026, as the claimed amount is SGD 377.6."
+      }
+    ]
+  },
+  "llama3.2:3b RAG + code facts": {
+    "n_failures": 30,
+    "categories": {
+      "MISSING_FIELD_ERROR": 11,
+      "REASONING_ERROR": 8,
+      "POLICY_PRECEDENCE_ERROR": 2,
+      "WRONG_POLICY_VERSION": 2,
+      "DUPLICATE_FALSE_NEGATIVE": 2,
+      "SPLIT_TRANSACTION_MISS": 2,
+      "FAILED_TO_ESCALATE": 3
+    },
+    "failures": [
+      {
+        "case_id": "EXP-0006",
+        "family": "EVIDENCE_CONFLICT",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "REJECT",
+        "category": "MISSING_FIELD_ERROR",
+        "challenge": true,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "Claim is not compliant with policy due to missing attendee count and route details for the taxi ride. Additionally, the meal ceiling for employee-only meals is "
+      },
+      {
+        "case_id": "EXP-0009",
+        "family": "SELF_CONTAINED_POLICY",
+        "expected": "REJECT",
+        "predicted": "APPROVE",
+        "category": "REASONING_ERROR",
+        "challenge": true,
+        "currency_flagged": false,
+        "false_approval": true,
+        "system_reason": "The transaction is compliant with the Corporate Card and Personal Spend Policy (DOC-06) and the Singapore Expense Addendum (DOC-09). The employee meal ceiling f"
+      },
+      {
+        "case_id": "EXP-0011",
+        "family": "REGIONAL_PRECEDENCE",
+        "expected": "REJECT",
+        "predicted": "APPROVE",
+        "category": "POLICY_PRECEDENCE_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": true,
+        "system_reason": "The transaction meets the meal ceiling requirements for the employee category. The alcohol amount is incidental to the meal and does not exceed the client meal "
+      },
+      {
+        "case_id": "EXP-0015",
+        "family": "SELF_CONTAINED_POLICY",
+        "expected": "REJECT",
+        "predicted": "APPROVE",
+        "category": "REASONING_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": true,
+        "system_reason": "The expense claim for StreamNow is compliant with the Corporate Card and Personal Spend Policy (DOC-06) and the Singapore Expense Addendum (DOC-09). The transac"
+      },
+      {
+        "case_id": "EXP-0016",
+        "family": "TEMPORAL_POLICY_VERSION",
+        "expected": "REJECT",
+        "predicted": "APPROVE",
+        "category": "WRONG_POLICY_VERSION",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": true,
+        "system_reason": "Claim complies with Japan Expense Addendum (DOC-11) and Global Expense Policy 2024 (DOC-01). The transaction date is within the submission window, and the amoun"
+      },
+      {
+        "case_id": "EXP-0023",
+        "family": "REGIONAL_PRECEDENCE",
+        "expected": "REJECT",
+        "predicted": "APPROVE",
+        "category": "POLICY_PRECEDENCE_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": true,
+        "system_reason": "The transaction complies with the Meals and Entertainment Policy, specifically MEAL-1.1 and MEAL-2.1, as the employee meal ceiling (INR 2000) is not exceeded an"
+      },
+      {
+        "case_id": "EXP-0024",
+        "family": "EVIDENCE_CONFLICT",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "REJECT",
+        "category": "MISSING_FIELD_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "Claim is not compliant due to missing attendee count and route details for the taxi ride, which are required for reimbursement under TRV-3.1. Additionally, the "
+      },
+      {
+        "case_id": "EXP-0027",
+        "family": "SELF_CONTAINED_POLICY",
+        "expected": "REJECT",
+        "predicted": "APPROVE",
+        "category": "REASONING_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": true,
+        "system_reason": "The transaction complies with the Corporate Card and Personal Spend Policy (DOC-06), Singapore Expense Addendum (DOC-09), Late submission circular (CIRC-25-03),"
+      },
+      {
+        "case_id": "EXP-0030",
+        "family": "EVIDENCE_CONFLICT",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "REJECT",
+        "category": "MISSING_FIELD_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "Claim is not compliant due to missing attendee count and route details for the taxi ride. Additionally, the meal ceiling for employee-only meals is not specifie"
+      },
+      {
+        "case_id": "EXP-0033",
+        "family": "SELF_CONTAINED_POLICY",
+        "expected": "REJECT",
+        "predicted": "APPROVE",
+        "category": "REASONING_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": true,
+        "system_reason": "The expense claim for StreamNow is compliant with the Corporate Card and Personal Spend Policy and the Singapore Expense Addendum. The transaction amount is bel"
+      },
+      {
+        "case_id": "EXP-0034",
+        "family": "TEMPORAL_POLICY_VERSION",
+        "expected": "REJECT",
+        "predicted": "APPROVE",
+        "category": "WRONG_POLICY_VERSION",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": true,
+        "system_reason": "Claim complies with Japan Expense Addendum (DOC-11) and Global Expense Policy 2024 (DOC-01). The transaction date is within the submission window, and the amoun"
+      },
+      {
+        "case_id": "EXP-0039",
+        "family": "SELF_CONTAINED_POLICY",
+        "expected": "REJECT",
+        "predicted": "APPROVE",
+        "category": "REASONING_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": true,
+        "system_reason": "The expense claim for the personal subscription to StreamNow is compliant with the Corporate Card and Personal Spend Policy (DOC-06) and the Singapore Expense A"
+      },
+      {
+        "case_id": "EXP-0042",
+        "family": "EVIDENCE_CONFLICT",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "REJECT",
+        "category": "MISSING_FIELD_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "Claim is not compliant due to missing attendee count and route details for the taxi ride. Additionally, the meal ceiling for employee-only meals is not specifie"
+      },
+      {
+        "case_id": "EXP-0049",
+        "family": "MISSING_INFORMATION",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "APPROVE",
+        "category": "MISSING_FIELD_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": true,
+        "system_reason": "The transaction amount (SGD 115.00) is below the SGD 500 approval threshold, and a manager approval record is on file for this expense. The submission date is w"
+      },
+      {
+        "case_id": "EXP-0051",
+        "family": "MISSING_INFORMATION",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "APPROVE",
+        "category": "MISSING_FIELD_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": true,
+        "system_reason": "The employee's taxi fare for business travel is reimbursable under TRV-3.1. The meal ceiling for the employee is INR 1800, which is below the total amount of SG"
+      },
+      {
+        "case_id": "EXP-0057",
+        "family": "MISSING_INFORMATION",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "APPROVE",
+        "category": "MISSING_FIELD_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": true,
+        "system_reason": "The expense claim is compliant with the policy. The transaction amount is below the SGD 500 approval threshold, and manager approval record is on file for this "
+      },
+      {
+        "case_id": "EXP-0060",
+        "family": "MISSING_INFORMATION",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "REJECT",
+        "category": "MISSING_FIELD_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "The transaction does not meet the business purpose requirement as the employee description is not specific enough. Clause GEP26-1.1 requires a specific, auditab"
+      },
+      {
+        "case_id": "EXP-0061",
+        "family": "MISSING_INFORMATION",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "APPROVE",
+        "category": "MISSING_FIELD_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": true,
+        "system_reason": "The transaction amount (SGD 115.00) is below the SGD 500 approval threshold, and a manager approval record is on file for this expense. The submission date is w"
+      },
+      {
+        "case_id": "EXP-0064",
+        "family": "MISSING_INFORMATION",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "REJECT",
+        "category": "MISSING_FIELD_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "Claim does not specify whether the 'business supplies + personal item' is a client or employee-only expense. Policy clause SG-1.2 requires client meal ceiling t"
+      },
+      {
+        "case_id": "EXP-0070",
+        "family": "DUPLICATE_CHECK",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "REJECT",
+        "category": "DUPLICATE_FALSE_NEGATIVE",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "Claimed meal exceeds client meal ceiling of INR 4500 per attendee in 2026, and the attendee count could not be determined from the description. Additionally, th"
+      },
+      {
+        "case_id": "EXP-0076",
+        "family": "DUPLICATE_CHECK",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "REJECT",
+        "category": "DUPLICATE_FALSE_NEGATIVE",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "Claimed meal exceeds client meal ceiling of INR 4500 per attendee in 2026, and the attendee count could not be determined from the description. Additionally, th"
+      },
+      {
+        "case_id": "EXP-0083",
+        "family": "SPLIT_TRANSACTION",
+        "expected": "ESCALATE",
+        "predicted": "APPROVE",
+        "category": "SPLIT_TRANSACTION_MISS",
+        "challenge": false,
+        "currency_flagged": true,
+        "false_approval": true,
+        "system_reason": "The expense claim is compliant with the policy. The business purpose is specific and auditable, and the employee description is sufficient. The submission windo"
+      },
+      {
+        "case_id": "EXP-0088",
+        "family": "SPLIT_TRANSACTION",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "APPROVE",
+        "category": "SPLIT_TRANSACTION_MISS",
+        "challenge": false,
+        "currency_flagged": true,
+        "false_approval": true,
+        "system_reason": "The claim complies with the Japan Expense Addendum policy excerpts, specifically JP-1.1, JP-1.2, JP-3.1, and JP-4.1. The amount is below the SGD 500 approval th"
+      },
+      {
+        "case_id": "EXP-0092",
+        "family": "FIXED_WORKFLOW",
+        "expected": "ESCALATE",
+        "predicted": "APPROVE",
+        "category": "FAILED_TO_ESCALATE",
+        "challenge": true,
+        "currency_flagged": true,
+        "false_approval": true,
+        "system_reason": "The transaction amount is below the SGD 500 approval threshold, and a manager approval record is on file for this expense. The submission date is within the 45-"
+      },
+      {
+        "case_id": "EXP-0094",
+        "family": "FIXED_WORKFLOW",
+        "expected": "REQUEST_INFORMATION",
+        "predicted": "APPROVE",
+        "category": "MISSING_FIELD_ERROR",
+        "challenge": true,
+        "currency_flagged": false,
+        "false_approval": true,
+        "system_reason": "The employee's hotel claim is within the base ceiling for Singapore in 2026, and the claim is below the SGD 500 approval threshold. The employee's grade is G2, "
+      },
+      {
+        "case_id": "EXP-0106",
+        "family": "DYNAMIC_AGENT_INVESTIGATION",
+        "expected": "APPROVE",
+        "predicted": "REJECT",
+        "category": "REASONING_ERROR",
+        "challenge": true,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "Claim exceeds the base hotel ceiling for employee grade G7 in 2026 (18500 INR), and no manager approval record exists for this expense."
+      },
+      {
+        "case_id": "EXP-0108",
+        "family": "DYNAMIC_AGENT_INVESTIGATION",
+        "expected": "ESCALATE",
+        "predicted": "REJECT",
+        "category": "FAILED_TO_ESCALATE",
+        "challenge": true,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "The claim exceeds the base nightly ceiling for Tokyo in 2026, which is 32000 JPY. The claim amount of 37760 JPY is 1.18 times the base ceiling, violating TRV-1."
+      },
+      {
+        "case_id": "EXP-0112",
+        "family": "DYNAMIC_AGENT_INVESTIGATION",
+        "expected": "APPROVE",
+        "predicted": "REJECT",
+        "category": "REASONING_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "The claim exceeds the hotel ceiling for employee grade G7 in 2026, which is 18500 INR. The claim amount is 21830 INR, exceeding the base ceiling by a ratio of 1"
+      },
+      {
+        "case_id": "EXP-0117",
+        "family": "DYNAMIC_AGENT_INVESTIGATION",
+        "expected": "ESCALATE",
+        "predicted": "REJECT",
+        "category": "FAILED_TO_ESCALATE",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "The claim exceeds the base nightly ceiling for Tokyo in 2026 (42000 JPY), violating TRV-1.2. Additionally, the claim does not provide sufficient information on "
+      },
+      {
+        "case_id": "EXP-0119",
+        "family": "DYNAMIC_AGENT_INVESTIGATION",
+        "expected": "APPROVE",
+        "predicted": "REJECT",
+        "category": "REASONING_ERROR",
+        "challenge": false,
+        "currency_flagged": false,
+        "false_approval": false,
+        "system_reason": "The claim exceeds the base hotel ceiling for Singapore in 2026, which is SGD 320 per night. The claim amount is SGD 377.60, exceeding the allowed ratio of 1.18."
+      }
+    ]
+  }
+}

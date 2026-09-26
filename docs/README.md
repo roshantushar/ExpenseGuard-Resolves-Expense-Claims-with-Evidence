@@ -24,8 +24,9 @@ One file per experiment: hypothesis, frozen config, results, plots, failures, de
 | 28 | [exp28_guardrails.md](exp28_guardrails.md) | done: 15/15 system, LLM 3/4 |
 | 29 | [exp29_abstention_escalation.md](exp29_abstention_escalation.md) | done |
 | 30, 31 | [exp30_31_router_and_cost.md](exp30_31_router_and_cost.md) | done |
-| 32 | [exp32_freeze_and_runbook.md](exp32_freeze_and_runbook.md) | frozen, NOT yet run |
-| 33 | pending (needs the final run) | pending |
+| 32 | [exp32_freeze_and_runbook.md](exp32_freeze_and_runbook.md), [exp32_final_test_results.md](exp32_final_test_results.md) | done (run once) |
+| 33 | [exp33_failure_analysis.md](exp33_failure_analysis.md) | done |
+| report | [FINAL_REPORT.md](FINAL_REPORT.md) | done |
 
 Model plan: OpenRouter paid model (GPT-mini class) for initial experiments, compared against a free/local model (Ollama `llama3.2:3b`). Every experiment reports cost, latency and tokens with plots in `results/plots/`.
 
