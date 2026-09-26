@@ -1,0 +1,6 @@
+event_id,employee_id,event_name,event_date,registration_status,official_partner_hotel,approved_rate_multiplier
+CONF-000,E0071,Applied AI Summit,2026-09-01,REGISTERED,Mumbai Grand Hotel,1.25
+CONF-003,E0110,Applied AI Summit,2026-09-04,NOT_REGISTERED,Mumbai Grand Hotel,1.25
+CONF-006,E0149,Applied AI Summit,2026-09-07,REGISTERED,Mumbai Grand Hotel,1.25
+CONF-009,E0008,Applied AI Summit,2026-09-10,NOT_REGISTERED,Mumbai Grand Hotel,1.25
+CONF-012,E0047,Applied AI Summit,2026-09-13,REGISTERED,Mumbai Grand Hotel,1.25

@@ -1,0 +1,54 @@
+{
+  "run_id": "EXP09_METADATA_FILTERED-VALIDATION-gpt-4o-mini-bfaaf3",
+  "model": "openai/gpt-4o-mini",
+  "n": 20,
+  "correct": 2,
+  "correct_disposition_rate": 0.1,
+  "wilson95": [
+    0.0279,
+    0.301
+  ],
+  "false_approvals": 0,
+  "non_approvable": 15,
+  "false_approval_rate": 0.0,
+  "human_review_rate": 0.0,
+  "over_escalation": 0,
+  "missed_escalation": 2,
+  "missing_field_exact_match": "0/7",
+  "by_family": {
+    "SELF_CONTAINED_POLICY": "0/5",
+    "TEMPORAL_POLICY_VERSION": "1/1",
+    "EVIDENCE_CONFLICT": "0/1",
+    "MISSING_INFORMATION": "0/3",
+    "DUPLICATE_CHECK": "0/3",
+    "SPLIT_TRANSACTION": "0/2",
+    "FIXED_WORKFLOW": "0/2",
+    "DYNAMIC_AGENT_INVESTIGATION": "1/3"
+  },
+  "confusion": {
+    "REJECT->REQUEST_INFORMATION": 4,
+    "APPROVE->REJECT": 3,
+    "REJECT->REJECT": 2,
+    "REQUEST_INFORMATION->REJECT": 7,
+    "APPROVE->REQUEST_INFORMATION": 2,
+    "ESCALATE->REJECT": 1,
+    "ESCALATE->REQUEST_INFORMATION": 1
+  },
+  "errors": 0,
+  "median_latency_ms": 1805.5,
+  "p95_latency_ms": 2440,
+  "input_tokens": 24978,
+  "output_tokens": 1333,
+  "total_tokens": 26311,
+  "total_cost_usd": 0.004546,
+  "decision_counts": {
+    "REQUEST_INFORMATION": 7,
+    "REJECT": 13
+  },
+  "schema_valid": 20,
+  "unsupported_policy_assertion_rate": 0.55,
+  "policy_assertion_in_text_rate": 0.9,
+  "nonexistent_clause_rate": 0.0,
+  "wrong_policy_version_cases": 0,
+  "cached_calls": 0
+}

@@ -1,0 +1,121 @@
+case_id,split,employee_id,transaction_date,submission_date,merchant,country,currency,total,bill_number,merchant_category,employee_description,project_id
+EXP-0001,DEVELOPMENT,E0001,2024-01-01,2024-01-06,Sakura Grill,Japan,JPY,8800.0,SC-0000,RESTAURANT,Dinner while working late on a customer proposal. Two employees attended.,PRJ-001
+EXP-0002,DEVELOPMENT,E0014,2025-02-02,2025-02-06,Spice Courtyard,India,INR,19500.0,SC-0001,RESTAURANT,Dinner with two external client representatives after contract review; I attended as the only employee. Three attendees total.,PRJ-002
+EXP-0003,DEVELOPMENT,E0027,2026-03-03,2026-03-05,StreamNow,Singapore,SGD,95.0,SC-0002,CONSUMER_SERVICE,Monthly subscription for my personal use.,PRJ-003
+EXP-0004,DEVELOPMENT,E0040,2024-04-04,2024-06-08,OfficeMart,Japan,JPY,12000.0,SC-0003,OFFICE_SUPPLIES,Project materials for delivery.,PRJ-004
+EXP-0005,DEVELOPMENT,E0053,2025-05-05,2025-05-08,Spice Courtyard,India,INR,4200.0,SC-0004,RESTAURANT,Client dinner with two external attendees and one employee; alcohol was incidental to dinner.,PRJ-005
+EXP-0006,FINAL_TEST,E0066,2026-06-06,2026-06-10,Marina Dining Room,Singapore,SGD,88.0,SC-0005,RESTAURANT,Challenge-set wording: Taxi from airport to customer office.,PRJ-006
+EXP-0007,DEVELOPMENT,E0079,2024-07-07,2024-07-12,Sakura Grill,Japan,JPY,8800.0,SC-0006,RESTAURANT,Dinner while working late on a customer proposal. Two employees attended.,PRJ-007
+EXP-0008,VALIDATION,E0092,2025-08-08,2025-08-12,Spice Courtyard,India,INR,19500.0,SC-0007,RESTAURANT,Dinner with two external client representatives after contract review; I attended as the only employee. Three attendees total.,PRJ-008
+EXP-0009,FINAL_TEST,E0105,2026-09-09,2026-09-11,StreamNow,Singapore,SGD,95.0,SC-0008,CONSUMER_SERVICE,Challenge-set wording: Monthly subscription for my personal use.,PRJ-009
+EXP-0010,FINAL_TEST,E0118,2024-10-10,2024-12-14,OfficeMart,Japan,JPY,12000.0,SC-0009,OFFICE_SUPPLIES,Project materials for delivery.,PRJ-010
+EXP-0011,FINAL_TEST,E0131,2025-11-11,2025-11-14,Spice Courtyard,India,INR,4200.0,SC-0010,RESTAURANT,Client dinner with two external attendees and one employee; alcohol was incidental to dinner.,PRJ-011
+EXP-0012,DEVELOPMENT,E0144,2026-12-12,2026-12-16,Marina Dining Room,Singapore,SGD,88.0,SC-0011,RESTAURANT,Taxi from airport to customer office.,PRJ-012
+EXP-0013,VALIDATION,E0157,2024-01-13,2024-01-18,Sakura Grill,Japan,JPY,8800.0,SC-0012,RESTAURANT,Dinner while working late on a customer proposal. Two employees attended.,PRJ-013
+EXP-0014,DEVELOPMENT,E0170,2025-02-14,2025-02-18,Spice Courtyard,India,INR,19500.0,SC-0013,RESTAURANT,Dinner with two external client representatives after contract review; I attended as the only employee. Three attendees total.,PRJ-014
+EXP-0015,FINAL_TEST,E0003,2026-03-15,2026-03-17,StreamNow,Singapore,SGD,95.0,SC-0014,CONSUMER_SERVICE,Monthly subscription for my personal use.,PRJ-015
+EXP-0016,FINAL_TEST,E0016,2024-04-16,2024-06-20,OfficeMart,Japan,JPY,12000.0,SC-0015,OFFICE_SUPPLIES,Project materials for delivery.,PRJ-016
+EXP-0017,DEVELOPMENT,E0029,2025-05-17,2025-05-20,Spice Courtyard,India,INR,4200.0,SC-0016,RESTAURANT,Client dinner with two external attendees and one employee; alcohol was incidental to dinner.,PRJ-017
+EXP-0018,DEVELOPMENT,E0042,2026-06-18,2026-06-22,Marina Dining Room,Singapore,SGD,88.0,SC-0017,RESTAURANT,Taxi from airport to customer office.,PRJ-018
+EXP-0019,DEVELOPMENT,E0055,2024-07-19,2024-07-24,Sakura Grill,Japan,JPY,8800.0,SC-0018,RESTAURANT,Dinner while working late on a customer proposal. Two employees attended.,PRJ-019
+EXP-0020,VALIDATION,E0068,2025-08-20,2025-08-24,Spice Courtyard,India,INR,19500.0,SC-0019,RESTAURANT,Dinner with two external client representatives after contract review; I attended as the only employee. Three attendees total.,PRJ-020
+EXP-0021,DEVELOPMENT,E0081,2026-09-21,2026-09-23,StreamNow,Singapore,SGD,95.0,SC-0020,CONSUMER_SERVICE,Monthly subscription for my personal use.,PRJ-021
+EXP-0022,VALIDATION,E0094,2024-10-22,2024-12-26,OfficeMart,Japan,JPY,12000.0,SC-0021,OFFICE_SUPPLIES,Project materials for delivery.,PRJ-022
+EXP-0023,FINAL_TEST,E0107,2025-11-23,2025-11-26,Spice Courtyard,India,INR,4200.0,SC-0022,RESTAURANT,Client dinner with two external attendees and one employee; alcohol was incidental to dinner.,PRJ-023
+EXP-0024,FINAL_TEST,E0120,2026-12-24,2026-12-28,Marina Dining Room,Singapore,SGD,88.0,SC-0023,RESTAURANT,Taxi from airport to customer office.,PRJ-024
+EXP-0025,DEVELOPMENT,E0133,2024-01-25,2024-01-30,Sakura Grill,Japan,JPY,8800.0,SC-0024,RESTAURANT,Dinner while working late on a customer proposal. Two employees attended.,PRJ-025
+EXP-0026,DEVELOPMENT,E0146,2025-02-01,2025-02-05,Spice Courtyard,India,INR,19500.0,SC-0025,RESTAURANT,Dinner with two external client representatives after contract review; I attended as the only employee. Three attendees total.,PRJ-026
+EXP-0027,FINAL_TEST,E0159,2026-03-02,2026-03-04,StreamNow,Singapore,SGD,95.0,SC-0026,CONSUMER_SERVICE,Monthly subscription for my personal use.,PRJ-027
+EXP-0028,DEVELOPMENT,E0172,2024-04-03,2024-06-07,OfficeMart,Japan,JPY,12000.0,SC-0027,OFFICE_SUPPLIES,Project materials for delivery.,PRJ-028
+EXP-0029,DEVELOPMENT,E0005,2025-05-04,2025-05-07,Spice Courtyard,India,INR,4200.0,SC-0028,RESTAURANT,Client dinner with two external attendees and one employee; alcohol was incidental to dinner.,PRJ-029
+EXP-0030,FINAL_TEST,E0018,2026-06-05,2026-06-09,Marina Dining Room,Singapore,SGD,88.0,SC-0029,RESTAURANT,Taxi from airport to customer office.,PRJ-030
+EXP-0031,DEVELOPMENT,E0031,2024-07-06,2024-07-11,Sakura Grill,Japan,JPY,8800.0,SC-0030,RESTAURANT,Dinner while working late on a customer proposal. Two employees attended.,PRJ-031
+EXP-0032,VALIDATION,E0044,2025-08-07,2025-08-11,Spice Courtyard,India,INR,19500.0,SC-0031,RESTAURANT,Dinner with two external client representatives after contract review; I attended as the only employee. Three attendees total.,PRJ-032
+EXP-0033,FINAL_TEST,E0057,2026-09-08,2026-09-10,StreamNow,Singapore,SGD,95.0,SC-0032,CONSUMER_SERVICE,Monthly subscription for my personal use.,PRJ-033
+EXP-0034,FINAL_TEST,E0070,2024-10-09,2024-12-13,OfficeMart,Japan,JPY,12000.0,SC-0033,OFFICE_SUPPLIES,Project materials for delivery.,PRJ-034
+EXP-0035,DEVELOPMENT,E0083,2025-11-10,2025-11-13,Spice Courtyard,India,INR,4200.0,SC-0034,RESTAURANT,Client dinner with two external attendees and one employee; alcohol was incidental to dinner.,PRJ-035
+EXP-0036,VALIDATION,E0096,2026-12-11,2026-12-15,Marina Dining Room,Singapore,SGD,88.0,SC-0035,RESTAURANT,Taxi from airport to customer office.,PRJ-036
+EXP-0037,DEVELOPMENT,E0109,2024-01-12,2024-01-17,Sakura Grill,Japan,JPY,8800.0,SC-0036,RESTAURANT,Dinner while working late on a customer proposal. Two employees attended.,PRJ-037
+EXP-0038,FINAL_TEST,E0122,2025-02-13,2025-02-17,Spice Courtyard,India,INR,19500.0,SC-0037,RESTAURANT,Dinner with two external client representatives after contract review; I attended as the only employee. Three attendees total.,PRJ-038
+EXP-0039,FINAL_TEST,E0135,2026-03-14,2026-03-16,StreamNow,Singapore,SGD,95.0,SC-0038,CONSUMER_SERVICE,Monthly subscription for my personal use.,PRJ-039
+EXP-0040,DEVELOPMENT,E0148,2024-04-15,2024-06-19,OfficeMart,Japan,JPY,12000.0,SC-0039,OFFICE_SUPPLIES,Project materials for delivery.,PRJ-040
+EXP-0041,DEVELOPMENT,E0161,2025-05-16,2025-05-19,Spice Courtyard,India,INR,4200.0,SC-0040,RESTAURANT,Client dinner with two external attendees and one employee; alcohol was incidental to dinner.,PRJ-041
+EXP-0042,FINAL_TEST,E0174,2026-06-17,2026-06-21,Marina Dining Room,Singapore,SGD,88.0,SC-0041,RESTAURANT,Taxi from airport to customer office.,PRJ-042
+EXP-0043,DEVELOPMENT,E0007,2024-07-18,2024-07-23,Sakura Grill,Japan,JPY,8800.0,SC-0042,RESTAURANT,Dinner while working late on a customer proposal. Two employees attended.,PRJ-043
+EXP-0044,VALIDATION,E0020,2025-08-19,2025-08-23,Spice Courtyard,India,INR,19500.0,SC-0043,RESTAURANT,Dinner with two external client representatives after contract review; I attended as the only employee. Three attendees total.,PRJ-044
+EXP-0045,DEVELOPMENT,E0033,2026-09-20,2026-09-22,StreamNow,Singapore,SGD,95.0,SC-0044,CONSUMER_SERVICE,Monthly subscription for my personal use.,PRJ-045
+EXP-0046,FINAL_TEST,E0111,2026-01-01,2026-01-04,Marina Dining Room,Singapore,SGD,190.0,MI-0000,RESTAURANT,Challenge-set wording: Dinner after customer discussions.,PRJ-051
+EXP-0047,DEVELOPMENT,E0124,2026-02-02,2026-02-05,CityRide,Japan,JPY,4200.0,MI-0001,RIDE_HAIL,Taxi for business travel.,PRJ-052
+EXP-0048,DEVELOPMENT,E0137,2026-03-03,2026-03-06,OfficeMart,India,INR,9000.0,MI-0002,OFFICE_SUPPLIES,Bought project items together with one personal item.,PRJ-053
+EXP-0049,FINAL_TEST,E0150,2026-04-04,2026-04-07,OfficeMart,Singapore,SGD,115.0,MI-0003,OFFICE_SUPPLIES,Business expense.,PRJ-054
+EXP-0050,DEVELOPMENT,E0163,2026-05-05,2026-05-08,Sakura Grill,Japan,JPY,15000.0,MI-0004,RESTAURANT,Dinner after customer discussions.,PRJ-055
+EXP-0051,FINAL_TEST,E0176,2026-06-06,2026-06-09,QuickCab,India,INR,1100.0,MI-0005,RIDE_HAIL,Taxi for business travel.,PRJ-056
+EXP-0052,DEVELOPMENT,E0009,2026-07-07,2026-07-10,OfficeMart,Singapore,SGD,260.0,MI-0006,OFFICE_SUPPLIES,Bought project items together with one personal item.,PRJ-057
+EXP-0053,DEVELOPMENT,E0022,2026-08-08,2026-08-11,OfficeMart,Japan,JPY,9000.0,MI-0007,OFFICE_SUPPLIES,Business expense.,PRJ-058
+EXP-0054,DEVELOPMENT,E0035,2026-09-09,2026-09-12,Spice Courtyard,India,INR,6500.0,MI-0008,RESTAURANT,Dinner after customer discussions.,PRJ-059
+EXP-0055,VALIDATION,E0048,2026-10-10,2026-10-13,CityRide,Singapore,SGD,46.0,MI-0009,RIDE_HAIL,Taxi for business travel.,PRJ-060
+EXP-0056,VALIDATION,E0061,2026-11-11,2026-11-14,OfficeMart,Japan,JPY,18000.0,MI-0010,OFFICE_SUPPLIES,Bought project items together with one personal item.,PRJ-061
+EXP-0057,FINAL_TEST,E0074,2026-12-12,2026-12-15,OfficeMart,India,INR,4500.0,MI-0011,OFFICE_SUPPLIES,Business expense.,PRJ-062
+EXP-0058,DEVELOPMENT,E0087,2026-01-13,2026-01-16,Marina Dining Room,Singapore,SGD,190.0,MI-0012,RESTAURANT,Dinner after customer discussions.,PRJ-063
+EXP-0059,DEVELOPMENT,E0100,2026-02-14,2026-02-17,CityRide,Japan,JPY,4200.0,MI-0013,RIDE_HAIL,Taxi for business travel.,PRJ-064
+EXP-0060,FINAL_TEST,E0113,2026-03-15,2026-03-18,OfficeMart,India,INR,9000.0,MI-0014,OFFICE_SUPPLIES,Bought project items together with one personal item.,PRJ-065
+EXP-0061,FINAL_TEST,E0126,2026-04-16,2026-04-19,OfficeMart,Singapore,SGD,115.0,MI-0015,OFFICE_SUPPLIES,Business expense.,PRJ-066
+EXP-0062,VALIDATION,E0139,2026-05-17,2026-05-20,Sakura Grill,Japan,JPY,15000.0,MI-0016,RESTAURANT,Dinner after customer discussions.,PRJ-067
+EXP-0063,DEVELOPMENT,E0152,2026-06-18,2026-06-21,QuickCab,India,INR,1100.0,MI-0017,RIDE_HAIL,Taxi for business travel.,PRJ-068
+EXP-0064,FINAL_TEST,E0165,2026-07-19,2026-07-22,OfficeMart,Singapore,SGD,260.0,MI-0018,OFFICE_SUPPLIES,Bought project items together with one personal item.,PRJ-069
+EXP-0065,DEVELOPMENT,E0178,2026-08-20,2026-08-23,OfficeMart,Japan,JPY,9000.0,MI-0019,OFFICE_SUPPLIES,Business expense.,PRJ-070
+EXP-0066,FINAL_TEST,E0076,2026-06-01,2026-06-03,Sakura Grill,Japan,JPY,14500.0,DUP-B-0000,RESTAURANT,Challenge-set wording: Customer dinner after quarterly review.,PRJ-076
+EXP-0067,DEVELOPMENT,E0089,2026-07-02,2026-07-04,Spice Courtyard,India,INR,6201.0,NEAR-001-B,RESTAURANT,Dinner with customer team after a two-day workshop.,PRJ-077
+EXP-0068,DEVELOPMENT,E0102,2026-08-03,2026-08-05,CloudSuite Pro,Singapore,SGD,182.0,RECUR-002-NEW,SOFTWARE,Recurring monthly software subscription for the same active project.,PRJ-078
+EXP-0069,FINAL_TEST,E0115,2026-09-04,2026-09-06,Sakura Grill,Japan,JPY,14503.0,DUP-B-0003,RESTAURANT,Challenge-set wording: Customer dinner after quarterly review.,PRJ-079
+EXP-0070,FINAL_TEST,E0128,2026-06-05,2026-06-07,Spice Courtyard,India,INR,6204.0,NEAR-004-B,RESTAURANT,Dinner with customer team after a two-day workshop.,PRJ-080
+EXP-0071,DEVELOPMENT,E0141,2026-07-06,2026-07-08,CloudSuite Pro,Singapore,SGD,185.0,RECUR-005-NEW,SOFTWARE,Recurring monthly software subscription for the same active project.,PRJ-081
+EXP-0072,FINAL_TEST,E0154,2026-08-07,2026-08-09,Sakura Grill,Japan,JPY,14506.0,DUP-B-0006,RESTAURANT,Client dinner after quarterly review.,PRJ-082
+EXP-0073,VALIDATION,E0167,2026-09-08,2026-09-10,Spice Courtyard,India,INR,6207.0,NEAR-007-B,RESTAURANT,Dinner with customer team after a two-day workshop.,PRJ-083
+EXP-0074,VALIDATION,E0180,2026-06-09,2026-06-11,CloudSuite Pro,Singapore,SGD,188.0,RECUR-008-NEW,SOFTWARE,Recurring monthly software subscription for the same active project.,PRJ-084
+EXP-0075,DEVELOPMENT,E0013,2026-07-10,2026-07-12,Sakura Grill,Japan,JPY,14509.0,DUP-B-0009,RESTAURANT,Client dinner after quarterly review.,PRJ-085
+EXP-0076,FINAL_TEST,E0026,2026-08-11,2026-08-13,Spice Courtyard,India,INR,6210.0,NEAR-010-B,RESTAURANT,Dinner with customer team after a two-day workshop.,PRJ-086
+EXP-0077,VALIDATION,E0039,2026-09-12,2026-09-14,CloudSuite Pro,Singapore,SGD,191.0,RECUR-011-NEW,SOFTWARE,Recurring monthly software subscription for the same active project.,PRJ-087
+EXP-0078,DEVELOPMENT,E0052,2026-06-13,2026-06-15,Sakura Grill,Japan,JPY,14512.0,DUP-B-0012,RESTAURANT,Client dinner after quarterly review.,PRJ-088
+EXP-0079,DEVELOPMENT,E0065,2026-07-14,2026-07-16,Spice Courtyard,India,INR,6213.0,NEAR-013-B,RESTAURANT,Dinner with customer team after a two-day workshop.,PRJ-089
+EXP-0080,DEVELOPMENT,E0078,2026-08-15,2026-08-17,CloudSuite Pro,Singapore,SGD,194.0,RECUR-014-NEW,SOFTWARE,Recurring monthly software subscription for the same active project.,PRJ-090
+EXP-0081,FINAL_TEST,E0156,2026-08-01,2026-08-03,OfficeMart,Singapore,SGD,290.0,SPLIT-000-B,OFFICE_SUPPLIES,Challenge-set wording: Second purchase from the same merchant on the same project and day.,PRJ-096
+EXP-0082,VALIDATION,E0169,2026-08-02,2026-08-04,OfficeMart,Japan,JPY,28000.0,SPLIT-001-B,OFFICE_SUPPLIES,Second purchase from the same merchant on the same project and day.,PRJ-097
+EXP-0083,FINAL_TEST,E0002,2026-08-03,2026-08-05,OfficeMart,India,INR,9000.0,SPLIT-002-B,OFFICE_SUPPLIES,Second purchase from the same merchant on the same project and day.,PRJ-098
+EXP-0084,DEVELOPMENT,E0015,2026-08-04,2026-08-06,OfficeMart,Singapore,SGD,290.0,SPLIT-003-B,OFFICE_SUPPLIES,Second purchase from the same merchant on the same project and day.,PRJ-099
+EXP-0085,VALIDATION,E0028,2026-08-05,2026-08-07,OfficeMart,Japan,JPY,28000.0,SPLIT-004-B,OFFICE_SUPPLIES,Second purchase from the same merchant on the same project and day.,PRJ-100
+EXP-0086,DEVELOPMENT,E0041,2026-08-06,2026-08-08,OfficeMart,India,INR,9000.0,SPLIT-005-B,OFFICE_SUPPLIES,Second purchase from the same merchant on the same project and day.,PRJ-001
+EXP-0087,DEVELOPMENT,E0054,2026-08-07,2026-08-09,OfficeMart,Singapore,SGD,290.0,SPLIT-006-B,OFFICE_SUPPLIES,Second purchase from the same merchant on the same project and day.,PRJ-002
+EXP-0088,FINAL_TEST,E0067,2026-08-08,2026-08-10,OfficeMart,Japan,JPY,28000.0,SPLIT-007-B,OFFICE_SUPPLIES,Second purchase from the same merchant on the same project and day.,PRJ-003
+EXP-0089,DEVELOPMENT,E0080,2026-08-09,2026-08-11,OfficeMart,India,INR,9000.0,SPLIT-008-B,OFFICE_SUPPLIES,Second purchase from the same merchant on the same project and day.,PRJ-004
+EXP-0090,DEVELOPMENT,E0093,2026-08-10,2026-08-12,OfficeMart,Singapore,SGD,290.0,SPLIT-009-B,OFFICE_SUPPLIES,Second purchase from the same merchant on the same project and day.,PRJ-005
+EXP-0091,DEVELOPMENT,E0171,2026-03-01,2026-03-04,Grand Harbour Hotel,Singapore,SGD,347.8,WF-HOT-000,HOTEL,Hotel for client workshop.,PRJ-011
+EXP-0092,FINAL_TEST,E0004,2026-04-02,2026-04-04,CloudSuite Pro,Japan,JPY,1200.0,WF-SW-001,SOFTWARE,Challenge-set wording: Developer tool subscription for project work.,PRJ-012
+EXP-0093,VALIDATION,E0017,2026-05-03,2026-05-06,Mumbai Grand Hotel,India,INR,22200.0,WF-EX-002,HOTEL,Hotel claim with documented exception reference EXC-WF-002.,PRJ-013
+EXP-0094,FINAL_TEST,E0030,2026-06-04,2026-06-07,Grand Harbour Hotel,Singapore,SGD,300.8,WF-HOT-003,HOTEL,Challenge-set wording: Hotel for customer workshop.,PRJ-014
+EXP-0095,FINAL_TEST,E0043,2026-07-05,2026-07-07,CloudSuite Pro,Japan,JPY,1200.0,WF-SW-004,SOFTWARE,Developer tool subscription for project work.,PRJ-015
+EXP-0096,FINAL_TEST,E0056,2026-03-06,2026-03-09,Mumbai Grand Hotel,India,INR,17400.0,WF-EX-005,HOTEL,Hotel claim with documented exception reference EXC-WF-005.,PRJ-016
+EXP-0097,DEVELOPMENT,E0069,2026-04-07,2026-04-10,Grand Harbour Hotel,Singapore,SGD,347.8,WF-HOT-006,HOTEL,Hotel for client workshop.,PRJ-017
+EXP-0098,DEVELOPMENT,E0082,2026-05-08,2026-05-10,CloudSuite Pro,Japan,JPY,1200.0,WF-SW-007,SOFTWARE,Developer tool subscription for project work.,PRJ-018
+EXP-0099,DEVELOPMENT,E0095,2026-06-09,2026-06-12,Mumbai Grand Hotel,India,INR,22200.0,WF-EX-008,HOTEL,Hotel claim with documented exception reference EXC-WF-008.,PRJ-019
+EXP-0100,DEVELOPMENT,E0108,2026-07-10,2026-07-13,Grand Harbour Hotel,Singapore,SGD,300.8,WF-HOT-009,HOTEL,Hotel for client workshop.,PRJ-020
+EXP-0101,DEVELOPMENT,E0121,2026-03-11,2026-03-13,CloudSuite Pro,Japan,JPY,1200.0,WF-SW-010,SOFTWARE,Developer tool subscription for project work.,PRJ-021
+EXP-0102,FINAL_TEST,E0134,2026-04-12,2026-04-15,Mumbai Grand Hotel,India,INR,17400.0,WF-EX-011,HOTEL,Hotel claim with documented exception reference EXC-WF-011.,PRJ-022
+EXP-0103,VALIDATION,E0147,2026-05-13,2026-05-16,Grand Harbour Hotel,Singapore,SGD,347.8,WF-HOT-012,HOTEL,Hotel for client workshop.,PRJ-023
+EXP-0104,DEVELOPMENT,E0160,2026-06-14,2026-06-16,CloudSuite Pro,Japan,JPY,1200.0,WF-SW-013,SOFTWARE,Developer tool subscription for project work.,PRJ-024
+EXP-0105,DEVELOPMENT,E0173,2026-07-15,2026-07-18,Mumbai Grand Hotel,India,INR,22200.0,WF-EX-014,HOTEL,Hotel claim with documented exception reference EXC-WF-014.,PRJ-025
+EXP-0106,FINAL_TEST,E0071,2026-09-01,2026-09-04,Mumbai Grand Hotel,India,INR,21830.0,AG-000,HOTEL,Challenge-set wording: Hotel during an approved business trip; the claim does not state whether a conference or written exception applies.,PRJ-031
+EXP-0107,DEVELOPMENT,E0084,2026-09-02,2026-09-05,Grand Harbour Hotel,Singapore,SGD,377.6,AG-001,HOTEL,Hotel during an approved business trip; the claim does not state whether a conference or written exception applies.,PRJ-032
+EXP-0108,FINAL_TEST,E0097,2026-09-03,2026-09-06,Tokyo Central Hotel,Japan,JPY,37760.0,AG-002,HOTEL,Challenge-set wording: Hotel during an approved business trip; the claim does not state whether a conference or written exception applies.,PRJ-033
+EXP-0109,DEVELOPMENT,E0110,2026-09-04,2026-09-07,Mumbai Grand Hotel,India,INR,17110.0,AG-003,HOTEL,Hotel during an approved business trip; the claim does not state whether a conference or written exception applies.,PRJ-034
+EXP-0110,DEVELOPMENT,E0123,2026-09-05,2026-09-08,Grand Harbour Hotel,Singapore,SGD,436.6,AG-004,HOTEL,Hotel during an approved business trip; the claim does not state whether a conference or written exception applies.,PRJ-035
+EXP-0111,VALIDATION,E0136,2026-09-06,2026-09-09,Tokyo Central Hotel,Japan,JPY,49560.0,AG-005,HOTEL,Hotel during an approved business trip; the claim does not state whether a conference or written exception applies.,PRJ-036
+EXP-0112,FINAL_TEST,E0149,2026-09-07,2026-09-10,Mumbai Grand Hotel,India,INR,21830.0,AG-006,HOTEL,Hotel during an approved business trip; the claim does not state whether a conference or written exception applies.,PRJ-037
+EXP-0113,DEVELOPMENT,E0162,2026-09-08,2026-09-11,Grand Harbour Hotel,Singapore,SGD,377.6,AG-007,HOTEL,Hotel during an approved business trip; the claim does not state whether a conference or written exception applies.,PRJ-038
+EXP-0114,VALIDATION,E0175,2026-09-09,2026-09-12,Tokyo Central Hotel,Japan,JPY,37760.0,AG-008,HOTEL,Hotel during an approved business trip; the claim does not state whether a conference or written exception applies.,PRJ-039
+EXP-0115,VALIDATION,E0008,2026-09-10,2026-09-13,Mumbai Grand Hotel,India,INR,17110.0,AG-009,HOTEL,Hotel during an approved business trip; the claim does not state whether a conference or written exception applies.,PRJ-040
+EXP-0116,DEVELOPMENT,E0021,2026-09-11,2026-09-14,Grand Harbour Hotel,Singapore,SGD,436.6,AG-010,HOTEL,Hotel during an approved business trip; the claim does not state whether a conference or written exception applies.,PRJ-041
+EXP-0117,FINAL_TEST,E0034,2026-09-12,2026-09-15,Tokyo Central Hotel,Japan,JPY,49560.0,AG-011,HOTEL,Hotel during an approved business trip; the claim does not state whether a conference or written exception applies.,PRJ-042
+EXP-0118,DEVELOPMENT,E0047,2026-09-13,2026-09-16,Mumbai Grand Hotel,India,INR,21830.0,AG-012,HOTEL,Hotel during an approved business trip; the claim does not state whether a conference or written exception applies.,PRJ-043
+EXP-0119,FINAL_TEST,E0060,2026-09-14,2026-09-17,Grand Harbour Hotel,Singapore,SGD,377.6,AG-013,HOTEL,Hotel during an approved business trip; the claim does not state whether a conference or written exception applies.,PRJ-044
+EXP-0120,DEVELOPMENT,E0073,2026-09-15,2026-09-18,Tokyo Central Hotel,Japan,JPY,37760.0,AG-014,HOTEL,Hotel during an approved business trip; the claim does not state whether a conference or written exception applies.,PRJ-045

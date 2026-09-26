@@ -1,0 +1,14 @@
+merchant_name,merchant_category,country,active
+Grand Harbour Hotel,HOTEL,SG,TRUE
+Marina Dining Room,RESTAURANT,SG,TRUE
+CityRide,RIDE_HAIL,SG,TRUE
+Tokyo Central Hotel,HOTEL,JP,TRUE
+Sakura Grill,RESTAURANT,JP,TRUE
+Shinkansen JR,RAIL,JP,TRUE
+Mumbai Grand Hotel,HOTEL,IN,TRUE
+Spice Courtyard,RESTAURANT,IN,TRUE
+QuickCab,RIDE_HAIL,IN,TRUE
+CloudSuite Pro,SOFTWARE,SG,TRUE
+OfficeMart,OFFICE_SUPPLIES,SG,TRUE
+FitLife Club,FITNESS,SG,TRUE
+StreamNow,STREAMING,SG,TRUE

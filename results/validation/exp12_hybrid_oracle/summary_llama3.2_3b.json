@@ -1,0 +1,56 @@
+{
+  "run_id": "EXP12_HYBRID_ORACLE-VALIDATION-llama3.2:3b-4d5849",
+  "model": "llama3.2:3b",
+  "n": 20,
+  "correct": 7,
+  "correct_disposition_rate": 0.35,
+  "wilson95": [
+    0.1812,
+    0.5671
+  ],
+  "false_approvals": 4,
+  "non_approvable": 15,
+  "false_approval_rate": 0.2667,
+  "human_review_rate": 0.0,
+  "over_escalation": 0,
+  "missed_escalation": 2,
+  "missing_field_exact_match": "0/7",
+  "by_family": {
+    "SELF_CONTAINED_POLICY": "4/5",
+    "TEMPORAL_POLICY_VERSION": "0/1",
+    "EVIDENCE_CONFLICT": "0/1",
+    "MISSING_INFORMATION": "0/3",
+    "DUPLICATE_CHECK": "1/3",
+    "SPLIT_TRANSACTION": "0/2",
+    "FIXED_WORKFLOW": "1/2",
+    "DYNAMIC_AGENT_INVESTIGATION": "1/3"
+  },
+  "confusion": {
+    "REJECT->REJECT": 5,
+    "APPROVE->REJECT": 4,
+    "REJECT->REQUEST_INFORMATION": 1,
+    "REQUEST_INFORMATION->APPROVE": 4,
+    "REQUEST_INFORMATION->REJECT": 2,
+    "REQUEST_INFORMATION->REQUEST_INFORMATION": 1,
+    "APPROVE->APPROVE": 1,
+    "ESCALATE->REJECT": 2
+  },
+  "errors": 0,
+  "median_latency_ms": 2200.5,
+  "p95_latency_ms": 2850,
+  "input_tokens": 15215,
+  "output_tokens": 1626,
+  "total_tokens": 16841,
+  "total_cost_usd": 0.0,
+  "decision_counts": {
+    "REJECT": 13,
+    "REQUEST_INFORMATION": 2,
+    "APPROVE": 5
+  },
+  "schema_valid": 20,
+  "unsupported_policy_assertion_rate": 1.0,
+  "policy_assertion_in_text_rate": 0.95,
+  "nonexistent_clause_rate": 0.0,
+  "wrong_policy_version_cases": 0,
+  "cached_calls": 0
+}

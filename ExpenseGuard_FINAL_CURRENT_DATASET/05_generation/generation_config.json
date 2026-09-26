@@ -1,0 +1,11 @@
+{
+  "seed": 6201,
+  "cases": 120,
+  "splits": {
+    "DEVELOPMENT": 60,
+    "VALIDATION": 20,
+    "FINAL_TEST": 40
+  },
+  "challenge_final_cases": 10,
+  "policy_pdf_pages": 38
+}

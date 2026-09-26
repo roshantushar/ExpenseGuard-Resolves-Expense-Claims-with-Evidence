@@ -1,0 +1,201 @@
+[
+  {
+    "doc_id": "DOC-01",
+    "title": "Global Expense Policy 2024",
+    "region": "GLOBAL",
+    "effective_from": "2024-01-01",
+    "effective_to": "2024-12-31",
+    "category": "general",
+    "clause_ids": [
+      "GEP24-1.1",
+      "GEP24-1.2",
+      "GEP24-2.1",
+      "GEP24-2.2",
+      "GEP24-3.1",
+      "GEP24-4.1",
+      "GEP24-5.1"
+    ]
+  },
+  {
+    "doc_id": "DOC-02",
+    "title": "Global Expense Policy 2025",
+    "region": "GLOBAL",
+    "effective_from": "2025-01-01",
+    "effective_to": "2025-12-31",
+    "category": "general",
+    "clause_ids": [
+      "GEP25-1.1",
+      "GEP25-1.2",
+      "GEP25-2.1",
+      "GEP25-2.2",
+      "GEP25-3.1",
+      "GEP25-4.1",
+      "GEP25-5.1"
+    ]
+  },
+  {
+    "doc_id": "DOC-03",
+    "title": "Global Expense Policy 2026",
+    "region": "GLOBAL",
+    "effective_from": "2026-01-01",
+    "effective_to": "2099-12-31",
+    "category": "general",
+    "clause_ids": [
+      "GEP26-1.1",
+      "GEP26-1.2",
+      "GEP26-2.1",
+      "GEP26-2.2",
+      "GEP26-3.1",
+      "GEP26-4.1",
+      "GEP26-5.1"
+    ]
+  },
+  {
+    "doc_id": "DOC-04",
+    "title": "Travel and Hotel Policy",
+    "region": "GLOBAL",
+    "effective_from": "2024-01-01",
+    "effective_to": "2099-12-31",
+    "category": "travel",
+    "clause_ids": [
+      "TRV-1.1",
+      "TRV-1.2",
+      "TRV-1.3",
+      "TRV-2.1",
+      "TRV-3.1",
+      "TRV-3.2",
+      "TRV-4.1",
+      "TRV-5.1"
+    ]
+  },
+  {
+    "doc_id": "DOC-05",
+    "title": "Meals and Entertainment Policy",
+    "region": "GLOBAL",
+    "effective_from": "2024-01-01",
+    "effective_to": "2099-12-31",
+    "category": "meals",
+    "clause_ids": [
+      "MEAL-1.1",
+      "MEAL-1.2",
+      "MEAL-1.3",
+      "MEAL-2.1",
+      "MEAL-2.2",
+      "MEAL-3.1",
+      "MEAL-4.1"
+    ]
+  },
+  {
+    "doc_id": "DOC-06",
+    "title": "Corporate Card and Personal Spend Policy",
+    "region": "GLOBAL",
+    "effective_from": "2024-01-01",
+    "effective_to": "2099-12-31",
+    "category": "card",
+    "clause_ids": [
+      "CARD-1.1",
+      "CARD-1.2",
+      "CARD-2.1",
+      "CARD-2.2",
+      "CARD-3.1",
+      "CARD-4.1"
+    ]
+  },
+  {
+    "doc_id": "DOC-07",
+    "title": "Approval and Exception Matrix",
+    "region": "GLOBAL",
+    "effective_from": "2024-01-01",
+    "effective_to": "2099-12-31",
+    "category": "approval",
+    "clause_ids": [
+      "APR-1.1",
+      "APR-1.2",
+      "APR-1.3",
+      "APR-2.1",
+      "APR-2.2",
+      "APR-3.1"
+    ]
+  },
+  {
+    "doc_id": "DOC-08",
+    "title": "Training and Conferences Policy",
+    "region": "GLOBAL",
+    "effective_from": "2024-01-01",
+    "effective_to": "2099-12-31",
+    "category": "conference",
+    "clause_ids": [
+      "CONF-1.1",
+      "CONF-1.2",
+      "CONF-2.1",
+      "CONF-2.2",
+      "CONF-3.1",
+      "CONF-4.1"
+    ]
+  },
+  {
+    "doc_id": "DOC-09",
+    "title": "Singapore Expense Addendum",
+    "region": "SG",
+    "effective_from": "2024-01-01",
+    "effective_to": "2099-12-31",
+    "category": "regional",
+    "clause_ids": [
+      "SG-1.1",
+      "SG-1.2",
+      "SG-1.3",
+      "SG-2.1",
+      "SG-3.1",
+      "SG-4.1"
+    ]
+  },
+  {
+    "doc_id": "DOC-10",
+    "title": "India Expense Addendum",
+    "region": "IN",
+    "effective_from": "2024-01-01",
+    "effective_to": "2099-12-31",
+    "category": "regional",
+    "clause_ids": [
+      "IN-1.1",
+      "IN-1.2",
+      "IN-2.1",
+      "IN-3.1",
+      "IN-4.1"
+    ]
+  },
+  {
+    "doc_id": "DOC-11",
+    "title": "Japan Expense Addendum",
+    "region": "JP",
+    "effective_from": "2024-01-01",
+    "effective_to": "2099-12-31",
+    "category": "regional",
+    "clause_ids": [
+      "JP-1.1",
+      "JP-1.2",
+      "JP-2.1",
+      "JP-2.2",
+      "JP-3.1",
+      "JP-4.1"
+    ]
+  },
+  {
+    "doc_id": "DOC-12",
+    "title": "Historical Limits, Finance Circulars and Amendments",
+    "region": "GLOBAL",
+    "effective_from": "2024-01-01",
+    "effective_to": "2099-12-31",
+    "category": "historical",
+    "clause_ids": [
+      "HIST-1.1",
+      "HIST-1.2",
+      "HIST-1.3",
+      "CIRC-24-07",
+      "CIRC-25-03",
+      "CIRC-26-02",
+      "CIRC-26-05",
+      "HIST-9.1"
+    ]
+  }
+]

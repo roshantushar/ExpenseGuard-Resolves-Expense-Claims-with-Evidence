@@ -1,0 +1,193 @@
+{
+  "n_cases_audited": 10,
+  "workflow_correct": "7/10",
+  "by_branch": {
+    "exception_id -> exception lookup": "4/4",
+    "event_id -> conference lookup": "3/3",
+    "neither -> no further lookup": "0/3"
+  },
+  "q1_path_fixed_in_advance_as_linear_checklist": false,
+  "q1_decision_tree_finite_and_enumerable": true,
+  "q2_first_observation_changes_next_tool": "7/10",
+  "q3_finite_if_else_handles_class": true,
+  "q4_model_directed_sequencing_needed": false,
+  "rows": [
+    {
+      "case_id": "EXP-0107",
+      "split": "DEVELOPMENT",
+      "branch_observed": "exception_id -> exception lookup",
+      "label_branch_trigger": "travel.exception_id",
+      "first_observation_changes_next_tool": true,
+      "next_tool_after_travel_request": "get_exception_record",
+      "finite_if_else_implemented": true,
+      "workflow_tool_sequence": [
+        "search_previous_expenses",
+        "get_employee_profile",
+        "get_travel_request",
+        "get_exception_record"
+      ],
+      "workflow_decision": "APPROVE",
+      "expected_decision": "APPROVE",
+      "workflow_correct": true
+    },
+    {
+      "case_id": "EXP-0109",
+      "split": "DEVELOPMENT",
+      "branch_observed": "event_id -> conference lookup",
+      "label_branch_trigger": "travel.event_id",
+      "first_observation_changes_next_tool": true,
+      "next_tool_after_travel_request": "get_conference_registration",
+      "finite_if_else_implemented": true,
+      "workflow_tool_sequence": [
+        "search_previous_expenses",
+        "get_employee_profile",
+        "get_travel_request",
+        "get_conference_registration"
+      ],
+      "workflow_decision": "REJECT",
+      "expected_decision": "REJECT",
+      "workflow_correct": true
+    },
+    {
+      "case_id": "EXP-0110",
+      "split": "DEVELOPMENT",
+      "branch_observed": "exception_id -> exception lookup",
+      "label_branch_trigger": "travel.exception_id",
+      "first_observation_changes_next_tool": true,
+      "next_tool_after_travel_request": "get_exception_record",
+      "finite_if_else_implemented": true,
+      "workflow_tool_sequence": [
+        "search_previous_expenses",
+        "get_employee_profile",
+        "get_travel_request",
+        "get_exception_record"
+      ],
+      "workflow_decision": "REJECT",
+      "expected_decision": "REJECT",
+      "workflow_correct": true
+    },
+    {
+      "case_id": "EXP-0113",
+      "split": "DEVELOPMENT",
+      "branch_observed": "exception_id -> exception lookup",
+      "label_branch_trigger": "travel.exception_id",
+      "first_observation_changes_next_tool": true,
+      "next_tool_after_travel_request": "get_exception_record",
+      "finite_if_else_implemented": true,
+      "workflow_tool_sequence": [
+        "search_previous_expenses",
+        "get_employee_profile",
+        "get_travel_request",
+        "get_exception_record"
+      ],
+      "workflow_decision": "APPROVE",
+      "expected_decision": "APPROVE",
+      "workflow_correct": true
+    },
+    {
+      "case_id": "EXP-0116",
+      "split": "DEVELOPMENT",
+      "branch_observed": "exception_id -> exception lookup",
+      "label_branch_trigger": "travel.exception_id",
+      "first_observation_changes_next_tool": true,
+      "next_tool_after_travel_request": "get_exception_record",
+      "finite_if_else_implemented": true,
+      "workflow_tool_sequence": [
+        "search_previous_expenses",
+        "get_employee_profile",
+        "get_travel_request",
+        "get_exception_record"
+      ],
+      "workflow_decision": "REJECT",
+      "expected_decision": "REJECT",
+      "workflow_correct": true
+    },
+    {
+      "case_id": "EXP-0118",
+      "split": "DEVELOPMENT",
+      "branch_observed": "event_id -> conference lookup",
+      "label_branch_trigger": "travel.event_id",
+      "first_observation_changes_next_tool": true,
+      "next_tool_after_travel_request": "get_conference_registration",
+      "finite_if_else_implemented": true,
+      "workflow_tool_sequence": [
+        "search_previous_expenses",
+        "get_employee_profile",
+        "get_travel_request",
+        "get_conference_registration"
+      ],
+      "workflow_decision": "APPROVE",
+      "expected_decision": "APPROVE",
+      "workflow_correct": true
+    },
+    {
+      "case_id": "EXP-0120",
+      "split": "DEVELOPMENT",
+      "branch_observed": "neither -> no further lookup",
+      "label_branch_trigger": "travel has no event_id/exception_id",
+      "first_observation_changes_next_tool": false,
+      "next_tool_after_travel_request": null,
+      "finite_if_else_implemented": true,
+      "workflow_tool_sequence": [
+        "search_previous_expenses",
+        "get_employee_profile",
+        "get_travel_request"
+      ],
+      "workflow_decision": "REJECT",
+      "expected_decision": "ESCALATE",
+      "workflow_correct": false
+    },
+    {
+      "case_id": "EXP-0111",
+      "split": "VALIDATION",
+      "branch_observed": "neither -> no further lookup",
+      "label_branch_trigger": "travel has no event_id/exception_id",
+      "first_observation_changes_next_tool": false,
+      "next_tool_after_travel_request": null,
+      "finite_if_else_implemented": true,
+      "workflow_tool_sequence": [
+        "search_previous_expenses",
+        "get_employee_profile",
+        "get_travel_request"
+      ],
+      "workflow_decision": "REJECT",
+      "expected_decision": "ESCALATE",
+      "workflow_correct": false
+    },
+    {
+      "case_id": "EXP-0114",
+      "split": "VALIDATION",
+      "branch_observed": "neither -> no further lookup",
+      "label_branch_trigger": "travel has no event_id/exception_id",
+      "first_observation_changes_next_tool": false,
+      "next_tool_after_travel_request": null,
+      "finite_if_else_implemented": true,
+      "workflow_tool_sequence": [
+        "search_previous_expenses",
+        "get_employee_profile",
+        "get_travel_request"
+      ],
+      "workflow_decision": "REJECT",
+      "expected_decision": "ESCALATE",
+      "workflow_correct": false
+    },
+    {
+      "case_id": "EXP-0115",
+      "split": "VALIDATION",
+      "branch_observed": "event_id -> conference lookup",
+      "label_branch_trigger": "travel.event_id",
+      "first_observation_changes_next_tool": true,
+      "next_tool_after_travel_request": "get_conference_registration",
+      "finite_if_else_implemented": true,
+      "workflow_tool_sequence": [
+        "search_previous_expenses",
+        "get_employee_profile",
+        "get_travel_request",
+        "get_conference_registration"
+      ],
+      "workflow_decision": "REJECT",
+      "expected_decision": "REJECT",
+      "workflow_correct": true
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "experiment": "EXP01_SLICE",
+  "case_ids": [
+    "EXP-0001",
+    "EXP-0002",
+    "EXP-0003",
+    "EXP-0004",
+    "EXP-0007",
+    "EXP-0012",
+    "EXP-0018",
+    "EXP-0019",
+    "EXP-0047",
+    "EXP-0005"
+  ],
+  "policy_source": "evaluator-supplied required clauses (oracle, feasibility only)",
+  "models": {
+    "openai/gpt-4o-mini": {
+      "n": 10,
+      "correct": 3,
+      "correct_disposition_rate": 0.3,
+      "wilson95": [
+        0.1078,
+        0.6032
+      ],
+      "schema_valid": 10,
+      "false_approvals": "0/7",
+      "errors": 0,
+      "median_latency_ms": 1963.0,
+      "p95_latency_ms": 2727,
+      "input_tokens": 4748,
+      "output_tokens": 709,
+      "total_cost_usd": 0.001138
+    },
+    "llama3.2:3b": {
+      "n": 10,
+      "correct": 4,
+      "correct_disposition_rate": 0.4,
+      "wilson95": [
+        0.1682,
+        0.6873
+      ],
+      "schema_valid": 10,
+      "false_approvals": "2/7",
+      "errors": 0,
+      "median_latency_ms": 1673.5,
+      "p95_latency_ms": 2943,
+      "input_tokens": 4929,
+      "output_tokens": 690,
+      "total_cost_usd": 0.0
+    }
+  },
+  "ledger_total_spent_usd": 0.001138
+}

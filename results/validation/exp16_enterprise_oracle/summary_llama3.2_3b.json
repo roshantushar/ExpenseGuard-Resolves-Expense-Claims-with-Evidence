@@ -1,0 +1,48 @@
+{
+  "run_id": "EXP16_ENTERPRISE_ORACLE-VALIDATION-llama3.2:3b-291d52",
+  "model": "llama3.2:3b",
+  "n": 10,
+  "correct": 4,
+  "correct_disposition_rate": 0.4,
+  "wilson95": [
+    0.1682,
+    0.6873
+  ],
+  "false_approvals": 0,
+  "non_approvable": 6,
+  "false_approval_rate": 0.0,
+  "human_review_rate": 0.0,
+  "over_escalation": 0,
+  "missed_escalation": 2,
+  "missing_field_exact_match": "0/3",
+  "by_family": {
+    "DUPLICATE_CHECK": "2/3",
+    "SPLIT_TRANSACTION": "0/2",
+    "FIXED_WORKFLOW": "1/2",
+    "DYNAMIC_AGENT_INVESTIGATION": "1/3"
+  },
+  "confusion": {
+    "REQUEST_INFORMATION->REJECT": 3,
+    "APPROVE->APPROVE": 3,
+    "APPROVE->REJECT": 1,
+    "ESCALATE->REJECT": 2,
+    "REJECT->REJECT": 1
+  },
+  "errors": 0,
+  "median_latency_ms": 3576.5,
+  "p95_latency_ms": 4353,
+  "input_tokens": 16254,
+  "output_tokens": 1060,
+  "total_tokens": 17314,
+  "total_cost_usd": 0.0,
+  "decision_counts": {
+    "REJECT": 7,
+    "APPROVE": 3
+  },
+  "schema_valid": 10,
+  "unsupported_policy_assertion_rate": 1.0,
+  "policy_assertion_in_text_rate": 0.8,
+  "nonexistent_clause_rate": 0.7,
+  "wrong_policy_version_cases": 0,
+  "cached_calls": 0
+}

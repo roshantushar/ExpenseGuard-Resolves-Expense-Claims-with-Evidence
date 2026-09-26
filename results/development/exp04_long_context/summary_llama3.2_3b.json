@@ -1,0 +1,61 @@
+{
+  "run_id": "EXP04_LONG_CONTEXT-DEVELOPMENT-llama3.2:3b-b43165",
+  "model": "llama3.2:3b",
+  "n": 60,
+  "correct": 20,
+  "correct_disposition_rate": 0.3333,
+  "wilson95": [
+    0.2273,
+    0.4594
+  ],
+  "false_approvals": 13,
+  "non_approvable": 39,
+  "false_approval_rate": 0.3333,
+  "human_review_rate": 0.0,
+  "over_escalation": 0,
+  "missed_escalation": 5,
+  "missing_field_exact_match": "0/15",
+  "by_family": {
+    "SELF_CONTAINED_POLICY": "5/13",
+    "TEMPORAL_POLICY_VERSION": "0/3",
+    "REGIONAL_PRECEDENCE": "5/5",
+    "EVIDENCE_CONFLICT": "0/2",
+    "MISSING_INFORMATION": "0/10",
+    "DUPLICATE_CHECK": "5/7",
+    "SPLIT_TRANSACTION": "0/5",
+    "FIXED_WORKFLOW": "5/8",
+    "DYNAMIC_AGENT_INVESTIGATION": "0/7"
+  },
+  "confusion": {
+    "APPROVE->REJECT": 10,
+    "REJECT->None": 2,
+    "REJECT->REJECT": 12,
+    "REJECT->APPROVE": 2,
+    "REQUEST_INFORMATION->APPROVE": 9,
+    "REQUEST_INFORMATION->REJECT": 6,
+    "APPROVE->APPROVE": 8,
+    "ESCALATE->REJECT": 3,
+    "ESCALATE->APPROVE": 2,
+    "APPROVE->REQUEST_INFORMATION": 3,
+    "REJECT->REQUEST_INFORMATION": 3
+  },
+  "errors": 0,
+  "median_latency_ms": 3428.0,
+  "p95_latency_ms": 14018,
+  "input_tokens": 361478,
+  "output_tokens": 11775,
+  "total_tokens": 373253,
+  "total_cost_usd": 0.0,
+  "decision_counts": {
+    "REJECT": 31,
+    "null": 2,
+    "APPROVE": 21,
+    "REQUEST_INFORMATION": 6
+  },
+  "schema_valid": 55,
+  "unsupported_policy_assertion_rate": 0.9667,
+  "policy_assertion_in_text_rate": 0.6167,
+  "nonexistent_clause_rate": 0.1667,
+  "wrong_policy_version_cases": 9,
+  "cached_calls": 0
+}

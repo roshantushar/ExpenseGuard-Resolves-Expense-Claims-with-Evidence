@@ -1,0 +1,44 @@
+{
+  "run_id": "EXP18_WORKFLOW-VALIDATION-adaf5b",
+  "n": 20,
+  "correct": 18,
+  "correct_disposition_rate": 0.9,
+  "wilson95": [
+    0.699,
+    0.9721
+  ],
+  "false_approvals": 2,
+  "non_approvable": 15,
+  "false_approval_rate": 0.1333,
+  "human_review_rate": 0.1,
+  "over_escalation": 0,
+  "missed_escalation": 0,
+  "missing_field_exact_match": "3/7",
+  "by_family": {
+    "SELF_CONTAINED_POLICY": "5/5",
+    "TEMPORAL_POLICY_VERSION": "1/1",
+    "EVIDENCE_CONFLICT": "1/1",
+    "MISSING_INFORMATION": "3/3",
+    "DUPLICATE_CHECK": "3/3",
+    "SPLIT_TRANSACTION": "0/2",
+    "FIXED_WORKFLOW": "2/2",
+    "DYNAMIC_AGENT_INVESTIGATION": "3/3"
+  },
+  "confusion": {
+    "REJECT->REJECT": 6,
+    "APPROVE->APPROVE": 5,
+    "REQUEST_INFORMATION->REQUEST_INFORMATION": 5,
+    "REQUEST_INFORMATION->APPROVE": 2,
+    "ESCALATE->ESCALATE": 2
+  },
+  "errors": 0,
+  "median_latency_ms": 0.0645,
+  "p95_latency_ms": 0.134,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "total_tokens": 0,
+  "total_cost_usd": 0.0,
+  "required_tools_covered": "8/10",
+  "avg_tool_calls": 1.6,
+  "avg_tool_calls_on_evidence_cases": 2.2
+}
