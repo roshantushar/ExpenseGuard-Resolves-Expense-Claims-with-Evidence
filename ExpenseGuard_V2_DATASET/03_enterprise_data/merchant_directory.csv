@@ -1,0 +1,183 @@
+merchant_name,merchant_category,country,city,risk_class,active
+Kallang Dining Room,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Bengal Tiffin,RESTAURANT,India,Mumbai,STANDARD,TRUE
+Fuji Sushi,RESTAURANT,Japan,Tokyo,STANDARD,TRUE
+Tanjong Kitchen,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Fuji Grill,RESTAURANT,Japan,Tokyo,STANDARD,TRUE
+Orchard Noodle House,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Kyoto Izakaya,RESTAURANT,Japan,Tokyo,STANDARD,TRUE
+Bugis Grill,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Punjab Tiffin,RESTAURANT,India,Mumbai,STANDARD,TRUE
+Kallang Noodle House,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Lotus Kitchen,RESTAURANT,India,Mumbai,STANDARD,TRUE
+Raffles Terrace,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Tanjong Terrace,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Kyoto Sushi,RESTAURANT,Japan,Tokyo,STANDARD,TRUE
+Marina Bistro,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Kyoto Grill,RESTAURANT,Japan,Tokyo,STANDARD,TRUE
+PureYoga Club,CONSUMER_SERVICE,Singapore,Singapore,STANDARD,TRUE
+MovieBox+,CONSUMER_SERVICE,Japan,Tokyo,STANDARD,TRUE
+OfficeMart,EQUIPMENT,Singapore,Singapore,STANDARD,TRUE
+GadgetHub,EQUIPMENT,Singapore,Singapore,STANDARD,TRUE
+ErgoStore,EQUIPMENT,Singapore,Singapore,STANDARD,TRUE
+Circuit City Trade,EQUIPMENT,Singapore,Singapore,STANDARD,TRUE
+DeskWorks,EQUIPMENT,Singapore,Singapore,STANDARD,TRUE
+PeriphPoint,EQUIPMENT,India,Mumbai,STANDARD,TRUE
+SwiftCab SG,RIDE_HAIL,Singapore,Singapore,STANDARD,TRUE
+QuickCab,RIDE_HAIL,India,Mumbai,STANDARD,TRUE
+IslandCab,RIDE_HAIL,Singapore,Singapore,STANDARD,TRUE
+TokyoGo Taxi,RIDE_HAIL,Japan,Tokyo,STANDARD,TRUE
+Private vehicle mileage SG 2025,MILEAGE,Singapore,Singapore,STANDARD,TRUE
+Private vehicle mileage IN 2026,MILEAGE,India,Mumbai,STANDARD,TRUE
+Blossom & Co,GIFT_RETAIL,Japan,Tokyo,STANDARD,TRUE
+Golden Basket,GIFT_RETAIL,Singapore,Singapore,STANDARD,TRUE
+Tea & Tradition,GIFT_RETAIL,Singapore,Singapore,STANDARD,TRUE
+Orchid House Gifts,GIFT_RETAIL,India,Mumbai,STANDARD,TRUE
+Orchard Dining Room,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+RideNow India,RIDE_HAIL,India,Mumbai,STANDARD,TRUE
+TechBazaar,EQUIPMENT,Japan,Tokyo,STANDARD,TRUE
+Keystone Supplies,EQUIPMENT,Singapore,Singapore,STANDARD,TRUE
+Vector Notes,SOFTWARE,Singapore,,STANDARD,TRUE
+Kallang Bistro,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Garden Singapore Hotel,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Garden Tokyo Hotel,HOTEL,Japan,Tokyo,STANDARD,TRUE
+Royal Mumbai Hotel,HOTEL,India,Mumbai,STANDARD,TRUE
+Skyline Singapore Hotel,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Meridian Nagoya Hotel,HOTEL,Japan,Nagoya,STANDARD,TRUE
+Regency Tokyo Hotel,HOTEL,Japan,Tokyo,STANDARD,TRUE
+Grand Pune Hotel,HOTEL,India,Pune,STANDARD,TRUE
+Summit Singapore Hotel,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Regency Fukuoka Hotel,HOTEL,Japan,Fukuoka,STANDARD,TRUE
+Royal Singapore Hotel,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Royal Singapore Residence,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Royal Osaka Hotel,HOTEL,Japan,Osaka,STANDARD,TRUE
+Grand Osaka Hotel,HOTEL,Japan,Osaka,STANDARD,TRUE
+Harbour Tokyo Hotel,HOTEL,Japan,Tokyo,STANDARD,TRUE
+Meridian Tokyo Hotel,HOTEL,Japan,Tokyo,STANDARD,TRUE
+Garden Bengaluru Hotel,HOTEL,India,Bengaluru,STANDARD,TRUE
+Meridian Bengaluru Hotel,HOTEL,India,Bengaluru,STANDARD,TRUE
+Regency Singapore Hotel,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Palace Singapore Inn,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Regency Mumbai Hotel,HOTEL,India,Mumbai,STANDARD,TRUE
+Palace Mumbai Suites,HOTEL,India,Mumbai,STANDARD,TRUE
+Grand Singapore Hotel,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Skyline Tokyo Hotel,HOTEL,Japan,Tokyo,STANDARD,TRUE
+Harbour Osaka Hotel,HOTEL,Japan,Osaka,STANDARD,TRUE
+Grand Singapore Suites,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Grand Mumbai Hotel,HOTEL,India,Mumbai,STANDARD,TRUE
+Summit Singapore Inn,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Garden Pune Hotel,HOTEL,India,Pune,STANDARD,TRUE
+Garden Fukuoka Hotel,HOTEL,Japan,Fukuoka,STANDARD,TRUE
+Meridian Airways,AIRLINE,Singapore,Singapore,STANDARD,TRUE
+Merlion Air,AIRLINE,Singapore,Singapore,STANDARD,TRUE
+Lotus Air,AIRLINE,Singapore,Singapore,STANDARD,TRUE
+Nippon Sky,AIRLINE,Singapore,Singapore,STANDARD,TRUE
+Deccan Pacific,AIRLINE,Singapore,Singapore,STANDARD,TRUE
+SprintMill,SOFTWARE,Singapore,,STANDARD,TRUE
+Signal Stack,SOFTWARE,Singapore,,STANDARD,TRUE
+Quill Analytics,SOFTWARE,Singapore,,STANDARD,TRUE
+BrightBoard,SOFTWARE,Singapore,,STANDARD,TRUE
+InsightPad,SOFTWARE,Singapore,,STANDARD,TRUE
+TaskOrbit,SOFTWARE,Singapore,,STANDARD,TRUE
+CloudSuite Pro,SOFTWARE,Singapore,,STANDARD,TRUE
+PixelDesk,SOFTWARE,Singapore,,STANDARD,TRUE
+Pipeline Forge,SOFTWARE,Singapore,,STANDARD,TRUE
+Ledger Loop,SOFTWARE,Singapore,,STANDARD,TRUE
+Metric Harbor,SOFTWARE,Singapore,,STANDARD,TRUE
+CodeForge,SOFTWARE,Singapore,,STANDARD,TRUE
+DataLoom,SOFTWARE,Singapore,,STANDARD,TRUE
+Helix Docs,SOFTWARE,Singapore,,STANDARD,TRUE
+Beacon Suite,SOFTWARE,Singapore,,STANDARD,TRUE
+Artisan Crate,GIFT_RETAIL,Singapore,Singapore,STANDARD,TRUE
+Craft Collective,GIFT_RETAIL,Singapore,Singapore,STANDARD,TRUE
+Heritage Hampers,GIFT_RETAIL,Singapore,Singapore,STANDARD,TRUE
+Gift Gallery,GIFT_RETAIL,Singapore,Singapore,STANDARD,TRUE
+Praxis Academy,TRAINING_PROVIDER,Singapore,Singapore,STANDARD,TRUE
+Cedar Professional Institute,TRAINING_PROVIDER,Singapore,Singapore,STANDARD,TRUE
+SkillBridge Academy,TRAINING_PROVIDER,Singapore,Singapore,STANDARD,TRUE
+Meridian School of Data,TRAINING_PROVIDER,Singapore,Singapore,STANDARD,TRUE
+Lighthouse Training,TRAINING_PROVIDER,Singapore,Singapore,STANDARD,TRUE
+Northwind Institute,TRAINING_PROVIDER,Singapore,Singapore,STANDARD,TRUE
+Apex Learning,TRAINING_PROVIDER,Singapore,Singapore,STANDARD,TRUE
+IslandTel,TELECOM,Singapore,Singapore,STANDARD,TRUE
+NipponTel,TELECOM,Japan,Tokyo,STANDARD,TRUE
+IndiaWave,TELECOM,India,Mumbai,STANDARD,TRUE
+Marina Grill,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Mumbai Kitchen,RESTAURANT,India,Mumbai,STANDARD,TRUE
+Bengal Kitchen,RESTAURANT,India,Mumbai,STANDARD,TRUE
+Tokyo Teppan,RESTAURANT,Japan,Tokyo,STANDARD,TRUE
+Clarke Quay Grill,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Raffles Bistro,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Golden Dice Casino 2025,ENTERTAINMENT_VENUE,Singapore,Singapore,RESTRICTED_PROHIBITED,TRUE
+GiftCard Express 2026,PREPAID_CARD_RESELLER,Singapore,Singapore,RESTRICTED_REVIEW,TRUE
+PrepaidPlus Reseller 2025,PREPAID_CARD_RESELLER,Singapore,Singapore,RESTRICTED_REVIEW,TRUE
+Data Leaders Conference,CONFERENCE_ORGANISER,Singapore,,STANDARD,TRUE
+Product Craft Live,CONFERENCE_ORGANISER,Singapore,,STANDARD,TRUE
+DriveEasy Rentals 2025,CAR_RENTAL,Singapore,,STANDARD,TRUE
+DriveEasy Rentals 2026,CAR_RENTAL,Singapore,,STANDARD,TRUE
+Skyline Singapore Suites,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Harbour Singapore Hotel,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Summit Bengaluru Hotel,HOTEL,India,Bengaluru,STANDARD,TRUE
+Palace Bengaluru Hotel,HOTEL,India,Bengaluru,STANDARD,TRUE
+Regency Osaka Hotel,HOTEL,Japan,Osaka,STANDARD,TRUE
+Summit Osaka Hotel,HOTEL,Japan,Osaka,STANDARD,TRUE
+Crown Singapore Hotel,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Crown Singapore Residence,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Summit Tokyo Hotel,HOTEL,Japan,Tokyo,STANDARD,TRUE
+Palace Tokyo Residence,HOTEL,Japan,Tokyo,STANDARD,TRUE
+Grand Singapore Residence,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Harbour Singapore Residence,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Skyline Mumbai Hotel,HOTEL,India,Mumbai,STANDARD,TRUE
+Meridian Mumbai Hotel,HOTEL,India,Mumbai,STANDARD,TRUE
+Garden Osaka Residence,HOTEL,Japan,Osaka,STANDARD,TRUE
+Skyline Osaka Hotel,HOTEL,Japan,Osaka,STANDARD,TRUE
+Meridian Singapore Hotel,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Palace Singapore Hotel,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Palace Nagoya Hotel,HOTEL,Japan,Nagoya,STANDARD,TRUE
+Grand Nagoya Hotel,HOTEL,Japan,Nagoya,STANDARD,TRUE
+Telok Ayer Terrace,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Raffles Grill,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Marina Noodle House,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Telok Ayer Grill,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Raffles Noodle House,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Tanjong Dining Room,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Orchard Kitchen,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Kallang Terrace,RESTAURANT,Singapore,Singapore,STANDARD,TRUE
+Royal Singapore Inn,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Skyline Singapore Residence,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Palace Singapore Residence,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Regency Singapore Residence,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Harbour Singapore Suites,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Garden Singapore Inn,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Meridian Singapore Residence,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Skyline Singapore Inn,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Summit Singapore Suites,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Garden Singapore Suites,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Crown Singapore Inn,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Royal Singapore Suites,HOTEL,Singapore,Singapore,STANDARD,TRUE
+Central Stationers,RESTAURANT,Singapore,,STANDARD,TRUE
+Lunch Bowl Cafe,RESTAURANT,India,,STANDARD,TRUE
+Airport Express Kiosk,SOFTWARE,Singapore,,STANDARD,TRUE
+Metro Print Shop,RESTAURANT,India,,STANDARD,TRUE
+Green Leaf Catering,RESTAURANT,Singapore,,STANDARD,TRUE
+Harbor Office Supply,OTHER,Singapore,,STANDARD,TRUE
+QuickFix IT Services,SOFTWARE,India,,STANDARD,TRUE
+Corner Bakery Co,EQUIPMENT,Singapore,,STANDARD,TRUE
+Blue Line Couriers,SOFTWARE,Singapore,,STANDARD,TRUE
+City Parking Services,RESTAURANT,Japan,,STANDARD,TRUE
+Sunrise Bookstore,RESTAURANT,India,,STANDARD,TRUE
+Northside Pharmacy,OTHER,Singapore,,STANDARD,TRUE
+Urban Laundry,EQUIPMENT,Japan,,STANDARD,TRUE
+Paper & Pen Depot,OTHER,Singapore,,STANDARD,TRUE
+TransitCard Top-up,RIDE_HAIL,India,,STANDARD,TRUE
+Skyview Coffee,EQUIPMENT,India,,STANDARD,TRUE
+Delta Copy Centre,RIDE_HAIL,Singapore,,STANDARD,TRUE
+Evergreen Florists,EQUIPMENT,Japan,,STANDARD,TRUE
+Harvest Deli,RESTAURANT,India,,STANDARD,TRUE
+Tech Repair Lab,RESTAURANT,Japan,,STANDARD,TRUE
+Anchor Water Co,SOFTWARE,Japan,,STANDARD,TRUE
+Pinnacle Signage,RIDE_HAIL,Singapore,,STANDARD,TRUE
+Riverside Cafe,EQUIPMENT,India,,STANDARD,TRUE
+Summit Uniforms,RESTAURANT,Singapore,,STANDARD,TRUE
+Lantern Printing,OTHER,Singapore,,STANDARD,TRUE
+Bridge Street Grocer,RESTAURANT,Singapore,,STANDARD,TRUE

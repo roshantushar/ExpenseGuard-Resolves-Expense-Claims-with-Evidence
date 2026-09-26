@@ -1,0 +1,16 @@
+event_id,employee_id,event_name,event_date,registration_status,official_partner_hotel
+CONF-001,E0053,Applied AI Summit,2025-05-12,REGISTERED,Royal Singapore Hotel
+CONF-002,E0154,FinOps Forum,2026-03-23,REGISTERED,Royal Osaka Hotel
+CONF-003,E0156,FinOps Forum,2025-09-15,REGISTERED,Harbour Tokyo Hotel
+CONF-004,E0050,Data Leaders Conference,2025-10-13,REGISTERED,Meridian Bengaluru Hotel
+CONF-005,E0064,Cyber Assurance Summit,2026-04-20,NOT_REGISTERED,Regency Singapore Hotel
+CONF-006,E0171,FinOps Forum,2025-02-17,REGISTERED,Regency Mumbai Hotel
+CONF-007,E0069,Data Leaders Conference,2025-06-05,REGISTERED,TBD
+CONF-008,E0124,Product Craft Live,2026-02-27,NOT_REGISTERED,TBD
+CONF-009,E0007,Product Craft Live,2025-05-19,REGISTERED,Skyline Singapore Suites
+CONF-010,E0150,Applied AI Summit,2026-02-16,NOT_REGISTERED,Regency Osaka Hotel
+CONF-011,E0012,Product Craft Live,2025-09-01,REGISTERED,Crown Singapore Residence
+CONF-012,E0197,FinOps Forum,2025-11-17,NOT_REGISTERED,Summit Tokyo Hotel
+CONF-013,E0117,Supply Chain Expo,2026-04-27,REGISTERED,Harbour Singapore Residence
+CONF-014,E0265,FinOps Forum,2026-03-30,REGISTERED,Palace Nagoya Hotel
+CONF-015,E0112,Supply Chain Expo,2025-09-08,REGISTERED,Crown Singapore Inn

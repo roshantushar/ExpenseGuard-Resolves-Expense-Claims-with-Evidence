@@ -1,0 +1,336 @@
+{
+ "V1": {
+  "n_chunks": 23,
+  "n_cases": 120,
+  "avg_required_clauses": 2.12,
+  "bm25|filter=False|k=3": {
+   "recall": 0.434,
+   "precision": 0.281,
+   "rr": 0.425,
+   "ndcg": 0.368,
+   "full": 0.258,
+   "wrong_year_chunks": 0.092,
+   "wrong_region_chunks": 0.35
+  },
+  "bm25|filter=False|k=5": {
+   "recall": 0.547,
+   "precision": 0.207,
+   "rr": 0.44,
+   "ndcg": 0.421,
+   "full": 0.392,
+   "wrong_year_chunks": 0.383,
+   "wrong_region_chunks": 0.658
+  },
+  "bm25|filter=False|k=10": {
+   "recall": 0.683,
+   "precision": 0.125,
+   "rr": 0.458,
+   "ndcg": 0.471,
+   "full": 0.525,
+   "wrong_year_chunks": 1.233,
+   "wrong_region_chunks": 1.425
+  },
+  "bm25|filter=True|k=3": {
+   "recall": 0.48,
+   "precision": 0.308,
+   "rr": 0.501,
+   "ndcg": 0.443,
+   "full": 0.333,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.0
+  },
+  "bm25|filter=True|k=5": {
+   "recall": 0.613,
+   "precision": 0.222,
+   "rr": 0.533,
+   "ndcg": 0.502,
+   "full": 0.45,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.0
+  },
+  "bm25|filter=True|k=10": {
+   "recall": 0.839,
+   "precision": 0.149,
+   "rr": 0.554,
+   "ndcg": 0.583,
+   "full": 0.717,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.0
+  },
+  "dense|filter=False|k=3": {
+   "recall": 0.566,
+   "precision": 0.35,
+   "rr": 0.621,
+   "ndcg": 0.542,
+   "full": 0.392,
+   "wrong_year_chunks": 0.217,
+   "wrong_region_chunks": 0.35
+  },
+  "dense|filter=False|k=5": {
+   "recall": 0.673,
+   "precision": 0.242,
+   "rr": 0.646,
+   "ndcg": 0.587,
+   "full": 0.458,
+   "wrong_year_chunks": 0.4,
+   "wrong_region_chunks": 0.842
+  },
+  "dense|filter=False|k=10": {
+   "recall": 0.774,
+   "precision": 0.137,
+   "rr": 0.652,
+   "ndcg": 0.622,
+   "full": 0.617,
+   "wrong_year_chunks": 1.008,
+   "wrong_region_chunks": 2.042
+  },
+  "dense|filter=True|k=3": {
+   "recall": 0.637,
+   "precision": 0.381,
+   "rr": 0.672,
+   "ndcg": 0.595,
+   "full": 0.442,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.0
+  },
+  "dense|filter=True|k=5": {
+   "recall": 0.706,
+   "precision": 0.25,
+   "rr": 0.682,
+   "ndcg": 0.624,
+   "full": 0.5,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.0
+  },
+  "dense|filter=True|k=10": {
+   "recall": 0.835,
+   "precision": 0.15,
+   "rr": 0.685,
+   "ndcg": 0.671,
+   "full": 0.75,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.0
+  },
+  "hybrid|filter=False|k=3": {
+   "recall": 0.558,
+   "precision": 0.342,
+   "rr": 0.542,
+   "ndcg": 0.48,
+   "full": 0.392,
+   "wrong_year_chunks": 0.05,
+   "wrong_region_chunks": 0.333
+  },
+  "hybrid|filter=False|k=5": {
+   "recall": 0.637,
+   "precision": 0.228,
+   "rr": 0.561,
+   "ndcg": 0.515,
+   "full": 0.442,
+   "wrong_year_chunks": 0.325,
+   "wrong_region_chunks": 0.808
+  },
+  "hybrid|filter=False|k=10": {
+   "recall": 0.732,
+   "precision": 0.129,
+   "rr": 0.571,
+   "ndcg": 0.549,
+   "full": 0.542,
+   "wrong_year_chunks": 1.05,
+   "wrong_region_chunks": 1.708
+  },
+  "hybrid|filter=True|k=3": {
+   "recall": 0.558,
+   "precision": 0.342,
+   "rr": 0.607,
+   "ndcg": 0.522,
+   "full": 0.392,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.0
+  },
+  "hybrid|filter=True|k=5": {
+   "recall": 0.703,
+   "precision": 0.247,
+   "rr": 0.642,
+   "ndcg": 0.586,
+   "full": 0.483,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.0
+  },
+  "hybrid|filter=True|k=10": {
+   "recall": 0.835,
+   "precision": 0.151,
+   "rr": 0.642,
+   "ndcg": 0.634,
+   "full": 0.758,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.0
+  }
+ },
+ "V2": {
+  "n_chunks": 218,
+  "n_cases": 150,
+  "avg_required_clauses": 3.16,
+  "bm25|filter=False|k=3": {
+   "recall": 0.145,
+   "precision": 0.096,
+   "rr": 0.141,
+   "ndcg": 0.124,
+   "full": 0.087,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.067
+  },
+  "bm25|filter=False|k=5": {
+   "recall": 0.219,
+   "precision": 0.103,
+   "rr": 0.177,
+   "ndcg": 0.157,
+   "full": 0.113,
+   "wrong_year_chunks": 0.007,
+   "wrong_region_chunks": 0.173
+  },
+  "bm25|filter=False|k=10": {
+   "recall": 0.322,
+   "precision": 0.086,
+   "rr": 0.206,
+   "ndcg": 0.204,
+   "full": 0.16,
+   "wrong_year_chunks": 0.067,
+   "wrong_region_chunks": 0.52
+  },
+  "bm25|filter=True|k=3": {
+   "recall": 0.152,
+   "precision": 0.102,
+   "rr": 0.152,
+   "ndcg": 0.133,
+   "full": 0.087,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.0
+  },
+  "bm25|filter=True|k=5": {
+   "recall": 0.221,
+   "precision": 0.104,
+   "rr": 0.185,
+   "ndcg": 0.162,
+   "full": 0.113,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.0
+  },
+  "bm25|filter=True|k=10": {
+   "recall": 0.333,
+   "precision": 0.089,
+   "rr": 0.215,
+   "ndcg": 0.213,
+   "full": 0.167,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.0
+  },
+  "dense|filter=False|k=3": {
+   "recall": 0.288,
+   "precision": 0.24,
+   "rr": 0.482,
+   "ndcg": 0.336,
+   "full": 0.133,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.133
+  },
+  "dense|filter=False|k=5": {
+   "recall": 0.373,
+   "precision": 0.185,
+   "rr": 0.511,
+   "ndcg": 0.347,
+   "full": 0.18,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.293
+  },
+  "dense|filter=False|k=10": {
+   "recall": 0.464,
+   "precision": 0.127,
+   "rr": 0.521,
+   "ndcg": 0.389,
+   "full": 0.2,
+   "wrong_year_chunks": 0.027,
+   "wrong_region_chunks": 0.933
+  },
+  "dense|filter=True|k=3": {
+   "recall": 0.295,
+   "precision": 0.247,
+   "rr": 0.488,
+   "ndcg": 0.342,
+   "full": 0.133,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.0
+  },
+  "dense|filter=True|k=5": {
+   "recall": 0.389,
+   "precision": 0.196,
+   "rr": 0.514,
+   "ndcg": 0.359,
+   "full": 0.187,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.0
+  },
+  "dense|filter=True|k=10": {
+   "recall": 0.485,
+   "precision": 0.131,
+   "rr": 0.526,
+   "ndcg": 0.401,
+   "full": 0.233,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.0
+  },
+  "hybrid|filter=False|k=3": {
+   "recall": 0.263,
+   "precision": 0.2,
+   "rr": 0.389,
+   "ndcg": 0.286,
+   "full": 0.133,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.173
+  },
+  "hybrid|filter=False|k=5": {
+   "recall": 0.315,
+   "precision": 0.156,
+   "rr": 0.414,
+   "ndcg": 0.293,
+   "full": 0.153,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.327
+  },
+  "hybrid|filter=False|k=10": {
+   "recall": 0.411,
+   "precision": 0.112,
+   "rr": 0.428,
+   "ndcg": 0.337,
+   "full": 0.193,
+   "wrong_year_chunks": 0.013,
+   "wrong_region_chunks": 0.76
+  },
+  "hybrid|filter=True|k=3": {
+   "recall": 0.266,
+   "precision": 0.202,
+   "rr": 0.394,
+   "ndcg": 0.289,
+   "full": 0.133,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.0
+  },
+  "hybrid|filter=True|k=5": {
+   "recall": 0.326,
+   "precision": 0.163,
+   "rr": 0.419,
+   "ndcg": 0.301,
+   "full": 0.153,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.0
+  },
+  "hybrid|filter=True|k=10": {
+   "recall": 0.428,
+   "precision": 0.117,
+   "rr": 0.434,
+   "ndcg": 0.347,
+   "full": 0.213,
+   "wrong_year_chunks": 0.0,
+   "wrong_region_chunks": 0.0
+  }
+ }
+}

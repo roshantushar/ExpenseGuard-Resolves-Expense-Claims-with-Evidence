@@ -1,0 +1,151 @@
+case_id,split,employee_id,transaction_date,submission_date,merchant,merchant_category,country,currency,total,expense_type,employee_description,project_id
+X2-001,FINAL_TEST,E0040,2026-03-04,2026-03-08,PureYoga Club,CONSUMER_SERVICE,Singapore,SGD,24.9,OTHER,Renewal for PureYoga Club; keeps me sane during the busy quarter.,PRJ-003
+X2-002,FINAL_TEST,E0190,2025-03-24,2025-04-17,Grand Singapore Hotel,HOTEL,Singapore,SGD,910.0,HOTEL,Stayed in Singapore on the client trip; written exception EXC-0001 covers the rate.,PRJ-011
+X2-003,DEVELOPMENT,E0003,2025-05-22,2025-06-04,Vector Notes,SOFTWARE,Japan,JPY,44000.0,SOFTWARE,Licence renewal at Vector Notes; I own it for the team.,PRJ-020
+X2-004,VALIDATION,E0097,2025-05-21,2025-06-04,Ledger Loop,SOFTWARE,Singapore,SGD,240.0,SOFTWARE,Seat at Ledger Loop for the reporting group.,PRJ-020
+X2-005,DEVELOPMENT,E0276,2026-06-08,2026-06-17,Summit Bengaluru Hotel,HOTEL,India,INR,60060.0,HOTEL,3-night stay in Bengaluru covering the data-centre cutover.,PRJ-047
+X2-006,DEVELOPMENT,E0152,2024-08-13,2024-08-20,Metric Harbor,SOFTWARE,Singapore,SGD,95.0,SOFTWARE,Seat at Metric Harbor for the reporting group.,PRJ-060
+X2-007,VALIDATION,E0278,2026-06-30,2026-07-04,InsightPad,SOFTWARE,Singapore,SGD,1500.0,SOFTWARE,"Monthly plan for InsightPad, used by the design group.",PRJ-003
+X2-008,DEVELOPMENT,E0078,2024-09-17,2024-09-23,Kallang Noodle House,RESTAURANT,Singapore,SGD,420.0,MEAL_CLIENT,Hosted 2 guest(s) from Kestrel Logistics at Kallang Noodle House for lunch after the product roadmap workshop. Party of several.,PRJ-047
+X2-009,DEVELOPMENT,E0231,2025-08-05,2025-08-08,OfficeMart,EQUIPMENT,Singapore,SGD,285.0,EQUIPMENT,"More kit for the lab from OfficeMart, same project.",PRJ-007
+X2-010,DEVELOPMENT,E0124,2026-01-28,2026-02-01,Product Craft Live,CONFERENCE_ORGANISER,Singapore,SGD,480.0,CONFERENCE_FEE,Registration fee for Product Craft Live (CONF-008); attending for the the onboarding of a new account team.,PRJ-041
+X2-011,DEVELOPMENT,E0159,2025-08-18,2025-09-08,Garden Tokyo Hotel,HOTEL,Japan,JPY,69972.0,HOTEL,2-night stay at the Tokyo property during the client workshop.,PRJ-031
+X2-012,DEVELOPMENT,E0041,2025-11-10,2025-11-30,Harbour Osaka Hotel,HOTEL,Japan,JPY,76700.0,HOTEL,Stayed in Osaka on the client trip; written exception EXC-0003 covers the rate.,PRJ-044
+X2-013,DEVELOPMENT,E0087,2025-08-22,2025-08-28,MovieBox+,CONSUMER_SERVICE,Japan,JPY,9800.0,OTHER,Renewal for MovieBox+; keeps me sane during the busy quarter.,PRJ-056
+X2-014,FINAL_TEST,E0195,2025-08-27,2025-09-05,Orchard Dining Room,RESTAURANT,Singapore,SGD,96.0,MEAL_EMPLOYEE,Taxi from the airport to the customer office after a delayed flight.,PRJ-001
+X2-015,DEVELOPMENT,E0121,2025-06-03,2025-06-05,Tokyo Teppan,RESTAURANT,Japan,JPY,150000.0,MEAL_CLIENT,Catering for the Omnia Retail summit reception at Tokyo Teppan; 14 people attended.,PRJ-011
+X2-016,FINAL_TEST,E0222,2025-11-26,2025-12-05,PrepaidPlus Reseller 2025,PREPAID_CARD_RESELLER,Singapore,SGD,240.0,OTHER,Charge at PrepaidPlus Reseller 2025; purpose as stated on the form. Receipt ref B539004.,PRJ-058
+X2-017,DEVELOPMENT,E0247,2026-03-10,2026-03-23,PeriphPoint,EQUIPMENT,India,INR,11500.0,EQUIPMENT,"PeriphPoint order, follow-up to earlier purchase.",PRJ-009
+X2-018,DEVELOPMENT,E0244,2026-02-24,2026-03-01,Telok Ayer Grill,RESTAURANT,Singapore,SGD,950.0,MEAL_CLIENT,"Telok Ayer Grill: dinner with Omnia Retail after a training day for their analysts, party of 10.",PRJ-008
+X2-019,DEVELOPMENT,E0239,2026-04-14,2026-04-16,DriveEasy Rentals 2026,CAR_RENTAL,Singapore,SGD,210.0,CAR_RENTAL,Hired a car from DriveEasy Rentals 2026 for the site inspection day.,PRJ-043
+X2-020,VALIDATION,E0012,2025-09-01,2025-09-07,Crown Singapore Hotel,HOTEL,Singapore,SGD,1804.0,HOTEL,Stayed 4 nights in Singapore for the integration sprint.,PRJ-012
+X2-021,FINAL_TEST,E0202,2026-05-20,2026-05-29,Pipeline Forge,SOFTWARE,Singapore,SGD,1800.0,SOFTWARE,Pipeline Forge licences charged to the project; I am the business owner.,PRJ-019
+X2-022,VALIDATION,E0199,2025-04-15,2025-04-20,Bugis Grill,RESTAURANT,Singapore,SGD,375,MEAL_CLIENT,"Redwood Pharma visited us for an incident post-mortem, so we took them to Bugis Grill for supper.",PRJ-014
+X2-023,FINAL_TEST,E0166,2025-08-11,2025-08-15,DriveEasy Rentals 2025,CAR_RENTAL,Singapore,SGD,210.0,CAR_RENTAL,Rental from DriveEasy Rentals 2025 for the regional visit.,PRJ-052
+X2-024,DEVELOPMENT,E0295,2024-11-04,2024-11-09,Nippon Sky,AIRLINE,Singapore,SGD,420.0,AIRFARE,"Return airfare, 6.5 hours each way, economy.",PRJ-013
+X2-025,FINAL_TEST,E0007,2025-05-19,2025-06-09,Skyline Singapore Suites,HOTEL,Singapore,SGD,1207.5,HOTEL,"Put up in Singapore for 3 evenings on assignment. The figure is what the property charged, no upgrades, no extras. Receipt ref B684731.",PRJ-013
+X2-026,VALIDATION,E0112,2025-09-08,2025-09-15,Crown Singapore Inn,HOTEL,Singapore,SGD,2012.5,HOTEL,5-night stay in Singapore covering the data-centre cutover.,PRJ-052
+X2-027,FINAL_TEST,E0039,2026-04-08,2026-04-13,Private vehicle mileage IN 2026,MILEAGE,India,INR,1620.0,MILEAGE,Own vehicle for the site trip; the odometer says 120 km. Receipt ref B134547.,PRJ-037
+X2-028,DEVELOPMENT,E0131,2026-01-19,2026-01-24,Lotus Air,AIRLINE,Singapore,SGD,1850.0,AIRFARE,"Return airfare, 8 hours each way, business.",PRJ-019
+X2-029,DEVELOPMENT,E0279,2026-05-12,2026-05-21,Royal Mumbai Hotel,HOTEL,India,INR,57036.0,HOTEL,Accommodation in Mumbai while on a partner summit; 3 nights.,PRJ-009
+X2-030,DEVELOPMENT,E0002,2026-09-22,2026-10-05,NipponTel,TELECOM,Japan,JPY,3200.0,TELECOM,Phone plan charge for client calls this month.,PRJ-057
+X2-031,VALIDATION,E0099,2026-05-05,2026-05-14,BrightBoard,SOFTWARE,Singapore,SGD,1250.0,SOFTWARE,Subscription to BrightBoard for the the procurement panel.,PRJ-002
+X2-032,DEVELOPMENT,E0252,2026-05-13,2026-05-25,Kallang Terrace,RESTAURANT,Singapore,SGD,950.0,MEAL_CLIENT,"Client reception for Ironbridge Capital at Kallang Terrace, 10 people.",PRJ-029
+X2-033,DEVELOPMENT,E0075,2025-06-02,2025-09-06,ErgoStore,EQUIPMENT,Singapore,SGD,150.0,EQUIPMENT,Bought a laptop stand at ErgoStore for the project room.,PRJ-042
+X2-034,VALIDATION,E0089,2024-10-14,2024-10-26,Meridian Singapore Hotel,HOTEL,Singapore,SGD,858.0,HOTEL,"Accommodation in Singapore, 2 nights, the client workshop.",PRJ-016
+X2-035,VALIDATION,E0014,2025-08-12,2025-08-26,Apex Learning,TRAINING_PROVIDER,Singapore,SGD,1900.0,TRAINING,Course at Apex Learning on data engineering.,PRJ-015
+X2-036,DEVELOPMENT,E0071,2026-01-19,2026-02-06,Garden Pune Hotel,HOTEL,India,INR,38220.0,HOTEL,Stayed in Pune on the client trip; written exception EXC-0971 covers the rate.,PRJ-011
+X2-037,DEVELOPMENT,E0015,2026-07-14,2026-07-28,CodeForge,SOFTWARE,Singapore,SGD,1550.0,SOFTWARE,Annual-tier plan at CodeForge for the insights project.,PRJ-023
+X2-038,VALIDATION,E0063,2025-06-17,2025-06-26,Mumbai Kitchen,RESTAURANT,India,INR,70000.0,MEAL_CLIENT,Catering for the Halcyon Freight summit reception at Mumbai Kitchen; 20 people attended.,PRJ-036
+X2-039,VALIDATION,E0126,2024-05-06,2024-07-08,GadgetHub,EQUIPMENT,Singapore,SGD,120.0,EQUIPMENT,Bought a HDMI adapter at GadgetHub for the project room.,PRJ-023
+X2-040,FINAL_TEST,E0018,2025-10-14,2025-10-18,Kallang Dining Room,RESTAURANT,Singapore,SGD,154.5,MEAL_EMPLOYEE,Team working lunch at Kallang Dining Room following the launch readiness review. Colleagues only.,PRJ-020
+X2-041,VALIDATION,E0105,2025-09-15,2025-09-28,OfficeMart,EQUIPMENT,India,INR,11800.0,EQUIPMENT,"OfficeMart order, follow-up to earlier purchase.",PRJ-010
+X2-042,FINAL_TEST,E0091,2024-09-16,2024-10-06,Summit Singapore Inn,HOTEL,Singapore,SGD,1014.0,HOTEL,Stayed in Singapore on the client trip; written exception EXC-0006 covers the rate.,PRJ-048
+X2-043,VALIDATION,E0154,2026-03-23,2026-04-13,Royal Osaka Hotel,HOTEL,Japan,JPY,153720.0,HOTEL,Stayed 4 nights in Osaka while attending FinOps Forum (CONF-002).,PRJ-013
+X2-044,FINAL_TEST,E0045,2026-06-20,2026-06-27,Tea & Tradition,GIFT_RETAIL,Singapore,SGD,140.0,GIFT,"Tea & Tradition purchase, a gift for our counterpart at Tidewater Energy.",PRJ-054
+X2-045,FINAL_TEST,E0114,2026-03-19,2026-05-16,PeriphPoint,EQUIPMENT,India,INR,7400.0,EQUIPMENT,Small purchase of a monitor arm at PeriphPoint.,PRJ-018
+X2-046,FINAL_TEST,E0153,2025-12-08,2025-12-31,Garden Fukuoka Hotel,HOTEL,Japan,JPY,132600.0,HOTEL,Stayed in Fukuoka on the client trip; written exception EXC-0007 covers the rate.,PRJ-044
+X2-047,DEVELOPMENT,E0258,2025-08-19,2025-08-24,Raffles Grill,RESTAURANT,Singapore,SGD,1800.0,MEAL_CLIENT,Hosted Ember Foods delegates for supper at Raffles Grill; 18 attended.,PRJ-034
+X2-048,DEVELOPMENT,E0233,2024-11-12,2024-11-25,Marina Bistro,RESTAURANT,Singapore,SGD,360.0,MEAL_CLIENT,"Cobalt Mining visited us for a security audit debrief, so we took them to Marina Bistro for supper.",PRJ-008
+X2-049,DEVELOPMENT,E0241,2025-05-14,2025-05-26,Lotus Kitchen,RESTAURANT,India,INR,6400.0,MEAL_CLIENT,"Yarrow Systems visited us for the annual planning offsite, so we took them to Lotus Kitchen for lunch.",PRJ-001
+X2-050,FINAL_TEST,E0216,2025-03-10,2025-03-24,Merlion Air,AIRLINE,Singapore,SGD,640.0,AIRFARE,Booked the premium economy seat myself; the sector is roughly 8 hours in the air. Receipt ref B367249.,PRJ-021
+X2-051,FINAL_TEST,E0150,2026-02-16,2026-03-09,Regency Osaka Hotel,HOTEL,Japan,JPY,105840.0,HOTEL,"Put up in Osaka for 3 evenings on assignment. The figure is what the property charged, no upgrades, no extras. Receipt ref B604093.",PRJ-017
+X2-052,FINAL_TEST,E0139,2026-03-17,2026-03-21,Quill Analytics,SOFTWARE,Singapore,SGD,1350.0,SOFTWARE,Quill Analytics plan; I am the owner on record and it underpins our team's day-to-day analysis. Receipt ref B902242.,PRJ-001
+X2-053,FINAL_TEST,E0103,2026-05-14,2026-05-24,CloudSuite Pro,SOFTWARE,Singapore,SGD,1150.0,SOFTWARE,Subscription to CloudSuite Pro for the a partnership scoping session.,PRJ-005
+X2-054,DEVELOPMENT,E0290,2026-02-03,2026-02-06,Blossom & Co,GIFT_RETAIL,Japan,JPY,5500.0,GIFT,"Blossom & Co purchase, a gift for our counterpart at Ministry of Trade Liaison Office.",PRJ-034
+X2-055,DEVELOPMENT,E0243,2025-06-10,2025-06-14,Telok Ayer Terrace,RESTAURANT,Singapore,SGD,900.0,MEAL_CLIENT,"Telok Ayer Terrace: team dinner with Halcyon Freight after an incident post-mortem, party of 10.",PRJ-032
+X2-056,FINAL_TEST,E0155,2025-06-24,2025-07-09,SprintMill,SOFTWARE,Singapore,SGD,720.0,SOFTWARE,Subscription to SprintMill for the a security audit debrief.,PRJ-046
+X2-057,FINAL_TEST,E0182,2026-04-13,2026-04-27,Summit Singapore Suites,HOTEL,Singapore,SGD,2405.0,HOTEL,Stayed 5 nights in Singapore for the audit fieldwork.,PRJ-037
+X2-058,VALIDATION,E0177,2026-02-09,2026-02-25,Skyline Tokyo Hotel,HOTEL,Japan,JPY,163800.0,HOTEL,Stayed in Tokyo on the client trip; written exception EXC-0002 covers the rate.,PRJ-056
+X2-059,DEVELOPMENT,E0081,2025-09-29,2025-10-14,PixelDesk,SOFTWARE,Singapore,SGD,900.0,SOFTWARE,"Monthly plan for PixelDesk, used by the research group.",PRJ-037
+X2-060,DEVELOPMENT,E0010,2026-01-20,2026-01-25,Keystone Supplies,EQUIPMENT,Singapore,SGD,1899.0,EQUIPMENT,Workstation laptop bought at Keystone Supplies for my desk.,PRJ-008
+X2-061,DEVELOPMENT,E0200,2026-02-25,2026-03-08,RideNow India,RIDE_HAIL,India,INR,1890.0,GROUND_TRANSPORT,Two nights at the hotel next to the conference venue.,PRJ-055
+X2-062,FINAL_TEST,E0215,2026-08-04,2026-08-17,ErgoStore,EQUIPMENT,Singapore,SGD,290.0,EQUIPMENT,"ErgoStore order, follow-up to earlier purchase.",PRJ-006
+X2-063,FINAL_TEST,E0143,2025-11-04,2025-11-19,Gift Gallery,GIFT_RETAIL,Singapore,SGD,100.0,GIFT,"Gift for Tidewater Energy after a security audit debrief, bought at Gift Gallery.",PRJ-004
+X2-064,FINAL_TEST,E0242,2025-11-25,2025-12-20,Meridian Singapore Residence,HOTEL,Singapore,SGD,2275.0,HOTEL,Stayed 5 nights in Singapore for the integration sprint.,PRJ-054
+X2-065,DEVELOPMENT,E0059,2026-03-11,2026-03-24,Marina Grill,RESTAURANT,Singapore,SGD,1900.0,MEAL_CLIENT,Catering for the Yarrow Systems summit reception at Marina Grill; 16 people attended.,PRJ-040
+X2-066,DEVELOPMENT,E0047,2025-11-05,2025-11-11,Fuji Grill,RESTAURANT,Japan,JPY,16050,MEAL_EMPLOYEE,"Supper at Fuji Grill for the analytics team after budget alignment meetings; 3 of us, no guests.",PRJ-015
+X2-067,DEVELOPMENT,E0096,2025-03-25,2025-04-02,SwiftCab SG,RIDE_HAIL,Singapore,SGD,22.0,GROUND_TRANSPORT,SwiftCab SG fare; details on the receipt.,PRJ-011
+X2-068,VALIDATION,E0025,2025-11-18,2025-11-29,CodeForge,SOFTWARE,Singapore,SGD,310.0,SOFTWARE,"CodeForge charge for this period, business owner is me.",PRJ-031
+X2-069,FINAL_TEST,E0136,2026-01-22,2026-01-27,Ledger Loop,SOFTWARE,Singapore,SGD,240.0,SOFTWARE,"Ledger Loop charge for this period, business owner is me.",PRJ-017
+X2-070,FINAL_TEST,E0205,2025-07-14,2025-08-02,TechBazaar,EQUIPMENT,Japan,JPY,25000.0,EQUIPMENT,Docking station bought at TechBazaar for my desk.,PRJ-007
+X2-071,FINAL_TEST,E0260,2026-02-24,2026-02-26,GiftCard Express 2026,PREPAID_CARD_RESELLER,Singapore,SGD,240.0,OTHER,Client evening at GiftCard Express 2026.,PRJ-025
+X2-072,VALIDATION,E0256,2026-05-26,2026-06-16,Grand Singapore Suites,HOTEL,Singapore,SGD,832.0,HOTEL,Stayed in Singapore on the client trip; written exception EXC-0004 covers the rate.,PRJ-028
+X2-073,DEVELOPMENT,E0212,2026-05-18,2026-05-31,Meridian School of Data,TRAINING_PROVIDER,Singapore,SGD,1200.0,TRAINING,"Workshop fees, Meridian School of Data; part of my development plan.",PRJ-045
+X2-074,VALIDATION,E0116,2026-06-12,2026-07-06,Kyoto Izakaya,RESTAURANT,Japan,JPY,40200,MEAL_CLIENT,"Driftwood Travel visited us for the annual planning offsite, so we took them to Kyoto Izakaya for working lunch.",PRJ-037
+X2-075,FINAL_TEST,E0028,2025-07-25,2025-08-02,IndiaWave,TELECOM,India,INR,1100.0,TELECOM,"IndiaWave bill, business usage share.",PRJ-035
+X2-076,DEVELOPMENT,E0129,2025-08-20,2025-09-06,Tanjong Kitchen,RESTAURANT,Singapore,SGD,204,MEAL_EMPLOYEE,Working dinner with the squad at Tanjong Kitchen during the onboarding of a new account team. All employees.,PRJ-020
+X2-077,FINAL_TEST,E0001,2026-04-06,2026-04-21,DataLoom,SOFTWARE,Singapore,SGD,1250.0,SOFTWARE,DataLoom plan; I am the owner on record and it underpins our team's day-to-day analysis. Receipt ref B840802.,PRJ-017
+X2-078,DEVELOPMENT,E0226,2026-06-15,2026-06-23,Beacon Suite,SOFTWARE,Singapore,SGD,182.0,SOFTWARE,"Beacon Suite charge for this period, business owner is me.",PRJ-010
+X2-079,FINAL_TEST,E0110,2025-05-29,2025-06-14,TokyoGo Taxi,RIDE_HAIL,Japan,JPY,6800.0,GROUND_TRANSPORT,Needed to get from Haneda Airport to Client site in Shinagawa; a cab was the only sensible option. Receipt ref B639958.,PRJ-035
+X2-080,DEVELOPMENT,E0198,2026-02-23,2026-03-01,Merlion Air,AIRLINE,Singapore,SGD,1850.0,AIRFARE,Air ticket booked 28 days before departure for a regional planning offsite.,PRJ-033
+X2-081,DEVELOPMENT,E0093,2025-04-18,2025-04-30,Golden Dice Casino 2025,ENTERTAINMENT_VENUE,Singapore,SGD,240.0,OTHER,Client evening at Golden Dice Casino 2025.,PRJ-004
+X2-082,FINAL_TEST,E0076,2026-04-21,2026-05-04,TaskOrbit,SOFTWARE,Singapore,SGD,1200.0,SOFTWARE,Subscription to TaskOrbit for the a training day for their analysts.,PRJ-004
+X2-083,FINAL_TEST,E0092,2025-09-02,2025-09-10,Deccan Pacific,AIRLINE,Singapore,SGD,420.0,AIRFARE,"Return airfare, 5 hours each way, economy.",PRJ-027
+X2-084,VALIDATION,E0104,2025-07-08,2025-07-15,Keystone Supplies,EQUIPMENT,Singapore,SGD,292.0,EQUIPMENT,"Keystone Supplies order, follow-up to earlier purchase.",PRJ-008
+X2-085,FINAL_TEST,E0183,2025-08-19,2025-08-25,Signal Stack,SOFTWARE,Singapore,SGD,640.0,SOFTWARE,Subscription to Signal Stack for the the procurement panel.,PRJ-047
+X2-086,FINAL_TEST,E0022,2025-09-09,2025-09-24,Kyoto Sushi,RESTAURANT,Japan,JPY,32000.0,MEAL_CLIENT,"Solace Health visited us for an incident post-mortem, so we took them to Kyoto Sushi for dinner.",PRJ-049
+X2-087,DEVELOPMENT,E0117,2026-04-27,2026-05-10,Grand Singapore Residence,HOTEL,Singapore,SGD,1443.0,HOTEL,"Accommodation in Singapore, 3 nights, the audit fieldwork.",PRJ-016
+X2-088,DEVELOPMENT,E0019,2025-09-16,2025-09-29,Private vehicle mileage SG 2025,MILEAGE,Singapore,SGD,28.8,MILEAGE,Personal vehicle used for the site inspection; odometer shows 48 km.,PRJ-015
+X2-089,DEVELOPMENT,E0294,2025-06-30,2025-07-15,Royal Singapore Inn,HOTEL,Singapore,SGD,2275.0,HOTEL,"Accommodation in Singapore, 5 nights, the client workshop.",PRJ-043
+X2-090,FINAL_TEST,E0271,2025-10-06,2025-10-13,DeskWorks,EQUIPMENT,Japan,JPY,26000.0,EQUIPMENT,"More kit for the lab from DeskWorks, same project.",PRJ-013
+X2-091,VALIDATION,E0285,2026-03-10,2026-03-30,Fuji Sushi,RESTAURANT,Japan,JPY,21800,MEAL_EMPLOYEE,Working lunch with the squad at Fuji Sushi during a training day for their analysts. All employees.,PRJ-015
+X2-092,FINAL_TEST,E0296,2026-03-03,2026-03-14,DataLoom,SOFTWARE,Singapore,SGD,145.0,SOFTWARE,DataLoom plan; I am the owner on record and it underpins our team's day-to-day analysis. Receipt ref B764219.,PRJ-050
+X2-093,FINAL_TEST,E0286,2026-02-10,2026-02-24,Punjab Tiffin,RESTAURANT,India,INR,14400,MEAL_CLIENT,Client dinner with Solace Health at Punjab Tiffin to follow up on a joint pilot retrospective; 2 external attendee(s).,PRJ-018
+X2-094,FINAL_TEST,E0064,2026-04-20,2026-05-13,Regency Singapore Hotel,HOTEL,Singapore,SGD,1221.0,HOTEL,"Put up in Singapore for 3 evenings on assignment. The figure is what the property charged, no upgrades, no extras. Receipt ref B305659.",PRJ-040
+X2-095,DEVELOPMENT,E0094,2025-08-05,2025-08-24,Palace Singapore Residence,HOTEL,Singapore,SGD,2275.0,HOTEL,Stayed 5 nights in Singapore for a regional planning offsite.,PRJ-047
+X2-096,FINAL_TEST,E0217,2026-04-10,2026-06-29,Circuit City Trade,EQUIPMENT,Singapore,SGD,210.0,EQUIPMENT,Needed noise-cancelling headset in a hurry and Circuit City Trade had stock. Receipt ref B279923.,PRJ-008
+X2-097,DEVELOPMENT,E0026,2024-10-21,2024-11-04,Heritage Hampers,GIFT_RETAIL,Japan,JPY,5500.0,GIFT,"Gift for Willow Education after the annual planning offsite, bought at Heritage Hampers.",PRJ-025
+X2-098,DEVELOPMENT,E0201,2024-10-07,2024-10-15,Summit Singapore Hotel,HOTEL,Singapore,SGD,594.0,HOTEL,"Lodging for 2 nights, Singapore, covering a partner summit.",PRJ-016
+X2-099,FINAL_TEST,E0171,2025-02-17,2025-02-25,Regency Mumbai Hotel,HOTEL,India,INR,88400.0,HOTEL,"Lodging for FinOps Forum in Mumbai, 4 nights; event reference CONF-006.",PRJ-052
+X2-100,VALIDATION,E0062,2025-07-15,2025-07-25,Raffles Noodle House,RESTAURANT,Singapore,SGD,1200.0,MEAL_CLIENT,"Client reception for Cobalt Mining at Raffles Noodle House, 13 people.",PRJ-041
+X2-101,FINAL_TEST,E0023,2025-02-25,2025-02-28,Helix Docs,SOFTWARE,Singapore,SGD,260.0,SOFTWARE,Subscription payment to Helix Docs.,PRJ-020
+X2-102,DEVELOPMENT,E0283,2025-08-05,2025-08-17,Orchard Noodle House,RESTAURANT,Singapore,SGD,381,MEAL_CLIENT,"Ironbridge Capital visited us for the onboarding of a new account team, so we took them to Orchard Noodle House for team dinner.",PRJ-003
+X2-103,DEVELOPMENT,E0046,2026-03-04,2026-03-19,Meridian School of Data,TRAINING_PROVIDER,Singapore,SGD,800.0,TRAINING,Course at Meridian School of Data on leadership.,PRJ-039
+X2-104,DEVELOPMENT,E0221,2025-08-25,2025-09-18,Skyline Mumbai Hotel,HOTEL,India,INR,33800.0,HOTEL,"Accommodation in Mumbai, 2 nights, the integration sprint.",PRJ-017
+X2-105,DEVELOPMENT,E0127,2025-06-30,2025-07-03,Blossom & Co,GIFT_RETAIL,Japan,JPY,5400.0,GIFT,Hamper from Blossom & Co for Ember Foods.,PRJ-041
+X2-106,FINAL_TEST,E0108,2025-04-11,2025-04-22,Orchid House Gifts,GIFT_RETAIL,India,INR,3800.0,GIFT,A token of thanks for a contact at a partner firm; picked it up at Orchid House Gifts. Receipt ref B412903.,PRJ-012
+X2-107,VALIDATION,E0053,2025-05-12,2025-05-22,Royal Singapore Hotel,HOTEL,Singapore,SGD,805.0,HOTEL,Stayed 2 nights in Singapore while attending Applied AI Summit (CONF-001).,PRJ-033
+X2-108,VALIDATION,E0197,2025-11-17,2025-12-10,Summit Tokyo Hotel,HOTEL,Japan,JPY,151200.0,HOTEL,3-night stay in Tokyo covering the client workshop.,PRJ-003
+X2-109,DEVELOPMENT,E0281,2025-12-05,2025-12-15,Golden Basket,GIFT_RETAIL,Singapore,SGD,100.0,GIFT,"Golden Basket purchase, a gift for our counterpart at Zenith Foods.",PRJ-041
+X2-110,DEVELOPMENT,E0248,2025-04-16,2025-04-18,Pipeline Forge,SOFTWARE,Singapore,SGD,180.0,SOFTWARE,Subscription payment to Pipeline Forge.,PRJ-058
+X2-111,DEVELOPMENT,E0253,2026-02-16,2026-02-26,Regency Fukuoka Hotel,HOTEL,Japan,JPY,62100.0,HOTEL,Accommodation in Fukuoka while on the integration sprint; 3 nights.,PRJ-005
+X2-112,DEVELOPMENT,E0070,2025-06-11,2025-06-19,Praxis Academy,TRAINING_PROVIDER,Singapore,SGD,900.0,TRAINING,"Workshop fees, Praxis Academy; part of my development plan.",PRJ-015
+X2-113,VALIDATION,E0292,2026-07-13,2026-07-23,Heritage Hampers,GIFT_RETAIL,India,INR,4300.0,GIFT,Another present for our contact at Sterling Ports; Heritage Hampers receipt attached.,PRJ-016
+X2-114,FINAL_TEST,E0264,2026-02-18,2026-03-04,Raffles Terrace,RESTAURANT,Singapore,SGD,400.0,MEAL_CLIENT,Hosted 2 guest(s) from Redwood Pharma at Raffles Terrace for team dinner after the migration kickoff. Party of 4.,PRJ-013
+X2-115,VALIDATION,E0169,2025-09-22,2025-10-17,Grand Pune Hotel,HOTEL,India,INR,24300.0,HOTEL,Accommodation in Pune while on the audit fieldwork; 3 nights.,PRJ-049
+X2-116,DEVELOPMENT,E0069,2025-05-06,2025-05-19,Data Leaders Conference,CONFERENCE_ORGANISER,Singapore,SGD,480.0,CONFERENCE_FEE,Registration fee for Data Leaders Conference (CONF-007); attending for the a security audit debrief.,PRJ-010
+X2-117,DEVELOPMENT,E0137,2026-01-15,2026-01-28,QuickCab,RIDE_HAIL,India,INR,420.0,GROUND_TRANSPORT,QuickCab fare; details on the receipt.,PRJ-019
+X2-118,FINAL_TEST,E0238,2026-04-18,2026-04-30,Kyoto Grill,RESTAURANT,Japan,JPY,36000.0,MEAL_CLIENT,Hosted 2 guest(s) from Northgate Telecom at Kyoto Grill for lunch after the annual planning offsite. Party of 3.,PRJ-057
+X2-119,FINAL_TEST,E0203,2026-08-25,2026-09-09,Pipeline Forge,SOFTWARE,Singapore,SGD,1300.0,SOFTWARE,Annual-tier plan at Pipeline Forge for the platform project.,PRJ-024
+X2-120,FINAL_TEST,E0085,2026-06-09,2026-06-24,Ledger Loop,SOFTWARE,Singapore,SGD,1100.0,SOFTWARE,Ledger Loop plan; I am the owner on record and it underpins our team's day-to-day analysis. Receipt ref B208976.,PRJ-021
+X2-121,DEVELOPMENT,E0178,2025-07-14,2025-07-28,Grand Mumbai Hotel,HOTEL,India,INR,67600.0,HOTEL,Stayed in Mumbai on the client trip; written exception EXC-0005 covers the rate.,PRJ-033
+X2-122,VALIDATION,E0033,2026-03-16,2026-04-08,Harbour Singapore Suites,HOTEL,Singapore,SGD,2405.0,HOTEL,5-night stay in Singapore covering the integration sprint.,PRJ-007
+X2-123,DEVELOPMENT,E0272,2026-07-08,2026-07-14,Blossom & Co,GIFT_RETAIL,Singapore,SGD,128.0,GIFT,Hamper from Blossom & Co for Palmyra Hotels.,PRJ-001
+X2-124,FINAL_TEST,E0170,2026-03-25,2026-04-07,Orchard Kitchen,RESTAURANT,Singapore,SGD,2300.0,MEAL_CLIENT,"Client reception for Larkspur Media at Orchard Kitchen, 20 people.",PRJ-001
+X2-125,DEVELOPMENT,E0142,2025-11-20,2025-11-27,Bengal Tiffin,RESTAURANT,India,INR,8320,MEAL_EMPLOYEE,Working dinner with the squad at Bengal Tiffin during an incident post-mortem. All employees.,PRJ-036
+X2-126,VALIDATION,E0289,2025-06-10,2025-07-04,Tanjong Terrace,RESTAURANT,Singapore,SGD,180.0,MEAL_EMPLOYEE,Team supper at Tanjong Terrace following the migration kickoff. Colleagues only.,PRJ-021
+X2-127,FINAL_TEST,E0067,2025-07-08,2025-07-15,Meridian Airways,AIRLINE,Singapore,SGD,640.0,AIRFARE,Booked the premium economy seat myself; the sector is roughly 7 hours in the air. Receipt ref B364121.,PRJ-006
+X2-128,DEVELOPMENT,E0140,2025-06-23,2025-07-16,Garden Osaka Residence,HOTEL,Japan,JPY,115050.0,HOTEL,"Accommodation in Osaka, 3 nights, the client workshop.",PRJ-024
+X2-129,FINAL_TEST,E0122,2025-09-22,2025-10-05,Artisan Crate,GIFT_RETAIL,Singapore,SGD,110.0,GIFT,A token of thanks for a contact at Zenith Foods; picked it up at Artisan Crate. Receipt ref B490451.,PRJ-055
+X2-130,FINAL_TEST,E0172,2025-04-08,2025-04-17,Marina Noodle House,RESTAURANT,Singapore,SGD,1100.0,MEAL_CLIENT,"Client reception for Driftwood Travel at Marina Noodle House, 12 people.",PRJ-040
+X2-131,VALIDATION,E0050,2025-10-13,2025-10-21,Garden Bengaluru Hotel,HOTEL,India,INR,57200.0,HOTEL,"Lodging for Data Leaders Conference in Bengaluru, 4 nights; event reference CONF-004.",PRJ-058
+X2-132,DEVELOPMENT,E0013,2025-05-19,2025-06-02,Regency Tokyo Hotel,HOTEL,Japan,JPY,70040.0,HOTEL,"Lodging for 2 nights, Tokyo, covering the integration sprint.",PRJ-037
+X2-133,DEVELOPMENT,E0251,2026-04-08,2026-04-11,OfficeMart,EQUIPMENT,Japan,JPY,27500.0,EQUIPMENT,Second delivery of project equipment from OfficeMart.,PRJ-012
+X2-134,VALIDATION,E0079,2025-05-24,2025-05-27,IslandTel,TELECOM,Singapore,SGD,45.0,TELECOM,"Mobile data and calls for work, IslandTel.",PRJ-013
+X2-135,VALIDATION,E0111,2025-10-22,2025-10-27,IslandCab,RIDE_HAIL,Singapore,SGD,34.0,GROUND_TRANSPORT,IslandCab fare; details on the receipt.,PRJ-005
+X2-136,VALIDATION,E0088,2026-05-11,2026-07-10,DeskWorks,EQUIPMENT,Singapore,SGD,175.0,EQUIPMENT,Usb-c hub from DeskWorks; needed it for the support desk.,PRJ-040
+X2-137,FINAL_TEST,E0224,2026-03-12,2026-03-24,PixelDesk,SOFTWARE,Singapore,SGD,1400.0,SOFTWARE,PixelDesk licences charged to the project; I am the business owner.,PRJ-015
+X2-138,DEVELOPMENT,E0151,2026-08-19,2026-09-02,Bengal Kitchen,RESTAURANT,India,INR,90000.0,MEAL_CLIENT,"Client reception hosted for Larkspur Media at Bengal Kitchen, 24 guests and staff.",PRJ-055
+X2-139,DEVELOPMENT,E0156,2025-09-15,2025-10-07,Harbour Tokyo Hotel,HOTEL,Japan,JPY,96600.0,HOTEL,Stayed 2 nights in Tokyo while attending FinOps Forum (CONF-003).,PRJ-039
+X2-140,DEVELOPMENT,E0268,2025-06-12,2025-07-26,OfficeMart,EQUIPMENT,Singapore,SGD,89.0,EQUIPMENT,Bought a USB-C hub at OfficeMart for the project room.,PRJ-023
+X2-141,DEVELOPMENT,E0044,2025-10-15,2025-10-19,Clarke Quay Grill,RESTAURANT,Singapore,SGD,900.0,MEAL_CLIENT,Catering for the Zenith Foods summit reception at Clarke Quay Grill; 8 people attended.,PRJ-023
+X2-142,DEVELOPMENT,E0265,2026-03-30,2026-04-16,Palace Nagoya Hotel,HOTEL,Japan,JPY,168750.0,HOTEL,3-night stay in Nagoya covering the integration sprint.,PRJ-021
+X2-143,DEVELOPMENT,E0060,2025-06-16,2025-06-25,Garden Singapore Hotel,HOTEL,Singapore,SGD,997.5,HOTEL,3-night stay at the Singapore property during the client workshop.,PRJ-044
+X2-144,DEVELOPMENT,E0288,2025-09-24,2025-10-09,SkillBridge Academy,TRAINING_PROVIDER,Singapore,SGD,5200.0,TRAINING,Course at SkillBridge Academy on cloud security.,PRJ-003
+X2-145,DEVELOPMENT,E0180,2025-10-21,2025-10-31,Tanjong Dining Room,RESTAURANT,Singapore,SGD,1600.0,MEAL_CLIENT,"Tanjong Dining Room: dinner with Ember Foods after the quarterly business review, party of 16.",PRJ-052
+X2-146,VALIDATION,E0055,2025-05-27,2025-06-08,Kallang Bistro,RESTAURANT,Singapore,SGD,5600.0,MEAL_CLIENT,Reception for the Sterling Ports regional summit at Kallang Bistro; fifty guests and staff attended.,PRJ-031
+X2-147,DEVELOPMENT,E0146,2026-01-27,2026-02-02,Raffles Bistro,RESTAURANT,Singapore,SGD,1200.0,MEAL_CLIENT,Catering for the Palmyra Hotels summit reception at Raffles Bistro; 10 people attended.,PRJ-030
+X2-148,DEVELOPMENT,E0144,2026-03-09,2026-03-15,Skyline Singapore Hotel,HOTEL,Singapore,SGD,1472.0,HOTEL,"Lodging for 4 nights, Singapore, covering the data-centre cutover.",PRJ-036
+X2-149,DEVELOPMENT,E0102,2026-02-12,2026-02-20,PeriphPoint,EQUIPMENT,Japan,JPY,28000.0,EQUIPMENT,"More kit for the site from PeriphPoint, same project.",PRJ-011
+X2-150,FINAL_TEST,E0280,2025-04-14,2025-05-02,Meridian Nagoya Hotel,HOTEL,Japan,JPY,539600.0,HOTEL,"Lodging for 16 nights, Nagoya, covering the client workshop.",PRJ-042

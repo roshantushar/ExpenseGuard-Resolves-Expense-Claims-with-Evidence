@@ -1,0 +1,20 @@
+{
+ "seed": 6202,
+ "cases": 150,
+ "splits": {
+  "FINAL_TEST": 50,
+  "DEVELOPMENT": 70,
+  "VALIDATION": 30
+ },
+ "challenge_final_cases": 15,
+ "corpus": {
+  "docs": 22,
+  "clauses": 223,
+  "words": 38751,
+  "pages": 69,
+  "font_pt": 10.5,
+  "commentary_clauses": 182
+ },
+ "historical_expenses": 2483,
+ "tables": 11
+}

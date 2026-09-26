@@ -32,3 +32,6 @@ Model plan: OpenRouter paid model (GPT-mini class) for initial experiments, comp
 
 ## Run log
 `results/run_log.jsonl` is the single log. Row types: `llm_call` (tokens in/out, cost, latency, cached), `case_result` (prediction per case), `evaluation` (ground-truth join, written after the run), `experiment_summary`. Rows from Exp 2 onward carry `run_id` and `split`.
+
+## Dataset V2
+[dataset_v2_card.md](dataset_v2_card.md): the harder ExpenseGuard V2 dataset (dense 69-page corpus, 150 unique claims, deterministic reference-engine labels). Package: `ExpenseGuard_V2_DATASET/`; generator: `dataset_v2/`.

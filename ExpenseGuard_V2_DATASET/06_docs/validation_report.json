@@ -1,0 +1,232 @@
+{
+ "n_checks": 45,
+ "n_failed": 0,
+ "passed": true,
+ "checks": [
+  {
+   "check": "150 unique case ids",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "cases and ground truth cover the same ids",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "split 70/30/50",
+   "passed": true,
+   "detail": "Counter({'DEVELOPMENT': 70, 'FINAL_TEST': 50, 'VALIDATION': 30})"
+  },
+  {
+   "check": "split files match all_cases",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "groups 40/80/30",
+   "passed": true,
+   "detail": "Counter({'B_WORKFLOW': 80, 'A_SELF_CONTAINED': 40, 'C_AGENT_DYNAMIC': 30})"
+  },
+  {
+   "check": "four-way outcomes balanced (each 33-42)",
+   "passed": true,
+   "detail": "{'REJECT': 40, 'APPROVE': 39, 'REQUEST_INFORMATION': 35, 'ESCALATE': 36}"
+  },
+  {
+   "check": "DEVELOPMENT has every outcome within 18-36%",
+   "passed": true,
+   "detail": "{'APPROVE': 18, 'REQUEST_INFORMATION': 16, 'REJECT': 19, 'ESCALATE': 17}"
+  },
+  {
+   "check": "VALIDATION has every outcome within 18-36%",
+   "passed": true,
+   "detail": "{'APPROVE': 8, 'ESCALATE': 7, 'REJECT': 8, 'REQUEST_INFORMATION': 7}"
+  },
+  {
+   "check": "FINAL_TEST has every outcome within 18-36%",
+   "passed": true,
+   "detail": "{'REJECT': 13, 'APPROVE': 13, 'REQUEST_INFORMATION': 12, 'ESCALATE': 12}"
+  },
+  {
+   "check": "15 challenge cases, all in FINAL_TEST",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "cross-document cases >= 110",
+   "passed": true,
+   "detail": "116"
+  },
+  {
+   "check": "temporal-amendment cases present (>= 20)",
+   "passed": true,
+   "detail": "28"
+  },
+  {
+   "check": "20-22 policy documents",
+   "passed": true,
+   "detail": "22"
+  },
+  {
+   "check": "corpus >= 35k words",
+   "passed": true,
+   "detail": "38751"
+  },
+  {
+   "check": "PDF has 65-75 pages",
+   "passed": true,
+   "detail": "69"
+  },
+  {
+   "check": "clause ids unique",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "every clause id has a heading in the sources",
+   "passed": true,
+   "detail": "0"
+  },
+  {
+   "check": "every schedule value appears in the corpus",
+   "passed": true,
+   "detail": "[]"
+  },
+  {
+   "check": "every circular appears in the corpus",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "commentary contains no digits or currency codes (except tier labels)",
+   "passed": true,
+   "detail": "182"
+  },
+  {
+   "check": "all cited clause ids exist in the corpus",
+   "passed": true,
+   "detail": "[]"
+  },
+  {
+   "check": "controlling clauses present for every case",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "self-contained cases need no enterprise tool",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "workflow cases need at least one tool",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "dynamic cases need >= 2 tools and a branch trigger",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "missing-field lists only on REQUEST_INFORMATION",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "manual-touch flag equals ESCALATE",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "ground truth reproduced by the reference engine from the packaged files",
+   "passed": true,
+   "detail": "[]"
+  },
+  {
+   "check": "case employees and projects exist",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "11 enterprise tables",
+   "passed": true,
+   "detail": "['approval_delegations', 'conference_registry', 'cost_centre_budgets', 'employees', 'fx_rates', 'manager_approvals', 'merchant_directory', 'policy_exceptions', 'previous_expenses', 'project_registry', 'travel_requests']"
+  },
+  {
+   "check": "2000-3000 historical expenses",
+   "passed": true,
+   "detail": "2483"
+  },
+  {
+   "check": "approval and exception links point at real cases or background ids",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "travel links (event, exception) resolve except deliberate missing exceptions",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "delegation links resolve",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "FX rate exists for every case month and currency",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "hard-negative history rows present",
+   "passed": true,
+   "detail": "42"
+  },
+  {
+   "check": "all 150 employee descriptions are unique",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "all bill numbers unique",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "no employee shared across splits",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "no ground-truth keys in case files",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "no label strings in cases",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "no label strings in policy corpus or tables",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "no answer text from ground truth in visible data",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "case ids appear in tables only as approval/exception join keys",
+   "passed": true,
+   "detail": "['manager_approvals', 'policy_exceptions']"
+  },
+  {
+   "check": "challenge cases carry no marker in visible fields",
+   "passed": true,
+   "detail": ""
+  }
+ ]
+}
