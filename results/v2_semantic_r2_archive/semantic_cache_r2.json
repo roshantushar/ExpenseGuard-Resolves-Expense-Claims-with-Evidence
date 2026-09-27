@@ -1,0 +1,1052 @@
+{
+ "@K017": {
+  "note": "Renewal for PureYoga Club in SGD. Helps me stay sane during busy quarter.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K056": {
+  "note": "During the recent business trip, I stayed at the Grand Singapore Hotel in Singapore, Singapore, from March twenty-second to March twenty-fourth. Ravi mentioned that the exception reference for this stay is EXC-0001. I initially thought the bill was for two nights, but it was actually for the correct duration. Last year's trip involved a stay of three nights at a different hotel, which might be what I was confusing it with. Overall, the day was productive, and I managed to review several documents before the meeting at ten o'clock.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K039": {
+  "note": "Please find the receipt for the software subscription from Vector Notes, located in Tokyo, Japan, attached. The subscription is owned by Devi Lim and is billed on a month-by-month basis.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K093": {
+  "note": "This expense relates to a software subscription from Ledger Loop in Singapore. The subscription is billed month by month, and the named business owner for this service is Wei Ong.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K136": {
+  "note": "Please find the receipt for hotel accommodation at Summit Bengaluru Hotel in Bengaluru, India. The check-in date was initially noted as June fourth, but it should be June fifth, with check-out on June eighth. The total for this expense is in INR.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K083": {
+  "note": "I have submitted an expense for a software subscription with Metric Harbor, based in Singapore. The subscription is under the name of Ananya Chua and it follows a monthly billing pattern. The payment was made in Singapore dollars.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K074": {
+  "note": "This expense relates to a software subscription for InsightPad, which is based in Singapore. Hana Wong is the business owner for this subscription, and it is billed month by month.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K010": {
+  "note": "I hosted a meal for Mr. Chua, a freelance consultant, and one other guest from Kestrel Logistics at Kallang Noodle House. There were no drinks or voluntary items on the bill. I initially thought there were three external guests, but I corrected that; there were actually two. The total number of people at the table, employees included, was not recorded.",
+  "style": "indirect",
+  "attempts": 4,
+  "problems": [],
+  "manual_review": "Reviewed by hand: the note explicitly says the total headcount was not recorded; the extractor summed the named guests and the host, which the note does not state."
+ },
+ "@K095": {
+  "note": "We had a productive day working on the lab upgrades, and I made an equipment purchase from OfficeMart in Singapore for our ongoing project. The team was focused on enhancing our capabilities, and this new project equipment will be a valuable addition. I booked the order to ensure we stay on track with our timeline. Interestingly, I also found a document with the number fifty-three while sorting through our files, but that's unrelated to today's expenses.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K132": {
+  "note": "I am submitting a registration fee for the conference at Product Craft Live in Singapore. This is for CONF-008, which is essential for onboarding our new account team. The fee is listed in Singapore dollars.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K042": {
+  "note": "I stayed at the Garden Tokyo Hotel in Tokyo, Japan, checking in on August sixteenth and checking out on August eighteenth. I remember that during last year's trip, I stayed for two nights, but that was a different occasion. The currency for this expense is in Japanese Yen. Just to clarify, the total amount is not what I initially thought; it is actually accurate as listed.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K058": {
+  "note": "Hotel stay at Harbour Osaka Hotel, check-in 2025-11-08, check-out 2025-11-10, EXC-0003. Last year's stay was 2 nights. Oh, I meant JPY not USD.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K018": {
+  "note": "I had a meeting scheduled to discuss our upcoming projects, and the atmosphere was lively as we shared ideas and strategies. The renewal for MovieBox+ was a key topic, which is essential for keeping our team focused during this busy quarter. The expense was charged by MovieBox+ in Tokyo, Japan, and was processed in Japanese yen. I booked the meeting room number four hundred twenty-two, and we wrapped up just as the clock struck three.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K035": {
+  "note": "Taxi from the airport to the customer office after a delayed flight.",
+  "style": "original",
+  "attempts": 4,
+  "problems": [],
+  "manual_review": "Evidence-conflict claim: the LLM rewrite kept failing the conflict check, so the original short note is used."
+ },
+ "@K125": {
+  "note": "I hosted a meal at Tokyo Teppan for some delegates of Omnia Retail. Present were myself, six colleagues, and seven external guests, including a freelance consultant who is part of their team. There was no alcohol or voluntary items on the bill.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K130": {
+  "note": "The employee hosted an event that incurred a charge at PrepaidPlus Reseller 2025. The transaction was processed in Singapore dollars. The relevant receipt reference for this transaction is B539004.",
+  "style": "challenge",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K097": {
+  "note": "This is a follow-up to our earlier purchase from PeriphPoint. I bought some project equipment to support our ongoing work. The transaction was made in Mumbai, India, and the payment was made in INR. Everything was handled smoothly, just like a good chai at a busy dhaba.",
+  "style": "mixed",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K148": {
+  "note": "I hosted a meal for some delegates from Omnia Retail at Telok Ayer Grill in Singapore. Present were myself, four colleagues, and five external guests, including a freelance consultant who works with our team. There was no alcohol or voluntary charges on the bill. As a point of reference, during last year's dinner with Omnia Retail, we had a party of ten.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K134": {
+  "note": "I rented a car from DriveEasy Rentals 2026 for the site inspection day. The expense was incurred in Singapore and the currency used was Singapore dollars.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K138": {
+  "note": "Please find the receipt for hotel accommodation during the employee's recent stay at Crown Singapore Hotel in Singapore. Initially, I noted that the check-in date was August twenty-sixth, but it is actually August twenty-eighth, with the check-out date being September first. The expenses have been recorded in Singapore Dollars.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K155": {
+  "note": "This expense is for a software subscription with Pipeline Forge located in Singapore. Li Tan is the business owner for this subscription, which is billed month by month. The cost will be charged to the budget of project PRJ-019.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K008": {
+  "note": "After the meeting with Redwood Pharma regarding the incident post-mortem, we decided to host a meal at Bugis Grill. Present were myself, a colleague, and Mr. Menon, a freelance consultant working with the team. The evening went smoothly, and we discussed several important topics over dinner. I have not noted the number of documents we reviewed during our discussions, but it was certainly a productive evening.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K133": {
+  "note": "During our regional visit, we had a productive meeting discussing future strategies. The car rental was handled by our team, and we chose DriveEasy Rentals 2025 for the convenience it provided. Everything went smoothly, and we were able to cover all our scheduled appointments efficiently. I also organized two unrelated documents to support our discussions, which were helpful. The rental was in Singapore, and the charges were in SGD.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K067": {
+  "note": "I booked the ticket on November fourth, two thousand twenty-four, and the flight will take place six days later. The vendor for this airfare purchase is Nippon Sky in Singapore, and it is for an economy class seat. The scheduled flight time is six and a half hours. Just to clarify, my previous trip last year was also with Nippon Sky, but I had a premium economy cabin for that occasion.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K135": {
+  "note": "The employee hosted a stay at Skyline Singapore Suites in Singapore, Singapore for a business assignment. The check-in date was May sixteenth, twenty twenty-five, and the check-out date was May nineteenth, twenty twenty-five. The expense incurred is for hotel accommodation and is recorded in Singapore dollars.",
+  "style": "challenge",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K164": {
+  "note": "I stayed at Crown Singapore Inn in Singapore from September third until September eighth in 2025 for the data-centre cutover. The expenses I am submitting are for the hotel accommodation during this period. The currency for the transaction is SGD.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K030": {
+  "note": "The employee hosted a business meeting using their own car for travel. The odometer readings were four hundred sixty-seven ten at the start and four hundred sixty-eight thirty at the end of the trip. For clarity, during an earlier occasion, the employee's own vehicle was used for a site trip, and the odometer indicated one hundred twenty kilometers.",
+  "style": "challenge",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K066": {
+  "note": "I booked a ticket with Lotus Air on January nineteenth, two thousand twenty-six. The flight is in business class and is scheduled to take about eight hours. It will take place twenty-one days after the booking date.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K043": {
+  "note": "During my recent trip to Mumbai for a partner summit, I stayed at the Royal Mumbai Hotel. Ravi mentioned that my check-in date was May ninth, and I checked out on May twelfth. The day was quite productive, with various discussions and meetings taking place. I also had some unrelated documents to review, including a report on room two hundred.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K120": {
+  "note": "NipponTel bill for mobile/data plan charge in JPY for Sept twenty twenty-six. Covers client calls.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K073": {
+  "note": "We recently held a meeting regarding our ongoing projects with BrightBoard. Priya Reddy, the business owner of the subscription, coordinated the details and ensured everything was in place. The subscription is billed month by month, which allows us to manage our expenses efficiently. Interestingly, we also discussed some unrelated documents, including a report on room number three, during our time together.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K152": {
+  "note": "We had a productive meal at Kallang Terrace for our meeting, which was focused on discussing the upcoming project milestones. I initially thought we had six external guests, but it turns out there were actually five delegates from Ironbridge Capital, including a freelance consultant who provided valuable insights. Alongside me, four of my colleagues were present as well. The bill reflects that there was no alcohol or voluntary charges. I remember that the meeting room was number twenty-three, which was quite a coincidence as we also reviewed twenty-three documents during our session.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K021": {
+  "note": "I made an equipment purchase for the project room at ErgoStore in Singapore. The item I bought was a laptop stand, which should help improve our workspace ergonomics. The transaction was processed in Singapore dollars.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K143": {
+  "note": "I recently attended a client workshop in Singapore, which was quite productive. I booked my stay at the Meridian Singapore Hotel, where I checked in on the twelfth of October and checked out on the fourteenth of October. The day was filled with engaging discussions and planning for future projects. I also took the opportunity to review some documents related to the meeting, and I had a room on the fifteenth floor. The currency for the accommodation was in Singapore dollars.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K116": {
+  "note": "I attended an external training course at Apex Learning in Singapore focused on data engineering. The learning plan identifier for this course is LP-6658, and the training was provided by Apex Learning. The expenses are in Singapore dollars.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K062": {
+  "note": "During my recent trip to Pune, I had a productive meeting that revolved around our ongoing projects. My colleague Ravi mentioned that my stay at the Garden Pune Hotel was covered under exception reference EXC-0971. I checked in on January sixteenth and checked out on January nineteenth. The meeting room was set up nicely with all the necessary documents, including a stack of five reports that I had prepared beforehand.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K157": {
+  "note": "This expense is for a software subscription with CodeForge, based in Singapore. The subscription, owned by Priya Tan, is billed month by month and will be charged to the budget of project PRJ-023. The payment is made in Singapore Dollars.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K123": {
+  "note": "I hosted a meal for some delegates of Halcyon Freight at Mumbai Kitchen in Mumbai, India. Present were myself, nine colleagues, and ten external guests, including a freelance consultant from their team. I noted that there was no alcohol or voluntary items on the bill. Just to clarify, at last year's gathering at the same vendor, there were twenty attendees.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K020": {
+  "note": "Please find the receipt for an equipment purchase made at GadgetHub in Singapore. The item acquired was an HDMI adapter, and the transaction was conducted in Singapore Dollars.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K001": {
+  "note": "We had a meal at Kallang Dining Room in Singapore, and it was just the three of us from the team. The attendees included me and two colleagues, who are from another office and are also employees. There was no alcohol or anything voluntary on the bill.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K098": {
+  "note": "OfficeMart (Mumbai, India) purchase for proj equipment in INR. Follow-up to earlier order.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K061": {
+  "note": "Please find the receipt for hotel accommodation at Summit Singapore Inn in Singapore. The stay occurred from September fourteenth to September sixteenth, 2024, and is associated with exception reference EXC-0006. For clarity, during a previous trip last year, the duration of the stay was three nights.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K051": {
+  "note": "Please find the receipt for hotel accommodation at the Royal Osaka Hotel in Osaka, Japan. The check-in date was March nineteenth, two thousand twenty-six, and check-out occurred on March twenty-third, two thousand twenty-six. This stay was related to the conference referenced as CONF-002.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K033": {
+  "note": "During the meeting, we focused on strengthening our partnership with Tidewater Energy. The gift for Ms. Ho was carefully selected from Tea & Tradition, located in Singapore. This thoughtful gesture was a physical item handed over to her, intended to symbolize our collaboration. I remember the meeting started at ten o'clock, and it went smoothly, with plenty of documents exchanged.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K024": {
+  "note": "I made a small purchase at PeriphPoint in Mumbai, India. The item bought was a monitor arm, which should be categorized as an equipment purchase. The transaction was conducted in Indian Rupees.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K063": {
+  "note": "I stayed for four nights at the Garden Fukuoka Hotel in Fukuoka, Japan. The expense is related to my accommodation during the recent visit. Just as a note, last year's stay was for three nights at the same hotel. The reference for this stay is EXC-0007.",
+  "style": "mixed",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K146": {
+  "note": "I hosted a meal for some external guests at Raffles Grill in Singapore. There were eighteen people at the table, including nine delegates from Ember Foods. I want to note that there was no alcohol or voluntary expenses on the bill. Just as a reference, for a different occasion last year, we had a dinner with a total of twelve attendees.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K015": {
+  "note": "After our meeting with Cobalt Mining, we had a meal at Marina Bistro. Ravi mentioned that Ms. Lim from Cobalt Mining was present along with one of my colleagues and me. We enjoyed one bottle of wine priced at one hundred eighteen point eight Singapore dollars.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K011": {
+  "note": "I hosted a meal for Mr. Tanaka, a freelance consultant, and another guest from Yarrow Systems at Lotus Kitchen in Mumbai. We had a pleasant discussion about upcoming projects. I initially thought there were three external guests, but I corrected myself; there were actually two. We enjoyed two bottles of wine priced at four hundred INR each. Just to note, during an earlier trip, we had a dinner with five guests at a similar venue last year.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K065": {
+  "note": "The employee hosted a trip that required an airfare purchase from Merlion Air, based in Singapore. A colleague, Ravi, mentioned that the ticket was booked on March tenth, twenty twenty-five, for a departure on April fourth, twenty twenty-five. The flight departs at ten thirty and lands at eighteen thirty, and the employee will be traveling in premium economy.",
+  "style": "challenge",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K137": {
+  "note": "The employee hosted an assignment at the Regency Osaka Hotel in Osaka, Japan. The stay commenced on February thirteenth, two thousand twenty-six, and concluded on February sixteenth, two thousand twenty-six. The accommodation expense is documented in Japanese yen.",
+  "style": "challenge",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K072": {
+  "note": "The employee hosted a software subscription with Quill Analytics, based in Singapore. The subscription is billed month by month and is held under the business ownership of Ren Chua. The currency for this expense is Singapore Dollars.",
+  "style": "challenge",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K076": {
+  "note": "I am submitting an expense for a software subscription with CloudSuite Pro, based in Singapore. The business owner for this subscription is Kavya Tan, and it is billed month by month in Singapore dollars.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K031": {
+  "note": "Blossom & Co in Tokyo, JPY. Gift for Ms. Ho, Kanto Regional Development Authority, a state-owned body. It's a physical item to keep.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K145": {
+  "note": "The meal hosted for external guests took place at Telok Ayer Terrace in Singapore. The team included myself, four colleagues, and five delegates from Halcyon Freight, one of whom is a freelance consultant working closely with our team. It was a productive discussion over lunch without any alcohol or voluntary items included on the bill. I have not got the headcount for the previous occasion, but last year's dinner at the same venue had a total of ten attendees.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K070": {
+  "note": "Please find the receipt for the software subscription with SprintMill, located in Singapore. The business owner associated with this subscription is Li Reddy, and it follows a month-to-month billing pattern. The transaction is in Singapore dollars.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K163": {
+  "note": "Hotel stay at Summit Singapore Suites, check-in 2026-04-08, check-out 2026-04-13. Paid in SGD.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K057": {
+  "note": "During the trip to Tokyo, I stayed at the Skyline Tokyo Hotel from February sixth to February ninth. The expense is for hotel accommodation, and the currency used is Japanese yen. As mentioned, the written exception reference is EXC-0002.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K077": {
+  "note": "I am submitting an expense claim for a software subscription. This subscription, which is billed month by month, is for PixelDesk, a vendor based in Singapore. Sakura Goh is the business owner associated with this subscription.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K038": {
+  "note": "I purchased a workstation laptop for my desk at Keystone Supplies in Singapore. The transaction was made in Singapore dollars.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K036": {
+  "note": "I stayed for two nights at the hotel next to the conference venue. The vendor on the bill is RideNow India. I have not got the headcount for those who joined me.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K094": {
+  "note": "During our recent team meeting, we discussed the progress of our ongoing projects and the need for additional resources. I placed an order with ErgoStore in Singapore for some project equipment to enhance our capabilities. Everything went smoothly, and the order was finalized without any issues. There were also some unrelated documents from our last review that I had brought along, including a presentation we went over at two o'clock.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K105": {
+  "note": "After the security audit debrief, I visited Gift Gallery in Singapore to select a thoughtful gift for Ms. Wu from Tidewater Energy. The plan was to express appreciation for their collaboration. The gift is a physical item that Ms. Wu will keep. I also have some unrelated documents from the meeting that I noted down, but don\u2019t recall the specific count. Overall, it was a productive day.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K162": {
+  "note": "I booked a stay at Meridian Singapore Residence from November twentieth to November twenty-fifth, 2025, for a work trip. The hotel was conveniently located and provided great amenities. During this visit, we focused on various strategies for our upcoming projects. I remember last year's stay at a different hotel was for three nights, which made this trip feel quite different. I have not got the headcount for the meeting, but it was productive.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K122": {
+  "note": "The meal hosted for the delegates of Yarrow Systems took place at Marina Grill in Singapore. There were sixteen of us at the table, including eight external guests, one of whom is a freelance consultant. I have not got the headcount for that earlier dinner we had at Marina Grill last year, but I remember it was also for sixteen people.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K005": {
+  "note": "After our budget alignment meetings, we had a meal at Fuji Grill in Tokyo. The atmosphere was lively and it was nice to unwind together. Present were myself and two colleagues from different offices, both of whom are also employees on payroll. There was no alcohol or voluntary items on the bill, and I noted room two hundred for our discussion, but I have not got the headcount.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K025": {
+  "note": "This expense is for a taxi ride with SwiftCab SG, and it was charged in Singapore dollars. The trip was to a client's premises from another place, but the trip origin was not recorded.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K085": {
+  "note": "Please find the receipt for the software subscription related to our ongoing project. The vendor listed is CodeForge, located in Singapore, and the billing occurs on a month-by-month basis. The business owner associated with this subscription is Priya Tan.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K081": {
+  "note": "During our recent project meeting, we discussed various strategies for improving our workflow and enhancing productivity. I booked the software subscription with Ledger Loop, which is based in Singapore. The subscription is under my name, Emi Goh, and it is billed month by month. I have not noted the exact time of the meeting, but I do remember that we reviewed five unrelated documents before diving into the main agenda.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K037": {
+  "note": "I bought a docking station at TechBazaar located in Tokyo, Japan. The expense is for an equipment purchase, and the transaction was made in Japanese yen.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K129": {
+  "note": "I have submitted an expense related to the client evening at GiftCard Express 2026. This charge was incurred in Singapore, and the currency used was Singapore Dollars.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K059": {
+  "note": "Hotel stay at Grand Singapore Suites (SGD) from 2026-05-24 to 2026-05-26. Ravi mentioned EXC-0004. Last year's trip was 3 nights in biz class.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K117": {
+  "note": "I attended an external training course organized by Meridian School of Data, which is located in Singapore. This training was part of my learning plan identifier LP-6850. The day was productive, with engaging sessions that contributed to my professional development. I booked the course after discussing it with my manager. I also prepared a total of three unrelated documents for a separate meeting scheduled in room twenty-two.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K007": {
+  "note": "Please find the receipt for a meal hosted for external guests at Kyoto Izakaya in Tokyo, Japan. The attendees were the employee, and two external guests, Ms. Iyer, a freelance consultant, and another representative from Driftwood Travel. There was no alcohol or voluntary expense on the bill. For reference, last year's event involved three guests at a different occasion hosted at the same vendor.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K121": {
+  "note": "Please find the receipt for the mobile phone and data plan charge, which is associated with the IndiaWave bill from Mumbai, India. This charge pertains to the month of July in the year two thousand twenty-five.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K004": {
+  "note": "During our working dinner at Tanjong Kitchen, Ravi mentioned that there were no external guests present. It was just me and three colleagues, all of whom are employees, including some from our subsidiary and a couple of interns on payroll. I noted that there was no alcohol or voluntary charges on the bill.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K154": {
+  "note": "The employee hosted a software subscription with DataLoom, based in Singapore, Singapore. This subscription, owned by Haruto Suzuki, is billed month by month and is charged to the budget of project PRJ-017. The receipt reference for this expense is B840802.",
+  "style": "challenge",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K091": {
+  "note": "This expense is for a software subscription. It is billed month by month, and the vendor for this service is Beacon Suite based in Singapore. The subscription is managed by Siti Ito.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K028": {
+  "note": "The employee hosted a trip from Haneda Airport to the client site in Shinagawa. The trip was completed using TokyoGo Taxi as the vendor. The associated expense is recorded in Japanese Yen.",
+  "style": "challenge",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K069": {
+  "note": "I booked an airfare with Merlion Air on February twenty-third, two thousand twenty-six. The flight departs at nine forty-five and arrives at seven fifteen, with the departure occurring twenty-eight days after the booking date. The trip is in business class, and I referenced exception EXC-0008 for this ticket. For clarity, on a previous occasion, I traveled with Merlion Air in business class for a planning offsite last year, which was for three nights.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K128": {
+  "note": "I attended a client evening at Golden Dice Casino 2025, which was organized to strengthen our relationship with key partners. The atmosphere was lively, and we had several engaging discussions throughout the night. I booked the venue for this event, and it took place in the main hall, room 101. The bill was settled in Singapore dollars.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K075": {
+  "note": "This is for a software subscription to TaskOrbit, which is based in Singapore. The billing is done month by month, and the business owner for this subscription is Li Yamamoto. The expense is listed in Singapore dollars.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K068": {
+  "note": "I booked an airfare with Deccan Pacific on September second, twenty twenty-five. The flight departs at eleven forty-five and lands at sixteen forty-five, and it's in economy class. This ticket is for a trip that takes place twenty days after the booking date.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K096": {
+  "note": "This expense is for an equipment purchase from Keystone Supplies in Singapore. We acquired some project equipment to support our ongoing work. The transaction was made in SGD.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K071": {
+  "note": "The procurement panel had a productive meeting discussing various tools for enhancing our operations. Sakura Ito, who manages our subscription to Signal Stack, booked the software for our ongoing needs. We reviewed the monthly billing pattern to ensure it aligns with our budget planning. The room was well equipped, and we even had a stack of five documents to reference during the discussions.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K014": {
+  "note": "Please find the receipt for a meal hosted for external guests at Kyoto Sushi in Tokyo, Japan. The attendees included the employee and two external guests: Ms. Ito, a freelance consultant, and a representative from Solace Health. The bill also reflects the purchase of two bottles of alcohol, each priced at four thousand yen.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K140": {
+  "note": "I stayed at the Grand Singapore Residence from April twenty-fourth to April twenty-seventh, two thousand twenty-six. The expense is for hotel accommodation in Singapore, and the currency is Singapore dollars.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K029": {
+  "note": "Used own car for work. Mileage from Private vehicle mileage SG 2025, SGD. Odometer shows 48 km. Last year's trip was 2 nights in biz.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K159": {
+  "note": "I stayed at the Royal Singapore Inn in Singapore for five nights. The accommodation was arranged for the duration of our visit. The expenses incurred are in Singapore dollars.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K101": {
+  "note": "I purchased some project equipment for our lab from DeskWorks in Tokyo, Japan. The bill was generated in Japanese yen.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K003": {
+  "note": "Lunch at Fuji Sushi, Tokyo. 4 total, all employees, incl interns & subs. No alcohol or voluntary charges. Great team meal!",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K087": {
+  "note": "The employee hosted a software subscription with DataLoom based in Singapore, Singapore. The business owner of this subscription is Arjun Wong, and it is billed on a month-by-month basis. The transaction is recorded in Singapore dollars.",
+  "style": "challenge",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K009": {
+  "note": "I hosted a meal for two external guests at Punjab Tiffin in Mumbai. Present were myself and the two guests. There was no alcohol or voluntary charges on the bill. Just for reference, during last year's client dinner at the same place, we had a total of three attendees.",
+  "style": "mixed",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K054": {
+  "note": "The employee hosted an assignment in Singapore and incurred expenses for hotel accommodation at the Regency Singapore Hotel. The stay was from April seventeenth to April twentieth, two thousand twenty-six, and is associated with the conference reference CONF-005. The transaction was processed in Singapore dollars.",
+  "style": "challenge",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K160": {
+  "note": "Please find the receipt for hotel accommodation at Palace Singapore Residence in Singapore. The check-in date was July thirty-first, two thousand twenty-five, and the check-out date was August fifth, two thousand twenty-five. Ravi mentioned that the stay was noted to be in Singapore dollars. For your reference, during last year's trip, the stay length was five nights.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K022": {
+  "note": "The employee hosted a purchase of equipment, specifically a noise-cancelling headset, from Circuit City Trade located in Singapore. The transaction was conducted in Singapore Dollars, and the receipt is referenced as B279923.",
+  "style": "challenge",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K113": {
+  "note": "Gift for Ms. Wu, Willow Education, private co. from Heritage Hampers (Tokyo, Japan). Physical item handed over to keep.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K048": {
+  "note": "I stayed at Summit Singapore Hotel from the fifth to the seventh of October, two thousand twenty-four. The expense is for hotel accommodation during my trip.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K055": {
+  "note": "Please find the receipt for hotel accommodation at Regency Mumbai Hotel in Mumbai, India, for the stay from February thirteenth to February seventeenth, twenty twenty-five. This is in relation to conference reference CONF-006. For clarity, an earlier trip last year involved a stay of four nights at the same hotel.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K149": {
+  "note": "Please find the receipt for a meal hosted for external guests at Raffles Noodle House in Singapore. The attendees included the employee, six colleagues, and six delegates from Cobalt Mining, one of whom is a freelance consultant working closely with the team. There was no alcohol or voluntary charges on the bill. For reference, during a previous event at the same venue for Cobalt Mining, there were thirteen attendees.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K089": {
+  "note": "We had a productive meeting about our ongoing projects yesterday, where Li Rao discussed the latest updates. As part of our tools, we rely on the subscription from Helix Docs, which is billed month by month. I arranged the payment details, and the transaction will be processed in Singapore dollars. By the way, the meeting room was number twelve, and we reviewed several documents related to our strategy.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K006": {
+  "note": "During our meeting with Ironbridge Capital, we had dinner at Orchard Noodle House. The meal was a great opportunity to discuss the onboarding of the new account team. Present were myself, one colleague, and Ms. Nair, a freelance consultant from Ironbridge Capital. There was no alcohol served during the dinner. I have not noted the room number where we met, but it was a productive evening.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K115": {
+  "note": "I attended an external training course at Meridian School of Data focused on leadership. The learning plan identifier for this session is LP-4408. The training was provided by Meridian School of Data, and the expense is in Singapore Dollars.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K141": {
+  "note": "I stayed at the Skyline Mumbai Hotel from August twenty-third to August twenty-fifth, while attending meetings related to our projects. The hotel provided a comfortable atmosphere that was conducive for discussions. I booked this accommodation to ensure I was well-rested for the day's activities. Last year, I had a similar experience for an integration sprint, which lasted three nights at the same venue. I also had an unrelated meeting at ten o'clock where we reviewed four different project documents.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K109": {
+  "note": "I purchased a gift from Blossom & Co in Tokyo, Japan. It was a physical item meant to be kept and was handed over to Ms. Wu at Ember Foods, which is a private company.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K034": {
+  "note": "The employee hosted a meeting and presented a gift to Ms. Ho as a token of thanks. This gift was purchased from Orchid House Gifts in Mumbai, India, and is a physical item intended to be kept. The transaction was conducted in Indian Rupees.",
+  "style": "challenge",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K050": {
+  "note": "I booked accommodations at the Royal Singapore Hotel for my stay while attending the Applied AI Summit. The check-in date was May tenth, two thousand twenty-five, and I checked out on May twelfth, two thousand twenty-five. The conference reference is CONF-001. It was a productive day filled with insightful discussions, and I remember reviewing several documents in room three hundred. The hotel was comfortable and conveniently located.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K139": {
+  "note": "Please find the receipt for hotel accommodation attached. I initially noted the check-in date as November 15, but it is actually November 14. Ravi mentioned that the check-out date is November 17, and the vendor on the bill is Summit Tokyo Hotel in Tokyo, Japan. The transactions are in Japanese Yen.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K032": {
+  "note": "I recently visited Golden Basket to pick up a gift for Ms. Ho, who works at Zenith Foods. This private company has been a valuable partner, and I wanted to express our appreciation. The gift was a stored-value gift card that I believe she will find useful. During my visit, I also noted that the meeting was scheduled for room three hundred, which was a comfortable space for our discussions.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K079": {
+  "note": "I recently attended a meeting regarding our ongoing projects, and it was a productive session. The subscription to Pipeline Forge is essential for our operations, and Tao Kobayashi is the business owner overseeing this expense. We are billed month by month for this service. By the way, the meeting room was number three hundred and fifteen, which added a nice touch to our discussions.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K049": {
+  "note": "Please find the receipt for hotel accommodation during the recent integration sprint. The vendor listed is Regency Fukuoka Hotel in Fukuoka, Japan. The stay encompassed a total of three nights.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K114": {
+  "note": "I attended an external training course provided by Praxis Academy on October fifth. The learning plan identifier for this course is LP-5758, which aligns with my development goals. The session focused on enhancing our skills and was well-organized. The vendor for the bill is Praxis Academy based in Singapore. I also have a document related to room two hundred for our internal meeting that day.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K107": {
+  "note": "I purchased a gift for Ms. Wu, who is with Sterling Ports. This is a private company, and the present is a physical item that she will keep. The vendor for this transaction is Heritage Hampers, located in Mumbai, India.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K012": {
+  "note": "I hosted a meal for external guests at Raffles Terrace in Singapore. There were four of us at the table, including two external guests, Mr. Menon and one from Redwood Pharma. We enjoyed two bottles of wine priced at seventy each. Just to clarify, on a previous occasion, we had a dinner with two guests from Redwood Pharma at Raffles Terrace, with a total of four people present.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K047": {
+  "note": "During my recent trip to Pune for the audit fieldwork, I stayed at the Grand Pune Hotel. Initially, I thought I checked in on September twentieth, but Ravi mentioned that my actual check-in date was September nineteenth. I enjoyed my time there until I checked out on September twenty-second. The hotel was comfortable, and I found the staff very accommodating. By the way, I had a meeting scheduled for two o'clock that day.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K131": {
+  "note": "Please find the receipt for the registration fee related to the Data Leaders Conference in Singapore. The event reference is CONF-007, and the transaction was processed in SGD.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K026": {
+  "note": "Taxi trip w/ QuickCab (Mumbai, India) from home to Bengaluru office. INR bill attached.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K016": {
+  "note": "After the annual planning offsite, I hosted a meal at Kyoto Grill in Tokyo, Japan. I initially thought there were three guests, but in fact, it was just myself and two external guests: Mr. Chua, a freelance consultant, and another representative from Northgate Telecom. There was no alcohol served during our lunch, and I included a gratuity of three thousand yen. Everything went smoothly, and the discussions were productive.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K158": {
+  "note": "I have submitted an expense for a software subscription from Pipeline Forge in Singapore. The subscription is owned by Devi Lim and is billed on a month-by-month basis. This cost will be charged to the budget of project PRJ-024.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K156": {
+  "note": "The employee hosted a software subscription with Ledger Loop based in Singapore. The business owner of this subscription is Devi Tanaka, and it is billed month by month. The expense is charged to the budget of project PRJ-021.",
+  "style": "challenge",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K060": {
+  "note": "During my recent client trip, I booked a room at the Grand Mumbai Hotel in Mumbai, India. I initially thought my check-in was on July eleventh, but it was actually July tenth, and I checked out on July fourteenth. The stay was comfortable and met my needs well. I have not noted the exact room number, but I remember discussing several documents related to our agenda. The expense is referenced under EXC-0005.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K161": {
+  "note": "Hotel stay at Harbour Singapore Suites, check-in 2026-03-11, check-out 2026-03-16. All in SGD.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K111": {
+  "note": "I purchased a gift from Blossom & Co in Singapore. The recipient is Ms. Wu from Palmyra Hotels, which is a private company. This gift is a physical item that was handed over for her to keep.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K151": {
+  "note": "We hosted a meal for delegates from Larkspur Media at Orchard Kitchen in Singapore. I initially thought there were nineteen of us, but it turns out there were actually twenty present: me, nine colleagues, and ten external guests. There was no alcohol or voluntary charges on the bill.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K002": {
+  "note": "This meal was held at Bengal Tiffin in Mumbai, India, and no alcohol or voluntary items were included on the bill. Present were the employee and three colleagues, all of whom are employees from different offices of the company or interns on payroll. Just to note, during last year's dinner at the same place, we had five attendees.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K013": {
+  "note": "The team supper at Tanjong Terrace was attended by the employee and three colleagues, including some who are interns or come from another office of the company. We enjoyed two bottles of wine, each priced at fifteen Singapore dollars. There were no external guests present, and all attendees were employees.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K064": {
+  "note": "The employee hosted a trip requiring an airfare purchase from Meridian Airways based in Singapore. The ticket was booked on July eighth, two thousand twenty-five, for a departure on August seventh, two thousand twenty-five, with the flight departing at twelve fifteen and landing at nineteen fifteen, in premium economy class. For reference, an earlier trip involved a stay of three nights in the same cabin.",
+  "style": "challenge",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K142": {
+  "note": "I booked a stay at Garden Osaka Residence in Osaka, Japan, for the team. We checked in on June twentieth, twenty twenty-five, and checked out on June twenty-third, twenty twenty-five. The details are attached, and transactions were in Japanese yen.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K103": {
+  "note": "The employee hosted a gesture of appreciation for Ms. Wu, a representative from Zenith Foods, which is a private company. The gift, a physical item intended for her to keep, was purchased at Artisan Crate located in Singapore.",
+  "style": "challenge",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K147": {
+  "note": "I hosted a meal at Marina Noodle House in Singapore for delegates from Driftwood Travel. Five of my colleagues joined me, and I learned from Ravi that there were six external guests present, one of whom is a freelance consultant working with our team. There was no alcohol or voluntary items on the bill. Just to clarify, during a previous occasion, we had twelve people at a client reception for the same organization at the same venue.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K053": {
+  "note": "Ravi mentioned that the accommodation for the Data Leaders Conference in Bengaluru was at the Garden Bengaluru Hotel. We stayed for four nights during the event referenced as CONF-004. The expenses were incurred in INR.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K046": {
+  "note": "I stayed at the Regency Tokyo Hotel in Tokyo, Japan, checking in on May seventeenth and checking out on May nineteenth. Ravi mentioned that the expense is for hotel accommodation, and I wanted to highlight that last year's trip involved a stay of three nights. The charges were in Japanese Yen.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K100": {
+  "note": "This is for the second delivery of project equipment that I purchased from OfficeMart in Tokyo. The transaction was made in Japanese yen, and it was necessary for our ongoing work. Everything is moving along smoothly, and I'm looking forward to seeing the equipment in action during our next kaigi.",
+  "style": "mixed",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K119": {
+  "note": "I recently had a productive meeting regarding our upcoming project plans. We used IslandTel for mobile data and calls to ensure smooth communication throughout the discussions. The phone bill I am submitting covers the month of May in the year two thousand twenty-five. I booked the meeting room on the fourth floor, which had a great view. As a side note, there were ten unrelated documents circulating during the meeting.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K027": {
+  "note": "I took a ride-hail trip home from the office. My colleague Ravi mentioned I left at twenty-two forty after wrapping up business at twenty-two oh five. The fare was with IslandCab in Singapore, and the currency is SGD.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K023": {
+  "note": "I made an equipment purchase from DeskWorks in Singapore. I bought a USB-C hub, which is essential for the support desk.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K153": {
+  "note": "We had a productive meeting about the upcoming milestones for project PRJ-015, which is under my supervision. The software subscription from PixelDesk is essential for our ongoing work, and I am the business owner, Priya Iyer. The subscription is billed month by month, and the cost will be charged to the project's budget. I also noted that the meeting was set in room two hundred and twelve, which was quite convenient for everyone involved.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K124": {
+  "note": "We recently hosted a meal for our delegates from Larkspur Media at Bengal Kitchen in Mumbai. Ravi mentioned that there were twenty-four people at the table, which included twelve external guests, among them a freelance consultant named Sarah Lee. The day was productive, and we enjoyed discussing key projects. I have not noted any alcohol or voluntary charges on the bill, and it was nice to have everyone together in room 305.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K052": {
+  "note": "Hotel stay at Harbour Tokyo Hotel, check-in 2025-09-13, check-out 2025-09-15, w/ CONF-003. Last year's trip was in biz for 3 nights.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K019": {
+  "note": "During the project meeting, which lasted from two to four in room 305, we discussed our upcoming deadlines and resource allocations. I booked the equipment needed for our team\u2019s work, which included purchasing a USB-C hub at OfficeMart in Singapore. The hub will enhance our connectivity for presentations and collaborative work. The vendor provided the item in Singapore dollars.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K126": {
+  "note": "I hosted a meal for some external guests at Clarke Quay Grill in Singapore. There were three colleagues with me, along with four delegates from Zenith Foods, one of whom is a freelance consultant working closely with our team. I initially thought there were seven attendees, but I have corrected that to eight, as I included myself and my colleagues in that count. There was no alcohol or voluntary items on the bill.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K144": {
+  "note": "During our recent integration sprint, I booked a stay at the Palace Nagoya Hotel in Nagoya, Japan. The accommodation was for three nights to ensure a productive environment for our team. I checked in on the thirteenth and checked out on the sixteenth. The hotel room was comfortable and conducive to our work discussions, and I have not noted the exact time of our meeting that day, which was at two o'clock.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K041": {
+  "note": "I stayed at the Garden Singapore Hotel from June thirteenth to June sixteenth, two thousand twenty-five for hotel accommodation. Last year, I was there for a three-night stay during the client workshop. The expenses were incurred in Singapore dollars.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K118": {
+  "note": "I attended a course at SkillBridge Academy focused on cloud security. The training was detailed and engaging, enhancing my skills in this critical area. The learning plan identifier for this session is LP-2744. The course was booked by my manager, and I found it valuable for our upcoming projects. I also reviewed five unrelated documents in room two hundred and twelve before heading to the training.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K150": {
+  "note": "We had a meal hosted for external guests at Tanjong Dining Room in Singapore. There were eight of us from our team, including myself, and eight delegates from Ember Foods, one of whom is a freelance consultant working with us. I mistakenly thought there were seven external guests, but it turns out there were actually eight. A colleague mentioned that there was no alcohol or voluntary items on the bill.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K040": {
+  "note": "Please find the receipt for a meal hosted at Kallang Bistro in Singapore. The meal included the employee, nineteen colleagues, and thirty external guests, who were delegates of Sterling Ports. Among them was a freelance consultant working with our team. There was no alcohol or voluntary charges on the bill.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K127": {
+  "note": "I hosted a meal at Raffles Bistro in Singapore for some delegates of Palmyra Hotels. Present were myself, four colleagues, and five external guests, including a freelance consultant who specializes in hospitality. I initially thought there were six external guests, but it turns out there were actually five. The meal did not include any alcohol or voluntary charges. We discussed various topics related to the summit, and I believe the meeting was productive.",
+  "style": "verbose",
+  "attempts": 2,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K044": {
+  "note": "I stayed at the Skyline Singapore Hotel from March fifth to March ninth in 2026 for accommodation. Last year's trip involved a stay of four nights at the same hotel. The expenses are in Singapore dollars.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K099": {
+  "note": "I picked up some project equipment from PeriphPoint in Tokyo. It was for the same site we discussed earlier. The expense was made in JPY, and I\u2019ll share the details soon. Chotto matte, and I'll get the bill sorted!",
+  "style": "mixed",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ },
+ "@K045": {
+  "note": "I stayed at the Meridian Nagoya Hotel in Nagoya, Japan, from March twenty-ninth to April fourteenth in connection with my recent trip. Last year, I had a stay of sixteen nights there for a different occasion. The expenses for this trip are in Japanese yen.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "manual_review": null
+ }
+}

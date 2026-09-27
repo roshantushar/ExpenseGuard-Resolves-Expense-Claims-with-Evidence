@@ -1,0 +1,52 @@
+{
+  "run_id": "EXP01_SLICE-DEVELOPMENT-llama3.2:3b-837f0e",
+  "model": "llama3.2:3b",
+  "n": 9,
+  "correct": 4,
+  "correct_disposition_rate": 0.4444,
+  "wilson95": [
+    0.1888,
+    0.7334
+  ],
+  "false_approvals": 0,
+  "non_approvable": 6,
+  "false_approval_rate": 0.0,
+  "human_review_rate": 0.0,
+  "over_escalation": 0,
+  "missed_escalation": 1,
+  "missing_field_exact_match": "0/2",
+  "by_family": {
+    "FX_THRESHOLD": "0/1",
+    "CLIENT_MEAL": "0/1",
+    "PERSONAL_SPEND": "1/1",
+    "SUBMISSION_WINDOW": "0/1",
+    "ALCOHOL_REGIONAL": "1/2",
+    "GIFT_RULES": "1/1",
+    "EVIDENCE_CONFLICT": "1/1",
+    "MILEAGE": "0/1"
+  },
+  "confusion": {
+    "APPROVE->REJECT": 3,
+    "REQUEST_INFORMATION->REJECT": 1,
+    "REJECT->REJECT": 3,
+    "ESCALATE->REJECT": 1,
+    "REQUEST_INFORMATION->REQUEST_INFORMATION": 1
+  },
+  "errors": 0,
+  "median_latency_ms": 2400,
+  "p95_latency_ms": 3544,
+  "input_tokens": 8401,
+  "output_tokens": 740,
+  "total_tokens": 9141,
+  "total_cost_usd": 0.0,
+  "decision_counts": {
+    "REJECT": 8,
+    "REQUEST_INFORMATION": 1
+  },
+  "schema_valid": 9,
+  "unsupported_policy_assertion_rate": 1.0,
+  "policy_assertion_in_text_rate": 0.6667,
+  "nonexistent_clause_rate": 0.0,
+  "wrong_policy_version_cases": 0,
+  "cached_calls": 0
+}

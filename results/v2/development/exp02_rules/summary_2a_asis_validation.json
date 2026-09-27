@@ -1,0 +1,98 @@
+{
+ "run_id": "EXP02_RULES-2a_asis-VALIDATION-abc68a",
+ "n": 30,
+ "correct": 12,
+ "correct_disposition_rate": 0.4,
+ "wilson95": [
+  0.2459,
+  0.5768
+ ],
+ "false_approvals": 16,
+ "non_approvable": 22,
+ "false_approval_rate": 0.7273,
+ "human_review_rate": 0.0333,
+ "over_escalation": 0,
+ "missed_escalation": 6,
+ "missing_field_exact_match": "1/7",
+ "by_family": {
+  "DUPLICATE_CHECK": "1/2",
+  "SOFTWARE_APPROVAL": "0/2",
+  "DYNAMIC_HOTEL_DISCOVERY": "1/3",
+  "CLIENT_MEAL": "1/2",
+  "DYNAMIC_DEEP_HOTEL_CHAIN": "1/2",
+  "TRAINING_CAP": "0/1",
+  "APPROVAL_TIERS": "0/1",
+  "SUBMISSION_WINDOW": "2/2",
+  "SPLIT_TRANSACTION": "0/2",
+  "HOTEL_CONFERENCE": "2/3",
+  "HOTEL_EXCEPTION": "1/2",
+  "EMPLOYEE_MEAL_TEMPORAL": "1/1",
+  "DYNAMIC_DELEGATION_CHAIN": "0/1",
+  "GIFT_ANNUAL_CAP": "0/1",
+  "HOTEL_CEILING": "0/1",
+  "ALCOHOL_REGIONAL": "0/1",
+  "TELECOM_MONTHLY": "0/1",
+  "GROUND_TRANSPORT": "1/1",
+  "FINANCE_THRESHOLD": "1/1"
+ },
+ "confusion": {
+  "APPROVE->APPROVE": 8,
+  "ESCALATE->APPROVE": 4,
+  "REJECT->APPROVE": 7,
+  "ESCALATE->REQUEST_INFORMATION": 2,
+  "REQUEST_INFORMATION->APPROVE": 5,
+  "REJECT->REJECT": 1,
+  "REQUEST_INFORMATION->REQUEST_INFORMATION": 2,
+  "ESCALATE->ESCALATE": 1
+ },
+ "errors": 0,
+ "median_latency_ms": 0.085,
+ "p95_latency_ms": 0.113,
+ "input_tokens": 0,
+ "output_tokens": 0,
+ "total_tokens": 0,
+ "total_cost_usd": 0.0,
+ "crashes_scored_as_escalate": 0,
+ "extended": {
+  "n": 30,
+  "per_class": {
+   "APPROVE": {
+    "support": 8,
+    "precision": 0.3333333333333333,
+    "recall": 1.0,
+    "f1": 0.5
+   },
+   "REJECT": {
+    "support": 8,
+    "precision": 1.0,
+    "recall": 0.125,
+    "f1": 0.2222222222222222
+   },
+   "REQUEST_INFORMATION": {
+    "support": 7,
+    "precision": 0.5,
+    "recall": 0.2857142857142857,
+    "f1": 0.36363636363636365
+   },
+   "ESCALATE": {
+    "support": 7,
+    "precision": 1.0,
+    "recall": 0.14285714285714285,
+    "f1": 0.25
+   }
+  },
+  "macro_f1": 0.334,
+  "wrongful_rejections": "0/8",
+  "wrongful_rejection_rate": 0.0,
+  "over_escalation_rate": 0.0,
+  "missed_escalation_rate": 0.8571,
+  "auto_resolved": 29,
+  "error_rate_among_auto_resolved": 0.6207,
+  "citation_precision": 0.6667,
+  "citation_recall": 0.0917,
+  "cases_citing_anything": 6,
+  "missing_field_precision": 0.25,
+  "missing_field_recall": 0.14285714285714285,
+  "cost_per_correct_usd": 0.0
+ }
+}

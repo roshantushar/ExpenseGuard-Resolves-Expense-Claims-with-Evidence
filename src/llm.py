@@ -5,10 +5,11 @@ import hashlib, json, os, time, urllib.request
 from . import config as C
 
 C.load_env()
-CACHE = C.RESULTS / "cache"
-LEDGER = C.RESULTS / "run_log.jsonl"  # single log of everything: llm calls, per-case results, experiment summaries
+CACHE = C.SHARED / "cache"
+LEDGER = C.SHARED / "run_log.jsonl"  # single log of everything: llm calls, per-case results, experiment summaries
 # USD per 1M tokens, fallback only if the API does not report cost
 PRICES = {"openai/gpt-4o-mini": (0.15, 0.60)}
+NUM_CTX = 16384  # Ollama context window; long-context experiments raise it (Ollama silently truncates prompts beyond it)
 
 
 class BudgetExceeded(RuntimeError):
@@ -18,7 +19,7 @@ class BudgetExceeded(RuntimeError):
 def log_event(**row) -> None:
     """Append one row to the single run log. `type` is llm_call | case_result | experiment_summary."""
     with open(LEDGER, "a") as fh:
-        fh.write(json.dumps({"ts": time.strftime("%Y-%m-%dT%H:%M:%S"), **row}, default=str) + "\n")
+        fh.write(json.dumps({"ts": time.strftime("%Y-%m-%dT%H:%M:%S"), "dataset": C.VERSION, **row}, default=str) + "\n")
 
 
 def spent() -> float:
@@ -37,7 +38,8 @@ def _post(url, payload, headers, timeout=120):
 
 def chat(model: str, messages: list, temperature: float = 0.0, max_tokens: int = 600, tag: str = "", case_id: str = "", run_id: str = "", split: str = "") -> dict:
     """Returns {text, input_tokens, output_tokens, cost_usd, latency_ms, cached, model}."""
-    key = hashlib.sha256(json.dumps([model, messages, temperature, max_tokens], sort_keys=True).encode()).hexdigest()
+    key_parts = [model, messages, temperature, max_tokens] + ([NUM_CTX] if "/" not in model and NUM_CTX != 16384 else [])   # non-default local context window is part of the key
+    key = hashlib.sha256(json.dumps(key_parts, sort_keys=True).encode()).hexdigest()
     f = CACHE / f"{key}.json"
     if f.exists():
         out = json.loads(f.read_text())
@@ -52,7 +54,7 @@ def chat(model: str, messages: list, temperature: float = 0.0, max_tokens: int =
     t0 = time.time()
     if local:
         r = _post("http://localhost:11434/api/chat", {"model": model, "messages": messages, "stream": False, "format": "json",
-                  "options": {"temperature": temperature, "num_predict": max_tokens, "num_ctx": 16384}}, {}, timeout=600)
+                  "options": {"temperature": temperature, "num_predict": max_tokens, "num_ctx": NUM_CTX}}, {}, timeout=600)
         out = {"text": r["message"]["content"], "input_tokens": r.get("prompt_eval_count", 0), "output_tokens": r.get("eval_count", 0), "cost_usd": 0.0}
     else:
         r = _post("https://openrouter.ai/api/v1/chat/completions",

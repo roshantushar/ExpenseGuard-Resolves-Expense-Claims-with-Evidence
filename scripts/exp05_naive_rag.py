@@ -72,7 +72,7 @@ for (m, cfg), rows in results.items():
 
 # embedding cost/tokens per model from the log
 cost, toks = defaultdict(float), defaultdict(int)
-for l in open(C.RESULTS / "run_log.jsonl"):
+for l in open(C.SHARED / "run_log.jsonl"):
     r = json.loads(l)
     if r.get("kind") == "embedding" and not r.get("cached"):
         cost[r["model"]] += r["cost_usd"]; toks[r["model"]] += r["input_tokens"]

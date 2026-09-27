@@ -1,0 +1,1 @@
+{"text": "{\"decision\": \"REJECT\", \"policy_evidence\": [\"GEP25-2.1\"], \"missing_fields\": [], \"explanation\": \"The claim was submitted 44 days after the transaction date, which falls within the submission window requiring manager approval.\"}", "input_tokens": 694, "output_tokens": 55, "cost_usd": 0.0, "latency_ms": 1384, "model": "llama3.2:3b"}

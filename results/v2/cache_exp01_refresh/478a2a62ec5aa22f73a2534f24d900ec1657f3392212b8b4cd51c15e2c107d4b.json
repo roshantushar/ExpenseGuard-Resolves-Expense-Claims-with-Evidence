@@ -1,0 +1,1 @@
+{"text": "{\"decision\": \"REJECT\", \"policy_evidence\": [\"SG-2.2\", \"MEAL-1.2\"], \"missing_fields\": [], \"explanation\": \"The claim exceeds the client meal ceiling per attendee, including employees present, which is SGD 120 in 2024.\"}", "input_tokens": 1005, "output_tokens": 63, "cost_usd": 0.0, "latency_ms": 1798, "model": "llama3.2:3b"}

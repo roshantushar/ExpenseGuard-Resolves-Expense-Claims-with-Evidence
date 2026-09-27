@@ -1,0 +1,105 @@
+{
+ "run_id": "EXP02_RULES-2a_asis-VALIDATION-378aca",
+ "n": 30,
+ "correct": 7,
+ "correct_disposition_rate": 0.2333,
+ "wilson95": [
+  0.1179,
+  0.4093
+ ],
+ "false_approvals": 9,
+ "non_approvable": 22,
+ "false_approval_rate": 0.4091,
+ "human_review_rate": 0.3667,
+ "over_escalation": 9,
+ "missed_escalation": 5,
+ "missing_field_exact_match": "1/7",
+ "by_family": {
+  "DUPLICATE_CHECK": "1/2",
+  "SOFTWARE_APPROVAL": "0/2",
+  "DYNAMIC_HOTEL_DISCOVERY": "1/3",
+  "CLIENT_MEAL": "0/2",
+  "DYNAMIC_DEEP_HOTEL_CHAIN": "1/2",
+  "TRAINING_CAP": "0/1",
+  "APPROVAL_TIERS": "1/1",
+  "SUBMISSION_WINDOW": "2/2",
+  "SPLIT_TRANSACTION": "0/2",
+  "HOTEL_CONFERENCE": "0/3",
+  "HOTEL_EXCEPTION": "0/2",
+  "EMPLOYEE_MEAL_TEMPORAL": "0/1",
+  "DYNAMIC_DELEGATION_CHAIN": "0/1",
+  "GIFT_ANNUAL_CAP": "0/1",
+  "HOTEL_CEILING": "0/1",
+  "ALCOHOL_REGIONAL": "0/1",
+  "TELECOM_MONTHLY": "0/1",
+  "GROUND_TRANSPORT": "1/1",
+  "FINANCE_THRESHOLD": "0/1"
+ },
+ "confusion": {
+  "APPROVE->APPROVE": 2,
+  "ESCALATE->APPROVE": 3,
+  "REJECT->ESCALATE": 3,
+  "REJECT->REQUEST_INFORMATION": 1,
+  "ESCALATE->ESCALATE": 2,
+  "REQUEST_INFORMATION->APPROVE": 3,
+  "REQUEST_INFORMATION->REQUEST_INFORMATION": 2,
+  "REJECT->REJECT": 1,
+  "APPROVE->ESCALATE": 4,
+  "APPROVE->REJECT": 1,
+  "APPROVE->REQUEST_INFORMATION": 1,
+  "ESCALATE->REJECT": 1,
+  "REJECT->APPROVE": 3,
+  "REQUEST_INFORMATION->ESCALATE": 2,
+  "ESCALATE->REQUEST_INFORMATION": 1
+ },
+ "errors": 0,
+ "median_latency_ms": 0.0935,
+ "p95_latency_ms": 0.121,
+ "input_tokens": 0,
+ "output_tokens": 0,
+ "total_tokens": 0,
+ "total_cost_usd": 0.0,
+ "crashes_scored_as_escalate": 0,
+ "extended": {
+  "n": 30,
+  "per_class": {
+   "APPROVE": {
+    "support": 8,
+    "precision": 0.18181818181818182,
+    "recall": 0.25,
+    "f1": 0.2105263157894737
+   },
+   "REJECT": {
+    "support": 8,
+    "precision": 0.3333333333333333,
+    "recall": 0.125,
+    "f1": 0.18181818181818182
+   },
+   "REQUEST_INFORMATION": {
+    "support": 7,
+    "precision": 0.4,
+    "recall": 0.2857142857142857,
+    "f1": 0.3333333333333333
+   },
+   "ESCALATE": {
+    "support": 7,
+    "precision": 0.18181818181818182,
+    "recall": 0.2857142857142857,
+    "f1": 0.2222222222222222
+   }
+  },
+  "macro_f1": 0.237,
+  "wrongful_rejections": "1/8",
+  "wrongful_rejection_rate": 0.125,
+  "over_escalation_rate": 0.3,
+  "missed_escalation_rate": 0.7143,
+  "auto_resolved": 19,
+  "error_rate_among_auto_resolved": 0.7368,
+  "citation_precision": 0.1316,
+  "citation_recall": 0.075,
+  "cases_citing_anything": 19,
+  "missing_field_precision": 0.2,
+  "missing_field_recall": 0.14285714285714285,
+  "cost_per_correct_usd": 0.0
+ }
+}

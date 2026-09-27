@@ -1,0 +1,1 @@
+{"text": "{\"decision\": \"REJECT\", \"policy_evidence\": [\"IN-2.4\", \"MEAL-2.1\"], \"missing_fields\": [], \"explanation\": \"The transaction is not reimbursable due to the presence of alcohol expenses, which are prohibited under IN-2.4 for transactions in India.\"}", "input_tokens": 995, "output_tokens": 68, "cost_usd": 0.0, "latency_ms": 1922, "model": "llama3.2:3b"}

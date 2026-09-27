@@ -192,11 +192,12 @@ def _eval(R):
         R.cite(["CARD-1.1", "CARD-2.1"], ["GEP%d-1.2" % (y - 2000)]); R.done("REJECT", "Consumer service presumed personal spend.")
     # -- prohibited by content
     if et == "GIFT":
-        if f.get("recipient_type") == "GOVERNMENT": R.cite("GIFT-1.2", "EXC-3.1"); R.done("REJECT", "Gift to a public official or government-affiliated body.")
-        if f.get("gift_form") == "CASH_EQUIVALENT": R.cite("GIFT-1.3", "EXC-3.1"); R.done("REJECT", "Cash equivalents are prohibited as gifts.")
+        if f.get("recipient_type") == "GOVERNMENT": R.cite("GIFT-1.2", ["EXC-3.1", "GIFT-1.5"]); R.done("REJECT", "Gift to a public official or government-affiliated body.")
+        if f.get("gift_form") == "CASH_EQUIVALENT": R.cite("GIFT-1.3", ["EXC-3.1", "GIFT-1.6"]); R.done("REJECT", "Cash equivalents are prohibited as gifts.")
     if et in MEALS:
         alc = float(f.get("alcohol_amount") or 0)
         if alc > 0:
+            R.cite([], ["MEAL-1.4"])
             if reg == "IN": R.cite(["IN-2.4"], ["MEAL-2.1"]); R.done("REJECT", "Alcohol is not reimbursable in India.")
             if int(f.get("external_attendees") or 0) == 0: R.cite([f"{reg}-2.4"], ["MEAL-2.1"]); R.done("REJECT", "Alcohol is permitted only with external attendees.")
             lim = W.ALCOHOL[reg][y]

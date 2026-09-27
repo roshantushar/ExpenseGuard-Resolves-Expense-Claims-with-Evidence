@@ -1,0 +1,99 @@
+{
+ "run_id": "EXP02_RULES-2c_regex-VALIDATION-b0007b",
+ "n": 30,
+ "correct": 21,
+ "correct_disposition_rate": 0.7,
+ "wilson95": [
+  0.5212,
+  0.8334
+ ],
+ "false_approvals": 4,
+ "non_approvable": 22,
+ "false_approval_rate": 0.1818,
+ "human_review_rate": 0.1333,
+ "over_escalation": 0,
+ "missed_escalation": 3,
+ "missing_field_exact_match": "6/7",
+ "by_family": {
+  "DUPLICATE_CHECK": "2/2",
+  "SOFTWARE_APPROVAL": "2/2",
+  "DYNAMIC_HOTEL_DISCOVERY": "2/3",
+  "CLIENT_MEAL": "0/2",
+  "DYNAMIC_DEEP_HOTEL_CHAIN": "1/2",
+  "TRAINING_CAP": "1/1",
+  "APPROVAL_TIERS": "1/1",
+  "SUBMISSION_WINDOW": "2/2",
+  "SPLIT_TRANSACTION": "2/2",
+  "HOTEL_CONFERENCE": "3/3",
+  "HOTEL_EXCEPTION": "1/2",
+  "EMPLOYEE_MEAL_TEMPORAL": "0/1",
+  "DYNAMIC_DELEGATION_CHAIN": "1/1",
+  "GIFT_ANNUAL_CAP": "1/1",
+  "HOTEL_CEILING": "1/1",
+  "ALCOHOL_REGIONAL": "0/1",
+  "TELECOM_MONTHLY": "1/1",
+  "GROUND_TRANSPORT": "0/1",
+  "FINANCE_THRESHOLD": "0/1"
+ },
+ "confusion": {
+  "APPROVE->APPROVE": 5,
+  "ESCALATE->ESCALATE": 4,
+  "REJECT->REJECT": 5,
+  "REJECT->APPROVE": 3,
+  "ESCALATE->REJECT": 1,
+  "REQUEST_INFORMATION->REQUEST_INFORMATION": 7,
+  "ESCALATE->APPROVE": 1,
+  "APPROVE->REQUEST_INFORMATION": 3,
+  "ESCALATE->REQUEST_INFORMATION": 1
+ },
+ "errors": 0,
+ "median_latency_ms": 1.4335,
+ "p95_latency_ms": 1.562,
+ "input_tokens": 0,
+ "output_tokens": 0,
+ "total_tokens": 0,
+ "total_cost_usd": 0.0,
+ "crashes_scored_as_escalate": 0,
+ "extended": {
+  "n": 30,
+  "per_class": {
+   "APPROVE": {
+    "support": 8,
+    "precision": 0.5555555555555556,
+    "recall": 0.625,
+    "f1": 0.5882352941176471
+   },
+   "REJECT": {
+    "support": 8,
+    "precision": 0.8333333333333334,
+    "recall": 0.625,
+    "f1": 0.7142857142857143
+   },
+   "REQUEST_INFORMATION": {
+    "support": 7,
+    "precision": 0.6363636363636364,
+    "recall": 1.0,
+    "f1": 0.7777777777777778
+   },
+   "ESCALATE": {
+    "support": 7,
+    "precision": 1.0,
+    "recall": 0.5714285714285714,
+    "f1": 0.7272727272727273
+   }
+  },
+  "macro_f1": 0.7019,
+  "wrongful_rejections": "0/8",
+  "wrongful_rejection_rate": 0.0,
+  "over_escalation_rate": 0.0,
+  "missed_escalation_rate": 0.4286,
+  "auto_resolved": 26,
+  "error_rate_among_auto_resolved": 0.3462,
+  "citation_precision": 0.6667,
+  "citation_recall": 0.1903,
+  "cases_citing_anything": 21,
+  "missing_field_precision": 0.5454545454545454,
+  "missing_field_recall": 0.8571428571428571,
+  "cost_per_correct_usd": 0.0
+ }
+}

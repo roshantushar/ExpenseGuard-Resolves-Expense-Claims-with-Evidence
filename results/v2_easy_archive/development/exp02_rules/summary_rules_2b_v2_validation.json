@@ -1,0 +1,93 @@
+{
+ "run_id": "EXP02_RULES-rules_2b_v2-VALIDATION-df9a05",
+ "n": 30,
+ "correct": 30,
+ "correct_disposition_rate": 1.0,
+ "wilson95": [
+  0.8865,
+  1.0
+ ],
+ "false_approvals": 0,
+ "non_approvable": 22,
+ "false_approval_rate": 0.0,
+ "human_review_rate": 0.2333,
+ "over_escalation": 0,
+ "missed_escalation": 0,
+ "missing_field_exact_match": "6/7",
+ "by_family": {
+  "DUPLICATE_CHECK": "2/2",
+  "SOFTWARE_APPROVAL": "2/2",
+  "DYNAMIC_HOTEL_DISCOVERY": "3/3",
+  "CLIENT_MEAL": "2/2",
+  "DYNAMIC_DEEP_HOTEL_CHAIN": "2/2",
+  "TRAINING_CAP": "1/1",
+  "APPROVAL_TIERS": "1/1",
+  "SUBMISSION_WINDOW": "2/2",
+  "SPLIT_TRANSACTION": "2/2",
+  "HOTEL_CONFERENCE": "3/3",
+  "HOTEL_EXCEPTION": "2/2",
+  "EMPLOYEE_MEAL_TEMPORAL": "1/1",
+  "DYNAMIC_DELEGATION_CHAIN": "1/1",
+  "GIFT_ANNUAL_CAP": "1/1",
+  "HOTEL_CEILING": "1/1",
+  "ALCOHOL_REGIONAL": "1/1",
+  "TELECOM_MONTHLY": "1/1",
+  "GROUND_TRANSPORT": "1/1",
+  "FINANCE_THRESHOLD": "1/1"
+ },
+ "confusion": {
+  "APPROVE->APPROVE": 8,
+  "ESCALATE->ESCALATE": 7,
+  "REJECT->REJECT": 8,
+  "REQUEST_INFORMATION->REQUEST_INFORMATION": 7
+ },
+ "errors": 0,
+ "median_latency_ms": 1.4020000000000001,
+ "p95_latency_ms": 1.532,
+ "input_tokens": 0,
+ "output_tokens": 0,
+ "total_tokens": 0,
+ "total_cost_usd": 0.0,
+ "extended": {
+  "n": 30,
+  "per_class": {
+   "APPROVE": {
+    "support": 8,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "REJECT": {
+    "support": 8,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "REQUEST_INFORMATION": {
+    "support": 7,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "ESCALATE": {
+    "support": 7,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   }
+  },
+  "macro_f1": 1.0,
+  "wrongful_rejections": "0/8",
+  "wrongful_rejection_rate": 0.0,
+  "over_escalation_rate": 0.0,
+  "missed_escalation_rate": 0.0,
+  "auto_resolved": 23,
+  "error_rate_among_auto_resolved": 0.0,
+  "citation_precision": 0.8636,
+  "citation_recall": 0.2584,
+  "cases_citing_anything": 22,
+  "missing_field_precision": 0.8571428571428571,
+  "missing_field_recall": 0.8571428571428571,
+  "cost_per_correct_usd": 0.0
+ }
+}

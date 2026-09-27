@@ -1,0 +1,99 @@
+{
+ "run_id": "EXP02_RULES-2c_regex-VALIDATION-78ddf3",
+ "n": 30,
+ "correct": 25,
+ "correct_disposition_rate": 0.8333,
+ "wilson95": [
+  0.6644,
+  0.9266
+ ],
+ "false_approvals": 1,
+ "non_approvable": 22,
+ "false_approval_rate": 0.0455,
+ "human_review_rate": 0.2,
+ "over_escalation": 0,
+ "missed_escalation": 1,
+ "missing_field_exact_match": "6/7",
+ "by_family": {
+  "DUPLICATE_CHECK": "2/2",
+  "SOFTWARE_APPROVAL": "2/2",
+  "DYNAMIC_HOTEL_DISCOVERY": "3/3",
+  "CLIENT_MEAL": "0/2",
+  "DYNAMIC_DEEP_HOTEL_CHAIN": "2/2",
+  "TRAINING_CAP": "1/1",
+  "APPROVAL_TIERS": "1/1",
+  "SUBMISSION_WINDOW": "2/2",
+  "SPLIT_TRANSACTION": "2/2",
+  "HOTEL_CONFERENCE": "3/3",
+  "HOTEL_EXCEPTION": "2/2",
+  "EMPLOYEE_MEAL_TEMPORAL": "1/1",
+  "DYNAMIC_DELEGATION_CHAIN": "0/1",
+  "GIFT_ANNUAL_CAP": "1/1",
+  "HOTEL_CEILING": "1/1",
+  "ALCOHOL_REGIONAL": "0/1",
+  "TELECOM_MONTHLY": "1/1",
+  "GROUND_TRANSPORT": "0/1",
+  "FINANCE_THRESHOLD": "1/1"
+ },
+ "confusion": {
+  "APPROVE->APPROVE": 6,
+  "ESCALATE->ESCALATE": 6,
+  "REJECT->REJECT": 6,
+  "REJECT->REQUEST_INFORMATION": 1,
+  "REQUEST_INFORMATION->REQUEST_INFORMATION": 7,
+  "APPROVE->REQUEST_INFORMATION": 1,
+  "ESCALATE->REQUEST_INFORMATION": 1,
+  "REJECT->APPROVE": 1,
+  "APPROVE->REJECT": 1
+ },
+ "errors": 0,
+ "median_latency_ms": 1.379,
+ "p95_latency_ms": 1.524,
+ "input_tokens": 0,
+ "output_tokens": 0,
+ "total_tokens": 0,
+ "total_cost_usd": 0.0,
+ "crashes_scored_as_escalate": 0,
+ "extended": {
+  "n": 30,
+  "per_class": {
+   "APPROVE": {
+    "support": 8,
+    "precision": 0.8571428571428571,
+    "recall": 0.75,
+    "f1": 0.7999999999999999
+   },
+   "REJECT": {
+    "support": 8,
+    "precision": 0.8571428571428571,
+    "recall": 0.75,
+    "f1": 0.7999999999999999
+   },
+   "REQUEST_INFORMATION": {
+    "support": 7,
+    "precision": 0.7,
+    "recall": 1.0,
+    "f1": 0.8235294117647058
+   },
+   "ESCALATE": {
+    "support": 7,
+    "precision": 1.0,
+    "recall": 0.8571428571428571,
+    "f1": 0.923076923076923
+   }
+  },
+  "macro_f1": 0.8367,
+  "wrongful_rejections": "1/8",
+  "wrongful_rejection_rate": 0.125,
+  "over_escalation_rate": 0.0,
+  "missed_escalation_rate": 0.1429,
+  "auto_resolved": 24,
+  "error_rate_among_auto_resolved": 0.2083,
+  "citation_precision": 0.7391,
+  "citation_recall": 0.2167,
+  "cases_citing_anything": 23,
+  "missing_field_precision": 0.6,
+  "missing_field_recall": 0.8571428571428571,
+  "cost_per_correct_usd": 0.0
+ }
+}

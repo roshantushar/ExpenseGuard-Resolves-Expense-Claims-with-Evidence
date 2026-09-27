@@ -5,7 +5,7 @@ import numpy as np
 from . import config as C, llm
 
 C.load_env()
-EMB_CACHE = C.RESULTS / "cache" / "emb"
+EMB_CACHE = C.SHARED / "cache" / "emb"
 
 
 def embed(model: str, texts: list, tag: str = "", run_id: str = "", batch: int = 64) -> np.ndarray:

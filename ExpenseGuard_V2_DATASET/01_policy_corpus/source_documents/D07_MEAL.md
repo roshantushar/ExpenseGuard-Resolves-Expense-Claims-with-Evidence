@@ -31,6 +31,14 @@ Interpretive guidance: The purpose of this clause is to delineate the parameters
 
 Common misunderstandings may arise from the interpretation of what constitutes 'primarily recreational' entertainment. Employees might mistakenly believe that any social gathering qualifies for reimbursement, but the clause emphasizes the need for a clear distinction between business-related meals and entertainment. This topic is conceptually linked to client meals and employee meals, as all these categories involve external interactions but are governed by different reimbursement criteria and approval processes, highlighting the importance of adhering to the specific guidelines for each type.
 
+## MEAL-1.4 - Attendee status
+
+An attendee is an employee only if they are on the payroll of the company or of one of its subsidiaries, including interns and secondees on payroll. Freelance consultants, agency staff, contractors and staff of partner or customer firms are external attendees even when they work alongside employees every day. The role a person plays in the meeting does not change their status.
+
+Interpretive guidance: The purpose of this clause is to clearly define who qualifies as an attendee for the purposes of expense reimbursement related to meals. This distinction is particularly relevant in business scenarios where meetings involve both employees and external parties, such as freelance consultants or contractors. By establishing that only employees on the company payroll, including interns and secondees, are considered attendees, the policy aims to ensure that meal expenses are appropriately allocated and justified within the context of internal business operations.
+
+A common misunderstanding regarding attendee status may arise from the assumption that proximity or collaboration with employees automatically qualifies external individuals as attendees. This misconception can lead to inappropriate expense claims and potential compliance issues. This clause is conceptually linked to other policies concerning expense eligibility and reimbursement procedures, emphasizing the importance of accurately categorizing individuals involved in business activities to maintain financial integrity.
+
 ## MEAL-2.1 - Alcohol
 
 Alcohol follows the regional addendum. Where permitted, it must be incidental to an otherwise reimbursable client meal or event and its share of the bill is limited as the addendum states.

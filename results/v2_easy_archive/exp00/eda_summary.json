@@ -1,0 +1,65 @@
+{
+ "n_claims": 150,
+ "splits": {
+  "DEVELOPMENT": 70,
+  "FINAL_TEST": 50,
+  "VALIDATION": 30
+ },
+ "outcomes": {
+  "REJECT": 40,
+  "APPROVE": 39,
+  "ESCALATE": 36,
+  "REQUEST_INFORMATION": 35
+ },
+ "groups": {
+  "B_WORKFLOW": 80,
+  "A_SELF_CONTAINED": 40,
+  "C_AGENT_DYNAMIC": 30
+ },
+ "n_families": 31,
+ "families": {
+  "DYNAMIC_HOTEL_DISCOVERY": 10,
+  "HOTEL_CEILING": 9,
+  "DYNAMIC_DELEGATION_CHAIN": 8,
+  "DUPLICATE_CHECK": 8,
+  "SOFTWARE_APPROVAL": 8,
+  "SPLIT_TRANSACTION": 8,
+  "HOTEL_EXCEPTION": 8,
+  "DYNAMIC_PROJECT_BUDGET_CHAIN": 6,
+  "SUBMISSION_WINDOW": 6,
+  "DYNAMIC_DEEP_HOTEL_CHAIN": 6,
+  "AIRFARE_CABIN": 6,
+  "APPROVAL_TIERS": 6,
+  "HOTEL_CONFERENCE": 6,
+  "GIFT_ANNUAL_CAP": 6,
+  "ALCOHOL_REGIONAL": 5,
+  "CLIENT_MEAL": 5,
+  "TRAINING_CAP": 5,
+  "EMPLOYEE_MEAL_TEMPORAL": 5,
+  "GIFT_RULES": 4,
+  "GROUND_TRANSPORT": 4,
+  "RESTRICTED_MERCHANT": 3,
+  "TELECOM_MONTHLY": 3,
+  "EQUIPMENT_TIERS": 2,
+  "PERSONAL_SPEND": 2,
+  "MILEAGE": 2,
+  "CAR_RENTAL": 2,
+  "EVIDENCE_CONFLICT": 2,
+  "CONFERENCE_FEE": 2,
+  "FX_THRESHOLD": 1,
+  "GRATUITY_REGIONAL": 1,
+  "FINANCE_THRESHOLD": 1
+ },
+ "validator": {
+  "n_checks": 45,
+  "n_failed": 0,
+  "passed": true
+ },
+ "independent_checks": {
+  "unique case ids": true,
+  "cases and ground truth align 1:1": true,
+  "required policy IDs exist in corpus": true,
+  "private field names absent from model-visible cases": true,
+  "challenge cases only in FINAL_TEST": true
+ }
+}

@@ -57,7 +57,7 @@ for k, s in res.items():
 
 # ---------------- Exp 31 ----------------
 # measured per-claim AI cost. LLM path = generation call (measured) + one query embedding (measured from the log).
-emb = [json.loads(l) for l in open(C.RESULTS / "run_log.jsonl") if '"kind": "embedding"' in l]
+emb = [json.loads(l) for l in open(C.SHARED / "run_log.jsonl") if '"kind": "embedding"' in l]
 q = [r for r in emb if r["model"] == "voyageai/voyage-4-lite" and r["experiment"] == "EXP07_TOPK" and not r["cached"]]
 emb_tokens_per_query = sum(r["input_tokens"] for r in q) / 80 if q else 90
 emb_cost_per_query = (sum(r["cost_usd"] for r in q) / 80) if q else 2e-6

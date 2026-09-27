@@ -20,7 +20,10 @@ def main():
     tp = Counter(len(g["minimum_required_tools"]) for g in gt if g["architecture_group"] == "C_AGENT_DYNAMIC")
     v1, v2 = ret["V1"], ret["V2"]
     def rr(d, k): v = d[k]; return f"{v['recall']:.2f} / {v['full']:.2f}"
-    card = f"""# ExpenseGuard V2 Dataset Card
+    card = f"""# ExpenseGuard V2 Dataset Card (semantic edition)
+
+## What changed in the semantic edition
+The first V2 exposed every decision-critical fact in a structured claim `form` (cabin, attendee counts, gift type, alcohol amount...), so a rule engine reading those fields reached 100%. In this edition the visible `form` is empty and the bill has one generic line item: **every fact a decision depends on is stated only in a free-text note**, drafted by gpt-4o-mini from hidden facts. Notes vary in style (indirect, terse, verbose with distractor numbers, assistant-written, local-language terms, formal challenge memos), express some facts indirectly (check-in/check-out dates instead of nights, a list of who attended instead of a headcount, cabin by its features) and rely on policy definitions (contractors are external, subsidiary staff and interns on payroll are employees, e-vouchers are cash equivalents, state-owned bodies are government-affiliated: clauses MEAL-1.4, GIFT-1.5, GIFT-1.6 and FAQ entries). The hidden exact facts stay in `04_ground_truth_PRIVATE` (`hidden_form`, `hidden_description`) and still drive every label through the reference engine. Each note was validated by a blind LLM extraction against the hidden facts, by a re-run of the reference engine on the visible text, and by leak/length checks; the notes are **not human-reviewed** (one note was accepted by hand, see `semantic.manual_review`).
 
 ## Purpose
 A harder synthetic benchmark for expense-claim readiness (APPROVE / REJECT / REQUEST_INFORMATION / ESCALATE) built to stress **retrieval**: a dense, versioned, cross-referenced policy corpus; claims phrased in everyday language; and rules whose numbers live in different documents, years, regions and circulars. The task is not fraud detection.
@@ -82,7 +85,8 @@ Runtime and model-visible: `02_cases`, `01_policy_corpus`, approved read-only to
 - Synthetic; not for estimating real prevalence, behaviour, processing times or fraud.
 - The reference engine defines the policy semantics where the prose could be read two ways; a human policy review of the engine would strengthen the labels.
 - {multi} of the 80 workflow cases need two or more lookups; the other {80 - multi} need exactly one, so "multi-tool" holds for {multi}/80.
-- The runtime tool layer in `src/` still targets V1 (eight tools). V2 adds two lookups (`get_approval_delegation`, `get_cost_centre_budget`), new columns and a structured claim `form`, and needs a port before systems can be run on it.
+- The runtime tool layer in `src/` still targets V1 (eight tools). V2 adds two lookups (`get_approval_delegation`, `get_cost_centre_budget`) and new columns, and needs a port before systems can be run on it.
+- Claim notes and policy commentary are LLM-written; the notes were validated automatically only. The retrieval-difficulty table below was measured on the previous V2 corpus (three clauses and three FAQ entries were added afterwards), so treat it as approximate.
 - Interpretive guidance was LLM-written (qualitative only). The V1 metadata-aware wrong-year metric is near zero here because temporal difficulty sits in circular-versus-base values, not in whole-year documents.
 - No baseline system results exist yet on V2 apart from the retrieval measurements above.
 """

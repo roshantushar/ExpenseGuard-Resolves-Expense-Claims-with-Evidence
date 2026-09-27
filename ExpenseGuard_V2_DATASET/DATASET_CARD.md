@@ -1,11 +1,14 @@
-# ExpenseGuard V2 Dataset Card
+# ExpenseGuard V2 Dataset Card (semantic edition)
+
+## What changed in the semantic edition
+The first V2 exposed every decision-critical fact in a structured claim `form` (cabin, attendee counts, gift type, alcohol amount...), so a rule engine reading those fields reached 100%. In this edition the visible `form` is empty and the bill has one generic line item: **every fact a decision depends on is stated only in a free-text note**, drafted by gpt-4o-mini from hidden facts. Notes vary in style (indirect, terse, verbose with distractor numbers, assistant-written, local-language terms, formal challenge memos), express some facts indirectly (check-in/check-out dates instead of nights, a list of who attended instead of a headcount, cabin by its features) and rely on policy definitions (contractors are external, subsidiary staff and interns on payroll are employees, e-vouchers are cash equivalents, state-owned bodies are government-affiliated: clauses MEAL-1.4, GIFT-1.5, GIFT-1.6 and FAQ entries). The hidden exact facts stay in `04_ground_truth_PRIVATE` (`hidden_form`, `hidden_description`) and still drive every label through the reference engine. Each note was validated by a blind LLM extraction against the hidden facts, by a re-run of the reference engine on the visible text, and by leak/length checks; the notes are **not human-reviewed** (one note was accepted by hand, see `semantic.manual_review`).
 
 ## Purpose
 A harder synthetic benchmark for expense-claim readiness (APPROVE / REJECT / REQUEST_INFORMATION / ESCALATE) built to stress **retrieval**: a dense, versioned, cross-referenced policy corpus; claims phrased in everyday language; and rules whose numbers live in different documents, years, regions and circulars. The task is not fraud detection.
 
 ## Size
 - 150 unique claims (every employee description and bill number is unique; one employee per claim, so no employee spans splits)
-- 22 policy documents, 223 clauses, 38,751 words, 69-page PDF
+- 22 policy documents, 229 clauses, 39,470 words, 71-page PDF
 - 11 enterprise tables; 2,483 historical expenses (including hard-negative rows for duplicate and split detection)
 - 15 separate guardrail cases (carried over from V1, `04_ground_truth_PRIVATE/guardrail_cases.csv`)
 
@@ -51,7 +54,7 @@ voyage-4-lite embeddings, recursive 300/50 chunks. V2 cases need 3.16 controllin
 approval_delegations 37, conference_registry 15, cost_centre_budgets 83, employees 300, fx_rates 108, manager_approvals 123, merchant_directory 182, policy_exceptions 46, previous_expenses 2483, project_registry 60, travel_requests 114.
 
 ## Validation
-`python -m dataset_v2.validate` runs 45 checks (45 pass): split, group and outcome balance, clause existence, schedule values present in the corpus, PDF page count, referential integrity, uniqueness, leakage (labels absent from cases, corpus and tables; challenge cases unmarked), and **reproduction of every label by the reference engine from the packaged files**. Report: `06_docs/validation_report.json`.
+`python -m dataset_v2.validate` runs 50 checks (50 pass): split, group and outcome balance, clause existence, schedule values present in the corpus, PDF page count, referential integrity, uniqueness, leakage (labels absent from cases, corpus and tables; challenge cases unmarked), and **reproduction of every label by the reference engine from the packaged files**. Report: `06_docs/validation_report.json`.
 
 ## Data boundaries
 Runtime and model-visible: `02_cases`, `01_policy_corpus`, approved read-only tools over `03_enterprise_data`. Evaluator-only: `04_ground_truth_PRIVATE`.
@@ -60,6 +63,7 @@ Runtime and model-visible: `02_cases`, `01_policy_corpus`, approved read-only to
 - Synthetic; not for estimating real prevalence, behaviour, processing times or fraud.
 - The reference engine defines the policy semantics where the prose could be read two ways; a human policy review of the engine would strengthen the labels.
 - 47 of the 80 workflow cases need two or more lookups; the other 33 need exactly one, so "multi-tool" holds for 47/80.
-- The runtime tool layer in `src/` still targets V1 (eight tools). V2 adds two lookups (`get_approval_delegation`, `get_cost_centre_budget`), new columns and a structured claim `form`, and needs a port before systems can be run on it.
+- The runtime tool layer in `src/` still targets V1 (eight tools). V2 adds two lookups (`get_approval_delegation`, `get_cost_centre_budget`) and new columns, and needs a port before systems can be run on it.
+- Claim notes and policy commentary are LLM-written; the notes were validated automatically only. The retrieval-difficulty table below was measured on the previous V2 corpus (three clauses and three FAQ entries were added afterwards), so treat it as approximate.
 - Interpretive guidance was LLM-written (qualitative only). The V1 metadata-aware wrong-year metric is near zero here because temporal difficulty sits in circular-versus-base values, not in whole-year documents.
 - No baseline system results exist yet on V2 apart from the retrieval measurements above.

@@ -93,29 +93,47 @@ A: The addendum of the country where the expense was incurred applies.
 
 ## FAQ-1.11 - Question 11
 
+Q: Are contractors and freelancers external attendees at a meal?
+
+A: Yes. Only people on the payroll of the company or a subsidiary count as employees; contractors, freelancers and agency staff are external.
+
+## FAQ-1.12 - Question 12
+
+Q: Is a prepaid e-voucher or a store credit a cash equivalent?
+
+A: Yes. Any stored-value or exchangeable instrument is a cash equivalent, whatever the medium.
+
+## FAQ-1.13 - Question 13
+
+Q: Is a public university or a state-owned company a government-affiliated body for gift purposes?
+
+A: Yes. Public bodies and companies owned or controlled by the state are government-affiliated even when they operate commercially.
+
+## FAQ-1.14 - Question 14
+
 Q: Which document is authoritative for grade?
 
 A: The employee profile record, not the claim.
 
-## FAQ-1.12 - Question 12
+## FAQ-1.15 - Question 15
 
 Q: Are tips reimbursable in every country?
 
 A: The meals policy and the regional addendum decide. In some countries gratuities are not customary.
 
-## FAQ-1.13 - Question 13
+## FAQ-1.16 - Question 16
 
 Q: What is the difference between a gift and hospitality?
 
 A: A gift is given to keep; hospitality is a shared event such as a meal.
 
-## FAQ-1.14 - Question 14
+## FAQ-1.17 - Question 17
 
 Q: Can a project charge to another project's budget?
 
 A: A child project charges the cost centre of its parent project, as the budget policy describes.
 
-## FAQ-1.15 - Question 15
+## FAQ-1.18 - Question 18
 
 Q: Where do I find a superseded value?
 

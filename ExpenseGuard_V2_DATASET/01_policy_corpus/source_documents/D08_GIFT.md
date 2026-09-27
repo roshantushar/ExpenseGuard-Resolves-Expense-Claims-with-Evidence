@@ -31,6 +31,22 @@ Interpretive guidance: The purpose of this clause is to prohibit the reimburseme
 
 A common misunderstanding may be the belief that cash equivalents can be considered acceptable gifts if they are modest in value. However, this clause clearly delineates that all forms of cash equivalents are prohibited, regardless of their perceived value. This policy is conceptually linked to the broader principles of ethical gifting and compliance, emphasizing the need for clarity and consistency in gift-giving practices to uphold the company's standards and avoid any potential conflicts of interest.
 
+## GIFT-1.5 - Government-affiliated bodies
+
+A government-affiliated body is a ministry, department, agency, statutory board or authority, a municipal or regional body, a public university or hospital, and any company that is owned or controlled by the state. A recipient does not stop being government-affiliated because it trades commercially or has a corporate-sounding name.
+
+Interpretive guidance: This clause serves to delineate the characteristics of a government-affiliated body, which is crucial for compliance with regulations surrounding gifts and hospitality. In various business contexts, interactions with government entities may necessitate the offering of gifts or services, and understanding the classification of these bodies helps ensure that such offerings are compliant with legal and ethical standards. This clarity aids employees in navigating complex relationships with governmental organizations while maintaining the company's integrity.
+
+A frequent misunderstanding may arise when employees encounter organizations with corporate-sounding names that are, in fact, government-affiliated. This can lead to confusion regarding the appropriateness of offering gifts to such entities. This clause is conceptually related to policies governing gift-giving and hospitality, highlighting the need for employees to be diligent in identifying the status of potential recipients to avoid inadvertent violations of corporate or legal guidelines.
+
+## GIFT-1.6 - What counts as a cash equivalent
+
+A cash equivalent is any stored-value or exchangeable instrument: gift cards, prepaid or reloadable cards, e-vouchers, redeemable codes, store credit and any item that the recipient can exchange for money. The instrument is a cash equivalent whether it is delivered on paper, by message or by e-mail.
+
+Interpretive guidance: The purpose of this clause is to provide a comprehensive definition of what constitutes a cash equivalent in the context of gifts and expenses. This is particularly relevant in situations where employees may consider various forms of stored-value instruments as gifts or incentives. By clearly outlining items such as gift cards, e-vouchers, and redeemable codes, the policy seeks to establish a consistent understanding of what is permissible and to prevent any ambiguity in expense reporting or gift-giving practices.
+
+A common misunderstanding may occur when employees mistakenly believe that certain promotional items or discounts do not fall under the definition of cash equivalents. This can lead to inconsistencies in how gifts are recorded and reported. This clause is conceptually tied to broader policies regarding gifts and hospitality, emphasizing the importance of transparency and accountability in all forms of compensation or incentives provided to recipients.
+
 ## GIFT-1.4 - Required details
 
 A gift claim must state the recipient name, the recipient organisation and the business purpose. A claim missing any of them is returned for the missing details.

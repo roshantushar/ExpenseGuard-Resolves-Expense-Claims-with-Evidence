@@ -2,7 +2,7 @@
 import re, sys, unittest
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
-RUNTIME = ["tools", "rules", "workflow", "history", "tables", "retrievers", "retrieval", "chunking", "policy", "llm", "embed", "rag_run", "llm_exp"]
+RUNTIME = ["tools", "rules", "rules_v2", "rules_text", "hybrid_facts", "workflow", "workflow_v2", "history", "tables", "retrievers", "retrieval", "chunking", "policy", "llm", "embed", "rag_run", "llm_exp"]
 EVALUATOR = ["evaluate", "retrieval_eval"]
 
 

@@ -96,7 +96,7 @@ def build(b):
         d = _u(b, lambda: rng.choice([f"Thank-you present for a contact at {org}, bought at {m}.", f"Small gift for the {org} team after {rng.choice(EVENTS)}.", f"{m} purchase, a gift for our counterpart at {org}."]))
         return b.claim("A_SELF_CONTAINED", "A8", want, e, t, rng.randint(3, 20), m, "GIFT_RETAIL", COUNTRY[reg], CITY[reg], total, "GIFT",
                        dict(recipient_name=name, recipient_org=None if org_missing else org, recipient_type=rtype, gift_form=gform), d)
-    gift("REJECT", "JP", "2026-02-03", 5500.0, rtype="GOVERNMENT", org="Ministry of Trade Liaison Office")
+    gift("REJECT", "JP", "2026-02-03", 5500.0, rtype="GOVERNMENT", org="Kanto Regional Development Authority")
     gift("REJECT", "SG", "2025-12-05", 100.0, gform="CASH_EQUIVALENT")
     gift("REJECT", "SG", "2026-06-20", 140.0)
     gift("REQUEST_INFORMATION", "IN", "2025-04-11", 3800.0, org_missing=True)

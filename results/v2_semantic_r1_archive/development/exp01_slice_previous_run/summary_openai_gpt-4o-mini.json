@@ -1,0 +1,51 @@
+{
+  "run_id": "EXP01_SLICE-DEVELOPMENT-gpt-4o-mini-479bd1",
+  "model": "openai/gpt-4o-mini",
+  "n": 9,
+  "correct": 5,
+  "correct_disposition_rate": 0.5556,
+  "wilson95": [
+    0.2666,
+    0.8112
+  ],
+  "false_approvals": 0,
+  "non_approvable": 6,
+  "false_approval_rate": 0.0,
+  "human_review_rate": 0.0,
+  "over_escalation": 0,
+  "missed_escalation": 1,
+  "missing_field_exact_match": "0/2",
+  "by_family": {
+    "FX_THRESHOLD": "0/1",
+    "CLIENT_MEAL": "1/1",
+    "PERSONAL_SPEND": "1/1",
+    "SUBMISSION_WINDOW": "0/1",
+    "ALCOHOL_REGIONAL": "1/2",
+    "GIFT_RULES": "1/1",
+    "EVIDENCE_CONFLICT": "1/1",
+    "MILEAGE": "0/1"
+  },
+  "confusion": {
+    "APPROVE->REJECT": 3,
+    "REQUEST_INFORMATION->REQUEST_INFORMATION": 2,
+    "REJECT->REJECT": 3,
+    "ESCALATE->REJECT": 1
+  },
+  "errors": 0,
+  "median_latency_ms": 2019,
+  "p95_latency_ms": 2315,
+  "input_tokens": 8206,
+  "output_tokens": 694,
+  "total_tokens": 8900,
+  "total_cost_usd": 0.001647,
+  "decision_counts": {
+    "REJECT": 7,
+    "REQUEST_INFORMATION": 2
+  },
+  "schema_valid": 9,
+  "unsupported_policy_assertion_rate": 0.7778,
+  "policy_assertion_in_text_rate": 0.7778,
+  "nonexistent_clause_rate": 0.0,
+  "wrong_policy_version_cases": 0,
+  "cached_calls": 0
+}

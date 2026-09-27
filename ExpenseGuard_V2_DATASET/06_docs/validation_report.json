@@ -1,5 +1,5 @@
 {
- "n_checks": 45,
+ "n_checks": 50,
  "n_failed": 0,
  "passed": true,
  "checks": [
@@ -71,12 +71,12 @@
   {
    "check": "corpus >= 35k words",
    "passed": true,
-   "detail": "38751"
+   "detail": "39470"
   },
   {
    "check": "PDF has 65-75 pages",
    "passed": true,
-   "detail": "69"
+   "detail": "71"
   },
   {
    "check": "clause ids unique",
@@ -101,7 +101,7 @@
   {
    "check": "commentary contains no digits or currency codes (except tier labels)",
    "passed": true,
-   "detail": "182"
+   "detail": "185"
   },
   {
    "check": "all cited clause ids exist in the corpus",
@@ -142,6 +142,31 @@
    "check": "ground truth reproduced by the reference engine from the packaged files",
    "passed": true,
    "detail": "[]"
+  },
+  {
+   "check": "visible forms expose no decision-critical structured facts",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "every claim has a validated free-text note (no unresolved semantic problems)",
+   "passed": true,
+   "detail": "[]"
+  },
+  {
+   "check": "visible bills carry one generic line item (no alcohol/tip line items)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "notes are 12-110 words (characters/5 for unspaced scripts)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "visible merchant categories are coarse",
+   "passed": true,
+   "detail": ""
   },
   {
    "check": "case employees and projects exist",

@@ -1,0 +1,139 @@
+# Exp 32 freeze manifest (V2, semantic edition) — committed before the frozen final test runs.
+# Nothing below may change after the final-test results are viewed. If any change is needed, it must happen
+# BEFORE this run, with a new manifest, not as a post-hoc edit to this one.
+
+frozen_at: "2026-09-27"
+dataset:
+  package: ExpenseGuard_V2_DATASET
+  edition: semantic (round 3 — dictated/local-language notes, coarse bill category, computed facts)
+  final_test_file: ExpenseGuard_V2_DATASET/02_cases/final_test.jsonl
+  final_test_sha256: f77d201d46e9efb66a3838ac85ae91f119ba720dbd41b7ecdacf5214254dcbfb
+  final_test_n_claims: 50
+  note: this file has not been opened or inspected by the resolving code before this run; it was last touched by dataset_v2.build during the round-3 rebuild.
+
+git:
+  last_commit_full_sha: ee478779feded3f44bdcebbe89b24dab040281c5   # HEAD at freeze time (unambiguous full SHA)
+  working_tree: uncommitted (by the user's own standing instruction, Claude does not commit/push). Freeze is therefore
+    by file content hash below, not by a clean git commit. Recommendation: the user commits the working tree now, before
+    Exp 32 runs, so the frozen state also has a git identity — this is a recommendation, not a blocker.
+
+frozen_code (sha256, first 16 hex chars, of the file as it stands right now):
+  src/resolver.py:      9095f4aeccd44891   # the selective architecture pipeline (Exp 30)
+  src/workflow_v2.py:   ae69177d8b48ae66   # fixed workflow (Exp 18), used only for reference/comparison, not in resolver's path
+  src/tools.py:         aea9c3f0e4354925   # typed tools incl. validate_approval with the CONFLICTING_RECORDS fix (Exp 28/30)
+  src/rules_v2.py:      87d4fe21c41b83da   # deterministic policy mechanics
+  src/rules_text.py:    f3d64c5fc5460d9d   # note-parsing (extracts visible facts from free text)
+  src/hybrid_facts.py:  df11575960bc0dca   # H1-H4 resolved-fact extraction fed to the LLM-residual step
+  src/retrievers.py:    b9211c5f62cf0985   # dense/BM25/hybrid + metadata mask
+  src/retrieval.py:     34fbd50b0cc99bd8   # claim_query, index build/load
+  src/embed.py:         5ed4d6b4cb48bf49   # embedding client + disk cache
+  src/llm_exp.py:       d6739c69ac6d0327   # shared single-call LLM runner + logging
+  src/evaluate.py:      0c9fee47795d9c4e   # evaluator (reads ground truth; joins labels only here)
+  src/metrics_ext.py:   099abc15197d717b   # extended metrics
+  src/llm.py:           43b00956c85364b2   # OpenRouter/Ollama client, cache, budget cap
+  src/chunking.py:      8bc46aaf66eef272   # policy corpus chunking
+
+frozen_policy_corpus:
+  combined_sha256: 0707b4abce8d3d4592b1f068cd1288939c704ebf1dde834f5aba4eb3e01be91a   # sha256 of the 22 source_documents/*.md files, concatenated in sorted filename order
+  n_documents: 22
+  per_document_sha256_first16:
+    D01_GEP24.md: 5998551b4fff3999
+    D02_GEP25.md: f558c352f5f5268d
+    D03_GEP26.md: cfac0760c920585f
+    D04_TRV.md: 02b3de91a8baf180
+    D05_AIR.md: 197aca125acf06c1
+    D06_GRD.md: 18b04c28c643dc70
+    D07_MEAL.md: 86447dbfcbc0503e
+    D08_GIFT.md: 8d49c17063fcd0db
+    D09_CARD.md: fc5d6f30096271f7
+    D10_APR.md: 504e0e7c53c37b28
+    D11_EXC.md: 7d36ceb8611588a0
+    D12_TRN.md: d0e9c5a72cbecbb3
+    D13_SWE.md: 57da76ac903831da
+    D14_TEL.md: dc24ad9a2d67a0f6
+    D15_DUP.md: 3b814c0e17e5b8b4
+    D16_FX.md: 1e0da7c26a73e3a6
+    D17_SG.md: 8b42814bd663f665
+    D18_IN.md: c9f1821eb955284e
+    D19_JP.md: ec586393e2352d57
+    D20_CIRC.md: 55f4fa1f3291d9b8
+    D21_HIST.md: 4b084e56f84153be
+    D22_FAQ.md: e5bebaa4b64e473c
+
+frozen_enterprise_data (sha256, first 16 hex chars, of each CSV in ExpenseGuard_V2_DATASET/03_enterprise_data/):
+  approval_delegations.csv: 8ca838cf21085e6a
+  conference_registry.csv: 85d9cb8730d9c944
+  cost_centre_budgets.csv: 618b8099628eb788
+  employees.csv: 17ed2a98378296c2
+  fx_rates.csv: 5177796474625f8b
+  manager_approvals.csv: 9b25fa6421648f21
+  merchant_directory.csv: b501627ae513a964
+  policy_exceptions.csv: 846611243d03bb27
+  previous_expenses.csv: 3d712e8bdf81aa6c
+  project_registry.csv: 6fabed3f2a4e3a57
+  travel_requests.csv: faf11997b6385396
+  note: rules_v2, hybrid_facts and tools all read these tables at call time (not a snapshot); if any of these files
+    change after this freeze, the same frozen code could legitimately produce different answers on a rerun.
+
+frozen_ground_truth:
+  file: ExpenseGuard_V2_DATASET/04_ground_truth_PRIVATE/ground_truth.jsonl
+  sha256: 3a8808311a2751478bb8810196266aee4f9b19a3f42e501dd21a8a58a76a8429
+  note: the evaluator's labels are part of the frozen benchmark, not just the code that reads them.
+
+frozen_runner:
+  script: scripts/v2/exp32_final_test.py
+  sha256_first16: 985cd5842fcd9ab1
+  behaviour: loads the 50 final-test claims, calls resolver.resolve_batch() exactly once with no per-case branching,
+    writes predictions.jsonl before opening the ground truth, evaluates only after predictions are locked to disk,
+    and prints only the aggregate summary (never a per-case result) before the run completes.
+
+frozen_model:
+  decision_model: openai/gpt-4o-mini   # from .env PAID_MODEL; used for the LLM-residual step only
+  embedding_model: voyageai/voyage-4-lite
+  temperature: 0
+  max_tokens: 600   # via src/llm_exp.run's default
+  decoding: OpenRouter default (top_p etc. unset/provider default); JSON mode enforced via response_format
+  disclosed_caveat: OpenRouter's provider routing/backend for openai/gpt-4o-mini is not fully reproducible outside our
+    control (the underlying provider or backend behind the OpenRouter endpoint can change over time). This is accepted
+    and disclosed rather than worked around by switching models at freeze time.
+
+frozen_retriever_config:
+  chunking: fixed600_100
+  top_k: 8
+  metadata_filter: M4 (date + region + authoritative-document-type + expense-category compatibility; src/resolver.py's _mask, identical to Exp 9's M4)
+  query: raw claim-derived query (retrieval.claim_query), no rewriting (Exp 10 found rewriting did not help downstream)
+
+frozen_routing_logic:
+  conclusiveness_signal: src/resolver.py:deterministic() — a claim is conclusive iff (a) the deterministic rule engine
+    (rules_text.parse + rules_v2.decide) reaches a decision other than its "No rule triggered." fallback, AND (b) every
+    note-parsed field that expense type's category function needs (the NEEDED dict) was actually extracted (not None).
+    This signal is visible-only: it never reads a label, case_family, or expected_decision.
+  deterministic_path: conclusive claims use the deterministic decision directly, no LLM call.
+  llm_residual_path: non-conclusive claims get M4 RAG excerpts + H1-H4 resolved facts (src/hybrid_facts.py) and the LLM
+    (SYSTEM_LLM_STEP in src/resolver.py) makes the final call.
+  known_open_limitations (not fixed for this run, carried forward from Exp 28):
+    - retrieval-text injection can still defeat the LLM-residual step's prompt-level defence; no structural isolation
+      of retrieved text is implemented.
+    - the LLM-residual step's own reliability is measured at 36.1% accuracy on development (Exp 30) — the weakest part
+      of the frozen pipeline, known and accepted for this run.
+
+frozen_evaluator:
+  module: src/evaluate.py (evaluate.evaluate), unchanged since Exp 2
+  ground_truth: ExpenseGuard_V2_DATASET/04_ground_truth_PRIVATE/ground_truth.jsonl, opened only by the evaluator after
+    predictions are produced, per the project's standing leakage rule (tests/test_no_leakage.py)
+
+cache_policy:
+  llm_calls: cached on disk (results/cache/), keyed by [model, messages, temperature, max_tokens] (+ non-default
+    local num_ctx where applicable); a fresh final-test claim's exact prompt has not been seen before, so this run
+    is expected to be a live run, not a cache replay, except by coincidence.
+  embeddings: cached the same way (results/cache/emb/); the final-test claims' embeddings have not been computed before.
+  budget_cap: MAX_BUDGET_USD=3.50 (.env); spend before this run: ~$2.139; projected cost for 50 claims at the LLM-residual
+    rate observed in Exp 30 (51% of claims, ~$0.00083/claim on that path) is well under $0.05.
+
+process_rule:
+  statement: >
+    No code, prompt, retriever setting, conclusiveness threshold, or evaluator logic listed above may change after
+    the final-test predictions are produced and viewed. If Exp 32's results reveal a bug or a desired change, that
+    change is documented as a finding for a *future* experiment, not applied retroactively to this run's numbers.
+    Individual final-test cases are not inspected mid-run, and no failed case is rerun in isolation: the full batch
+    of 50 completes, the outputs are locked (saved to disk) exactly as produced, and only then is any analysis performed.

@@ -9,11 +9,23 @@
  "challenge_final_cases": 15,
  "corpus": {
   "docs": 22,
-  "clauses": 223,
-  "words": 38751,
-  "pages": 69,
+  "clauses": 229,
+  "words": 39470,
+  "pages": 71,
   "font_pt": 10.5,
-  "commentary_clauses": 182
+  "commentary_clauses": 185
+ },
+ "semantic": {
+  "cost_usd": 0.0011,
+  "n": 150,
+  "validated": 150,
+  "failed": [],
+  "attempts": {
+   "1": 141,
+   "2": 1,
+   "3": 5,
+   "4": 3
+  }
  },
  "historical_expenses": 2483,
  "tables": 11

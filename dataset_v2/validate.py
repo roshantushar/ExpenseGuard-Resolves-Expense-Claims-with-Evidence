@@ -85,9 +85,16 @@ def main():
     # ---- reference-engine reproduction from the packaged files
     S = engine.State(T); diff = []
     for c in cases:
-        r = engine.evaluate(c, S); g = gb[c["case_id"]]
+        g = gb[c["case_id"]]; r = engine.evaluate(dict(c, bill=dict(c["bill"], merchant_category=g["hidden_merchant_category"]), form=g["hidden_form"], employee_description=g["hidden_description"]), S)
         if (r["expected_decision"], r["controlling_clause_ids"], r["missing_fields"], [t["tool"] for t in r["tool_path"]]) != (g["expected_decision"], g["required_policy_ids"], g["missing_fields"], [t["tool"] for t in g["tool_path"]]): diff.append(c["case_id"])
     check("ground truth reproduced by the reference engine from the packaged files", not diff, diff[:5])
+    # ---- semantic layer
+    hid = {k for g in gt for k in g["hidden_form"]} - {"expense_type", "approval_ref", "charge_to"}
+    check("visible forms expose no decision-critical structured facts", all(not (hid & set(c["form"])) and "expense_type" not in c["form"] for c in cases))
+    check("every claim has a validated free-text note (no unresolved semantic problems)", all(not g["semantic"]["unresolved"] for g in gt), [g["case_id"] for g in gt if g["semantic"]["unresolved"]][:8])
+    check("visible bills carry one generic line item (no alcohol/tip line items)", all(len(c["bill"]["line_items"]) == 1 for c in cases))
+    check("notes are 12-110 words (characters/5 for unspaced scripts)", all(12 <= max(len(c["employee_description"].split()), len(c["employee_description"]) // (3 if re.search(r"[\u3000-\u9fff]", c["employee_description"]) else 5)) <= 110 for c in cases))
+    check("visible merchant categories are coarse", {c["bill"]["merchant_category"] for c in cases} <= {"TRAVEL", "FOOD_AND_DRINK", "TECH_AND_SUPPLIES", "EDUCATION_AND_EVENTS", "RETAIL", "OTHER"})
     # ---- referential integrity
     emp = {r["employee_id"] for r in T["employees"]}; proj = {r["project_id"] for r in T["project_registry"]}
     check("case employees and projects exist", all(c["employee_id"] in emp and c["project_id"] in proj for c in cases))

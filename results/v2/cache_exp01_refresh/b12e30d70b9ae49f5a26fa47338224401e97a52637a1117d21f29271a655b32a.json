@@ -1,0 +1,1 @@
+{"text": "{\"decision\": \"REJECT\", \"policy_evidence\": [\"SWE-1.1\"], \"missing_fields\": [], \"explanation\": \"The claim is missing the business owner's name, which is a required field for software or online service subscriptions as per policy clause SWE-1.1.\"}", "input_tokens": 669, "output_tokens": 64, "cost_usd": 0.0, "latency_ms": 3544, "model": "llama3.2:3b"}

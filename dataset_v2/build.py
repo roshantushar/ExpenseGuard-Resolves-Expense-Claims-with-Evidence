@@ -3,7 +3,7 @@ from __future__ import annotations
 import csv, hashlib, json, random, shutil, sys
 from collections import Counter
 from pathlib import Path
-from . import world as W, assemble, engine, render, policy_text, faq
+from . import world as W, assemble, engine, render, policy_text, faq, semantic
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "ExpenseGuard_V2_DATASET"
@@ -74,16 +74,18 @@ def main():
     for c in cases:                                        # engine result must not depend on wording; re-derive after rewriting
         c["_gt"] = engine.evaluate(c, S)
     assert all(c["_want"] == c["_gt"]["expected_decision"] for c in cases), "intended and engine outcomes diverged"
+    sem = semantic.apply(cases, S)                          # visible claims: facts only in LLM-drafted notes; hidden truth stays in the ground truth
+    print("semantic layer:", json.dumps({k: v for k, v in sem.items() if k != "failed"}), "failed:", sem["failed"])
     stats = render.build_corpus(OUT / "01_policy_corpus")
     meta = json.loads((OUT / "01_policy_corpus" / "policy_metadata.json").read_text())
     cl2doc = {cid: d["doc_id"] for d in meta for cid in d["clause_ids"]}
     cases.sort(key=lambda c: c["case_id"])
-    vis = [{k: c[k] for k in assemble.VISIBLE} for c in cases]
+    vis = [c["_vis"] for c in cases]
     (OUT / "02_cases" / "all_cases.jsonl").write_text("\n".join(json.dumps(v) for v in vis) + "\n")
     for sp, fn in (("DEVELOPMENT", "development"), ("VALIDATION", "validation"), ("FINAL_TEST", "final_test")):
         (OUT / "02_cases" / f"{fn}.jsonl").write_text("\n".join(json.dumps(v) for v in vis if v["split"] == sp) + "\n")
     write_csv(OUT / "02_cases" / "all_cases.csv", [dict(case_id=v["case_id"], split=v["split"], employee_id=v["employee_id"], transaction_date=v["transaction_date"], submission_date=v["submission_date"], merchant=v["bill"]["merchant"],
-                                                        merchant_category=v["bill"]["merchant_category"], country=v["bill"]["country"], currency=v["bill"]["currency"], total=v["bill"]["total"], expense_type=v["form"]["expense_type"],
+                                                        merchant_category=v["bill"]["merchant_category"], country=v["bill"]["country"], currency=v["bill"]["currency"], total=v["bill"]["total"],
                                                         employee_description=v["employee_description"], project_id=v["project_id"]) for v in vis])
     for t, rows in b.T.items():
         write_csv(OUT / "03_enterprise_data" / f"{t}.csv", sorted(rows, key=lambda r: json.dumps(r, sort_keys=True)) if t == "previous_expenses" else rows)
@@ -95,14 +97,15 @@ def main():
                    required_policy_ids=g["controlling_clause_ids"], supporting_policy_ids=g["context_clause_ids"], required_doc_ids=docs_, cross_document=len(docs_) >= 2,
                    temporal_amendment_case=any(i.startswith("CIRC-") for i in g["controlling_clause_ids"]), missing_fields=g["missing_fields"], manual_touch_required=esc, human_review_reason=human_review_reason(g) if esc else None,
                    tool_path=g["tool_path"], minimum_required_tools=g["minimum_required_tools"], branch_trigger=g["branch_trigger"], dynamic_branching=c["_group"] == "C_AGENT_DYNAMIC",
-                   agent_required_candidate=c["_group"] == "C_AGENT_DYNAMIC", reason=g["reason"], facts=g["facts"], independent_challenge=bool(c.get("_challenge")),
+                   agent_required_candidate=c["_group"] == "C_AGENT_DYNAMIC", reason=g["reason"], facts=g["facts"], independent_challenge=bool(c.get("_challenge")), hidden_form=c["_hidden_form"], hidden_merchant_category=c["_hidden_cat"], hidden_description=c["_orig_desc"],
+                   semantic=dict(style=c["_sem"]["style"], attempts=c["_sem"]["attempts"], unresolved=c["_sem"]["problems"], manual_review=c["_sem"].get("manual_review")),
                    challenge_source="independently authored alternative phrasing (not human-reviewed)" if c.get("_challenge") else "")
         gts.append(rec)
         manifest.append({k: rec[k] for k in ("case_id", "split", "architecture_group", "case_family", "expected_decision", "cross_document", "independent_challenge")})
     (OUT / "04_ground_truth_PRIVATE" / "ground_truth.jsonl").write_text("\n".join(json.dumps(r) for r in gts) + "\n")
     write_csv(OUT / "04_ground_truth_PRIVATE" / "case_family_manifest.csv", manifest)
     shutil.copy(ROOT / "ExpenseGuard_FINAL_CURRENT_DATASET" / "04_ground_truth_PRIVATE" / "guardrail_cases.csv", OUT / "04_ground_truth_PRIVATE" / "guardrail_cases.csv")
-    cfg = dict(seed=W.SEED, cases=len(cases), splits=dict(Counter(c["split"] for c in cases)), challenge_final_cases=sum(1 for c in cases if c.get("_challenge")), corpus=stats,
+    cfg = dict(seed=W.SEED, cases=len(cases), splits=dict(Counter(c["split"] for c in cases)), challenge_final_cases=sum(1 for c in cases if c.get("_challenge")), corpus=stats, semantic={k: v for k, v in sem.items()},
                historical_expenses=len(b.T["previous_expenses"]), tables=len(b.T))
     (OUT / "05_generation" / "generation_config.json").write_text(json.dumps(cfg, indent=1))
     print(json.dumps(cfg, indent=1))
