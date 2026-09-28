@@ -1,0 +1,1033 @@
+{
+ "X2-009": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "DUP-2.1",
+   "DUP-2.2"
+  ],
+  "missing_fields": [
+   "combined_spend_approval"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-010": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "TRN-1.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-017": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "DUP-2.1",
+   "DUP-2.2"
+  ],
+  "missing_fields": [
+   "combined_spend_approval"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-019": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "APR-3.1"
+  ],
+  "missing_fields": [
+   "manager_approval"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-024": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "GEP26-4.1",
+   "GEP26-1.2"
+  ],
+  "missing_fields": [
+   "correct_business_purpose"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-028": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "GEP26-4.1",
+   "GEP26-1.2"
+  ],
+  "missing_fields": [
+   "correct_business_purpose"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-030": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "TEL-2.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-032": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "APR-4.2"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-033": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "GEP25-2.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-036": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "EXC-2.1"
+  ],
+  "missing_fields": [
+   "exception_reference"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-037": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "APR-5.1"
+  ],
+  "missing_fields": [
+   "budget_owner_approval"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-059": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "APR-2.2"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-060": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "SWE-2.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-073": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "APR-2.2"
+  ],
+  "missing_fields": [
+   "director_approval"
+  ],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-081": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "CARD-3.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-087": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "EXC-2.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-089": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "GEP26-4.1",
+   "GEP26-1.2"
+  ],
+  "missing_fields": [
+   "correct_business_purpose"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-095": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "TRV-6.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-097": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "GIFT-2.2"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-098": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "TRV-1.1"
+  ],
+  "missing_fields": [
+   "approved_travel_request"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-103": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "APR-3.1"
+  ],
+  "missing_fields": [
+   "director_approval"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-109": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "GIFT-1.2",
+   "GIFT-1.3"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-110": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "DUP-1.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-111": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "TRV-1.1"
+  ],
+  "missing_fields": [
+   "approved_travel_request"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-117": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "GEP26-4.1",
+   "GEP26-1.2"
+  ],
+  "missing_fields": [
+   "correct_business_purpose"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-121": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "EXC-2.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-132": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "TRV-6.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-133": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "DUP-2.2"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-138": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "APR-2.2"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-142": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "EXC-2.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-144": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "APR-1.3"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-147": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "MEAL-1.2"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-148": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "TRV-6.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-149": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "DUP-2.1",
+   "DUP-2.2"
+  ],
+  "missing_fields": [
+   "combined_spend_approval"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-003": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 5120,
+  "output_tokens": 86,
+  "model_cost_usd": 0.000695,
+  "error": null,
+  "turns": 3
+ },
+ "X2-005": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "TRV-4.2"
+  ],
+  "missing_fields": [
+   "number_of_nights"
+  ],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 23728,
+  "output_tokens": 184,
+  "model_cost_usd": 0.002422,
+  "error": null,
+  "turns": 6
+ },
+ "X2-006": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 5299,
+  "output_tokens": 89,
+  "model_cost_usd": 0.000493,
+  "error": null,
+  "turns": 3
+ },
+ "X2-008": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "MEAL-1.2"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 43563,
+  "output_tokens": 361,
+  "model_cost_usd": 0.00414,
+  "error": null,
+  "turns": 7
+ },
+ "X2-011": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "TRV-6.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 5362,
+  "output_tokens": 114,
+  "model_cost_usd": 0.000546,
+  "error": null,
+  "turns": 3
+ },
+ "X2-012": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "Cited exception is not approved or is outside its validity window."
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 7532,
+  "output_tokens": 138,
+  "model_cost_usd": 0.000742,
+  "error": null,
+  "turns": 4
+ },
+ "X2-013": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 9005,
+  "output_tokens": 181,
+  "model_cost_usd": 0.000874,
+  "error": null,
+  "turns": 5
+ },
+ "X2-015": {
+  "decision": "ESCALATE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 16092,
+  "output_tokens": 429,
+  "model_cost_usd": 0.001577,
+  "error": null,
+  "turns": 8
+ },
+ "X2-018": {
+  "decision": "ESCALATE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 16086,
+  "output_tokens": 438,
+  "model_cost_usd": 0.001581,
+  "error": null,
+  "turns": 8
+ },
+ "X2-029": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "TRV-6.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 5345,
+  "output_tokens": 110,
+  "model_cost_usd": 0.000513,
+  "error": null,
+  "turns": 3
+ },
+ "X2-047": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 16150,
+  "output_tokens": 443,
+  "model_cost_usd": 0.001556,
+  "error": null,
+  "turns": 8
+ },
+ "X2-048": {
+  "decision": "ESCALATE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 16127,
+  "output_tokens": 447,
+  "model_cost_usd": 0.001612,
+  "error": null,
+  "turns": 8
+ },
+ "X2-049": {
+  "decision": "REJECT",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 16382,
+  "output_tokens": 446,
+  "model_cost_usd": 0.001611,
+  "error": null,
+  "turns": 8
+ },
+ "X2-054": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "GIFT-1.2",
+   "GIFT-1.3"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 7668,
+  "output_tokens": 111,
+  "model_cost_usd": 0.000727,
+  "error": null,
+  "turns": 4
+ },
+ "X2-055": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "MEAL-1.2"
+  ],
+  "missing_fields": [
+   "external_names"
+  ],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 13743,
+  "output_tokens": 414,
+  "model_cost_usd": 0.00135,
+  "error": null,
+  "turns": 7
+ },
+ "X2-061": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "GRD-1.1"
+  ],
+  "missing_fields": [
+   "origin",
+   "destination"
+  ],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 15045,
+  "output_tokens": 164,
+  "model_cost_usd": 0.00177,
+  "error": null,
+  "turns": 5
+ },
+ "X2-065": {
+  "decision": "ESCALATE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 15978,
+  "output_tokens": 431,
+  "model_cost_usd": 0.001571,
+  "error": null,
+  "turns": 8
+ },
+ "X2-066": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "MEAL-1.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 11504,
+  "output_tokens": 307,
+  "model_cost_usd": 0.001295,
+  "error": null,
+  "turns": 6
+ },
+ "X2-067": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "GRD-1.1"
+  ],
+  "missing_fields": [
+   "origin",
+   "destination"
+  ],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 3382,
+  "output_tokens": 66,
+  "model_cost_usd": 0.000326,
+  "error": null,
+  "turns": 2
+ },
+ "X2-076": {
+  "decision": "ESCALATE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 15928,
+  "output_tokens": 421,
+  "model_cost_usd": 0.001576,
+  "error": null,
+  "turns": 8
+ },
+ "X2-078": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 5197,
+  "output_tokens": 91,
+  "model_cost_usd": 0.000489,
+  "error": null,
+  "turns": 3
+ },
+ "X2-080": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "APR-3.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 34276,
+  "output_tokens": 151,
+  "model_cost_usd": 0.003226,
+  "error": null,
+  "turns": 5
+ },
+ "X2-088": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "GRD-4.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 3439,
+  "output_tokens": 65,
+  "model_cost_usd": 0.000353,
+  "error": null,
+  "turns": 2
+ },
+ "X2-102": {
+  "decision": "ESCALATE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 16112,
+  "output_tokens": 438,
+  "model_cost_usd": 0.001585,
+  "error": null,
+  "turns": 8
+ },
+ "X2-104": {
+  "decision": "APPROVE",
+  "policy_evidence": [
+   "TRV-2.2",
+   "TRV-3.2",
+   "TRV-6.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 9595,
+  "output_tokens": 148,
+  "model_cost_usd": 0.000914,
+  "error": null,
+  "turns": 5
+ },
+ "X2-105": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "GIFT-1.3 - Cash and equivalents are prohibited as gifts and are rejected."
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 34052,
+  "output_tokens": 147,
+  "model_cost_usd": 0.00318,
+  "error": null,
+  "turns": 5
+ },
+ "X2-112": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 10967,
+  "output_tokens": 201,
+  "model_cost_usd": 0.001046,
+  "error": null,
+  "turns": 6
+ },
+ "X2-116": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 39019,
+  "output_tokens": 186,
+  "model_cost_usd": 0.003737,
+  "error": null,
+  "turns": 7
+ },
+ "X2-123": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "GIFT-2.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 17818,
+  "output_tokens": 110,
+  "model_cost_usd": 0.001951,
+  "error": null,
+  "turns": 3
+ },
+ "X2-125": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 15813,
+  "output_tokens": 307,
+  "model_cost_usd": 0.001587,
+  "error": null,
+  "turns": 8
+ },
+ "X2-128": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "None"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 40806,
+  "output_tokens": 199,
+  "model_cost_usd": 0.003773,
+  "error": null,
+  "turns": 8
+ },
+ "X2-139": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "TRV-6.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 5308,
+  "output_tokens": 121,
+  "model_cost_usd": 0.000533,
+  "error": null,
+  "turns": 3
+ },
+ "X2-140": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 9157,
+  "output_tokens": 208,
+  "model_cost_usd": 0.000903,
+  "error": null,
+  "turns": 5
+ },
+ "X2-141": {
+  "decision": "ESCALATE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 22308,
+  "output_tokens": 227,
+  "model_cost_usd": 0.002388,
+  "error": null,
+  "turns": 8
+ },
+ "X2-143": {
+  "decision": "APPROVE",
+  "policy_evidence": [
+   "TRV-2.2",
+   "TRV-3.2",
+   "TRV-6.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 7391,
+  "output_tokens": 133,
+  "model_cost_usd": 0.000776,
+  "error": null,
+  "turns": 4
+ },
+ "X2-145": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 28656,
+  "output_tokens": 381,
+  "model_cost_usd": 0.002991,
+  "error": null,
+  "turns": 8
+ }
+}

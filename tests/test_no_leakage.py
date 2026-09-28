@@ -2,7 +2,7 @@
 import re, sys, unittest
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
-RUNTIME = ["tools", "rules", "rules_v2", "rules_text", "hybrid_facts", "workflow", "workflow_v2", "history", "tables", "retrievers", "retrieval", "chunking", "policy", "llm", "embed", "rag_run", "llm_exp"]
+RUNTIME = ["tools", "rules_v2", "rules_text", "hybrid_facts", "workflow_v2", "tables", "retrievers", "retrieval", "chunking", "policy", "llm", "embed", "llm_exp", "agent", "agent_tools", "agent_variants", "resolver"]
 EVALUATOR = ["evaluate", "retrieval_eval"]
 
 
@@ -19,12 +19,12 @@ class NoLeakage(unittest.TestCase):
         for m in RUNTIME:
             src = (ROOT / "src" / f"{m}.py").read_text()
             for ev in EVALUATOR:
-                if m in ("llm_exp", "rag_run") :  # orchestration modules score after the run (documented)
+                if m == "llm_exp":  # orchestration module scores after the run (documented)
                     continue
                 self.assertIsNone(re.search(rf"import .*\b{ev}\b|from \.{ev}|from \. import .*\b{ev}\b", src), f"{m}.py imports {ev}")
 
     def test_case_and_policy_files_carry_no_labels(self):
-        blob = (ROOT / "ExpenseGuard_FINAL_CURRENT_DATASET" / "02_cases" / "all_cases.jsonl").read_text()
+        blob = (ROOT / "ExpenseGuard_V2_DATASET" / "02_cases" / "all_cases.jsonl").read_text()
         for bad in ("expected_decision", "required_policy_ids", "architecture_group", "independent_challenge"):
             self.assertNotIn(bad, blob)
 

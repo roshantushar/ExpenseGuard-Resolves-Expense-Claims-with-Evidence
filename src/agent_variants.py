@@ -411,29 +411,45 @@ def make_check_hotel_compliance(case: dict):
     ceiling_tool = make_check_hotel_ceiling(case)
     f = RT.parse(case)
 
-    def check_hotel_compliance(grade, nights=None) -> dict:
+    def check_hotel_compliance(grade, nights=None, check_in_date=None, check_out_date=None) -> dict:
         if f.get("expense_type") != "HOTEL":
             # domain guard: Exp 41 found the model calling this tool on a non-hotel (meal) claim and
             # treating its output as if it applied -- refuse outright rather than let a manufactured
             # "ceiling" feed a wrong decision.
             return {"ok": False, "found": False, "data": None, "error": "this claim is not a HOTEL expense; check_hotel_compliance does not apply here"}
+        # TRV-1.1 prerequisite, checked first in both rules_v2.hotel() and workflow_v2.hotel() but
+        # missing here until Exp 51's validation run caught it (X2-115: a compliant ceiling with no
+        # approved travel request silently returned "no issue," leading to a false approval) -- a ceiling
+        # or exception being fine is meaningless if there was never an approved trip to begin with.
+        tr = RV.travel_request(case)
+        if not tr or tr.get("status") != "APPROVED":
+            return {"ok": True, "found": True, "data": {"policy_disposition": "REQUEST_INFORMATION", "policy_evidence": ["TRV-1.1"], "missing_fields": ["approved_travel_request"],
+                                                          "reason": "No approved travel request covers the transaction date."}, "error": None}
         r = ceiling_tool(grade)
         if not r["ok"]:
             return r
         d = r["data"]
         # nights is rarely regex-extractable from a hardened free-text note (that's the point of the
-        # hardening); RT.parse's own value is used only when the model doesn't supply one, and a missing
-        # value here is reported rather than silently defaulted, since defaulting to 1 previously gave a
-        # wrong rate that happened to still land on the right disposition by luck, not correctness.
-        nights = nights or f.get("nights")
+        # hardening); RT.parse's own value is used only when the model doesn't supply one. Prefer
+        # check_in_date/check_out_date when given: the model has been observed miscounting nights from a
+        # stated date range itself (X2-104: "23rd to 25th August" computed as 3 nights instead of 2,
+        # confused by a self-correction sentence in the note) -- the same class of arithmetic error this
+        # tool already exists to prevent for the ceiling division. Code computes the difference instead.
+        if check_in_date and check_out_date:
+            from datetime import date as _date
+            try:
+                nights = (_date.fromisoformat(check_out_date) - _date.fromisoformat(check_in_date)).days
+            except ValueError:
+                return {"ok": False, "found": False, "data": None, "error": "check_in_date/check_out_date must be YYYY-MM-DD"}
+        else:
+            nights = nights or f.get("nights")
         if not nights:
-            return {"ok": False, "found": False, "data": None, "error": "nights not stated in the retrieved fact set or the claim; read the employee note for the number of nights and pass it explicitly"}
+            return {"ok": False, "found": False, "data": None, "error": "nights not stated; pass check_in_date and check_out_date (preferred, code computes the count) or nights directly"}
         rate = round(case["bill"]["total"] / int(nights), 2)
         compliant = rate <= d["ceiling"] + 1e-9
         base = {**d, "nightly_rate": rate}
         if compliant:
             return {"ok": True, "found": True, "data": {**base, "compliant": True, "policy_disposition": None, "reason": "Within the applicable ceiling."}, "error": None}
-        tr = RV.travel_request(case) or {}
         exc_id = f.get("exception_ref") or tr.get("exception_id")
         st = RV.exception_for(case, "TRV-6.1", exc_id)
         if st == "VALID":
@@ -509,12 +525,14 @@ AGENT_TOOL_SPECS_40 = {
                             "amount (you do not supply required_level/required_types -- they cannot be wrong). Returns valid, reason_code and "
                             "policy_disposition (None if compliant, else the disposition this reason_code requires -- use it directly, do not "
                             "re-derive it)."),
-    "check_hotel_compliance": ({"grade": ("str", None), "nights": ("amount", None)}, "The full hotel ceiling-and-exception check for THIS "
-                                "claim (city/country/exception are resolved automatically). Returns compliant and policy_disposition (None if "
-                                "compliant, else the required disposition) -- use policy_disposition directly rather than deciding REJECT vs "
-                                "REQUEST_INFORMATION yourself. grade is the employee grade exactly as returned by get_employee_profile, e.g. "
-                                "'G4'. nights is the number of nights stated in the employee's own note -- read it from the claim yourself, "
-                                "it is not resolved automatically."),
+    "check_hotel_compliance": ({"grade": ("str", None), "nights": ("amount?", None), "check_in_date": ("str?", None), "check_out_date": ("str?", None)},
+                                "The full hotel ceiling-and-exception check for THIS claim (city/country/exception are resolved automatically). "
+                                "Returns compliant and policy_disposition (None if compliant, else the required disposition) -- use "
+                                "policy_disposition directly rather than deciding REJECT vs REQUEST_INFORMATION yourself. grade is the employee "
+                                "grade exactly as returned by get_employee_profile, e.g. 'G4'. PREFER passing check_in_date and check_out_date "
+                                "(YYYY-MM-DD, exactly as stated in the note) over counting nights yourself -- do the arithmetic in your head and "
+                                "you will sometimes miscount, especially if the note corrects itself mid-sentence; only pass nights directly when "
+                                "no clear date range is stated."),
 }
 
 
@@ -536,6 +554,216 @@ SYSTEM_40 = A.SYSTEM.replace(
     "If any observation includes 'unverified_policy_domain', you must call search_policy_corpus again before deciding.")
 
 
+# ================================================================== Exp 47: broad category coverage
+# Exp 45 found false approvals concentrated entirely in categories with no guarded tool. Two are closed
+# here: check_meal_compliance (mirrors rules_v2.meal() exactly; Exp 45's meal false approvals traced to
+# RT.parse misreading the note -- one even flipped MEAL_EMPLOYEE to MEAL_CLIENT, which uses a materially
+# higher ceiling, so is_client/attendees/external/alcohol/tip are all model-supplied, the same fix
+# pattern as nights/city for hotels) and check_workflow_compliance (a broad net: reuses workflow_v2.decide,
+# already tested end-to-end in Exp 18 through typed tools only, as a NEGATIVE-signal source for every
+# other category -- its REJECT/REQUEST_INFORMATION/ESCALATE verdicts are trusted, but never its own
+# APPROVE, since workflow_v2 itself has a measured 13.5% false-approval rate; trusting only its negative
+# verdicts keeps that risk out while still catching real violations it does correctly detect).
+
+def make_check_meal_compliance(case: dict):
+    f = RT.parse(case)
+
+    def check_meal_compliance(is_client_meal: bool, attendees_total, external_attendees=0, external_names=None, alcohol_amount=0, tip_amount=0) -> dict:
+        # external_names is deliberately accepted as whatever the model naturally wants to pass (the
+        # actual name(s), a comma-joined string, a list, or nothing/empty) rather than a bool the model
+        # has to compute -- a live run showed it consistently passing [] / "" / null for "no names" and
+        # getting rejected every time by a strict bool check, burning the whole turn budget on retries.
+        # Only the truthiness of what's given matters here: were names actually provided or not.
+        has_names = bool(external_names) and (not isinstance(external_names, (list, str)) or len(external_names) > 0)
+        if f.get("expense_type") not in ("MEAL_CLIENT", "MEAL_EMPLOYEE"):
+            return {"ok": False, "found": False, "data": None, "error": "this claim is not a meal expense; check_meal_compliance does not apply here"}
+        b = case["bill"]; y = RV.Y(case); r = RV.region(case); yr = int(case["transaction_date"][:4]); d = case["transaction_date"]
+        client = bool(is_client_meal) or (external_attendees or 0) > 0
+        alc = float(alcohol_amount or 0)
+        if r == "IN" and alc:
+            return {"ok": True, "found": True, "data": {"policy_disposition": "REJECT", "policy_evidence": ["IN-2.4"], "reason": "Alcohol is not reimbursable in India."}, "error": None}
+        if alc and not client:
+            return {"ok": True, "found": True, "data": {"policy_disposition": "REJECT", "policy_evidence": ["SG-2.4" if r == "SG" else "JP-2.4"], "reason": "Alcohol permitted only with external attendees."}, "error": None}
+        if alc:
+            lim = 0.30 if (r == "JP" or (r == "SG" and yr == 2026)) else 0.35
+            if alc > lim * b["total"] + 1e-9:
+                return {"ok": True, "found": True, "data": {"policy_disposition": "REJECT", "policy_evidence": ["MEAL-2.1"], "reason": "Alcohol exceeds the share limit."}, "error": None}
+        n = attendees_total
+        if not n:
+            return {"ok": True, "found": True, "data": {"policy_disposition": "REQUEST_INFORMATION", "policy_evidence": ["MEAL-3.2"], "reason": "Attendee count needed."}, "error": None}
+        if client and (external_attendees or 0) > 0 and not has_names:
+            return {"ok": True, "found": True, "data": {"policy_disposition": "REQUEST_INFORMATION", "policy_evidence": ["MEAL-1.2"], "reason": "External attendee names required."}, "error": None}
+        tip = float(tip_amount or 0)
+        if r == "JP" and tip > 0:
+            return {"ok": True, "found": True, "data": {"policy_disposition": "REJECT", "policy_evidence": ["JP-2.5"], "reason": "Gratuities not reimbursable in Japan."}, "error": None}
+        ceil = (RV.CLIENT_MEAL if client else RV.EMP_MEAL)[r][y]
+        if client and r == "SG" and yr == 2025 and d >= "2025-07-01":
+            ceil = 128
+        if client and r == "JP" and yr == 2026 and d >= "2026-05-01":
+            ceil = 13500
+        if not client:
+            if r == "SG" and yr == 2025 and d >= "2025-09-01": ceil = 52
+            if r == "JP" and yr == 2025 and d >= "2025-10-01": ceil = 5200
+            if r == "IN" and yr == 2025 and d >= "2025-11-01": ceil = 2100
+        per_person = b["total"] / n
+        if per_person > ceil + 1e-9:
+            return {"ok": True, "found": True, "data": {"per_person_spend": round(per_person, 2), "ceiling": ceil, "policy_disposition": "REJECT",
+                                                          "policy_evidence": ["MEAL-1.2" if client else "MEAL-1.1"], "reason": f"Per-person spend {per_person:.0f} exceeds ceiling {ceil}."}, "error": None}
+        pre = b["total"] - tip
+        if tip and pre > 0 and tip > 0.15 * pre and r != "JP":
+            return {"ok": True, "found": True, "data": {"per_person_spend": round(per_person, 2), "ceiling": ceil, "policy_disposition": "REQUEST_INFORMATION",
+                                                          "policy_evidence": ["MEAL-2.2"], "reason": "Gratuity above 15% needs manager approval; confirm approval on file."}, "error": None}
+        return {"ok": True, "found": True, "data": {"per_person_spend": round(per_person, 2), "ceiling": ceil, "policy_disposition": None, "reason": "Within ceiling, no issue found."}, "error": None}
+
+    return check_meal_compliance
+
+
+def make_check_gift_compliance(case: dict):
+    """Mirrors rules_v2.gift() exactly. Recipient fields, gift form and prior-annual-spend context are
+    all model-supplied -- the same reason as everywhere else: not reliably regex-extractable."""
+    f = RT.parse(case)
+
+    def check_gift_compliance(recipient_type: str = None, gift_form: str = None, recipient_name: str = None, recipient_org: str = None) -> dict:
+        if f.get("expense_type") != "GIFT":
+            return {"ok": False, "found": False, "data": None, "error": "this claim is not a gift expense; check_gift_compliance does not apply here"}
+        b, y, r, d = case["bill"], RV.Y(case), RV.region(case), case["transaction_date"]
+        if (recipient_type or "").upper() in ("GOVERNMENT", "TENDER_DECISION_MAKER", "PUBLIC_OFFICIAL") or (gift_form or "").upper() in ("CASH", "GIFT_CARD", "VOUCHER", "CASH_EQUIVALENT"):
+            return {"ok": True, "found": True, "data": {"policy_disposition": "REJECT", "policy_evidence": ["GIFT-1.2", "GIFT-1.3"], "reason": "Prohibited recipient or cash equivalent."}, "error": None}
+        miss = [k for k, v in (("recipient_name", recipient_name), ("recipient_org", recipient_org)) if not v]
+        if miss:
+            return {"ok": True, "found": True, "data": {"policy_disposition": "REQUEST_INFORMATION", "policy_evidence": ["GIFT-1.4"], "missing_fields": miss, "reason": "Recipient details missing."}, "error": None}
+        cap = RV.GIFT[r][y]
+        if r == "SG" and d >= "2026-06-01":
+            cap = 130
+        if b["total"] > cap:
+            return {"ok": True, "found": True, "data": {"policy_disposition": "REJECT", "policy_evidence": ["GIFT-2.1"], "reason": f"Gift {b['total']} exceeds per-gift ceiling {cap}."}, "error": None}
+        hist = T.search_previous_expenses(employee_id=case["employee_id"], date_from=f"{d[:4]}-01-01", date_to=f"{d[:4]}-12-31")
+        prior_rows = hist["data"] or [] if hist["found"] else []
+        prior = sum(float(p["amount"]) for p in prior_rows if p.get("category") == "GIFT" and p.get("counterparty") == recipient_org)
+        if prior + b["total"] > RV.GIFT_ANNUAL[r][y]:
+            return {"ok": True, "found": True, "data": {"policy_disposition": "REJECT", "policy_evidence": ["GIFT-2.2"], "reason": "Annual gift ceiling for the recipient organisation exceeded."}, "error": None}
+        return {"ok": True, "found": True, "data": {"policy_disposition": None, "reason": "Within per-gift and annual ceilings, recipient details given, no prohibited form."}, "error": None}
+
+    return check_gift_compliance
+
+
+def make_check_ground_transport_compliance(case: dict):
+    """Mirrors rules_v2.ground() exactly. origin/destination/whether either end is home are model-
+    supplied (the same reason as attendees_total for meals: not reliably regex-extractable from a
+    hardened note)."""
+    f = RT.parse(case)
+
+    _UNSTATED = {"unknown", "not stated", "not known", "n/a", "na", "none", "unspecified", "not specified", "not given", "unclear", ""}
+
+    def check_ground_transport_compliance(origin: str = None, destination: str = None, either_end_is_home: bool = False,
+                                           departure_time: str = None, activity_end_time: str = None) -> dict:
+        if f.get("expense_type") != "GROUND_TRANSPORT":
+            return {"ok": False, "found": False, "data": None, "error": "this claim is not a ground-transport expense; check_ground_transport_compliance does not apply here"}
+        # the model has been observed passing a placeholder like "unknown" instead of omitting the
+        # argument when the note genuinely doesn't state it -- a non-empty string still passes `not x`,
+        # so normalize known placeholders to missing before checking.
+        if origin and str(origin).strip().lower() in _UNSTATED:
+            origin = None
+        if destination and str(destination).strip().lower() in _UNSTATED:
+            destination = None
+        if not origin or not destination:
+            return {"ok": True, "found": True, "data": {"policy_disposition": "REQUEST_INFORMATION", "policy_evidence": ["GRD-1.1"], "missing_fields": ["origin", "destination"],
+                                                          "reason": "Route details missing."}, "error": None}
+        if either_end_is_home:
+            late = (departure_time or "00:00") > "22:00" and (activity_end_time or "00:00") > "21:30"
+            if not late:
+                return {"ok": True, "found": True, "data": {"policy_disposition": "REJECT", "policy_evidence": ["GRD-1.2"], "reason": "Commute is not reimbursable."}, "error": None}
+        return {"ok": True, "found": True, "data": {"policy_disposition": None, "reason": "Route stated and not an ordinary commute."}, "error": None}
+
+    return check_ground_transport_compliance
+
+
+AGENT_TOOL_SPECS_47 = {
+    "check_gift_compliance": ({"recipient_type": ("str?", None), "gift_form": ("str?", None), "recipient_name": ("str?", None), "recipient_org": ("str?", None)},
+                              "The full gift compliance check for THIS claim (prohibited recipient/cash-equivalent, per-gift ceiling, annual "
+                              "per-recipient-organisation ceiling). Read recipient_type (e.g. GOVERNMENT/PUBLIC_OFFICIAL if applicable), gift_form "
+                              "(e.g. CASH/GIFT_CARD/VOUCHER if applicable), recipient_name and recipient_org yourself from the note. Returns "
+                              "policy_disposition directly."),
+    "check_ground_transport_compliance": ({"origin": ("str?", None), "destination": ("str?", None), "either_end_is_home": ("bool?", None),
+                                           "departure_time": ("str?", None), "activity_end_time": ("str?", None)},
+                                          "The ground-transport compliance check for THIS claim. Read origin, destination, whether either end "
+                                          "is the employee's home, and (if home is involved) the departure/activity-end times yourself from the "
+                                          "note. Returns policy_disposition directly."),
+    "check_meal_compliance": ({"is_client_meal": ("bool", None), "attendees_total": ("amount", None), "external_attendees": ("amount?", None),
+                               "external_names": ("text_or_list?", None), "alcohol_amount": ("amount?", None), "tip_amount": ("amount?", None)},
+                              "The full meal compliance check for THIS claim (alcohol, tip, per-person ceiling with temporal amendments). Read "
+                              "is_client_meal, attendees_total, external_attendees, alcohol_amount and tip_amount yourself from the employee's "
+                              "note -- do not trust a superficial reading; a note can describe a colleague as external-sounding without them being "
+                              "an external guest. external_names: pass the actual name(s) if the note states them, or omit/leave blank if it "
+                              "doesn't -- do not pass true/false. Returns policy_disposition directly."),
+}
+
+
+def make_check_workflow_compliance(case: dict):
+    from . import workflow_v2 as WF
+    f = RT.parse(case)
+
+    # ALLOWLIST, not a denylist: Exp 47 found check_workflow_compliance regressed cases across meal,
+    # delegation, gift, mileage AND approval-tier categories -- because workflow_v2.decide() internally
+    # calls RT.parse for every category-specific check (attendees, gift recipient, tip, alcohol...), the
+    # exact same fragile free-text extraction responsible for the tier/nights/attendee bugs found
+    # elsewhere this session. A denylist naming only the checks WITH a dedicated fix (hotel, software,
+    # meal) leaves every other category's fragile check trusted by default -- backwards. Trusting only
+    # the checks that never depend on a free-text field at all is the safe default: duplicates
+    # (DUP-*, bill/date-based), submission window (GEP*-2.1/2.2, date-based), merchant/consumer-service
+    # restriction (CARD-*), and mandatory-documentation (GEP*-1.3, bill-field presence). Every other
+    # category (gift, delegation-consequence outside hotel/software, mileage, telecom, training,
+    # conference, car, equipment) is left unresolved here until it gets the same model-argument-based
+    # treatment check_hotel_compliance/check_meal_compliance already received.
+    _TRUSTED_PREFIXES = ("DUP-", "CARD-")
+    _TRUSTED_EXACT_SUFFIXES = ("-2.1", "-2.2", "-1.3")  # GEP24/25/26-2.1 (submission window), -2.2 (late/outage), -1.3 (mandatory docs)
+
+    def _is_trusted(policy_evidence: list) -> bool:
+        return any(c.startswith(_TRUSTED_PREFIXES) or (c.startswith("GEP") and c.endswith(_TRUSTED_EXACT_SUFFIXES)) for c in policy_evidence)
+
+    def check_workflow_compliance() -> dict:
+        # CARD-2.1 ("consumer service presumed personal") is checked by rules_v2/workflow_v2 against the
+        # VISIBLE, coarsened bill.merchant_category (round-3 hardening deliberately coarsened it to "OTHER"
+        # etc.), so it can never trigger there -- but the TRUE category is still on file in the merchant
+        # directory (real enterprise data, not free text), and the model has been observed missing it
+        # (X2-013, MovieBox+). This is not a free-text-parsing shortcut: get_merchant_metadata is a tool
+        # the agent already has direct access to; this only makes the cross-check systematic.
+        mm = T.get_merchant_metadata(merchant_name=case["bill"]["merchant"])
+        if mm["found"] and mm["data"].get("merchant_category") in ("CONSUMER_SERVICE", "STREAMING", "FITNESS"):
+            return {"ok": True, "found": True, "data": {"policy_disposition": "REJECT", "policy_evidence": ["CARD-2.1"],
+                                                          "reason": f"Merchant directory lists {case['bill']['merchant']} as {mm['data']['merchant_category']}; consumer service presumed personal."}, "error": None}
+        try:
+            d = WF.decide(case)
+        except Exception as e:  # noqa
+            return {"ok": False, "found": False, "data": None, "error": f"workflow error: {type(e).__name__}"}
+        if d["decision"] == "APPROVE" or not _is_trusted(d.get("policy_evidence", [])):
+            # workflow_v2's own APPROVE is not trusted as a positive signal (it has a measured 13.5% FAR,
+            # Exp 30); a non-APPROVE verdict outside the trusted (free-text-independent) checks is ALSO
+            # not trusted, since it can be just as wrong as a false approval when it rests on a misread
+            # note field. Either way this is reported as "no issue found here", not a resolved answer.
+            return {"ok": True, "found": True, "data": {"policy_disposition": None, "reason": "No violation found among this tool's trusted (free-text-independent) checks."}, "error": None}
+        return {"ok": True, "found": True, "data": {"policy_disposition": d["decision"], "policy_evidence": d.get("policy_evidence", []),
+                                                      "missing_fields": d.get("missing_fields", []), "reason": d.get("reason", "")}, "error": None}
+
+    return check_workflow_compliance
+
+
+AGENT_TOOL_SPECS_47["check_workflow_compliance"] = ({}, "Checks THIS claim for duplicate submission, a late/very-late submission, a restricted or "
+                    "consumer-service merchant, and mandatory documentation -- the checks that never depend on reading a category-specific field "
+                    "from the note (so they cannot be wrong the way a ceiling or attendee count can be). Call this for any claim before concluding "
+                    "APPROVE. It does NOT check telecom, training, mileage, car rental or equipment category rules -- for those, and for any "
+                    "claim it returns no issue on, still form your own judgement from search_policy_corpus and the enterprise tools.")
+
+
+def specs_and_tools_47(case: dict) -> tuple:
+    base_specs, base_tools = specs_and_tools_42(case)
+    specs = {**base_specs, "check_meal_compliance": AGENT_TOOL_SPECS_47["check_meal_compliance"], "check_workflow_compliance": AGENT_TOOL_SPECS_47["check_workflow_compliance"],
+             "check_ground_transport_compliance": AGENT_TOOL_SPECS_47["check_ground_transport_compliance"], "check_gift_compliance": AGENT_TOOL_SPECS_47["check_gift_compliance"]}
+    case_tools = {**base_tools, "check_meal_compliance": make_check_meal_compliance(case), "check_workflow_compliance": make_check_workflow_compliance(case),
+                  "check_ground_transport_compliance": make_check_ground_transport_compliance(case), "check_gift_compliance": make_check_gift_compliance(case)}
+    return specs, case_tools
+
+
 AGENT_TOOL_SPECS_42 = {"check_project_budget": ({}, "Whether THIS claim's project is active and its cost centre is open (SWE-1.2/CIRC-26-02, for software "
                                                      "subscriptions charged to a project above SGD 1000 from Feb 2026). Returns policy_disposition directly "
                                                      "(None if no issue, else ESCALATE) -- use it rather than guessing whether the project chain is valid.")}
@@ -554,6 +782,15 @@ SYSTEM_42 = SYSTEM_40.replace(
     "For a hotel claim, call check_hotel_compliance instead of computing a ceiling or judging an exception yourself.",
     "For a hotel claim (not any other expense type), call check_hotel_compliance instead of computing a ceiling or judging an exception "
     "yourself. For a software subscription charged to a project, call check_project_budget.")
+
+
+SYSTEM_47 = SYSTEM_42.replace(
+    "For a software subscription charged to a project, call check_project_budget.",
+    "For a software subscription charged to a project, call check_project_budget. For a meal claim, call check_meal_compliance -- read every "
+    "argument yourself from the note; do not assume a colleague described in passing is an external guest, or vice versa. For a gift claim, call "
+    "check_gift_compliance. For a ground-transport claim, call check_ground_transport_compliance. For any claim, also call "
+    "check_workflow_compliance before concluding APPROVE -- it catches duplicates, late submission, and restricted merchants, which apply "
+    "regardless of category.")
 
 
 def gate_disposition(result: dict) -> dict:
@@ -590,7 +827,9 @@ def gate_approve(result: dict) -> dict:
     if result.get("decision") != "APPROVE":
         return result
     for step in result.get("trace", []):
-        d = (step.get("observation") or {}).get("data") or {}
+        d = (step.get("observation") or {}).get("data")
+        if not isinstance(d, dict):
+            continue
         if d.get("policy_disposition") or d.get("valid") is False or d.get("compliant") is False:
             return {**result, "decision": "ESCALATE", "explanation": result.get("explanation", "") +
                     f" [Exp 40 gate: overridden from APPROVE -- {step['tool']} returned a disposition of {d.get('policy_disposition')!r} that was not honored.]"}

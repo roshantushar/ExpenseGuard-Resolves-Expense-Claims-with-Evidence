@@ -1,0 +1,57 @@
+{
+  "run_id": "RESOLVER-VALIDATION-gpt-4o-mini-ca7109",
+  "model": "openai/gpt-4o-mini",
+  "n": 15,
+  "correct": 3,
+  "correct_disposition_rate": 0.2,
+  "wilson95": [
+    0.0705,
+    0.4519
+  ],
+  "false_approvals": 0,
+  "non_approvable": 7,
+  "false_approval_rate": 0.0,
+  "human_review_rate": 0.0,
+  "over_escalation": 0,
+  "missed_escalation": 2,
+  "missing_field_exact_match": "0/2",
+  "by_family": {
+    "DUPLICATE_CHECK": "1/2",
+    "CLIENT_MEAL": "1/2",
+    "DYNAMIC_HOTEL_DISCOVERY": "0/2",
+    "HOTEL_CONFERENCE": "0/2",
+    "HOTEL_EXCEPTION": "1/2",
+    "EMPLOYEE_MEAL_TEMPORAL": "0/1",
+    "HOTEL_CEILING": "0/1",
+    "ALCOHOL_REGIONAL": "0/1",
+    "GROUND_TRANSPORT": "0/1",
+    "FINANCE_THRESHOLD": "0/1"
+  },
+  "confusion": {
+    "APPROVE->REQUEST_INFORMATION": 3,
+    "REJECT->REJECT": 2,
+    "ESCALATE->REJECT": 1,
+    "APPROVE->REJECT": 5,
+    "REQUEST_INFORMATION->REQUEST_INFORMATION": 1,
+    "REQUEST_INFORMATION->REJECT": 1,
+    "REJECT->REQUEST_INFORMATION": 1,
+    "ESCALATE->REQUEST_INFORMATION": 1
+  },
+  "errors": 0,
+  "median_latency_ms": 2113,
+  "p95_latency_ms": 3623,
+  "input_tokens": 79884,
+  "output_tokens": 1165,
+  "total_tokens": 81049,
+  "total_cost_usd": 0.012682,
+  "decision_counts": {
+    "REQUEST_INFORMATION": 6,
+    "REJECT": 9
+  },
+  "schema_valid": 15,
+  "unsupported_policy_assertion_rate": 0.6,
+  "policy_assertion_in_text_rate": 1.0,
+  "nonexistent_clause_rate": 0.0,
+  "wrong_policy_version_cases": 0,
+  "cached_calls": 1
+}

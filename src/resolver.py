@@ -105,8 +105,8 @@ def resolve_batch_v2(cases: list, model: str | None = None, max_steps: int = 8) 
             out[c["case_id"]] = {"decision": d["decision"], "policy_evidence": d.get("policy_evidence", []), "missing_fields": d.get("missing_fields", []),
                                   "manual_review_required": d["decision"] == "ESCALATE", "path": "deterministic", "latency_ms": 0, "input_tokens": 0, "output_tokens": 0, "model_cost_usd": 0.0, "error": None}
     for c in residual:
-        specs, case_tools = V.specs_and_tools_42(c)
-        r = agent.run(c, model=model, system_template=V.SYSTEM_42, specs=specs, case_tools=case_tools, max_steps=max_steps, tag="RESOLVER_V2")
+        specs, case_tools = V.specs_and_tools_47(c)
+        r = agent.run(c, model=model, system_template=V.SYSTEM_47, specs=specs, case_tools=case_tools, max_steps=max_steps, tag="RESOLVER_V2")
         r = V.gate_disposition(V.gate_approve(r))
         out[c["case_id"]] = {"decision": r["decision"], "policy_evidence": r.get("policy_evidence", []), "missing_fields": r.get("missing_fields", []),
                               "manual_review_required": r["decision"] == "ESCALATE", "path": "llm_residual_v2", "latency_ms": 0,

@@ -1,75 +1,215 @@
-# ExpenseGuard V2 — master experiment index
+# ExpenseGuard V2 — master index
 
-This is the single entry point into everything run on the V2 (semantic, round-3-hardened) dataset:
-150 claims (70 dev / 30 validation / 50 final test), 22 policy documents, 11 enterprise tables.
-Every experiment below has its own doc (this folder), its own notebook (`notebooks/v2/`), and its own
-saved results (`results/v2/<split>/<experiment>/`) — nothing here is hand-typed, every table traces
-back to a saved file. No git commit/push has been made on your behalf; the working tree is yours to
-review and commit.
+## The problem
 
-## How to read this
-- **Dev** = tuned freely. **Validation** = touched once for confirmation, then left alone.
-- **Final test** = touched exactly once, ever, under a hash-frozen manifest (Exp 32). Nothing after
-  that point changed the frozen numbers.
-- Cost figures are real spend from `results/run_log.jsonl`, capped by `MAX_BUDGET_USD=3.50`.
+An employee submits an expense claim: a bill, a free-text note explaining it, nothing else structured.
+The system has to decide **APPROVE / REJECT / REQUEST_INFORMATION / ESCALATE**, using:
+- a **22-document policy corpus** (global rules, regional addenda, category policies, finance circulars,
+  exception procedures),
+- **11 enterprise tables** (approvals, delegations, travel requests, project/budget status, prior
+  expenses),
+- and the note itself — deliberately hardened across three rounds so decision-critical facts (nights,
+  attendee counts, exception references, even the expense category) live only in prose, sometimes next
+  to a distractor sentence that states something else.
 
-## The story, end to end
+The question this whole project answers: **what architecture gets this right, safely, and why does
+everything that looks like it should work often not?**
 
-| # | Experiment | What it tested | Headline result | Doc |
-|---|---|---|---|---|
-| 0 | Dataset validation + EDA | Leakage/integrity audit, label/family/split balance | 0 critical errors; corpus hardened to hide facts in free text (semantic round 3) | [exp00](exp00_eda.md) |
-| 1 | End-to-end sanity | 10 dev cases, policy given directly | Stale (pre-hardening); superseded by later experiments | [exp01](exp01_smallest_slice.md) |
-| 2 | Deterministic rules baseline | `rules.py`/`rules_v2.py`/`rules_text.py` on 70 dev | Regex-only parsing collapses once facts move to free text — this *forced* the hardening | [exp02](exp02_rules_baseline.md) |
-| 3 | Generic LLM, no policy | Claim only | Confident but unsupported answers, can't detect missing approvals | [exp03](exp03_generic_llm.md) |
-| 4A/4B | Long-context feasibility + baseline | Full corpus in-context vs. RAG | Feasible but expensive ($0.77); did not beat retrieval | [exp04a](exp04a_long_context_feasibility.md) / [exp04b](exp04b_long_context_baseline.md) |
-| 5 | Naive RAG | Dense, fixed chunks, top-3 | Beat no-policy, not yet rules | [exp05](exp05_naive_rag.md) |
-| 6 | Chunking | 300/50 vs 600/100 vs 900/150 | **600/100 frozen** | [exp06](exp06_chunking.md) |
-| 7 | Top-K | K = 1, 3, 5, 8 | **K=8 frozen** | [exp07](exp07_topk.md) |
-| 8 | Retriever | BM25 vs dense vs hybrid | Dense frozen; hybrid didn't add enough to justify complexity | [exp08](exp08_retriever.md) |
-| 9 | Metadata filtering | M0→M4 ablation (date/region/doc-type/category) | **M4 frozen** — biggest single retrieval-quality lever | [exp09](exp09_metadata.md) |
-| 10 | Query rewriting | Rewrite vs. raw query | No benefit found; raw query kept, rewriting **not adopted** | [exp10](exp10_query_rewrite.md) |
-| 11 | Policy oracle | Exact clauses supplied vs. best RAG | Split retrieval failure from reasoning failure | [exp11](exp11_oracle.md) |
-| 12 | Hybrid rules + RAG | Deterministic mechanics (H1–H4) extracted, LLM decides | Motivated moving arithmetic/temporal/evidence/duplicate logic out of the LLM | [exp12](exp12_hybrid.md) |
-| 12B | Deterministic-first router (probe) | Conclusive → trust rules; else → LLM | Proved the routing concept later frozen in Exp 30 | [exp12b](exp12b_resolver.md) |
-| 13 | Missing-information detection | REQUEST_INFORMATION accuracy + negative controls | Qualified as a working component | [exp13](exp13_missing_info.md) |
-| 14 | Duplicate detection | EXACT/POSSIBLE/LEGITIMATE/NONE classes | 4/4 on classification; no false-fraud wording | [exp14](exp14_duplicate_detection.md) |
-| 15 | Split-transaction chain | Retrieval → grouping → combined amount → policy | Full chain confirmed, not just the label | [exp15](exp15_split_transaction.md) |
-| 16 | Enterprise-evidence oracle | Raw records vs. pre-resolved facts | Pre-resolved facts help — motivated the typed tool layer | [exp16](exp16_enterprise_oracle.md) |
-| 17 | Typed tools + unit tests | 11 read-only tools over enterprise tables | Full pass/fail matrix; `validate_approval` hardened | [exp17](exp17_tools.md) |
-| 18 | Fixed workflow | Pre-declared tool sequence, no model | 45/70 (64%) — most accurate single architecture on dev | [exp18](exp18_fixed_workflow.md) |
-| 19 | Agent-necessity audit | Do any cases need a model deciding what to look up? | Most "agent-candidate" cases were workflow-solvable | [exp19](exp19_agent_audit.md) |
-| 20 | Bounded agent pilot | Real ReAct agent vs. fixed workflow, same cases | Agent didn't beat the workflow → **gate closed, Exp 21–27 not run** | [exp20](exp20_bounded_agent.md) |
-| 28 | Guardrail suite (security) | Injection, fake authority, malformed/conflicting input | Found and fixed `validate_approval`'s conflicting-records bug; retrieval-text injection left as a documented open risk | [exp28](exp28_guardrails.md) |
-| 29 | Abstention/escalation | Risk-coverage, over/under-escalation | Escalation behaviour quantified per architecture | [exp29](exp29_abstention.md) |
-| 30 | **Architecture comparison + freeze** | LLM-for-all vs. fixed workflow vs. selective resolver | **Selective resolver frozen**: 0% FAR, 61% correct, 51% of claims go to the LLM | [exp30](exp30_selective_router.md) |
-| 31 | Cost-to-serve | Measured $/claim + review-cost and error-cost sensitivity | $0.00043/claim blended — cost is a non-issue at any scale | [exp31](exp31_cost_to_serve.md) |
-| 32 | **Frozen final test (one-shot)** | The 50 held-out claims, touched once | **30/50 (60%), 0 false approvals**, but APPROVE recall 0.00 | [exp32](exp32_final_test.md) |
-| 33 | Failure analysis | Root-caused all 20 final-test errors | 9/20 LLM reasoning errors, 5/20 over-asking for info, 4/20 fact-coverage gaps, 0 routing errors | [exp33](exp33_failure_analysis.md) |
+## What's in this folder
+One `.md` file per experiment (hypothesis → method → result → decision), a notebook or script backing
+almost every one, and every number traceable to a file under `results/v2/`. Nothing here is hand-typed.
+No git commit/push has been made on the user's behalf.
 
-*(Exp 21–27 are intentionally absent: Exp 20's measured result closed that gate — see exp20's doc for the decision.)*
+## Governance & security alignment
 
-## The one-paragraph project story
-Rules alone fail once facts are hidden in free text (Exp 2) — this is *why* the dataset was hardened
-three times. RAG recovers most of that (Exp 5–10, converging on 600/100 chunking, K=8, dense retrieval,
-M4 metadata filtering). But retrieval and even a policy oracle leave real reasoning error (Exp 11), so
-deterministic mechanics were pulled out of the LLM into rules + typed tools (Exp 12, 16, 17), and a
-fixed workflow using them was the single most accurate architecture (Exp 18, 64% on dev) — but with the
-worst false-approval rate (13.5%). A real agent was tested and did not beat the fixed workflow
-(Exp 19–20), so agent-specific work stopped there. The chosen design is a **selective resolver**:
-deterministic rules handle every case they can resolve conclusively (which turned out to be **100%
-accurate on final test**, unseen), and only the residual, harder cases go to an LLM — this drives false
-approvals to **exactly zero** at a small accuracy cost and negligible dollar cost (Exp 30, 31). That
-design was frozen under a hash-verified manifest and run once on the final 50 claims (Exp 32): 30/50
-correct, 0 false approvals, but the LLM step never once correctly approved a genuinely approvable claim
-(0/13). Exp 33 traces all 20 errors to the LLM-residual step specifically — mostly reasoning errors and
-over-asking for unneeded information, not retrieval or routing failures — and documents concrete,
-un-applied fix directions for a future iteration.
+Framed against recognized frameworks — this is an honest mapping of what was actually built and
+adversarially tested to the risk categories they name, not a compliance certification.
 
-## Where to look for what
-- **Architecture comparison, final numbers:** Exp 30 (dev) + Exp 32 (frozen final test).
-- **Cost:** Exp 31.
-- **Security:** Exp 28.
-- **Why the agent path was dropped:** Exp 19 + Exp 20.
-- **What to fix next, if the project continues:** Exp 33's prioritization table.
-- **Freeze manifest (reproducibility guarantee for Exp 32):** `experiments/exp32_freeze_manifest_v2.yaml`.
-- **All raw results:** `results/v2/<split>/<experiment>/`; nothing above is hand-typed.
+- **OWASP Top 10 for LLM Applications — LLM06: Excessive Agency.** Directly and concretely mitigated:
+  every tool is read-only, bounded by a step cap and call deduplication (Exp 20, 28), and — the core
+  mechanism — Exp 41's disposition gate structurally prevents the model from overriding a tool that
+  already computed the correct answer, with Exp 43's domain guards restricting each tool to only the
+  claim types it actually applies to.
+- **OWASP Top 10 for LLM Applications — LLM01: Prompt Injection.** Identified and adversarially tested
+  (Exp 28: injection, fake authority, malicious tool-embedded text), with a prompt-level defense in
+  place (retrieved/user text is treated as data, never instructions). **Not fully solved**: Exp 28 found
+  retrieval-text injection can still defeat that defense — this remains a documented, disclosed open
+  risk, carried forward rather than silently fixed, per the project's own decision at the time.
+- **Human oversight (in the spirit of Singapore's IMDA Model AI Governance Framework for agentic AI and
+  the EU AI Act's human-oversight/transparency principles for workplace and financial systems).**
+  ESCALATE is a first-class, deliberately safe outcome, not a failure — any claim the system can't
+  resolve with confidence routes to a human reviewer by design. The frozen architecture (Exp 30) was
+  chosen specifically because it drives false approvals to 0%, at the cost of some raw accuracy, over a
+  design that was more "accurate" but approved bad claims 13.5% of the time.
+- **Transparency and auditability.** Every decision's full evidence trail — retrieved clauses, resolved
+  facts, every tool call — is logged and inspectable (`ui/`'s demo app is that transparency made
+  visible). Ground truth is never read by runtime code, enforced by automated leakage tests
+  (`tests/test_no_leakage.py`), so no decision path can see the answer it's being graded against.
+
+## The two designs, and which one is actually running
+
+| | Frozen & final-tested | Best validated |
+|---|---|---|
+| **What** | Selective resolver (Exp 30/32) | Guarded agent (Exp 40-52) |
+| **Mechanism** | Deterministic rules → conclusive? code decides : single-shot LLM decides | Deterministic rules → conclusive? code decides : bounded ReAct agent with code-computed disposition tools |
+| **Result** | 30/50 final test (60%), **0% FAR** | 44/70 dev (62.9%) **and** 21/30 validation (70.0%), **0% FAR on both** |
+| **Status** | **This is what's shipped.** Tested once on the real held-out final test, hash-manifest-verified, never rerun. | Fully validated, beats the frozen design's own dev accuracy at matching safety — but never run against final test, no freeze manifest. |
+
+**If asked "what does the system do," the honest answer is the selective resolver, exactly as frozen.**
+The guarded agent is the better, proven candidate to replace it, pending a deliberate freeze decision.
+
+## The flow, end to end
+
+```
+                         EMPLOYEE EXPENSE CLAIM
+                    (bill + free-text note, nothing else)
+                                  │
+                                  ▼
+                 ┌────────────────────────────────┐
+                 │   DETERMINISTIC RESOLVER         │
+                 │   rules_text.py parses the note  │
+                 │   rules_v2.py applies policy      │
+                 │   mechanics (visible-only,        │
+                 │   never reads a label)            │
+                 └────────────────┬─────────────────┘
+                                  │
+                     conclusive? ─┴─ (a rule fired, AND every
+                                      needed field was extracted)
+                    ┌─────yes───────────────no──────┐
+                    ▼                                ▼
+         ┌─────────────────────┐      ┌───────────────────────────────┐
+         │  CODE DECIDES         │      │   RESIDUAL STEP (the part      │
+         │  no LLM call, $0       │      │   every experiment below is    │
+         │  100% accurate on      │      │   about)                       │
+         │  unseen final-test     │      └───────────────┬────────────────┘
+         │  data (Exp 32)         │                       │
+         └───────────┬───────────┘         ┌──────────────┴───────────────┐
+                     │                      ▼                              ▼
+                     │           FROZEN DESIGN (Exp 30/32)      BEST VALIDATED DESIGN
+                     │           M4 RAG + resolved facts        (Exp 40-52)
+                     │           → single-shot LLM               bounded ReAct agent +
+                     │           28.6% accurate                  guarded, argument-minimal
+                     │                                           tools that compute the
+                     │                                           disposition in CODE, gated
+                     │                                           so the model can't override
+                     │                                           a tool's correct answer
+                     │                                           58-89% accurate, 0% FAR
+                     │                      │                              │
+                     └──────────────────────┴──────────────────────────────┘
+                                             ▼
+                              APPROVE / REJECT / REQUEST_INFORMATION / ESCALATE
+```
+
+### How the diagnostic journey actually went (Exp 34 → 52)
+
+```
+Exp 34: rebuild as a full agent → WORSE than a fixed workflow (4/13 vs 7/13)
+             │  Chennai hotel claim: used ceiling 14,500 instead of the correct 9,800
+             ▼
+   ┌─────────┴─────────┬─────────────┬──────────────┬───────────────┐
+   ▼                    ▼             ▼              ▼               ▼
+ Stricter          Stronger       Perfect RAG    Better RAG      Parallel
+ prompt             model         handed          + forced        tool calls
+ (35A)             (35B/46)       directly        re-query        (36)
+   │                    │         (37, diag.)     (38 audit,       │
+   ▼                    ▼             │            39 fix)         ▼
+ FAR triples      16-30x cost,        ▼               │        more calls,
+ same accuracy    same accuracy,  FAR quadruples       ▼        same accuracy,
+                  FAR to 50%      → rules OUT      accuracy        worse step-
+                                  evidence          FELL further   cap hits
+                                  quality                          │
+   └────────────────────┴──────────────┴────────────────┴─────────┘
+                                        │
+                    NONE of these fixed it. The model had the
+                    right facts and still decided wrong, or
+                    ignored a tool that already had the answer.
+                                        ▼
+              ┌─────────────────────────────────────────────┐
+              │  THE FIX (Exp 40-41): give the model a tool   │
+              │  that COMPUTES the disposition in code, and   │
+              │  a gate that trusts the tool over the model    │
+              └────────────────────┬────────────────────────┘
+                                   ▼
+                    7/13 → 9/13 → 11/13 → 17/19 (89.5%), one claim family
+                                   ▼
+              ┌─────────────────────────────────────────────┐
+              │  Scale to the WHOLE dataset (Exp 45)          │
+              │  accuracy UP, but FAR breaks (11.5%) in every  │
+              │  category with no guarded tool                 │
+              └────────────────────┬────────────────────────┘
+                                   ▼
+              ┌─────────────────────────────────────────────┐
+              │  Exp 47-52: build the missing guards, one      │
+              │  real bug at a time (7 found and fixed:        │
+              │  clause conflicts, placeholder strings,         │
+              │  date-arithmetic miscounts, a coarsened-        │
+              │  category blind spot, a missing prerequisite    │
+              │  check caught BY the validation run itself)     │
+              └────────────────────┬────────────────────────┘
+                                   ▼
+                 44/70 dev (62.9%) AND 21/30 validation (70.0%)
+                          0% false approvals on both
+                 ── beats the frozen system's own dev number ──
+```
+
+## Full experiment index
+
+### Part 1 — building the frozen architecture (Exp 0–33)
+| # | Experiment | Headline result |
+|---|---|---|
+| 0 | Dataset validation + EDA | 0 critical errors; hardened 3x so facts live in free text |
+| 1 | End-to-end sanity | *(stale — pre-hardening)* |
+| 2 | Deterministic rules baseline | Regex-only rules collapse once facts move to free text |
+| 3 | Generic LLM, no policy | Confident, unsupported answers |
+| 4A/4B | Long-context feasibility/baseline | Feasible, $0.77/run, doesn't beat RAG |
+| 5–10 | RAG tuning ladder | 600/100 chunking, K=8, dense, M4 metadata filter → Recall@8 0.56 |
+| 11 | Policy oracle | Perfect retrieval only 22→25/70 — **reasoning, not retrieval, is the bottleneck** |
+| 12, 12B | Hybrid rules + RAG; router probe | Motivated pulling mechanics into code; proved the routing concept |
+| 13–17 | Component qualification | Missing-info, duplicates, enterprise facts, typed tools — each qualified |
+| 18–20 | Workflow vs. agent | Workflow 64% beats a real agent (7/13, 30% FAR) → **agent gate closed** |
+| 28 | Guardrail suite | Found & fixed a real bug; retrieval-injection logged as open risk |
+| 29 | Abstention/escalation | Quantified risk-coverage behavior |
+| **30** | **Architecture freeze** | **Selective resolver frozen**: 0% FAR, 61% dev |
+| 31 | Cost-to-serve | $0.00043/claim — cost is a non-issue |
+| **32** | **Frozen final test** | **30/50 (60%), 0% FAR** — *(dataset snapshot caveat: see the doc)* |
+| 33 | Failure analysis | 20 errors: 9 reasoning, 5 over-asking, 4 fact gaps, 0 retrieval |
+
+### Part 2 — the agentic-RAG diagnostic line (Exp 34–39): ruling things out
+| # | Experiment | Result |
+|---|---|---|
+| 34 | Agentic RAG rebuild | Worse than the workflow: 4/13, tier-substitution false approval |
+| 35 | Prompt / model / tool-interface isolated | None fixed it alone |
+| 36 | Parallel turns + poka-yoke v2 | Bug fixed for its one target; step-cap hits got worse |
+| 37 | Perfect policy oracle (diagnostic) | Same accuracy, FAR quadrupled — rules out evidence quality |
+| 38 | $0 RAG trace audit | Agent's own queries: 33.6% recall, 0/13 ever re-queried |
+| 39 | Fixed retrieval | Recall improved to 45.4% — **accuracy still fell** |
+
+### Part 3 — the fix, and closing the gap (Exp 40–52)
+| # | Experiment | Result |
+|---|---|---|
+| **40** | Decision-in-code | Ties the workflow: 7/13, 0% FAR |
+| **41** | Disposition gate ($0) | Beats the workflow: 9/13, 0% FAR |
+| 42 | + project-budget tool | Caught a tool firing on the wrong claim type, live |
+| **43** | Guarded tools, corrected | 11/13 (84.6%) |
+| **44** | Full confirmation | **17/19 (89.5%), 0% FAR** — 6/6 validation cases correct |
+| 45 | Full-dataset extension | *(superseded)* accuracy up, FAR breaks to 11.5% |
+| 46 | + stronger model | Still no: worse accuracy, 30x cost, FAR held at 0% by the guards |
+| **47–52** | **Closing the gap** | 7 more real bugs found and fixed → **44/70 dev + 21/30 validation, 0% FAR on both** |
+
+Full detail: `docs/v2/expNN_*.md`.
+
+## Key findings, distilled
+1. **RAG quality was never the dominant bottleneck** — perfect retrieval barely moves accuracy (Exp 11, 37).
+2. **More autonomy made things worse, consistently** — looser prompts, bigger models, and parallel tool calls each either did nothing or made safety worse (Exp 35, 36, 46).
+3. **The fix that worked: stop asking the model to decide, give it the answer.** Every point of accuracy gained from Exp 40 onward came from a tool computing the disposition in code, gated so the model can't override it.
+4. **A tool is only safe to trust if its own inputs are reliable** — found and fixed at every level: the model's own reasoning (Exp 33), a poorly-scoped tool (Exp 42), and even a *reused, previously-tested* piece of code (`workflow_v2.decide()`, Exp 47) that turned out to share the same fragile free-text parsing it was meant to route around.
+5. **Validation caught a real bug, and that's it working as intended** — the very first validation run (Exp 51→52) found a missing prerequisite check (`check_hotel_compliance` never verified there was an approved travel request). Fixed, re-verified, re-confirmed — exactly the discipline validation exists for.
+6. **The dataset is not the problem.** The deterministic path scores 100% on unseen final-test data; every improvement this session came from fixing code, never from touching the data.
+
+## Where things stand
+- **Frozen and tested on the real final test:** Exp 30/32 — 30/50, 0% FAR. This is what's shipped.
+- **Fully validated, not yet frozen:** the guarded-agent design (Exp 40-52) for the *entire* claim
+  population — 44/70 dev, 21/30 validation, 0% FAR on both. Beats the frozen design's own dev number.
+- **Not yet done:** a new freeze manifest and a one-shot run against the real final test. That is the
+  next deliberate decision, not something to do implicitly.
+- **Budget:** $4.36 of $5.00 spent (raised once this session from the original $3.50 cap).

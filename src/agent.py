@@ -55,6 +55,16 @@ def _catalogue(specs: dict) -> str:
 def _check_arg(kind, key, v):
     if kind in ("list_str_ok_empty",):
         return None if isinstance(v, list) and all(isinstance(x, str) for x in v) else f"{key or 'value'} must be a list of strings"
+    if kind in ("bool", "bool?"):
+        return None if isinstance(v, bool) else f"{key or 'value'} must be true or false"
+    if kind == "amount?":
+        return None if v is None else T._check("amount", key, v)
+    if kind == "text_or_list?":
+        # deliberately permissive: a live run showed a model consistently sending null/""/[] for "not
+        # applicable" and a string or list for "here's the actual content" -- accept whatever shape it
+        # sends rather than rejecting a reasonable answer for having the wrong type, since the function
+        # only ever needs this value's truthiness.
+        return None if v is None or isinstance(v, (str, list)) else f"{key or 'value'} must be a string, a list, or omitted"
     return T._check(kind, key, v)
 
 
