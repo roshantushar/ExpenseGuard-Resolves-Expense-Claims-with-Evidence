@@ -197,6 +197,8 @@ def hotel(c):
     if not tr or tr["status"] != "APPROVED":
         return out("REQUEST_INFORMATION", ["TRV-1.1"], ["approved_travel_request"], "No approved travel request covers the transaction date.")
     tier = TIER.get(f.get("city") or b["city"]) or TIER.get(b["city"])
+    if tier is None:
+        return None  # city not in this engine's tier table -> unresolved, falls through to "No rule triggered" (residual)
     ceil = HOTEL[y][tier][band(grade(c))]
     if tier == "JP-TOKYO" and y == 2025 and c["transaction_date"] >= "2025-07-01":
         ceil = rnd(ceil * 1.05)

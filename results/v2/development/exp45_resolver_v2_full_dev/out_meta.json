@@ -1,0 +1,1040 @@
+{
+ "X2-009": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "DUP-2.1",
+   "DUP-2.2"
+  ],
+  "missing_fields": [
+   "combined_spend_approval"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-010": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "TRN-1.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-017": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "DUP-2.1",
+   "DUP-2.2"
+  ],
+  "missing_fields": [
+   "combined_spend_approval"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-019": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "APR-3.1"
+  ],
+  "missing_fields": [
+   "manager_approval"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-024": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "GEP26-4.1",
+   "GEP26-1.2"
+  ],
+  "missing_fields": [
+   "correct_business_purpose"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-028": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "GEP26-4.1",
+   "GEP26-1.2"
+  ],
+  "missing_fields": [
+   "correct_business_purpose"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-030": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "TEL-2.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-032": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "APR-4.2"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-033": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "GEP25-2.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-036": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "EXC-2.1"
+  ],
+  "missing_fields": [
+   "exception_reference"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-037": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "APR-5.1"
+  ],
+  "missing_fields": [
+   "budget_owner_approval"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-059": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "APR-2.2"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-060": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "SWE-2.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-073": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "APR-2.2"
+  ],
+  "missing_fields": [
+   "director_approval"
+  ],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-081": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "CARD-3.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-087": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "EXC-2.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-089": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "GEP26-4.1",
+   "GEP26-1.2"
+  ],
+  "missing_fields": [
+   "correct_business_purpose"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-095": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "TRV-6.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-097": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "GIFT-2.2"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-098": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "TRV-1.1"
+  ],
+  "missing_fields": [
+   "approved_travel_request"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-103": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "APR-3.1"
+  ],
+  "missing_fields": [
+   "director_approval"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-109": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "GIFT-1.2",
+   "GIFT-1.3"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-110": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "DUP-1.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-111": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "TRV-1.1"
+  ],
+  "missing_fields": [
+   "approved_travel_request"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-117": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "GEP26-4.1",
+   "GEP26-1.2"
+  ],
+  "missing_fields": [
+   "correct_business_purpose"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-121": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "EXC-2.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-132": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "TRV-6.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-133": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "DUP-2.2"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-138": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "APR-2.2"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-142": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "EXC-2.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-144": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "APR-1.3"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-147": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "MEAL-1.2"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-148": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "TRV-6.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-149": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "DUP-2.1",
+   "DUP-2.2"
+  ],
+  "missing_fields": [
+   "combined_spend_approval"
+  ],
+  "manual_review_required": false,
+  "path": "deterministic",
+  "latency_ms": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "model_cost_usd": 0.0,
+  "error": null
+ },
+ "X2-003": {
+  "decision": "APPROVE",
+  "policy_evidence": [
+   "No approval is required for this amount."
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 27669,
+  "output_tokens": 167,
+  "model_cost_usd": 0.002715,
+  "error": null,
+  "turns": 6
+ },
+ "X2-005": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "Cited exception identifier does not exist; request the correct reference."
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 30232,
+  "output_tokens": 197,
+  "model_cost_usd": 0.003117,
+  "error": null,
+  "turns": 7
+ },
+ "X2-006": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 4507,
+  "output_tokens": 77,
+  "model_cost_usd": 0.000434,
+  "error": null,
+  "turns": 3
+ },
+ "X2-008": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "The claim lacks the total number of attendees",
+   "which is necessary for compliance with the meal policy."
+  ],
+  "missing_fields": [
+   "total number of attendees"
+  ],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 47413,
+  "output_tokens": 222,
+  "model_cost_usd": 0.004221,
+  "error": null,
+  "turns": 7
+ },
+ "X2-011": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "TRV-6.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 4576,
+  "output_tokens": 127,
+  "model_cost_usd": 0.000484,
+  "error": null,
+  "turns": 3
+ },
+ "X2-012": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "REQUEST_INFORMATION"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 6484,
+  "output_tokens": 127,
+  "model_cost_usd": 0.000626,
+  "error": null,
+  "turns": 4
+ },
+ "X2-013": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 20086,
+  "output_tokens": 140,
+  "model_cost_usd": 0.002146,
+  "error": null,
+  "turns": 5
+ },
+ "X2-015": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "APR-2.2"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 28123,
+  "output_tokens": 171,
+  "model_cost_usd": 0.002775,
+  "error": null,
+  "turns": 6
+ },
+ "X2-018": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "DELEGATION_INVALID"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 22434,
+  "output_tokens": 160,
+  "model_cost_usd": 0.002328,
+  "error": null,
+  "turns": 6
+ },
+ "X2-029": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "TRV-6.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 28960,
+  "output_tokens": 165,
+  "model_cost_usd": 0.002974,
+  "error": null,
+  "turns": 6
+ },
+ "X2-047": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "SG-2.1 - Employee meal ceiling",
+   "SG-2.2 - Client meal ceiling"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 30456,
+  "output_tokens": 243,
+  "model_cost_usd": 0.003111,
+  "error": null,
+  "turns": 7
+ },
+ "X2-048": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 27381,
+  "output_tokens": 167,
+  "model_cost_usd": 0.002671,
+  "error": null,
+  "turns": 6
+ },
+ "X2-049": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "IN-2.4 - Alcohol prohibition"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 29497,
+  "output_tokens": 168,
+  "model_cost_usd": 0.002922,
+  "error": null,
+  "turns": 6
+ },
+ "X2-054": {
+  "decision": "APPROVE",
+  "policy_evidence": [
+   "No approval is required for this amount."
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 29249,
+  "output_tokens": 141,
+  "model_cost_usd": 0.003493,
+  "error": null,
+  "turns": 6
+ },
+ "X2-055": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 22100,
+  "output_tokens": 170,
+  "model_cost_usd": 0.002342,
+  "error": null,
+  "turns": 6
+ },
+ "X2-061": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "TRV-1.1",
+   "TRV-1.2"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 35859,
+  "output_tokens": 212,
+  "model_cost_usd": 0.003394,
+  "error": null,
+  "turns": 7
+ },
+ "X2-065": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "APR-3.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 39547,
+  "output_tokens": 177,
+  "model_cost_usd": 0.00359,
+  "error": null,
+  "turns": 6
+ },
+ "X2-066": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 39571,
+  "output_tokens": 166,
+  "model_cost_usd": 0.003578,
+  "error": null,
+  "turns": 6
+ },
+ "X2-067": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 6044,
+  "output_tokens": 100,
+  "model_cost_usd": 0.000583,
+  "error": null,
+  "turns": 4
+ },
+ "X2-076": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 27297,
+  "output_tokens": 170,
+  "model_cost_usd": 0.00267,
+  "error": null,
+  "turns": 6
+ },
+ "X2-078": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 4411,
+  "output_tokens": 91,
+  "model_cost_usd": 0.000428,
+  "error": null,
+  "turns": 3
+ },
+ "X2-080": {
+  "decision": "REQUEST_INFORMATION",
+  "policy_evidence": [
+   "APR-3.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 43492,
+  "output_tokens": 205,
+  "model_cost_usd": 0.003988,
+  "error": null,
+  "turns": 7
+ },
+ "X2-088": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 40500,
+  "output_tokens": 164,
+  "model_cost_usd": 0.003687,
+  "error": null,
+  "turns": 6
+ },
+ "X2-102": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "The meal expense claim does not meet the reimbursement criteria as it involves external attendees without proper identification and business purpose."
+  ],
+  "missing_fields": [
+   "attendee names",
+   "business purpose"
+  ],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 33626,
+  "output_tokens": 197,
+  "model_cost_usd": 0.003156,
+  "error": null,
+  "turns": 6
+ },
+ "X2-104": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "Exception names a different policy or employee -- Finance must review."
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 32018,
+  "output_tokens": 201,
+  "model_cost_usd": 0.003109,
+  "error": null,
+  "turns": 7
+ },
+ "X2-105": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "Gift exceeds the ceiling of 6",
+   "000 JPY for 2025."
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 28108,
+  "output_tokens": 191,
+  "model_cost_usd": 0.002795,
+  "error": null,
+  "turns": 6
+ },
+ "X2-112": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 5986,
+  "output_tokens": 97,
+  "model_cost_usd": 0.000572,
+  "error": null,
+  "turns": 4
+ },
+ "X2-116": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 21846,
+  "output_tokens": 165,
+  "model_cost_usd": 0.002282,
+  "error": null,
+  "turns": 6
+ },
+ "X2-123": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 20148,
+  "output_tokens": 133,
+  "model_cost_usd": 0.002228,
+  "error": null,
+  "turns": 5
+ },
+ "X2-125": {
+  "decision": "APPROVE",
+  "policy_evidence": [
+   "Employee meal claim is compliant with the policy as it is for a meal consumed only by employees during ordinary work hours",
+   "and the total amount is within the ceiling for the region."
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 39320,
+  "output_tokens": 204,
+  "model_cost_usd": 0.00362,
+  "error": null,
+  "turns": 6
+ },
+ "X2-128": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "ESCALATE due to exception EXC-2.1 naming a different policy or employee"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 30344,
+  "output_tokens": 206,
+  "model_cost_usd": 0.002976,
+  "error": null,
+  "turns": 7
+ },
+ "X2-139": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "TRV-6.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 8134,
+  "output_tokens": 143,
+  "model_cost_usd": 0.000797,
+  "error": null,
+  "turns": 5
+ },
+ "X2-140": {
+  "decision": "APPROVE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 6141,
+  "output_tokens": 95,
+  "model_cost_usd": 0.000565,
+  "error": null,
+  "turns": 4
+ },
+ "X2-141": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "APR-2.2"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 24204,
+  "output_tokens": 122,
+  "model_cost_usd": 0.002389,
+  "error": null,
+  "turns": 4
+ },
+ "X2-143": {
+  "decision": "APPROVE",
+  "policy_evidence": [
+   "TRV-2.2",
+   "TRV-3.2",
+   "TRV-6.1"
+  ],
+  "missing_fields": [],
+  "manual_review_required": false,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 8191,
+  "output_tokens": 146,
+  "model_cost_usd": 0.000788,
+  "error": null,
+  "turns": 5
+ },
+ "X2-145": {
+  "decision": "ESCALATE",
+  "policy_evidence": [
+   "APR-2.2"
+  ],
+  "missing_fields": [],
+  "manual_review_required": true,
+  "path": "llm_residual_v2",
+  "latency_ms": 0,
+  "input_tokens": 22198,
+  "output_tokens": 163,
+  "model_cost_usd": 0.002295,
+  "error": null,
+  "turns": 6
+ }
+}

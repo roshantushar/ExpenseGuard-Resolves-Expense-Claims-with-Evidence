@@ -1,0 +1,37 @@
+{
+ "n": 19,
+ "correct": 17,
+ "correct_disposition_rate": 0.8947,
+ "wilson95": [
+  0.6861,
+  0.9706
+ ],
+ "false_approvals": 0,
+ "non_approvable": 15,
+ "false_approval_rate": 0.0,
+ "human_review_rate": 0.4737,
+ "over_escalation": 0,
+ "missed_escalation": 0,
+ "missing_field_exact_match": "0/4",
+ "by_family": {
+  "DYNAMIC_HOTEL_DISCOVERY": "8/8",
+  "DYNAMIC_DELEGATION_CHAIN": "5/6",
+  "DYNAMIC_DEEP_HOTEL_CHAIN": "3/4",
+  "DYNAMIC_PROJECT_BUDGET_CHAIN": "1/1"
+ },
+ "confusion": {
+  "REQUEST_INFORMATION->REQUEST_INFORMATION": 4,
+  "REJECT->REJECT": 1,
+  "ESCALATE->ESCALATE": 9,
+  "APPROVE->REJECT": 1,
+  "APPROVE->APPROVE": 3,
+  "REJECT->REQUEST_INFORMATION": 1
+ },
+ "errors": 0,
+ "median_latency_ms": 0,
+ "p95_latency_ms": 0,
+ "input_tokens": 417897,
+ "output_tokens": 3366,
+ "total_tokens": 421263,
+ "total_cost_usd": 0.042807
+}

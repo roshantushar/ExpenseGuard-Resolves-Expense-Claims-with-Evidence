@@ -51,7 +51,7 @@
  "@K010": {
   "note": "I hosted a meal for external guests at Kallang Noodle House. Ravi mentioned that there were two guests, Mr. Chua and one from Kestrel Logistics. There was no alcohol or voluntary charge on the bill. I have not got the total number of people at the table, employees included.",
   "style": "indirect",
-  "attempts": 3,
+  "attempts": 1,
   "problems": [],
   "manual_review": null
  },
@@ -100,7 +100,7 @@
  "@K125": {
   "note": "I hosted a meal for some delegates of Omnia Retail at Tokyo Teppan in Japan. It was me, six of my colleagues, and seven external guests, including a freelance consultant named Alex Johnson. I initially thought there were eight external guests, but it turns out there were seven. There was no alcohol or voluntary charges on the bill.",
   "style": "indirect",
-  "attempts": 3,
+  "attempts": 1,
   "problems": [],
   "manual_review": null
  },
@@ -140,9 +140,9 @@
   "manual_review": null
  },
  "@K155": {
-  "note": "I recently processed an expense related to a software subscription. This subscription is with Pipeline Forge, located in Singapore. Li Tan is the business owner responsible for this service, which is billed month by month. The cost will be charged to the budget of project PRJ-019. During the meeting, we discussed various aspects of the project, and I also reviewed several unrelated documents, including the ones for room two hundred.",
+  "note": "I recently attended a meeting regarding our ongoing projects, where we discussed various tools and resources we are using. One of the key points was the software subscription with Pipeline Forge, which is billed month by month. The subscription is charged to the budget of project PRJ-019. As the business owner, Jun Reddy emphasized the importance of this tool for our team's efficiency. I also noted that we have a file labeled Room 302 that contains additional project documents.",
   "style": "verbose",
-  "attempts": 1,
+  "attempts": 2,
   "problems": [],
   "manual_review": null
  },
@@ -252,9 +252,9 @@
   "manual_review": null
  },
  "@K157": {
-  "note": "so um i just wanted to mention that there\u2019s this software subscription from CodeForge in Singapore you know it's like billed month by month and the business owner is Priya Tan um the cost is charged to the budget of project p r j dash zero two three you know just wanted to get that down.",
+  "note": "so um this is for a software subscription with CodeForge in Singapore you know the business owner is Wei Reddy and it's billed month by month the cost is charged to the budget of project p r j dash zero two three.",
   "style": "dictated",
-  "attempts": 1,
+  "attempts": 2,
   "problems": [],
   "manual_review": null
  },
@@ -464,7 +464,7 @@
  "@K025": {
   "note": "I took a ride with SwiftCab SG to the client office, ending at their premises. The trip origin was not recorded. For reference, on another occasion last year, I had a stay of three nights for a business trip.",
   "style": "indirect",
-  "attempts": 3,
+  "attempts": 1,
   "problems": [],
   "manual_review": null
  },
@@ -491,8 +491,8 @@
  },
  "@K129": {
   "note": "I had an evening with the client at GiftCard Express 2026. We enjoyed a lovely time there, and the charge reflects our experience. The currency for this expense is in Singapore dollars.",
-  "style": "indirect",
-  "attempts": 3,
+  "style": "terse",
+  "attempts": 1,
   "problems": [],
   "manual_review": null
  },
@@ -673,8 +673,8 @@
  },
  "@K113": {
   "note": "After our annual planning offsite, I purchased a gift for Ms. Wu, who is with Willow Education. The gift was sourced from Heritage Hampers in Tokyo, Japan, and it is a physical item that she will keep. This was done to acknowledge her contributions.",
-  "style": "indirect",
-  "attempts": 4,
+  "style": "local",
+  "attempts": 1,
   "problems": [],
   "manual_review": null
  },
@@ -826,16 +826,16 @@
   "manual_review": null
  },
  "@K158": {
-  "note": "so um this is for a software subscription with Pipeline Forge in Singapore you know, and the business owner is Devi Lim. it's billed month by month and the cost goes to the budget for project p r j dash zero two four.",
+  "note": "so um this is for a software subscription from Pipeline Forge in Singapore you know and it's billed month by month I just wanted to mention that the cost is charged to the budget of project p r j dash zero two four and the business owner of this subscription is Wei Tanaka.",
   "style": "dictated",
-  "attempts": 1,
+  "attempts": 2,
   "problems": [],
   "manual_review": null
  },
  "@K156": {
-  "note": "The employee hosted a software subscription with Ledger Loop based in Singapore. The business owner of this subscription is Devi Tanaka, and it is billed month by month. The expense is charged to the budget of project PRJ-021.",
+  "note": "The employee hosted a software subscription with Ledger Loop, based in Singapore. The subscription, which is billed month by month, is owned by Kavya Lim and is charged to the budget of project PRJ-021. The expense is recorded in Singapore dollars.",
   "style": "challenge",
-  "attempts": 1,
+  "attempts": 2,
   "problems": [],
   "manual_review": null
  },
@@ -862,8 +862,8 @@
  },
  "@K151": {
   "note": "I hosted a meal for external guests at Orchard Kitchen in Singapore. Present were myself, nine colleagues, and delegates from Larkspur Media, including a freelance consultant. Ravi mentioned that there were ten external guests in total. For reference, at last year's client reception at the same venue, there were twenty people in attendance.",
-  "style": "indirect",
-  "attempts": 3,
+  "style": "dictated",
+  "attempts": 1,
   "problems": [],
   "manual_review": null
  },
@@ -925,8 +925,8 @@
  },
  "@K100": {
   "note": "This is for the second delivery of project equipment from OfficeMart in Tokyo, Japan. The purchase was made in Japanese yen.",
-  "style": "indirect",
-  "attempts": 4,
+  "style": "local",
+  "attempts": 1,
   "problems": [],
   "manual_review": null
  },
@@ -952,9 +952,9 @@
   "manual_review": null
  },
  "@K153": {
-  "note": "I have submitted an expense for a software subscription with PixelDesk based in Singapore. This subscription is billed month by month and is associated with project PRJ-015. As the business owner, Priya Iyer is responsible for this subscription.",
+  "note": "I have submitted an expense for a software subscription from PixelDesk, based in Singapore. The billing occurs month by month, and the cost will be charged to the budget of project PRJ-015. As the business owner of this subscription, I am Kenji Kobayashi.",
   "style": "indirect",
-  "attempts": 1,
+  "attempts": 2,
   "problems": [],
   "manual_review": null
  },
@@ -1024,7 +1024,7 @@
  "@K127": {
   "note": "Please find the receipt for a meal hosted for external guests at Raffles Bistro in Singapore. The attendees included myself, four colleagues, and five delegates of Palmyra Hotels, including a freelance consultant working with our team. I initially mentioned that there were six attendees, but to clarify, there were actually ten present. There was no alcohol or voluntary service on the bill.",
   "style": "secondhand",
-  "attempts": 2,
+  "attempts": 1,
   "problems": [],
   "manual_review": null
  },
@@ -1037,8 +1037,8 @@
  },
  "@K099": {
   "note": "I purchased some project equipment from PeriphPoint in Tokyo, Japan. This is for the same project as the earlier purchase. The expense was made in Japanese yen.",
-  "style": "indirect",
-  "attempts": 4,
+  "style": "local",
+  "attempts": 1,
   "problems": [],
   "manual_review": null
  },

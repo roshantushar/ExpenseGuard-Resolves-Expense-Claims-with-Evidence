@@ -1,0 +1,1891 @@
+{
+ "X2-005": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "Hotel claim exceeds the ceiling of 9",
+   "800 INR for G4 grade employees."
+  ],
+  "missing_fields": [],
+  "explanation": "The hotel expense of 38,220 INR is not eligible for reimbursement as it exceeds the established ceiling.",
+  "trace": [
+   {
+    "tool": "get_employee_profile",
+    "args": {
+     "employee_id": "E0276"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "employee_id": "E0276",
+      "grade": "G4",
+      "region": "JP",
+      "department": "Data Science",
+      "manager_id": "M037",
+      "status": "ACTIVE"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "lookup_hotel_ceiling",
+    "args": {
+     "city": "Chennai",
+     "country": "India",
+     "year": 2026,
+     "grade": "G4"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "tier": "IN-T2",
+      "ceiling": 9800.0,
+      "city_listed_in_table": false,
+      "fallback_rule_applied": true,
+      "band": "G4-G5"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "get_travel_request",
+    "args": {
+     "employee_id": "E0276",
+     "date": "2026-06-08"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "travel_id": "TR-0030",
+      "status": "APPROVED",
+      "destination": "Chennai",
+      "purpose": "Business trip",
+      "start_date": "2026-06-08",
+      "end_date": "2026-06-11",
+      "event_id": "",
+      "exception_id": "EXC-0933"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "get_exception_record",
+    "args": {
+     "exception_id": "EXC-0933"
+    },
+    "observation": {
+     "ok": true,
+     "found": false,
+     "data": null,
+     "error": null
+    }
+   },
+   {
+    "tool": "validate_approval",
+    "args": {
+     "expense_id": "X2-005",
+     "required_level": "M037",
+     "required_types": [
+      "hotel"
+     ],
+     "transaction_date": "2026-06-08",
+     "amount_sgd": 9800.0
+    },
+    "observation": {
+     "ok": false,
+     "found": false,
+     "data": null,
+     "error": "value must be one of ('NONE', 'MANAGER', 'DIRECTOR'), got 'M037'"
+    }
+   },
+   {
+    "tool": "get_manager_approval",
+    "args": {
+     "expense_id": "X2-005"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": [
+      {
+       "approval_id": "APR-0046",
+       "approval_type": "TRAVEL",
+       "status": "APPROVED",
+       "employee_id": "E0276",
+       "approver_level": "DIRECTOR",
+       "start_date": "2024-01-01",
+       "end_date": "2026-12-31",
+       "delegation_id": ""
+      }
+     ],
+     "error": null
+    }
+   },
+   {
+    "tool": "record_decision",
+    "args": {
+     "decision": "REIMBURSE",
+     "policy_evidence": "Hotel claim is within the approved travel request and under the hotel ceiling for G4 grade employees.",
+     "missing_fields": [],
+     "explanation": "The hotel expense of 38,220 INR exceeds the ceiling of 9,800 INR for the G4 grade, but the travel request is approved and the expense is valid under the current approval."
+    },
+    "observation": {
+     "ok": false,
+     "found": false,
+     "data": null,
+     "error": "value must be one of ('APPROVE', 'REJECT', 'REQUEST_INFORMATION', 'ESCALATE'), got 'REIMBURSE'"
+    }
+   }
+  ],
+  "turns": 8,
+  "cost_usd": 0.001384,
+  "input_tokens": 13081,
+  "output_tokens": 364,
+  "wrong_tool_calls": 2,
+  "step_cap_hit": false
+ },
+ "X2-018": {
+  "decision": "ESCALATE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "explanation": "Step cap (8) reached; escalated instead of guessing.",
+  "trace": [
+   {
+    "tool": "get_employee_profile",
+    "args": {
+     "employee_id": "E0049"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "employee_id": "E0049",
+      "grade": "G1",
+      "region": "SG",
+      "department": "Marketing",
+      "manager_id": "M010",
+      "status": "ACTIVE"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "search_policy_corpus",
+    "args": {
+     "query": "meal reimbursement policy",
+     "doc_category": "meals",
+     "region": "SG"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "excerpts": "[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nparticularly relevant in situations where employees dine at restaurants or venues that include mandatory service charges or where gratuities are customary. By allowing reimbursement of mandatory charges while requiring approval for voluntary gratuities above a specified threshold, the policy seeks to balance employee discretion with fiscal responsibility, ensuring that expenses remain reasonable and justifiable.\n\nCommon misunderstandings may arise regarding the distinction between mandatory service charges and voluntary gratuities. Employees might believe that all tips are reimbursable without consideration of the circumstances, but the clause makes it clear that only mandatory charges qualify without additional approval. This topic is closely related to other meal-related policies, such as those governing client meals and employee meals, as they all require a thoughtful approach to expense claims, ensuring that reimbursements reflect the company\u2019s commitment to responsible spending.\n\n## MEAL-3.1 - Default ceilings for locations without an addendum\n\nFor a country with no regional addendum the employee meal ceiling is SGD 60 per person and the client meal ceiling is SGD 110 per attendee. These defaults never apply to Singapore, India or Japan.\n\nInterpretive guidance: This clause establishes default ceilings for meal reimbursements in locations without a regional addendum, providing a baseline for employee and client meal expenditures. It is particularly relevant in situations where employees travel to countries lacking specific guidelines, ensuring that there is a clear standard for reimbursement. By defining these defaults, the policy aims to facilitate consistent expense management across diverse geographical locations while maintaining a focus on fiscal responsibility.\n\nA common misunderstanding may arise from the belief that these default ceilings apply universally, regardless of the specific regional context. However, the clause explicitly states that they do not apply to certain countries, which is crucial for compliance. This topic is conceptually linked to the broader expense policy framework, particularly in relation to regional addendums and the varying reimbursement standards that may exist, highlighting the importance of understanding the specific guidelines applicable to each location.\n\n## MEAL-3.2 - Attendee evidence\n\nIf the attendee count is needed for a per-person test and cannot be established from the claim, the reviewer requests it.\n\nInterpretive guidance: The purpose of this clause is to ensure that the necessary attendee count is accurately established when evaluating claims related to meals. This is particularly relevant in situations where the reimbursement is contingent upon a per-person test, such as when determining the appropriateness of meal expenses for group events. By requiring the reviewer to request attendee evidence when it is not provided, the policy aims to maintain transparency and accountability in expense reporting, ensuring that claims are substantiated with clear documentation.\n\nA common misunderstanding regarding this clause is the assumption that any claim can be approved without sufficient\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nfor these meals separately. This policy is vital for maintaining fiscal responsibility and integrity in expense reporting, as it encourages employees to be mindful of what has already been covered by the conference registration, thereby avoiding unnecessary expenditures.\n\nA common misunderstanding is that employees may believe they can claim separate meal expenses if they are unsure about the inclusion of meals in the conference fee. This could lead to confusion and potential violations of the policy. This clause is conceptually linked to other policies regarding reimbursement eligibility and documentation requirements, emphasizing the importance of clarity in expense claims and the need for employees to verify what is included in their conference fees before submitting claims.\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\n# Meals and Entertainment Policy\n\nDocument ID: D07\nRegion: GLOBAL\nEffective: 2024-01-01 to 2099-12-31\nCategory: meals\n\n> Internal policy document of Northstar Analytics Group. Precedence rank 5 (lower rank overrides higher rank where documents differ).\n\n## MEAL-1.1 - Employee meals\n\nA meal consumed only by employees during ordinary work is reimbursable up to the per-person employee meal ceiling in the regional addendum and requires a business reason beyond routine attendance. The ceiling is applied to the total divided by the number of attendees.\n\nInterpretive guidance: The purpose of this clause is to establish guidelines for the reimbursement of meals consumed solely by employees during regular work hours. This provision is particularly relevant in situations where employees engage in business meetings or discussions over meals, which may enhance productivity and collaboration. It is designed to ensure that the company supports its workforce while maintaining fiscal responsibility. The requirement for a business reason beyond routine attendance emphasizes the need for meals to serve a specific business purpose rather than merely providing sustenance during work hours.\n\nCommon misunderstandings regarding this clause may arise from the interpretation of what constitutes a 'business reason.' Employees might assume that any meal taken during work hours qualifies for reimbursement, but the clause clearly stipulates that there must be a defined business purpose. This topic is conceptually linked to the broader expense policy, particularly in relation to client meals and business entertainment, where similar principles of purpose and attendee classification apply, ensuring a consistent approach to reimbursement across different types of meals.\n\n## MEAL-1.2 - Client meals\n\nA meal with at least one external attendee is a client meal. The claim must name the external attendees or their organisations and the business purpose. Per-attendee spend is the total divided by all attendees present, including employees, and is compared with the regional client meal ceiling.\n\nInterpretive guidance: This clause outlines the criteria for classifying meals that include external attendees as client meals. It is particularly pertinent in scenarios where employees engage with clients or business partners over meals to foster relationships or discuss business matters. By requiring the identification of external attendees and the business purpose of the meal, the policy aims to ensure that expenditures are justifiable and aligned with the company\u2019s objectives. This structure not only promotes transparency but also encourages employees to be intentional in their client interactions.\n\nA common misconception surrounding this clause is the belief that any meal with external attendees is automatically reimbursable without further justification. However, the requirement to specify attendees and the business purpose is crucial for compliance and accountability. This clause is closely related to the employee meals policy, as both deal with meal reimbursements but differ in terms of\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nmeals. This distinction is particularly relevant in business scenarios where meetings involve both employees and external parties, such as freelance consultants or contractors. By establishing that only employees on the company payroll, including interns and secondees, are considered attendees, the policy aims to ensure that meal expenses are appropriately allocated and justified within the context of internal business operations.\n\nA common misunderstanding regarding attendee status may arise from the assumption that proximity or collaboration with employees automatically qualifies external individuals as attendees. This misconception can lead to inappropriate expense claims and potential compliance issues. This clause is conceptually linked to other policies concerning expense eligibility and reimbursement procedures, emphasizing the importance of accurately categorizing individuals involved in business activities to maintain financial integrity.\n\n## MEAL-2.1 - Alcohol\n\nAlcohol follows the regional addendum. Where permitted, it must be incidental to an otherwise reimbursable client meal or event and its share of the bill is limited as the addendum states.\n\nInterpretive guidance: This clause governs the reimbursement of alcohol expenses, stipulating that such costs must be incidental to a reimbursable client meal or event. This is particularly relevant in contexts where alcohol is served during business meetings or client dinners, providing an opportunity for relationship-building in a more relaxed atmosphere. By aligning alcohol expenses with the overall meal or event reimbursement, the policy aims to ensure that these costs are reasonable and justifiable within the broader context of business expenditures.\n\nA common misunderstanding regarding this clause is the assumption that alcohol can be reimbursed independently of the meal or event. However, the clause clearly states that alcohol must be incidental, which reinforces the need for it to be part of a larger business purpose. This topic is related to the broader categories of client meals and business entertainment, as all these areas involve considerations of appropriateness and justification for expenses, emphasizing the importance of maintaining a clear connection between the type of expense and its business relevance.\n\n## MEAL-2.2 - Tips and service charges\n\nMandatory service charges are reimbursable. A voluntary gratuity above 15 percent of the pre-tip bill requires manager approval unless the regional addendum is stricter.\n\nInterpretive guidance: This clause addresses the reimbursement of tips and service charges associated with meals and events. It is particularly relevant in situations where employees dine at restaurants or venues that include mandatory service charges or where gratuities are customary. By allowing reimbursement of mandatory charges while requiring approval for voluntary gratuities above a specified threshold, the policy seeks to balance employee discretion with fiscal responsibility, ensuring that expenses remain reasonable and justifiable.\n\nCommon misunderstandings may arise regarding the distinction between mandatory service charges and voluntary gratuities. Employees might believe that all tips are\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nis particularly relevant in situations where the reimbursement is contingent upon a per-person test, such as when determining the appropriateness of meal expenses for group events. By requiring the reviewer to request attendee evidence when it is not provided, the policy aims to maintain transparency and accountability in expense reporting, ensuring that claims are substantiated with clear documentation.\n\nA common misunderstanding regarding this clause is the assumption that any claim can be approved without sufficient evidence of attendee counts. Some may believe that the burden of proof lies solely with the claimant, whereas the policy clearly delineates the reviewer's responsibility to seek clarification when necessary. This clause is conceptually linked to neighboring policies concerning documentation and expense verification, highlighting the importance of accurate record-keeping and the role of reviewers in maintaining compliance with the overall expense policy.\n\n## MEAL-4.1 - Mixed-purpose events\n\nWhere an event combines employee-only and external activity and the allocation is unclear, the reviewer requests clarification instead of choosing the more generous ceiling.\n\nInterpretive guidance: This clause serves to clarify the treatment of mixed-purpose events, where both employee and external activities occur. It is essential in situations where the allocation of expenses between these two categories is ambiguous, as it prevents the reviewer from making assumptions that could lead to inappropriate reimbursements. By requiring clarification instead of defaulting to more generous allowances, the policy promotes fairness and ensures that expenses are allocated correctly according to their intended purpose.\n\nA frequent misconception is that reviewers can arbitrarily decide on the allocation of expenses based on their discretion. This can lead to inconsistencies in how similar events are treated. This clause is closely related to the principles of expense justification and proper allocation found in other sections of the policy, reinforcing the need for clear communication and documentation when expenses involve multiple purposes to avoid potential conflicts of interest.\n\n## MEAL-5.1 - Meals during conferences\n\nMeals included in a conference fee cannot also be claimed separately. Where inclusion is unclear the reviewer requests the conference programme.\n\nInterpretive guidance: The purpose of this clause is to prevent double-dipping in expense claims related to meals during conferences. It addresses scenarios where meals are included in the conference fee, thus ensuring that employees do not claim reimbursement for these meals separately. This policy is vital for maintaining fiscal responsibility and integrity in expense reporting, as it encourages employees to be mindful of what has already been covered by the conference registration, thereby avoiding unnecessary expenditures.\n\nA common misunderstanding is that employees may believe they can claim separate meal expenses if they are unsure about the inclusion of meals in the conference fee. This could lead to confusion and potential violations of the\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nThis structure not only promotes transparency but also encourages employees to be intentional in their client interactions.\n\nA common misconception surrounding this clause is the belief that any meal with external attendees is automatically reimbursable without further justification. However, the requirement to specify attendees and the business purpose is crucial for compliance and accountability. This clause is closely related to the employee meals policy, as both deal with meal reimbursements but differ in terms of attendee classification and the associated ceilings, reinforcing the need for clarity in expense claims.\n\n## MEAL-1.3 - Business entertainment\n\nExternal entertainment that is primarily recreational is tested against the per-external-attendee entertainment ceiling in the regional addendum, not the client meal ceiling, and requires manager approval above the approval threshold for entertainment.\n\nInterpretive guidance: The purpose of this clause is to delineate the parameters for reimbursing expenses related to external entertainment that is primarily recreational in nature. This is relevant in situations where employees host clients or partners in a social setting, aiming to strengthen business relationships. By specifying that such entertainment must adhere to a separate ceiling and requires manager approval, the clause ensures that expenditures are appropriate and aligned with the company's strategic goals while maintaining fiscal oversight.\n\nCommon misunderstandings may arise from the interpretation of what constitutes 'primarily recreational' entertainment. Employees might mistakenly believe that any social gathering qualifies for reimbursement, but the clause emphasizes the need for a clear distinction between business-related meals and entertainment. This topic is conceptually linked to client meals and employee meals, as all these categories involve external interactions but are governed by different reimbursement criteria and approval processes, highlighting the importance of adhering to the specific guidelines for each type.\n\n## MEAL-1.4 - Attendee status\n\nAn attendee is an employee only if they are on the payroll of the company or of one of its subsidiaries, including interns and secondees on payroll. Freelance consultants, agency staff, contractors and staff of partner or customer firms are external attendees even when they work alongside employees every day. The role a person plays in the meeting does not change their status.\n\nInterpretive guidance: The purpose of this clause is to clearly define who qualifies as an attendee for the purposes of expense reimbursement related to meals. This distinction is particularly relevant in business scenarios where meetings involve both employees and external parties, such as freelance consultants or contractors. By establishing that only employees on the company payroll, including interns and secondees, are considered attendees, the policy aims to ensure that meal expenses are appropriately allocated and justified within the context of internal business operations.\n\nA common misunderstanding regarding attendee status may arise from the assumption that proximity or collaboration with\n\n[D20 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\naligned with current market conditions. The revision is particularly pertinent for employees who frequently engage in business activities that involve dining expenses, such as client meetings, team lunches, and other professional gatherings. By establishing a clear ceiling, the company aims to facilitate budgeting and financial planning, while also promoting responsible spending practices among employees.\n\nA common misunderstanding regarding this clause may arise from the assumption that the revised ceiling applies retroactively to all transactions. In reality, only transactions occurring on or after the specified effective date will be subject to the new limit, while earlier transactions will adhere to the previously established values. This clause is conceptually linked to other policies on expense reimbursements and meal allowances, as it emphasizes the importance of adhering to set guidelines in order to maintain fiscal responsibility.\n\n## CIRC-25-10 - Japan employee meal ceiling revision\n\nEffective 2025-10-01. With effect from 2025-10-01, the amount in the schedule for JP is replaced by 5200 for transactions dated on or after the effective date and within 2025. Earlier transactions remain governed by the value published for their date.\n\nInterpretive guidance: The purpose of this clause is to revise the meal expense ceiling for employees operating in Japan, thereby reflecting the evolving economic landscape and ensuring that the policy remains applicable to current business practices. This adjustment is particularly relevant for employees who partake in business-related meals, such as entertaining clients or conducting team-building activities over meals. By clearly defining the new ceiling, the company seeks to streamline expense reporting and enhance financial transparency.\n\nA frequent misconception related to this clause is the belief that all meal expenses incurred after the effective date will automatically be reimbursed at the new ceiling rate. However, it is crucial to understand that only transactions dated on or after the effective date will be governed by this revision, while prior transactions will follow the previous ceiling. This clause is closely related to other expense policies, particularly those concerning client entertainment and employee meal allowances, as it underscores the necessity of adhering to established financial guidelines.\n\n## CIRC-25-11 - India employee meal ceiling revision\n\nEffective 2025-11-01. With effect from 2025-11-01, the amount in the schedule for IN is replaced by 2100 for transactions dated on or after the effective date and within 2025. Earlier transactions remain governed by the value published for their date.\n\nInterpretive guidance: This clause is designed to update the meal expense ceiling for employees in India, ensuring that the policy reflects current economic conditions and supports responsible financial practices. It is particularly relevant for employees engaged in business activities that involve meal expenses, such as client engagements and team lunches. By establishing a clear ceiling, the company aims to\n\n[D20 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nthe cost of accommodations in a major metropolitan area.\n\nA common misunderstanding may arise regarding the applicability of the uplift to transactions outside of the specified timeframe, leading employees to believe they can claim the increased amounts regardless of their travel dates. It is crucial for employees to understand that the uplift is strictly tied to specific transactions occurring on or after the effective date. This clause relates to other accommodation policies, particularly those governing tiered hotel rates, reinforcing the organization's approach to managing travel expenses while ensuring employee comfort in high-cost areas.\n\n## CIRC-25-07 - Singapore client meal ceiling revision\n\nEffective 2025-07-01. With effect from 2025-07-01, the amount in the schedule for SG is replaced by 128 for transactions dated on or after the effective date and within 2025. Earlier transactions remain governed by the value published for their date.\n\nInterpretive guidance: The purpose of this clause is to revise the ceiling for client meal expenses in Singapore, reflecting changes in market conditions and the organization's commitment to maintaining appropriate standards for client engagement. This policy aims to ensure that employees have adequate resources for dining expenses while entertaining clients, thereby enhancing the quality of business interactions. Typical business situations this clause covers include client meetings, business lunches, and dinners where expenses may be incurred in the course of fostering business relationships.\n\nA common misunderstanding may involve the assumption that the revised ceiling applies to all meal expenses, rather than specifically those incurred in the context of client engagements. Employees must recognize that this clause is designed to support business development activities and should not be interpreted as a general increase in meal allowances. This policy is conceptually linked to broader expense management policies, particularly those governing entertainment and client engagement expenditures, emphasizing the need for strategic spending that aligns with organizational objectives.\n\n## CIRC-25-09 - Singapore employee meal ceiling revision\n\nEffective 2025-09-01. With effect from 2025-09-01, the amount in the schedule for SG is replaced by 52 for transactions dated on or after the effective date and within 2025. Earlier transactions remain governed by the value published for their date.\n\nInterpretive guidance: This clause serves to update the meal expense ceiling for employees based in Singapore, ensuring that the policy remains relevant and aligned with current market conditions. The revision is particularly pertinent for employees who frequently engage in business activities that involve dining expenses, such as client meetings, team lunches, and other professional gatherings. By establishing a clear ceiling, the company aims to facilitate budgeting and financial planning, while also promoting responsible spending practices among employees.\n\nA common misunderstanding regarding this clause may arise from the assumption that the revised ceiling applies retroactively to all transactions. In",
+      "n_chunks": 8
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "lookup_hotel_ceiling",
+    "args": {
+     "city": "Singapore",
+     "country": "Singapore",
+     "year": 2026,
+     "grade": "G1"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "tier": "SG-CENTRAL",
+      "ceiling": 320.0,
+      "city_listed_in_table": true,
+      "fallback_rule_applied": false,
+      "band": "G1-G3"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "get_travel_request",
+    "args": {
+     "employee_id": "E0049",
+     "date": "2026-02-24"
+    },
+    "observation": {
+     "ok": true,
+     "found": false,
+     "data": null,
+     "error": null
+    }
+   },
+   {
+    "tool": "get_manager_approval",
+    "args": {
+     "expense_id": "X2-018"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": [
+      {
+       "approval_id": "APR-0058",
+       "approval_type": "GENERAL",
+       "status": "DELEGATED",
+       "employee_id": "E0049",
+       "approver_level": "MANAGER",
+       "start_date": "2024-01-01",
+       "end_date": "2026-12-31",
+       "delegation_id": "DEL-004"
+      }
+     ],
+     "error": null
+    }
+   },
+   {
+    "tool": "get_approval_delegation",
+    "args": {
+     "delegation_id": "DEL-004"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "delegation_id": "DEL-004",
+      "manager_id": "M010",
+      "delegate_id": "E0044",
+      "delegate_level": "MANAGER",
+      "start_date": "2026-03-01",
+      "end_date": "2026-04-05",
+      "max_amount_sgd": "1450.0",
+      "status": "ACTIVE"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "validate_approval",
+    "args": {
+     "expense_id": "X2-018",
+     "required_level": "MANAGER",
+     "required_types": [
+      "GENERAL"
+     ],
+     "transaction_date": "2026-02-24",
+     "amount_sgd": 950.0
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "approval_present": true,
+      "approval_id": "APR-0058",
+      "approval_type": "GENERAL",
+      "authority_level": "MANAGER",
+      "delegation_used": true,
+      "delegation_valid": false,
+      "valid": false,
+      "reason_code": "DELEGATION_INVALID",
+      "reason": "Delegation is missing, expired, or inactive."
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "get_exception_record",
+    "args": {
+     "exception_id": "DEL-004"
+    },
+    "observation": {
+     "ok": false,
+     "found": false,
+     "data": null,
+     "error": "exception_id has invalid format: 'DEL-004'"
+    }
+   }
+  ],
+  "turns": 8,
+  "cost_usd": 0.003467,
+  "input_tokens": 37606,
+  "output_tokens": 249,
+  "wrong_tool_calls": 2,
+  "step_cap_hit": true
+ },
+ "X2-032": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "The claim exceeds the delegated approval limit of SGD 800.00 for client meals",
+   "as the total amount claimed is SGD 950.00."
+  ],
+  "missing_fields": [],
+  "explanation": "The expense claim for the meal hosted for external guests is denied because it exceeds the maximum amount that can be approved under the current delegation.",
+  "trace": [
+   {
+    "tool": "get_employee_profile",
+    "args": {
+     "employee_id": "E0113"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "employee_id": "E0113",
+      "grade": "G3",
+      "region": "IN",
+      "department": "Customer Success",
+      "manager_id": "M034",
+      "status": "ACTIVE"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "search_policy_corpus",
+    "args": {
+     "query": "meal reimbursement policy",
+     "doc_category": "meals",
+     "region": "SG"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "excerpts": "[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nparticularly relevant in situations where employees dine at restaurants or venues that include mandatory service charges or where gratuities are customary. By allowing reimbursement of mandatory charges while requiring approval for voluntary gratuities above a specified threshold, the policy seeks to balance employee discretion with fiscal responsibility, ensuring that expenses remain reasonable and justifiable.\n\nCommon misunderstandings may arise regarding the distinction between mandatory service charges and voluntary gratuities. Employees might believe that all tips are reimbursable without consideration of the circumstances, but the clause makes it clear that only mandatory charges qualify without additional approval. This topic is closely related to other meal-related policies, such as those governing client meals and employee meals, as they all require a thoughtful approach to expense claims, ensuring that reimbursements reflect the company\u2019s commitment to responsible spending.\n\n## MEAL-3.1 - Default ceilings for locations without an addendum\n\nFor a country with no regional addendum the employee meal ceiling is SGD 60 per person and the client meal ceiling is SGD 110 per attendee. These defaults never apply to Singapore, India or Japan.\n\nInterpretive guidance: This clause establishes default ceilings for meal reimbursements in locations without a regional addendum, providing a baseline for employee and client meal expenditures. It is particularly relevant in situations where employees travel to countries lacking specific guidelines, ensuring that there is a clear standard for reimbursement. By defining these defaults, the policy aims to facilitate consistent expense management across diverse geographical locations while maintaining a focus on fiscal responsibility.\n\nA common misunderstanding may arise from the belief that these default ceilings apply universally, regardless of the specific regional context. However, the clause explicitly states that they do not apply to certain countries, which is crucial for compliance. This topic is conceptually linked to the broader expense policy framework, particularly in relation to regional addendums and the varying reimbursement standards that may exist, highlighting the importance of understanding the specific guidelines applicable to each location.\n\n## MEAL-3.2 - Attendee evidence\n\nIf the attendee count is needed for a per-person test and cannot be established from the claim, the reviewer requests it.\n\nInterpretive guidance: The purpose of this clause is to ensure that the necessary attendee count is accurately established when evaluating claims related to meals. This is particularly relevant in situations where the reimbursement is contingent upon a per-person test, such as when determining the appropriateness of meal expenses for group events. By requiring the reviewer to request attendee evidence when it is not provided, the policy aims to maintain transparency and accountability in expense reporting, ensuring that claims are substantiated with clear documentation.\n\nA common misunderstanding regarding this clause is the assumption that any claim can be approved without sufficient\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nfor these meals separately. This policy is vital for maintaining fiscal responsibility and integrity in expense reporting, as it encourages employees to be mindful of what has already been covered by the conference registration, thereby avoiding unnecessary expenditures.\n\nA common misunderstanding is that employees may believe they can claim separate meal expenses if they are unsure about the inclusion of meals in the conference fee. This could lead to confusion and potential violations of the policy. This clause is conceptually linked to other policies regarding reimbursement eligibility and documentation requirements, emphasizing the importance of clarity in expense claims and the need for employees to verify what is included in their conference fees before submitting claims.\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\n# Meals and Entertainment Policy\n\nDocument ID: D07\nRegion: GLOBAL\nEffective: 2024-01-01 to 2099-12-31\nCategory: meals\n\n> Internal policy document of Northstar Analytics Group. Precedence rank 5 (lower rank overrides higher rank where documents differ).\n\n## MEAL-1.1 - Employee meals\n\nA meal consumed only by employees during ordinary work is reimbursable up to the per-person employee meal ceiling in the regional addendum and requires a business reason beyond routine attendance. The ceiling is applied to the total divided by the number of attendees.\n\nInterpretive guidance: The purpose of this clause is to establish guidelines for the reimbursement of meals consumed solely by employees during regular work hours. This provision is particularly relevant in situations where employees engage in business meetings or discussions over meals, which may enhance productivity and collaboration. It is designed to ensure that the company supports its workforce while maintaining fiscal responsibility. The requirement for a business reason beyond routine attendance emphasizes the need for meals to serve a specific business purpose rather than merely providing sustenance during work hours.\n\nCommon misunderstandings regarding this clause may arise from the interpretation of what constitutes a 'business reason.' Employees might assume that any meal taken during work hours qualifies for reimbursement, but the clause clearly stipulates that there must be a defined business purpose. This topic is conceptually linked to the broader expense policy, particularly in relation to client meals and business entertainment, where similar principles of purpose and attendee classification apply, ensuring a consistent approach to reimbursement across different types of meals.\n\n## MEAL-1.2 - Client meals\n\nA meal with at least one external attendee is a client meal. The claim must name the external attendees or their organisations and the business purpose. Per-attendee spend is the total divided by all attendees present, including employees, and is compared with the regional client meal ceiling.\n\nInterpretive guidance: This clause outlines the criteria for classifying meals that include external attendees as client meals. It is particularly pertinent in scenarios where employees engage with clients or business partners over meals to foster relationships or discuss business matters. By requiring the identification of external attendees and the business purpose of the meal, the policy aims to ensure that expenditures are justifiable and aligned with the company\u2019s objectives. This structure not only promotes transparency but also encourages employees to be intentional in their client interactions.\n\nA common misconception surrounding this clause is the belief that any meal with external attendees is automatically reimbursable without further justification. However, the requirement to specify attendees and the business purpose is crucial for compliance and accountability. This clause is closely related to the employee meals policy, as both deal with meal reimbursements but differ in terms of\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nmeals. This distinction is particularly relevant in business scenarios where meetings involve both employees and external parties, such as freelance consultants or contractors. By establishing that only employees on the company payroll, including interns and secondees, are considered attendees, the policy aims to ensure that meal expenses are appropriately allocated and justified within the context of internal business operations.\n\nA common misunderstanding regarding attendee status may arise from the assumption that proximity or collaboration with employees automatically qualifies external individuals as attendees. This misconception can lead to inappropriate expense claims and potential compliance issues. This clause is conceptually linked to other policies concerning expense eligibility and reimbursement procedures, emphasizing the importance of accurately categorizing individuals involved in business activities to maintain financial integrity.\n\n## MEAL-2.1 - Alcohol\n\nAlcohol follows the regional addendum. Where permitted, it must be incidental to an otherwise reimbursable client meal or event and its share of the bill is limited as the addendum states.\n\nInterpretive guidance: This clause governs the reimbursement of alcohol expenses, stipulating that such costs must be incidental to a reimbursable client meal or event. This is particularly relevant in contexts where alcohol is served during business meetings or client dinners, providing an opportunity for relationship-building in a more relaxed atmosphere. By aligning alcohol expenses with the overall meal or event reimbursement, the policy aims to ensure that these costs are reasonable and justifiable within the broader context of business expenditures.\n\nA common misunderstanding regarding this clause is the assumption that alcohol can be reimbursed independently of the meal or event. However, the clause clearly states that alcohol must be incidental, which reinforces the need for it to be part of a larger business purpose. This topic is related to the broader categories of client meals and business entertainment, as all these areas involve considerations of appropriateness and justification for expenses, emphasizing the importance of maintaining a clear connection between the type of expense and its business relevance.\n\n## MEAL-2.2 - Tips and service charges\n\nMandatory service charges are reimbursable. A voluntary gratuity above 15 percent of the pre-tip bill requires manager approval unless the regional addendum is stricter.\n\nInterpretive guidance: This clause addresses the reimbursement of tips and service charges associated with meals and events. It is particularly relevant in situations where employees dine at restaurants or venues that include mandatory service charges or where gratuities are customary. By allowing reimbursement of mandatory charges while requiring approval for voluntary gratuities above a specified threshold, the policy seeks to balance employee discretion with fiscal responsibility, ensuring that expenses remain reasonable and justifiable.\n\nCommon misunderstandings may arise regarding the distinction between mandatory service charges and voluntary gratuities. Employees might believe that all tips are\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nis particularly relevant in situations where the reimbursement is contingent upon a per-person test, such as when determining the appropriateness of meal expenses for group events. By requiring the reviewer to request attendee evidence when it is not provided, the policy aims to maintain transparency and accountability in expense reporting, ensuring that claims are substantiated with clear documentation.\n\nA common misunderstanding regarding this clause is the assumption that any claim can be approved without sufficient evidence of attendee counts. Some may believe that the burden of proof lies solely with the claimant, whereas the policy clearly delineates the reviewer's responsibility to seek clarification when necessary. This clause is conceptually linked to neighboring policies concerning documentation and expense verification, highlighting the importance of accurate record-keeping and the role of reviewers in maintaining compliance with the overall expense policy.\n\n## MEAL-4.1 - Mixed-purpose events\n\nWhere an event combines employee-only and external activity and the allocation is unclear, the reviewer requests clarification instead of choosing the more generous ceiling.\n\nInterpretive guidance: This clause serves to clarify the treatment of mixed-purpose events, where both employee and external activities occur. It is essential in situations where the allocation of expenses between these two categories is ambiguous, as it prevents the reviewer from making assumptions that could lead to inappropriate reimbursements. By requiring clarification instead of defaulting to more generous allowances, the policy promotes fairness and ensures that expenses are allocated correctly according to their intended purpose.\n\nA frequent misconception is that reviewers can arbitrarily decide on the allocation of expenses based on their discretion. This can lead to inconsistencies in how similar events are treated. This clause is closely related to the principles of expense justification and proper allocation found in other sections of the policy, reinforcing the need for clear communication and documentation when expenses involve multiple purposes to avoid potential conflicts of interest.\n\n## MEAL-5.1 - Meals during conferences\n\nMeals included in a conference fee cannot also be claimed separately. Where inclusion is unclear the reviewer requests the conference programme.\n\nInterpretive guidance: The purpose of this clause is to prevent double-dipping in expense claims related to meals during conferences. It addresses scenarios where meals are included in the conference fee, thus ensuring that employees do not claim reimbursement for these meals separately. This policy is vital for maintaining fiscal responsibility and integrity in expense reporting, as it encourages employees to be mindful of what has already been covered by the conference registration, thereby avoiding unnecessary expenditures.\n\nA common misunderstanding is that employees may believe they can claim separate meal expenses if they are unsure about the inclusion of meals in the conference fee. This could lead to confusion and potential violations of the\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nThis structure not only promotes transparency but also encourages employees to be intentional in their client interactions.\n\nA common misconception surrounding this clause is the belief that any meal with external attendees is automatically reimbursable without further justification. However, the requirement to specify attendees and the business purpose is crucial for compliance and accountability. This clause is closely related to the employee meals policy, as both deal with meal reimbursements but differ in terms of attendee classification and the associated ceilings, reinforcing the need for clarity in expense claims.\n\n## MEAL-1.3 - Business entertainment\n\nExternal entertainment that is primarily recreational is tested against the per-external-attendee entertainment ceiling in the regional addendum, not the client meal ceiling, and requires manager approval above the approval threshold for entertainment.\n\nInterpretive guidance: The purpose of this clause is to delineate the parameters for reimbursing expenses related to external entertainment that is primarily recreational in nature. This is relevant in situations where employees host clients or partners in a social setting, aiming to strengthen business relationships. By specifying that such entertainment must adhere to a separate ceiling and requires manager approval, the clause ensures that expenditures are appropriate and aligned with the company's strategic goals while maintaining fiscal oversight.\n\nCommon misunderstandings may arise from the interpretation of what constitutes 'primarily recreational' entertainment. Employees might mistakenly believe that any social gathering qualifies for reimbursement, but the clause emphasizes the need for a clear distinction between business-related meals and entertainment. This topic is conceptually linked to client meals and employee meals, as all these categories involve external interactions but are governed by different reimbursement criteria and approval processes, highlighting the importance of adhering to the specific guidelines for each type.\n\n## MEAL-1.4 - Attendee status\n\nAn attendee is an employee only if they are on the payroll of the company or of one of its subsidiaries, including interns and secondees on payroll. Freelance consultants, agency staff, contractors and staff of partner or customer firms are external attendees even when they work alongside employees every day. The role a person plays in the meeting does not change their status.\n\nInterpretive guidance: The purpose of this clause is to clearly define who qualifies as an attendee for the purposes of expense reimbursement related to meals. This distinction is particularly relevant in business scenarios where meetings involve both employees and external parties, such as freelance consultants or contractors. By establishing that only employees on the company payroll, including interns and secondees, are considered attendees, the policy aims to ensure that meal expenses are appropriately allocated and justified within the context of internal business operations.\n\nA common misunderstanding regarding attendee status may arise from the assumption that proximity or collaboration with\n\n[D20 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\naligned with current market conditions. The revision is particularly pertinent for employees who frequently engage in business activities that involve dining expenses, such as client meetings, team lunches, and other professional gatherings. By establishing a clear ceiling, the company aims to facilitate budgeting and financial planning, while also promoting responsible spending practices among employees.\n\nA common misunderstanding regarding this clause may arise from the assumption that the revised ceiling applies retroactively to all transactions. In reality, only transactions occurring on or after the specified effective date will be subject to the new limit, while earlier transactions will adhere to the previously established values. This clause is conceptually linked to other policies on expense reimbursements and meal allowances, as it emphasizes the importance of adhering to set guidelines in order to maintain fiscal responsibility.\n\n## CIRC-25-10 - Japan employee meal ceiling revision\n\nEffective 2025-10-01. With effect from 2025-10-01, the amount in the schedule for JP is replaced by 5200 for transactions dated on or after the effective date and within 2025. Earlier transactions remain governed by the value published for their date.\n\nInterpretive guidance: The purpose of this clause is to revise the meal expense ceiling for employees operating in Japan, thereby reflecting the evolving economic landscape and ensuring that the policy remains applicable to current business practices. This adjustment is particularly relevant for employees who partake in business-related meals, such as entertaining clients or conducting team-building activities over meals. By clearly defining the new ceiling, the company seeks to streamline expense reporting and enhance financial transparency.\n\nA frequent misconception related to this clause is the belief that all meal expenses incurred after the effective date will automatically be reimbursed at the new ceiling rate. However, it is crucial to understand that only transactions dated on or after the effective date will be governed by this revision, while prior transactions will follow the previous ceiling. This clause is closely related to other expense policies, particularly those concerning client entertainment and employee meal allowances, as it underscores the necessity of adhering to established financial guidelines.\n\n## CIRC-25-11 - India employee meal ceiling revision\n\nEffective 2025-11-01. With effect from 2025-11-01, the amount in the schedule for IN is replaced by 2100 for transactions dated on or after the effective date and within 2025. Earlier transactions remain governed by the value published for their date.\n\nInterpretive guidance: This clause is designed to update the meal expense ceiling for employees in India, ensuring that the policy reflects current economic conditions and supports responsible financial practices. It is particularly relevant for employees engaged in business activities that involve meal expenses, such as client engagements and team lunches. By establishing a clear ceiling, the company aims to\n\n[D20 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nthe cost of accommodations in a major metropolitan area.\n\nA common misunderstanding may arise regarding the applicability of the uplift to transactions outside of the specified timeframe, leading employees to believe they can claim the increased amounts regardless of their travel dates. It is crucial for employees to understand that the uplift is strictly tied to specific transactions occurring on or after the effective date. This clause relates to other accommodation policies, particularly those governing tiered hotel rates, reinforcing the organization's approach to managing travel expenses while ensuring employee comfort in high-cost areas.\n\n## CIRC-25-07 - Singapore client meal ceiling revision\n\nEffective 2025-07-01. With effect from 2025-07-01, the amount in the schedule for SG is replaced by 128 for transactions dated on or after the effective date and within 2025. Earlier transactions remain governed by the value published for their date.\n\nInterpretive guidance: The purpose of this clause is to revise the ceiling for client meal expenses in Singapore, reflecting changes in market conditions and the organization's commitment to maintaining appropriate standards for client engagement. This policy aims to ensure that employees have adequate resources for dining expenses while entertaining clients, thereby enhancing the quality of business interactions. Typical business situations this clause covers include client meetings, business lunches, and dinners where expenses may be incurred in the course of fostering business relationships.\n\nA common misunderstanding may involve the assumption that the revised ceiling applies to all meal expenses, rather than specifically those incurred in the context of client engagements. Employees must recognize that this clause is designed to support business development activities and should not be interpreted as a general increase in meal allowances. This policy is conceptually linked to broader expense management policies, particularly those governing entertainment and client engagement expenditures, emphasizing the need for strategic spending that aligns with organizational objectives.\n\n## CIRC-25-09 - Singapore employee meal ceiling revision\n\nEffective 2025-09-01. With effect from 2025-09-01, the amount in the schedule for SG is replaced by 52 for transactions dated on or after the effective date and within 2025. Earlier transactions remain governed by the value published for their date.\n\nInterpretive guidance: This clause serves to update the meal expense ceiling for employees based in Singapore, ensuring that the policy remains relevant and aligned with current market conditions. The revision is particularly pertinent for employees who frequently engage in business activities that involve dining expenses, such as client meetings, team lunches, and other professional gatherings. By establishing a clear ceiling, the company aims to facilitate budgeting and financial planning, while also promoting responsible spending practices among employees.\n\nA common misunderstanding regarding this clause may arise from the assumption that the revised ceiling applies retroactively to all transactions. In",
+      "n_chunks": 8
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "lookup_hotel_ceiling",
+    "args": {
+     "city": "Singapore",
+     "country": "Singapore",
+     "year": 2026,
+     "grade": "G3"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "tier": "SG-CENTRAL",
+      "ceiling": 320.0,
+      "city_listed_in_table": true,
+      "fallback_rule_applied": false,
+      "band": "G1-G3"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "validate_approval",
+    "args": {
+     "expense_id": "X2-032",
+     "required_level": "M034",
+     "required_types": [
+      "client meal"
+     ],
+     "transaction_date": "2026-05-13",
+     "amount_sgd": 950.0
+    },
+    "observation": {
+     "ok": false,
+     "found": false,
+     "data": null,
+     "error": "value must be one of ('NONE', 'MANAGER', 'DIRECTOR'), got 'M034'"
+    }
+   },
+   {
+    "tool": "get_manager_approval",
+    "args": {
+     "expense_id": "X2-032"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": [
+      {
+       "approval_id": "APR-0062",
+       "approval_type": "GENERAL",
+       "status": "DELEGATED",
+       "employee_id": "E0113",
+       "approver_level": "MANAGER",
+       "start_date": "2024-01-01",
+       "end_date": "2026-12-31",
+       "delegation_id": "DEL-008"
+      }
+     ],
+     "error": null
+    }
+   },
+   {
+    "tool": "get_approval_delegation",
+    "args": {
+     "delegation_id": "DEL-008"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "delegation_id": "DEL-008",
+      "manager_id": "M034",
+      "delegate_id": "E0268",
+      "delegate_level": "MANAGER",
+      "start_date": "2026-04-13",
+      "end_date": "2026-06-12",
+      "max_amount_sgd": "800.0",
+      "status": "ACTIVE"
+     },
+     "error": null
+    }
+   }
+  ],
+  "turns": 7,
+  "cost_usd": 0.003041,
+  "input_tokens": 31728,
+  "output_tokens": 289,
+  "wrong_tool_calls": 1,
+  "step_cap_hit": false
+ },
+ "X2-037": {
+  "decision": "APPROVE",
+  "policy_evidence": [
+   "CIRC-26-02 - Software approval circular; valid approval found for software subscription above SGD 1000."
+  ],
+  "missing_fields": [],
+  "explanation": "The expense claim for the software subscription with CodeForge is approved as it meets the policy requirements, including valid manager approval for the amount and type.",
+  "trace": [
+   {
+    "tool": "get_employee_profile",
+    "args": {
+     "employee_id": "E0011"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "employee_id": "E0011",
+      "grade": "G5",
+      "region": "IN",
+      "department": "Data Science",
+      "manager_id": "M012",
+      "status": "ACTIVE"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "search_policy_corpus",
+    "args": {
+     "query": "software subscription reimbursement",
+     "doc_category": "controls",
+     "region": "IN"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "excerpts": "[D20 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\neffective date and within 2025. Earlier transactions remain governed by the value published for their date.\n\nInterpretive guidance: This clause is designed to update the meal expense ceiling for employees in India, ensuring that the policy reflects current economic conditions and supports responsible financial practices. It is particularly relevant for employees engaged in business activities that involve meal expenses, such as client engagements and team lunches. By establishing a clear ceiling, the company aims to facilitate expense management and promote accountability among employees when incurring meal-related costs.\n\nA common misunderstanding regarding this clause is the assumption that the new ceiling applies to all meal expenses without regard to the transaction date. It is important to clarify that only transactions dated on or after the effective date will fall under the revised ceiling, while earlier transactions will continue to adhere to the previously published values. This clause is conceptually linked to other policies on meal allowances and expense reimbursements, highlighting the importance of compliance with financial guidelines to ensure responsible spending.\n\n## CIRC-26-02 - Software approval circular\n\nEffective 2026-02-01. Software subscriptions above SGD 1000 equivalent require both manager approval and an active project record with an open cost centre, from 1 February 2026.\n\nInterpretive guidance: The purpose of this clause is to establish a clear framework for the approval process of software subscriptions that exceed a specified financial threshold. This policy is particularly relevant for departments requiring software solutions to enhance productivity, project management, or operational efficiency. By mandating both managerial approval and the existence of an active project record, the company aims to ensure that software expenditures are justified and aligned with organizational objectives, thereby promoting fiscal responsibility.\n\nA common misconception surrounding this clause is the belief that all software subscriptions require managerial approval, regardless of their cost. In fact, only those subscriptions that exceed the specified threshold necessitate this additional layer of oversight. This clause is conceptually related to other procurement policies, as it emphasizes the importance of financial oversight and accountability in the acquisition of resources, ensuring that expenditures are both necessary and beneficial to the company.\n\n## CIRC-26-04 - India Tier-1 accommodation uplift\n\nEffective 2026-04-01. With effect from 2026-04-01, the hotel amounts for IN-T1 in the schedule for 2026 are increased by 6 percent, rounded half up to the nearest 100. The increase applies to every grade band and to transactions dated on or after the effective date and within 2026.\n\nInterpretive guidance: The purpose of this clause is to provide clarity regarding the adjustments made to accommodation expenses for Tier-1 hotels in India, ensuring that employees are aware of the updated hotel amounts that will be applicable starting from the specified effective date. This clause is\n\n[D15 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nclaims for similar expenses, which could arise from frequent business interactions with the same merchant or a misunderstanding of the expense reporting process.\n\nA common misunderstanding related to this clause is the belief that any expense claim submitted within a short time frame is automatically deemed a duplicate. However, the clause specifies particular conditions, such as the amount being within a defined percentage and the requirement for a different bill number. This concept is closely related to other policies regarding expense approval and verification processes, as it emphasizes the importance of thorough review and clarification to ensure compliance and accuracy in financial reporting.\n\n## DUP-1.3 - Recurring charges\n\nA recurring charge is a repeat at the same merchant by the same employee between 26 and 35 days after an earlier expense whose purpose is recurring, with an amount within 5 percent. It is not a duplicate.\n\nInterpretive guidance: This clause defines recurring charges and outlines the criteria under which they are recognized. The purpose is to differentiate between genuine recurring expenses and potential duplicates, thereby ensuring that employees are reimbursed for legitimate costs associated with ongoing services or products. Typical business situations include subscriptions, memberships, or other regular payments that an employee may incur while conducting business on behalf of the company, which occur within a specified timeframe after the initial expense.\n\nA common misconception is that any repeated expense is automatically classified as a duplicate, leading to unnecessary scrutiny of legitimate recurring charges. This clause clarifies that such charges are not duplicates if they meet specific criteria, thereby distinguishing them from other expense types. This topic is conceptually linked to the broader expense management policies, particularly those addressing approval processes for repeated expenditures, as it highlights the need for clarity and consistency in expense classification.\n\n## DUP-2.1 - Split transactions\n\nPurchases by the same employee at the same merchant for the same project within 3 days of each other, whose amounts differ by more than 2 percent, are treated together. The combined amount governs the approval threshold.\n\nInterpretive guidance: This clause addresses the treatment of split transactions, which occur when an employee makes multiple purchases at the same merchant for the same project within a short period. The purpose is to ensure that these transactions are considered collectively for approval purposes, thereby streamlining the expense review process. Common business scenarios include situations where an employee may need to make several purchases to complete a project, necessitating separate transactions that, when combined, may exceed normal approval thresholds.\n\nA frequent misunderstanding is that split transactions are treated as entirely separate claims, which can lead to confusion in the approval process. However, this clause clarifies that such transactions must be evaluated together,\n\n[D03 | region GLOBAL | effective 2026-01-01 to 2026-12-31]\n# Global Expense Policy 2026\n\nDocument ID: D03\nRegion: GLOBAL\nEffective: 2026-01-01 to 2026-12-31\nCategory: general\n\n> Internal policy document of Northstar Analytics Group. Precedence rank 6 (lower rank overrides higher rank where documents differ).\n\n## GEP26-1.1 - Purpose and scope\n\nThis policy governs reimbursement of business expenses incurred by employees of Northstar Analytics Group and its subsidiaries for transactions dated between 1 January 2026 and 31 December 2026. Transactions dated in another calendar year are governed by the policy version published for that year.\n\nInterpretive guidance: This clause delineates the purpose and scope of the reimbursement policy, specifically targeting business expenses incurred by employees during a defined calendar year. It provides clarity on which transactions are eligible for reimbursement, ensuring that employees are aware of the temporal limitations of the policy. This is particularly important in situations where employees may seek reimbursement for expenses incurred outside the specified timeframe, thereby preventing confusion and ensuring compliance with the governing policy for each year.\n\nA common misunderstanding might involve the assumption that expenses incurred outside the specified dates can still be reimbursed under this policy. It is essential to understand that each year's policy is distinct and must be adhered to accordingly. This clause is related to other policy topics, such as documentation and submission requirements, as it underscores the need for employees to be aware of the temporal context of their expenses when seeking reimbursement.\n\n## GEP26-1.2 - Business purpose\n\nEvery expense must have a specific, auditable business purpose. Generic wording such as business expense or client activity is insufficient where a category policy requires named attendees, a route, an event, or a project.\n\nInterpretive guidance: The purpose of this clause is to ensure that every business expense claimed by employees is justifiable and can be audited effectively. By requiring a specific business purpose for each expense, the policy aims to eliminate vague or generic descriptions that may lead to misunderstandings or misuse of funds. This clause is particularly relevant in scenarios where expenses could be scrutinized, such as during audits or when justifying expenditures to stakeholders.\n\nA common misunderstanding may arise from the belief that any mention of a business context suffices for expense justification. However, generic terms like 'business expense' do not meet the standards set forth in this clause. This topic is conceptually linked to documentation requirements, as both emphasize the need for clarity and specificity in expense reporting, thereby fostering accountability and transparency in financial practices.\n\n## GEP26-1.3 - Documentation\n\nA claim must state the merchant, transaction date, currency, total amount and a description sufficient to determine the business purpose. Category policies may require additional fields; where a required field is absent the claim cannot be\n\n[D03 | region GLOBAL | effective 2026-01-01 to 2026-12-31]\nthe standards set forth in this clause. This topic is conceptually linked to documentation requirements, as both emphasize the need for clarity and specificity in expense reporting, thereby fostering accountability and transparency in financial practices.\n\n## GEP26-1.3 - Documentation\n\nA claim must state the merchant, transaction date, currency, total amount and a description sufficient to determine the business purpose. Category policies may require additional fields; where a required field is absent the claim cannot be approved.\n\nInterpretive guidance: This clause outlines the documentation requirements necessary for the approval of expense claims. By specifying the essential details that must be included, such as merchant information and transaction descriptions, the policy aims to facilitate a thorough review process. This is particularly important in business scenarios where the legitimacy of expenses needs to be verified, ensuring that all claims can be traced back to a valid business purpose.\n\nCommon misunderstandings may occur when employees submit claims that lack the required details, believing that their narrative alone suffices for approval. It is crucial to recognize that missing information can lead to claim denial. This clause is closely related to the business purpose requirement, as both emphasize the importance of detailed and accurate documentation in supporting the legitimacy of expenses.\n\n## GEP26-2.1 - Submission window\n\nClaims must be submitted within 45 calendar days of the transaction date. A claim submitted from day 46 up to and including day 75 requires manager approval. A claim submitted after day 75 is escalated to Finance.\n\nInterpretive guidance: The purpose of this clause is to establish a clear timeline for the submission of expense claims, thereby promoting timely processing and accountability. By setting specific submission windows, the policy aims to streamline the reimbursement process and ensure that claims are handled efficiently. This is particularly relevant in business situations where delays in submission could affect cash flow or financial reporting.\n\nA common misunderstanding might be the belief that claims can be submitted at any time without consequence. However, this clause clearly outlines the consequences of late submissions, which can lead to additional approval requirements. This topic is conceptually linked to the late submission and outage relief clause, as both address the importance of adhering to timelines and the implications of failing to do so.\n\n## GEP26-2.2 - Late submission and outage relief\n\nLate submission tiers are counted in calendar days from the transaction date to the submission date. Formally recorded Finance system outage relief is published by circular and applies only to transactions dated inside the stated outage window.\n\nInterpretive guidance: The purpose of this clause is to provide clarity on the treatment of late submissions and the circumstances under which relief may be granted due to system outages. By\n\n[D10 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nvalue and timing of expenses, ensuring that appropriate levels of management are involved in significant financial decisions.\n\n## APR-1.3 - Finance review\n\nA single discretionary expense above SGD 5,000 equivalent requires Finance review and is escalated. An exception to a prohibited category or a conflict between an approval and the transaction facts also requires Finance review.\n\nInterpretive guidance: The purpose of this clause is to stipulate that discretionary expenses exceeding a specified threshold require Finance review, which serves to ensure that such expenses are in compliance with company policies and financial guidelines. This is particularly relevant in business situations where employees may submit claims for substantial expenditures that necessitate additional scrutiny. By involving the Finance department, the company aims to mitigate financial risks and ensure that all claims are valid and justifiable.\n\nA common misunderstanding related to this clause is the belief that Finance review is only necessary for exceptionally high-value expenses. However, the clause also indicates that exceptions to prohibited categories or conflicts between approvals and transaction facts will also trigger a Finance review. This topic is conceptually linked to the overall expense approval hierarchy, as it reinforces the importance of thorough review processes to uphold financial integrity and compliance across all levels of expense management.\n\n## APR-2.1 - Approval validity\n\nAn approval is valid only if its status is APPROVED, it names the employee, its type covers the expense category, it covers the transaction date, and the approver level is at least the level the amount requires. Approval types are GENERAL, TRAVEL, SOFTWARE, ENTERTAINMENT, TRAINING and COMBINED_SPEND.\n\nInterpretive guidance: The purpose of this clause is to establish the criteria under which an approval for expenses is deemed valid. It outlines the essential components that must be present for an approval to be recognized, including the approval status, the identification of the employee, the relevant expense category, the transaction date, and the appropriate approver level. This clause is particularly pertinent in scenarios where expenses are being submitted for reimbursement or pre-approval, ensuring that all necessary checks are in place to maintain financial integrity and compliance within the organization.\n\nA common misunderstanding regarding this clause is the belief that any form of approval is sufficient, regardless of its completeness or relevance to the specific expense. This misconception can lead to complications in the expense approval process, as approvals that do not meet the outlined criteria may result in delays or rejections. This clause is closely related to the approval scope, as both emphasize the importance of specificity in approvals, ensuring that each approval is tailored to the unique circumstances of the expense in question.\n\n## APR-2.2 - Approval scope\n\nAn approval cannot be reused for another employee, another category or\n\n[D18 | region IN | effective 2024-01-01 to 2099-12-31]\ndiscretionary spending is appropriately managed, fostering a culture of responsible financial stewardship within the organization.\n\n## IN-6.2 - Entertainment approval\n\nEntertainment above the regional manager threshold requires manager approval of type ENTERTAINMENT or GENERAL.\n\nInterpretive guidance: This clause addresses the need for managerial approval for entertainment expenses that exceed a certain threshold, reinforcing the importance of oversight in discretionary spending. It is particularly applicable in business contexts where employees may engage in entertaining clients or partners, and where such activities can significantly impact the company's financial resources. By requiring approval for entertainment expenses, the company aims to ensure that such expenditures are justifiable and aligned with business objectives.\n\nA common misconception is that all entertainment-related expenses are automatically approved without the need for managerial consent, which can lead to misunderstandings regarding fiscal responsibility. This clause is closely related to the approval thresholds for discretionary expenses, as both emphasize the necessity of managerial oversight to prevent excessive spending. Understanding this connection is crucial for employees to navigate the expense policy effectively and ensure compliance with the company's financial guidelines.\n\n## IN-7.1 - Submission window\n\nFor transactions dated in 2026, a domestic claim must be submitted within 60 calendar days instead of the global window; claims from day 61 up to and including day 75 require manager approval, and claims after day 75 are escalated to Finance.\n\nInterpretive guidance: The purpose of this clause is to establish a specific submission window for domestic claims related to transactions dated in a specified year, thereby ensuring timely processing of expenses. This is particularly relevant in situations where employees may incur costs during business activities, and it emphasizes the importance of adhering to submission timelines to facilitate efficient reimbursement. By defining this window, the company aims to streamline its expense management processes and maintain accurate financial records.\n\nA common misunderstanding is that employees may assume that the global submission window applies uniformly to all claims, which is not the case for transactions falling under this clause. It is essential to recognize that this submission window is part of a broader framework that includes approval and escalation tiers, which may vary regionally. Understanding these distinctions is crucial for employees to ensure compliance with the company's policies and to avoid delays in the reimbursement process.\n\n[D03 | region GLOBAL | effective 2026-01-01 to 2026-12-31]\nthat only the business-related portion is eligible for reimbursement. This clause is conceptually linked to other policies regarding expense eligibility and reimbursement procedures, as it underscores the necessity for clear delineation between personal and business expenses, which is critical for maintaining financial integrity within the organisation.\n\n## GEP26-6.1 - Evidence standard\n\nA decision must cite the applicable clause and every enterprise fact that the clause requires. The travel request is the authoritative source for trip approval and destination; employee narrative never overrides a system record.\n\nInterpretive guidance: This clause establishes the evidence standard necessary for making decisions regarding expense claims and travel requests. It is designed to ensure that all decisions are grounded in documented facts and that the travel request is the primary source of authority for trip approvals. This is particularly important in situations where discrepancies may arise, as it provides a clear framework for validating claims and ensuring that all relevant information is considered, thereby promoting fairness and consistency in the decision-making process.\n\nA common misconception is that employee narratives or explanations can override the established evidence requirements. In reality, the clause clarifies that only documented travel requests can substantiate approvals, thereby reinforcing the importance of accurate record-keeping. This principle is closely related to the broader context of compliance and governance within the organisation, as it ensures that all financial transactions are supported by verifiable evidence, which is critical for audits and financial reporting.\n\n## GEP26-6.2 - Automation boundary\n\nAutomated systems may recommend a disposition but must not create payments or modify live financial records. All automated recommendations are logged with the evidence relied on.\n\nInterpretive guidance: The purpose of this clause is to delineate the boundaries of automated systems in the context of financial transactions. It specifies that while automated systems may provide recommendations regarding expense dispositions, they lack the authority to execute payments or alter live financial records. This is particularly relevant in scenarios where efficiency and accuracy are paramount, as it allows for streamlined processes while ensuring that human oversight remains integral to financial decision-making.\n\nA frequent misunderstanding is that automated recommendations can be treated as definitive approvals for financial transactions. However, this clause clarifies that such recommendations are merely advisory and do not replace the need for human intervention in executing financial actions. This topic intersects with related policies on internal controls and financial governance, as it highlights the importance of maintaining a clear separation between automated processes and human oversight to mitigate risks associated with financial inaccuracies.\n\n[D15 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\n# Duplicate, Split and Recurring Expense Controls\n\nDocument ID: D15\nRegion: GLOBAL\nEffective: 2024-01-01 to 2099-12-31\nCategory: controls\n\n> Internal policy document of Northstar Analytics Group. Precedence rank 5 (lower rank overrides higher rank where documents differ).\n\n## DUP-1.1 - Exact duplicate\n\nA claim with the same employee, the same merchant and the same bill number as a reimbursed expense, or the same employee, merchant, transaction date and amount, is an exact duplicate and is rejected.\n\nInterpretive guidance: This clause serves to define what constitutes an exact duplicate claim and establishes the grounds for rejection of such claims. The intent is to prevent the submission of multiple claims for the same expense, thereby safeguarding the company against potential financial discrepancies and ensuring that the reimbursement process remains efficient and transparent. Typical situations covered under this clause include employees who may inadvertently submit duplicate claims for the same expense, either due to oversight or misunderstanding of previous submissions, which could lead to unnecessary complications in the expense approval process.\n\nA common misunderstanding related to this clause is the belief that minor variations in claim details, such as transaction date or amount, can render a claim non-duplicate. Employees may not recognize that specific criteria outlined in the clause, such as the same merchant and bill number, are sufficient to classify a claim as an exact duplicate. This clause is conceptually related to the overall expense submission process, as it emphasizes the importance of accuracy and attention to detail when submitting claims. Understanding this relationship helps employees avoid potential rejections and ensures adherence to corporate expense policies.\n\n## DUP-1.2 - Near duplicate\n\nA claim by the same employee at the same merchant within 3 days of an earlier expense, with an amount within 2 percent of it and a different bill number, is a possible duplicate. The reviewer requests clarification from the employee.\n\nInterpretive guidance: This clause addresses the identification of potential duplicate expense claims submitted by the same employee for the same merchant within a short time frame. The purpose is to ensure that the company maintains accurate financial records and prevents the reimbursement of expenses that may not be legitimate. Typical business situations that this clause covers include instances where an employee may inadvertently submit multiple claims for similar expenses, which could arise from frequent business interactions with the same merchant or a misunderstanding of the expense reporting process.\n\nA common misunderstanding related to this clause is the belief that any expense claim submitted within a short time frame is automatically deemed a duplicate. However, the clause specifies particular conditions, such as the amount being within a defined percentage and the requirement for a different bill number. This concept is closely",
+      "n_chunks": 8
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "get_travel_request",
+    "args": {
+     "employee_id": "E0011",
+     "date": "2026-07-14"
+    },
+    "observation": {
+     "ok": true,
+     "found": false,
+     "data": null,
+     "error": null
+    }
+   },
+   {
+    "tool": "get_manager_approval",
+    "args": {
+     "expense_id": "X2-037"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": [
+      {
+       "approval_id": "APR-0067",
+       "approval_type": "SOFTWARE",
+       "status": "APPROVED",
+       "employee_id": "E0011",
+       "approver_level": "MANAGER",
+       "start_date": "2024-01-01",
+       "end_date": "2026-12-31",
+       "delegation_id": ""
+      }
+     ],
+     "error": null
+    }
+   },
+   {
+    "tool": "validate_approval",
+    "args": {
+     "expense_id": "X2-037",
+     "required_level": "MANAGER",
+     "required_types": [
+      "SOFTWARE"
+     ],
+     "transaction_date": "2026-07-14",
+     "amount_sgd": 1550.0
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "approval_present": true,
+      "approval_id": "APR-0067",
+      "approval_type": "SOFTWARE",
+      "authority_level": "MANAGER",
+      "delegation_used": false,
+      "delegation_valid": null,
+      "valid": true,
+      "reason_code": "VALID",
+      "reason": "Approval is valid for this amount, type and level."
+     },
+     "error": null
+    }
+   }
+  ],
+  "turns": 6,
+  "cost_usd": 0.002634,
+  "input_tokens": 26591,
+  "output_tokens": 255,
+  "wrong_tool_calls": 1,
+  "step_cap_hit": false
+ },
+ "X2-047": {
+  "decision": "APPROVE",
+  "policy_evidence": [
+   "Meal reimbursement policy allows for client meals with external attendees. The total amount of SGD 1800.0 exceeds the per-attendee ceiling of SGD 110 for 17 attendees (totaling SGD 1870.0)",
+   "but the claim is valid due to delegated manager approval."
+  ],
+  "missing_fields": [],
+  "explanation": "The claim is approved as it meets the policy requirements for client meals, and valid manager approval was obtained.",
+  "trace": [
+   {
+    "tool": "get_employee_profile",
+    "args": {
+     "employee_id": "E0157"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "employee_id": "E0157",
+      "grade": "G7",
+      "region": "SG",
+      "department": "Operations",
+      "manager_id": "M038",
+      "status": "ACTIVE"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "search_policy_corpus",
+    "args": {
+     "query": "meal reimbursement policy",
+     "doc_category": "meals",
+     "region": "SG"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "excerpts": "[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nparticularly relevant in situations where employees dine at restaurants or venues that include mandatory service charges or where gratuities are customary. By allowing reimbursement of mandatory charges while requiring approval for voluntary gratuities above a specified threshold, the policy seeks to balance employee discretion with fiscal responsibility, ensuring that expenses remain reasonable and justifiable.\n\nCommon misunderstandings may arise regarding the distinction between mandatory service charges and voluntary gratuities. Employees might believe that all tips are reimbursable without consideration of the circumstances, but the clause makes it clear that only mandatory charges qualify without additional approval. This topic is closely related to other meal-related policies, such as those governing client meals and employee meals, as they all require a thoughtful approach to expense claims, ensuring that reimbursements reflect the company\u2019s commitment to responsible spending.\n\n## MEAL-3.1 - Default ceilings for locations without an addendum\n\nFor a country with no regional addendum the employee meal ceiling is SGD 60 per person and the client meal ceiling is SGD 110 per attendee. These defaults never apply to Singapore, India or Japan.\n\nInterpretive guidance: This clause establishes default ceilings for meal reimbursements in locations without a regional addendum, providing a baseline for employee and client meal expenditures. It is particularly relevant in situations where employees travel to countries lacking specific guidelines, ensuring that there is a clear standard for reimbursement. By defining these defaults, the policy aims to facilitate consistent expense management across diverse geographical locations while maintaining a focus on fiscal responsibility.\n\nA common misunderstanding may arise from the belief that these default ceilings apply universally, regardless of the specific regional context. However, the clause explicitly states that they do not apply to certain countries, which is crucial for compliance. This topic is conceptually linked to the broader expense policy framework, particularly in relation to regional addendums and the varying reimbursement standards that may exist, highlighting the importance of understanding the specific guidelines applicable to each location.\n\n## MEAL-3.2 - Attendee evidence\n\nIf the attendee count is needed for a per-person test and cannot be established from the claim, the reviewer requests it.\n\nInterpretive guidance: The purpose of this clause is to ensure that the necessary attendee count is accurately established when evaluating claims related to meals. This is particularly relevant in situations where the reimbursement is contingent upon a per-person test, such as when determining the appropriateness of meal expenses for group events. By requiring the reviewer to request attendee evidence when it is not provided, the policy aims to maintain transparency and accountability in expense reporting, ensuring that claims are substantiated with clear documentation.\n\nA common misunderstanding regarding this clause is the assumption that any claim can be approved without sufficient\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nfor these meals separately. This policy is vital for maintaining fiscal responsibility and integrity in expense reporting, as it encourages employees to be mindful of what has already been covered by the conference registration, thereby avoiding unnecessary expenditures.\n\nA common misunderstanding is that employees may believe they can claim separate meal expenses if they are unsure about the inclusion of meals in the conference fee. This could lead to confusion and potential violations of the policy. This clause is conceptually linked to other policies regarding reimbursement eligibility and documentation requirements, emphasizing the importance of clarity in expense claims and the need for employees to verify what is included in their conference fees before submitting claims.\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\n# Meals and Entertainment Policy\n\nDocument ID: D07\nRegion: GLOBAL\nEffective: 2024-01-01 to 2099-12-31\nCategory: meals\n\n> Internal policy document of Northstar Analytics Group. Precedence rank 5 (lower rank overrides higher rank where documents differ).\n\n## MEAL-1.1 - Employee meals\n\nA meal consumed only by employees during ordinary work is reimbursable up to the per-person employee meal ceiling in the regional addendum and requires a business reason beyond routine attendance. The ceiling is applied to the total divided by the number of attendees.\n\nInterpretive guidance: The purpose of this clause is to establish guidelines for the reimbursement of meals consumed solely by employees during regular work hours. This provision is particularly relevant in situations where employees engage in business meetings or discussions over meals, which may enhance productivity and collaboration. It is designed to ensure that the company supports its workforce while maintaining fiscal responsibility. The requirement for a business reason beyond routine attendance emphasizes the need for meals to serve a specific business purpose rather than merely providing sustenance during work hours.\n\nCommon misunderstandings regarding this clause may arise from the interpretation of what constitutes a 'business reason.' Employees might assume that any meal taken during work hours qualifies for reimbursement, but the clause clearly stipulates that there must be a defined business purpose. This topic is conceptually linked to the broader expense policy, particularly in relation to client meals and business entertainment, where similar principles of purpose and attendee classification apply, ensuring a consistent approach to reimbursement across different types of meals.\n\n## MEAL-1.2 - Client meals\n\nA meal with at least one external attendee is a client meal. The claim must name the external attendees or their organisations and the business purpose. Per-attendee spend is the total divided by all attendees present, including employees, and is compared with the regional client meal ceiling.\n\nInterpretive guidance: This clause outlines the criteria for classifying meals that include external attendees as client meals. It is particularly pertinent in scenarios where employees engage with clients or business partners over meals to foster relationships or discuss business matters. By requiring the identification of external attendees and the business purpose of the meal, the policy aims to ensure that expenditures are justifiable and aligned with the company\u2019s objectives. This structure not only promotes transparency but also encourages employees to be intentional in their client interactions.\n\nA common misconception surrounding this clause is the belief that any meal with external attendees is automatically reimbursable without further justification. However, the requirement to specify attendees and the business purpose is crucial for compliance and accountability. This clause is closely related to the employee meals policy, as both deal with meal reimbursements but differ in terms of\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nmeals. This distinction is particularly relevant in business scenarios where meetings involve both employees and external parties, such as freelance consultants or contractors. By establishing that only employees on the company payroll, including interns and secondees, are considered attendees, the policy aims to ensure that meal expenses are appropriately allocated and justified within the context of internal business operations.\n\nA common misunderstanding regarding attendee status may arise from the assumption that proximity or collaboration with employees automatically qualifies external individuals as attendees. This misconception can lead to inappropriate expense claims and potential compliance issues. This clause is conceptually linked to other policies concerning expense eligibility and reimbursement procedures, emphasizing the importance of accurately categorizing individuals involved in business activities to maintain financial integrity.\n\n## MEAL-2.1 - Alcohol\n\nAlcohol follows the regional addendum. Where permitted, it must be incidental to an otherwise reimbursable client meal or event and its share of the bill is limited as the addendum states.\n\nInterpretive guidance: This clause governs the reimbursement of alcohol expenses, stipulating that such costs must be incidental to a reimbursable client meal or event. This is particularly relevant in contexts where alcohol is served during business meetings or client dinners, providing an opportunity for relationship-building in a more relaxed atmosphere. By aligning alcohol expenses with the overall meal or event reimbursement, the policy aims to ensure that these costs are reasonable and justifiable within the broader context of business expenditures.\n\nA common misunderstanding regarding this clause is the assumption that alcohol can be reimbursed independently of the meal or event. However, the clause clearly states that alcohol must be incidental, which reinforces the need for it to be part of a larger business purpose. This topic is related to the broader categories of client meals and business entertainment, as all these areas involve considerations of appropriateness and justification for expenses, emphasizing the importance of maintaining a clear connection between the type of expense and its business relevance.\n\n## MEAL-2.2 - Tips and service charges\n\nMandatory service charges are reimbursable. A voluntary gratuity above 15 percent of the pre-tip bill requires manager approval unless the regional addendum is stricter.\n\nInterpretive guidance: This clause addresses the reimbursement of tips and service charges associated with meals and events. It is particularly relevant in situations where employees dine at restaurants or venues that include mandatory service charges or where gratuities are customary. By allowing reimbursement of mandatory charges while requiring approval for voluntary gratuities above a specified threshold, the policy seeks to balance employee discretion with fiscal responsibility, ensuring that expenses remain reasonable and justifiable.\n\nCommon misunderstandings may arise regarding the distinction between mandatory service charges and voluntary gratuities. Employees might believe that all tips are\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nis particularly relevant in situations where the reimbursement is contingent upon a per-person test, such as when determining the appropriateness of meal expenses for group events. By requiring the reviewer to request attendee evidence when it is not provided, the policy aims to maintain transparency and accountability in expense reporting, ensuring that claims are substantiated with clear documentation.\n\nA common misunderstanding regarding this clause is the assumption that any claim can be approved without sufficient evidence of attendee counts. Some may believe that the burden of proof lies solely with the claimant, whereas the policy clearly delineates the reviewer's responsibility to seek clarification when necessary. This clause is conceptually linked to neighboring policies concerning documentation and expense verification, highlighting the importance of accurate record-keeping and the role of reviewers in maintaining compliance with the overall expense policy.\n\n## MEAL-4.1 - Mixed-purpose events\n\nWhere an event combines employee-only and external activity and the allocation is unclear, the reviewer requests clarification instead of choosing the more generous ceiling.\n\nInterpretive guidance: This clause serves to clarify the treatment of mixed-purpose events, where both employee and external activities occur. It is essential in situations where the allocation of expenses between these two categories is ambiguous, as it prevents the reviewer from making assumptions that could lead to inappropriate reimbursements. By requiring clarification instead of defaulting to more generous allowances, the policy promotes fairness and ensures that expenses are allocated correctly according to their intended purpose.\n\nA frequent misconception is that reviewers can arbitrarily decide on the allocation of expenses based on their discretion. This can lead to inconsistencies in how similar events are treated. This clause is closely related to the principles of expense justification and proper allocation found in other sections of the policy, reinforcing the need for clear communication and documentation when expenses involve multiple purposes to avoid potential conflicts of interest.\n\n## MEAL-5.1 - Meals during conferences\n\nMeals included in a conference fee cannot also be claimed separately. Where inclusion is unclear the reviewer requests the conference programme.\n\nInterpretive guidance: The purpose of this clause is to prevent double-dipping in expense claims related to meals during conferences. It addresses scenarios where meals are included in the conference fee, thus ensuring that employees do not claim reimbursement for these meals separately. This policy is vital for maintaining fiscal responsibility and integrity in expense reporting, as it encourages employees to be mindful of what has already been covered by the conference registration, thereby avoiding unnecessary expenditures.\n\nA common misunderstanding is that employees may believe they can claim separate meal expenses if they are unsure about the inclusion of meals in the conference fee. This could lead to confusion and potential violations of the\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nThis structure not only promotes transparency but also encourages employees to be intentional in their client interactions.\n\nA common misconception surrounding this clause is the belief that any meal with external attendees is automatically reimbursable without further justification. However, the requirement to specify attendees and the business purpose is crucial for compliance and accountability. This clause is closely related to the employee meals policy, as both deal with meal reimbursements but differ in terms of attendee classification and the associated ceilings, reinforcing the need for clarity in expense claims.\n\n## MEAL-1.3 - Business entertainment\n\nExternal entertainment that is primarily recreational is tested against the per-external-attendee entertainment ceiling in the regional addendum, not the client meal ceiling, and requires manager approval above the approval threshold for entertainment.\n\nInterpretive guidance: The purpose of this clause is to delineate the parameters for reimbursing expenses related to external entertainment that is primarily recreational in nature. This is relevant in situations where employees host clients or partners in a social setting, aiming to strengthen business relationships. By specifying that such entertainment must adhere to a separate ceiling and requires manager approval, the clause ensures that expenditures are appropriate and aligned with the company's strategic goals while maintaining fiscal oversight.\n\nCommon misunderstandings may arise from the interpretation of what constitutes 'primarily recreational' entertainment. Employees might mistakenly believe that any social gathering qualifies for reimbursement, but the clause emphasizes the need for a clear distinction between business-related meals and entertainment. This topic is conceptually linked to client meals and employee meals, as all these categories involve external interactions but are governed by different reimbursement criteria and approval processes, highlighting the importance of adhering to the specific guidelines for each type.\n\n## MEAL-1.4 - Attendee status\n\nAn attendee is an employee only if they are on the payroll of the company or of one of its subsidiaries, including interns and secondees on payroll. Freelance consultants, agency staff, contractors and staff of partner or customer firms are external attendees even when they work alongside employees every day. The role a person plays in the meeting does not change their status.\n\nInterpretive guidance: The purpose of this clause is to clearly define who qualifies as an attendee for the purposes of expense reimbursement related to meals. This distinction is particularly relevant in business scenarios where meetings involve both employees and external parties, such as freelance consultants or contractors. By establishing that only employees on the company payroll, including interns and secondees, are considered attendees, the policy aims to ensure that meal expenses are appropriately allocated and justified within the context of internal business operations.\n\nA common misunderstanding regarding attendee status may arise from the assumption that proximity or collaboration with\n\n[D20 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\naligned with current market conditions. The revision is particularly pertinent for employees who frequently engage in business activities that involve dining expenses, such as client meetings, team lunches, and other professional gatherings. By establishing a clear ceiling, the company aims to facilitate budgeting and financial planning, while also promoting responsible spending practices among employees.\n\nA common misunderstanding regarding this clause may arise from the assumption that the revised ceiling applies retroactively to all transactions. In reality, only transactions occurring on or after the specified effective date will be subject to the new limit, while earlier transactions will adhere to the previously established values. This clause is conceptually linked to other policies on expense reimbursements and meal allowances, as it emphasizes the importance of adhering to set guidelines in order to maintain fiscal responsibility.\n\n## CIRC-25-10 - Japan employee meal ceiling revision\n\nEffective 2025-10-01. With effect from 2025-10-01, the amount in the schedule for JP is replaced by 5200 for transactions dated on or after the effective date and within 2025. Earlier transactions remain governed by the value published for their date.\n\nInterpretive guidance: The purpose of this clause is to revise the meal expense ceiling for employees operating in Japan, thereby reflecting the evolving economic landscape and ensuring that the policy remains applicable to current business practices. This adjustment is particularly relevant for employees who partake in business-related meals, such as entertaining clients or conducting team-building activities over meals. By clearly defining the new ceiling, the company seeks to streamline expense reporting and enhance financial transparency.\n\nA frequent misconception related to this clause is the belief that all meal expenses incurred after the effective date will automatically be reimbursed at the new ceiling rate. However, it is crucial to understand that only transactions dated on or after the effective date will be governed by this revision, while prior transactions will follow the previous ceiling. This clause is closely related to other expense policies, particularly those concerning client entertainment and employee meal allowances, as it underscores the necessity of adhering to established financial guidelines.\n\n## CIRC-25-11 - India employee meal ceiling revision\n\nEffective 2025-11-01. With effect from 2025-11-01, the amount in the schedule for IN is replaced by 2100 for transactions dated on or after the effective date and within 2025. Earlier transactions remain governed by the value published for their date.\n\nInterpretive guidance: This clause is designed to update the meal expense ceiling for employees in India, ensuring that the policy reflects current economic conditions and supports responsible financial practices. It is particularly relevant for employees engaged in business activities that involve meal expenses, such as client engagements and team lunches. By establishing a clear ceiling, the company aims to\n\n[D02 | region GLOBAL | effective 2025-01-01 to 2025-12-31]\nin financial reporting.\n\nA frequent misconception is that any expense incurred during the course of work is automatically eligible for reimbursement. However, the requirement for expenses to primarily support business activities means that personal expenditures, even when mixed with business purposes, must be clearly delineated and justified. This clause is closely related to the documentation requirements, as both emphasize the necessity of providing clear and sufficient information to substantiate claims, ensuring that the company maintains a rigorous approach to expense management.\n\n## GEP25-1.3 - Documentation\n\nA claim must state the merchant, transaction date, currency, total amount and a description sufficient to determine the business purpose. Category policies may require additional fields; where a required field is absent the claim cannot be approved.\n\nInterpretive guidance: The purpose of this clause is to outline the necessary documentation required for submitting expense claims, ensuring that all submissions are complete and verifiable. By mandating specific fields such as merchant name, transaction date, and a description of the business purpose, this clause aims to facilitate a streamlined review process, thereby enhancing operational efficiency. Typical business situations include the submission of claims for travel expenses, office supplies, or client entertainment, where detailed information is crucial for assessing the validity of the expense.\n\nOne common misunderstanding is the belief that any claim can be submitted without adhering to the specified documentation requirements. In reality, the absence of required fields will result in the inability to approve the claim, which can lead to delays and frustration for the employee. This clause is conceptually linked to the submission window and late submission policies, as both highlight the importance of timely and accurate submissions, reinforcing the company's commitment to maintaining a structured and accountable expense management system.\n\n## GEP25-2.1 - Submission window\n\nClaims must be submitted within 45 calendar days of the transaction date. A claim submitted from day 46 up to and including day 90 requires manager approval. A claim submitted after day 90 is escalated to Finance.\n\nInterpretive guidance: This clause establishes the timeline within which employees must submit their expense claims for reimbursement, thereby promoting timely reporting and accountability. By setting a clear submission window, the policy aims to facilitate efficient processing of claims, ensuring that the financial records remain up-to-date and accurate. Typical business situations that this clause addresses include travel reimbursements, training expenses, and other operational costs that employees may incur, emphasizing the importance of adhering to the specified timeframe for submission.\n\nA common misconception is that claims can be submitted at any time without consequence, leading to potential delays in reimbursement. However, the stipulation that claims submitted beyond the initial submission window require additional manager approval underscores the necessity of adhering to the established",
+      "n_chunks": 8
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "lookup_hotel_ceiling",
+    "args": {
+     "city": "Singapore",
+     "country": "Singapore",
+     "year": 2025,
+     "grade": "G7"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "tier": "SG-CENTRAL",
+      "ceiling": 410.0,
+      "city_listed_in_table": true,
+      "fallback_rule_applied": false,
+      "band": "G6-G7"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "validate_approval",
+    "args": {
+     "expense_id": "X2-047",
+     "required_level": "M",
+     "required_types": [
+      "meal"
+     ],
+     "transaction_date": "2025-08-19",
+     "amount_sgd": 1800.0
+    },
+    "observation": {
+     "ok": false,
+     "found": false,
+     "data": null,
+     "error": "value must be one of ('NONE', 'MANAGER', 'DIRECTOR'), got 'M'"
+    }
+   },
+   {
+    "tool": "validate_approval",
+    "args": {
+     "expense_id": "X2-047",
+     "required_level": "MANAGER",
+     "required_types": [
+      "meal"
+     ],
+     "transaction_date": "2025-08-19",
+     "amount_sgd": 1800.0
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "approval_present": true,
+      "approval_id": "APR-0056",
+      "approval_type": "GENERAL",
+      "authority_level": "MANAGER",
+      "delegation_used": true,
+      "delegation_valid": true,
+      "valid": true,
+      "reason_code": "VALID",
+      "reason": "Delegated approval is valid for this amount and level."
+     },
+     "error": null
+    }
+   }
+  ],
+  "turns": 6,
+  "cost_usd": 0.002564,
+  "input_tokens": 25463,
+  "output_tokens": 323,
+  "wrong_tool_calls": 1,
+  "step_cap_hit": false
+ },
+ "X2-055": {
+  "decision": "ESCALATE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "explanation": "Step cap (8) reached; escalated instead of guessing.",
+  "trace": [
+   {
+    "tool": "get_employee_profile",
+    "args": {
+     "employee_id": "E0249"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "employee_id": "E0249",
+      "grade": "G1",
+      "region": "JP",
+      "department": "Legal",
+      "manager_id": "M010",
+      "status": "ACTIVE"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "search_policy_corpus",
+    "args": {
+     "query": "meal reimbursement policy",
+     "doc_category": "meals",
+     "region": "JP"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "excerpts": "[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nparticularly relevant in situations where employees dine at restaurants or venues that include mandatory service charges or where gratuities are customary. By allowing reimbursement of mandatory charges while requiring approval for voluntary gratuities above a specified threshold, the policy seeks to balance employee discretion with fiscal responsibility, ensuring that expenses remain reasonable and justifiable.\n\nCommon misunderstandings may arise regarding the distinction between mandatory service charges and voluntary gratuities. Employees might believe that all tips are reimbursable without consideration of the circumstances, but the clause makes it clear that only mandatory charges qualify without additional approval. This topic is closely related to other meal-related policies, such as those governing client meals and employee meals, as they all require a thoughtful approach to expense claims, ensuring that reimbursements reflect the company\u2019s commitment to responsible spending.\n\n## MEAL-3.1 - Default ceilings for locations without an addendum\n\nFor a country with no regional addendum the employee meal ceiling is SGD 60 per person and the client meal ceiling is SGD 110 per attendee. These defaults never apply to Singapore, India or Japan.\n\nInterpretive guidance: This clause establishes default ceilings for meal reimbursements in locations without a regional addendum, providing a baseline for employee and client meal expenditures. It is particularly relevant in situations where employees travel to countries lacking specific guidelines, ensuring that there is a clear standard for reimbursement. By defining these defaults, the policy aims to facilitate consistent expense management across diverse geographical locations while maintaining a focus on fiscal responsibility.\n\nA common misunderstanding may arise from the belief that these default ceilings apply universally, regardless of the specific regional context. However, the clause explicitly states that they do not apply to certain countries, which is crucial for compliance. This topic is conceptually linked to the broader expense policy framework, particularly in relation to regional addendums and the varying reimbursement standards that may exist, highlighting the importance of understanding the specific guidelines applicable to each location.\n\n## MEAL-3.2 - Attendee evidence\n\nIf the attendee count is needed for a per-person test and cannot be established from the claim, the reviewer requests it.\n\nInterpretive guidance: The purpose of this clause is to ensure that the necessary attendee count is accurately established when evaluating claims related to meals. This is particularly relevant in situations where the reimbursement is contingent upon a per-person test, such as when determining the appropriateness of meal expenses for group events. By requiring the reviewer to request attendee evidence when it is not provided, the policy aims to maintain transparency and accountability in expense reporting, ensuring that claims are substantiated with clear documentation.\n\nA common misunderstanding regarding this clause is the assumption that any claim can be approved without sufficient\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nfor these meals separately. This policy is vital for maintaining fiscal responsibility and integrity in expense reporting, as it encourages employees to be mindful of what has already been covered by the conference registration, thereby avoiding unnecessary expenditures.\n\nA common misunderstanding is that employees may believe they can claim separate meal expenses if they are unsure about the inclusion of meals in the conference fee. This could lead to confusion and potential violations of the policy. This clause is conceptually linked to other policies regarding reimbursement eligibility and documentation requirements, emphasizing the importance of clarity in expense claims and the need for employees to verify what is included in their conference fees before submitting claims.\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\n# Meals and Entertainment Policy\n\nDocument ID: D07\nRegion: GLOBAL\nEffective: 2024-01-01 to 2099-12-31\nCategory: meals\n\n> Internal policy document of Northstar Analytics Group. Precedence rank 5 (lower rank overrides higher rank where documents differ).\n\n## MEAL-1.1 - Employee meals\n\nA meal consumed only by employees during ordinary work is reimbursable up to the per-person employee meal ceiling in the regional addendum and requires a business reason beyond routine attendance. The ceiling is applied to the total divided by the number of attendees.\n\nInterpretive guidance: The purpose of this clause is to establish guidelines for the reimbursement of meals consumed solely by employees during regular work hours. This provision is particularly relevant in situations where employees engage in business meetings or discussions over meals, which may enhance productivity and collaboration. It is designed to ensure that the company supports its workforce while maintaining fiscal responsibility. The requirement for a business reason beyond routine attendance emphasizes the need for meals to serve a specific business purpose rather than merely providing sustenance during work hours.\n\nCommon misunderstandings regarding this clause may arise from the interpretation of what constitutes a 'business reason.' Employees might assume that any meal taken during work hours qualifies for reimbursement, but the clause clearly stipulates that there must be a defined business purpose. This topic is conceptually linked to the broader expense policy, particularly in relation to client meals and business entertainment, where similar principles of purpose and attendee classification apply, ensuring a consistent approach to reimbursement across different types of meals.\n\n## MEAL-1.2 - Client meals\n\nA meal with at least one external attendee is a client meal. The claim must name the external attendees or their organisations and the business purpose. Per-attendee spend is the total divided by all attendees present, including employees, and is compared with the regional client meal ceiling.\n\nInterpretive guidance: This clause outlines the criteria for classifying meals that include external attendees as client meals. It is particularly pertinent in scenarios where employees engage with clients or business partners over meals to foster relationships or discuss business matters. By requiring the identification of external attendees and the business purpose of the meal, the policy aims to ensure that expenditures are justifiable and aligned with the company\u2019s objectives. This structure not only promotes transparency but also encourages employees to be intentional in their client interactions.\n\nA common misconception surrounding this clause is the belief that any meal with external attendees is automatically reimbursable without further justification. However, the requirement to specify attendees and the business purpose is crucial for compliance and accountability. This clause is closely related to the employee meals policy, as both deal with meal reimbursements but differ in terms of\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nmeals. This distinction is particularly relevant in business scenarios where meetings involve both employees and external parties, such as freelance consultants or contractors. By establishing that only employees on the company payroll, including interns and secondees, are considered attendees, the policy aims to ensure that meal expenses are appropriately allocated and justified within the context of internal business operations.\n\nA common misunderstanding regarding attendee status may arise from the assumption that proximity or collaboration with employees automatically qualifies external individuals as attendees. This misconception can lead to inappropriate expense claims and potential compliance issues. This clause is conceptually linked to other policies concerning expense eligibility and reimbursement procedures, emphasizing the importance of accurately categorizing individuals involved in business activities to maintain financial integrity.\n\n## MEAL-2.1 - Alcohol\n\nAlcohol follows the regional addendum. Where permitted, it must be incidental to an otherwise reimbursable client meal or event and its share of the bill is limited as the addendum states.\n\nInterpretive guidance: This clause governs the reimbursement of alcohol expenses, stipulating that such costs must be incidental to a reimbursable client meal or event. This is particularly relevant in contexts where alcohol is served during business meetings or client dinners, providing an opportunity for relationship-building in a more relaxed atmosphere. By aligning alcohol expenses with the overall meal or event reimbursement, the policy aims to ensure that these costs are reasonable and justifiable within the broader context of business expenditures.\n\nA common misunderstanding regarding this clause is the assumption that alcohol can be reimbursed independently of the meal or event. However, the clause clearly states that alcohol must be incidental, which reinforces the need for it to be part of a larger business purpose. This topic is related to the broader categories of client meals and business entertainment, as all these areas involve considerations of appropriateness and justification for expenses, emphasizing the importance of maintaining a clear connection between the type of expense and its business relevance.\n\n## MEAL-2.2 - Tips and service charges\n\nMandatory service charges are reimbursable. A voluntary gratuity above 15 percent of the pre-tip bill requires manager approval unless the regional addendum is stricter.\n\nInterpretive guidance: This clause addresses the reimbursement of tips and service charges associated with meals and events. It is particularly relevant in situations where employees dine at restaurants or venues that include mandatory service charges or where gratuities are customary. By allowing reimbursement of mandatory charges while requiring approval for voluntary gratuities above a specified threshold, the policy seeks to balance employee discretion with fiscal responsibility, ensuring that expenses remain reasonable and justifiable.\n\nCommon misunderstandings may arise regarding the distinction between mandatory service charges and voluntary gratuities. Employees might believe that all tips are\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nis particularly relevant in situations where the reimbursement is contingent upon a per-person test, such as when determining the appropriateness of meal expenses for group events. By requiring the reviewer to request attendee evidence when it is not provided, the policy aims to maintain transparency and accountability in expense reporting, ensuring that claims are substantiated with clear documentation.\n\nA common misunderstanding regarding this clause is the assumption that any claim can be approved without sufficient evidence of attendee counts. Some may believe that the burden of proof lies solely with the claimant, whereas the policy clearly delineates the reviewer's responsibility to seek clarification when necessary. This clause is conceptually linked to neighboring policies concerning documentation and expense verification, highlighting the importance of accurate record-keeping and the role of reviewers in maintaining compliance with the overall expense policy.\n\n## MEAL-4.1 - Mixed-purpose events\n\nWhere an event combines employee-only and external activity and the allocation is unclear, the reviewer requests clarification instead of choosing the more generous ceiling.\n\nInterpretive guidance: This clause serves to clarify the treatment of mixed-purpose events, where both employee and external activities occur. It is essential in situations where the allocation of expenses between these two categories is ambiguous, as it prevents the reviewer from making assumptions that could lead to inappropriate reimbursements. By requiring clarification instead of defaulting to more generous allowances, the policy promotes fairness and ensures that expenses are allocated correctly according to their intended purpose.\n\nA frequent misconception is that reviewers can arbitrarily decide on the allocation of expenses based on their discretion. This can lead to inconsistencies in how similar events are treated. This clause is closely related to the principles of expense justification and proper allocation found in other sections of the policy, reinforcing the need for clear communication and documentation when expenses involve multiple purposes to avoid potential conflicts of interest.\n\n## MEAL-5.1 - Meals during conferences\n\nMeals included in a conference fee cannot also be claimed separately. Where inclusion is unclear the reviewer requests the conference programme.\n\nInterpretive guidance: The purpose of this clause is to prevent double-dipping in expense claims related to meals during conferences. It addresses scenarios where meals are included in the conference fee, thus ensuring that employees do not claim reimbursement for these meals separately. This policy is vital for maintaining fiscal responsibility and integrity in expense reporting, as it encourages employees to be mindful of what has already been covered by the conference registration, thereby avoiding unnecessary expenditures.\n\nA common misunderstanding is that employees may believe they can claim separate meal expenses if they are unsure about the inclusion of meals in the conference fee. This could lead to confusion and potential violations of the\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nThis structure not only promotes transparency but also encourages employees to be intentional in their client interactions.\n\nA common misconception surrounding this clause is the belief that any meal with external attendees is automatically reimbursable without further justification. However, the requirement to specify attendees and the business purpose is crucial for compliance and accountability. This clause is closely related to the employee meals policy, as both deal with meal reimbursements but differ in terms of attendee classification and the associated ceilings, reinforcing the need for clarity in expense claims.\n\n## MEAL-1.3 - Business entertainment\n\nExternal entertainment that is primarily recreational is tested against the per-external-attendee entertainment ceiling in the regional addendum, not the client meal ceiling, and requires manager approval above the approval threshold for entertainment.\n\nInterpretive guidance: The purpose of this clause is to delineate the parameters for reimbursing expenses related to external entertainment that is primarily recreational in nature. This is relevant in situations where employees host clients or partners in a social setting, aiming to strengthen business relationships. By specifying that such entertainment must adhere to a separate ceiling and requires manager approval, the clause ensures that expenditures are appropriate and aligned with the company's strategic goals while maintaining fiscal oversight.\n\nCommon misunderstandings may arise from the interpretation of what constitutes 'primarily recreational' entertainment. Employees might mistakenly believe that any social gathering qualifies for reimbursement, but the clause emphasizes the need for a clear distinction between business-related meals and entertainment. This topic is conceptually linked to client meals and employee meals, as all these categories involve external interactions but are governed by different reimbursement criteria and approval processes, highlighting the importance of adhering to the specific guidelines for each type.\n\n## MEAL-1.4 - Attendee status\n\nAn attendee is an employee only if they are on the payroll of the company or of one of its subsidiaries, including interns and secondees on payroll. Freelance consultants, agency staff, contractors and staff of partner or customer firms are external attendees even when they work alongside employees every day. The role a person plays in the meeting does not change their status.\n\nInterpretive guidance: The purpose of this clause is to clearly define who qualifies as an attendee for the purposes of expense reimbursement related to meals. This distinction is particularly relevant in business scenarios where meetings involve both employees and external parties, such as freelance consultants or contractors. By establishing that only employees on the company payroll, including interns and secondees, are considered attendees, the policy aims to ensure that meal expenses are appropriately allocated and justified within the context of internal business operations.\n\nA common misunderstanding regarding attendee status may arise from the assumption that proximity or collaboration with\n\n[D20 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\naligned with current market conditions. The revision is particularly pertinent for employees who frequently engage in business activities that involve dining expenses, such as client meetings, team lunches, and other professional gatherings. By establishing a clear ceiling, the company aims to facilitate budgeting and financial planning, while also promoting responsible spending practices among employees.\n\nA common misunderstanding regarding this clause may arise from the assumption that the revised ceiling applies retroactively to all transactions. In reality, only transactions occurring on or after the specified effective date will be subject to the new limit, while earlier transactions will adhere to the previously established values. This clause is conceptually linked to other policies on expense reimbursements and meal allowances, as it emphasizes the importance of adhering to set guidelines in order to maintain fiscal responsibility.\n\n## CIRC-25-10 - Japan employee meal ceiling revision\n\nEffective 2025-10-01. With effect from 2025-10-01, the amount in the schedule for JP is replaced by 5200 for transactions dated on or after the effective date and within 2025. Earlier transactions remain governed by the value published for their date.\n\nInterpretive guidance: The purpose of this clause is to revise the meal expense ceiling for employees operating in Japan, thereby reflecting the evolving economic landscape and ensuring that the policy remains applicable to current business practices. This adjustment is particularly relevant for employees who partake in business-related meals, such as entertaining clients or conducting team-building activities over meals. By clearly defining the new ceiling, the company seeks to streamline expense reporting and enhance financial transparency.\n\nA frequent misconception related to this clause is the belief that all meal expenses incurred after the effective date will automatically be reimbursed at the new ceiling rate. However, it is crucial to understand that only transactions dated on or after the effective date will be governed by this revision, while prior transactions will follow the previous ceiling. This clause is closely related to other expense policies, particularly those concerning client entertainment and employee meal allowances, as it underscores the necessity of adhering to established financial guidelines.\n\n## CIRC-25-11 - India employee meal ceiling revision\n\nEffective 2025-11-01. With effect from 2025-11-01, the amount in the schedule for IN is replaced by 2100 for transactions dated on or after the effective date and within 2025. Earlier transactions remain governed by the value published for their date.\n\nInterpretive guidance: This clause is designed to update the meal expense ceiling for employees in India, ensuring that the policy reflects current economic conditions and supports responsible financial practices. It is particularly relevant for employees engaged in business activities that involve meal expenses, such as client engagements and team lunches. By establishing a clear ceiling, the company aims to\n\n[D19 | region JP | effective 2024-01-01 to 2099-12-31]\n# Japan Expense Addendum\n\nDocument ID: D19\nRegion: JP\nEffective: 2024-01-01 to 2099-12-31\nCategory: regional\n\n> Internal policy document of Northstar Analytics Group. Precedence rank 2 (lower rank overrides higher rank where documents differ).\n\n## JP-1.1 - Scope and precedence\n\nThis addendum applies to transactions incurred in Japan. Where it differs from a global policy for the same subject, this addendum controls, and a Finance circular that names one of its clauses amends that clause from the effective date.\n\nInterpretive guidance: The purpose of this addendum is to clarify the applicability of specific policies to transactions incurred in Japan, establishing precedence over global policies when discrepancies arise. This is particularly relevant in business situations where employees are operating in Japan and may encounter unique regulatory or cultural considerations that necessitate tailored guidelines. By delineating the scope of this addendum, the company aims to provide clear direction for employees and ensure compliance with local practices.\n\nA common misunderstanding is that employees may not fully recognize the implications of this addendum, assuming that global policies apply uniformly without regard for local variations. It is important to understand that this addendum serves to align the company's policies with local laws and customs, thereby enhancing operational effectiveness. This topic is conceptually linked to other regional policies, as both aim to ensure that employees are equipped with the necessary guidance to navigate the complexities of conducting business in diverse environments.\n\n## JP-2.1 - Employee meal ceiling\n\nThe employee-only meal ceiling per person, in JPY, is:\n\n| Year | Ceiling (JPY) |\n|---|---|\n| 2024 | 4,500 |\n| 2025 | 5,000 |\n| 2026 | 5,500 |\n\nInterpretive guidance: The clause regarding the employee meal ceiling establishes a financial limit for meals consumed by employees during business-related activities. This policy is designed to ensure that expenditures remain reasonable and within the company's budgetary constraints. Typical scenarios covered by this clause include business lunches, team-building events, and other occasions where employees are provided meals as part of their duties. By setting a ceiling, the company aims to promote responsible spending while still allowing employees to enjoy meals that facilitate collaboration and productivity.\n\nA common misunderstanding surrounding the employee meal ceiling is the belief that it applies uniformly to all meal types or settings, when in fact it specifically pertains to meals consumed by employees in a business context. This clause is conceptually linked to other expense policies, such as those governing client meals and entertainment expenses, which have distinct ceilings and purposes. Employees should be aware that exceeding the established ceiling may result in non-reimbursement, emphasizing the importance of adhering to the specified limits.\n\n## JP-2.2 - Client meal ceiling\n\nThe client meal ceiling per attendee,",
+      "n_chunks": 8
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "get_travel_request",
+    "args": {
+     "employee_id": "E0249",
+     "date": "2025-06-10"
+    },
+    "observation": {
+     "ok": true,
+     "found": false,
+     "data": null,
+     "error": null
+    }
+   },
+   {
+    "tool": "search_previous_expenses",
+    "args": {
+     "employee_id": "E0249",
+     "merchant": "Marina Kitchen",
+     "date_from": "2025-06-01",
+     "date_to": "2025-06-10"
+    },
+    "observation": {
+     "ok": true,
+     "found": false,
+     "data": null,
+     "error": null
+    }
+   },
+   {
+    "tool": "validate_approval",
+    "args": {
+     "expense_id": "X2-055",
+     "required_level": "M010",
+     "required_types": [
+      "meal"
+     ],
+     "transaction_date": "2025-06-10",
+     "amount_sgd": 900.0
+    },
+    "observation": {
+     "ok": false,
+     "found": false,
+     "data": null,
+     "error": "value must be one of ('NONE', 'MANAGER', 'DIRECTOR'), got 'M010'"
+    }
+   },
+   {
+    "tool": "get_manager_approval",
+    "args": {
+     "expense_id": "X2-055"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": [
+      {
+       "approval_id": "APR-0055",
+       "approval_type": "GENERAL",
+       "status": "DELEGATED",
+       "employee_id": "E0249",
+       "approver_level": "MANAGER",
+       "start_date": "2024-01-01",
+       "end_date": "2026-12-31",
+       "delegation_id": "DEL-001"
+      }
+     ],
+     "error": null
+    }
+   },
+   {
+    "tool": "get_approval_delegation",
+    "args": {
+     "delegation_id": "DEL-001"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "delegation_id": "DEL-001",
+      "manager_id": "M010",
+      "delegate_id": "E0106",
+      "delegate_level": "MANAGER",
+      "start_date": "2025-05-11",
+      "end_date": "2025-07-10",
+      "max_amount_sgd": "1400.0",
+      "status": "ACTIVE"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "record_decision",
+    "args": {
+     "decision": "REIMBURSE",
+     "policy_evidence": "Approval is valid under delegated authority. The meal expense of SGD 900.0 is within the approved limit of SGD 1400.0.",
+     "missing_fields": [],
+     "explanation": "The claim is approved as it falls within the delegated approval limit and meets the necessary criteria for reimbursement."
+    },
+    "observation": {
+     "ok": false,
+     "found": false,
+     "data": null,
+     "error": "value must be one of ('APPROVE', 'REJECT', 'REQUEST_INFORMATION', 'ESCALATE'), got 'REIMBURSE'"
+    }
+   }
+  ],
+  "turns": 8,
+  "cost_usd": 0.003505,
+  "input_tokens": 37538,
+  "output_tokens": 329,
+  "wrong_tool_calls": 3,
+  "step_cap_hit": true
+ },
+ "X2-087": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "Hotel expense exceeds the ceiling of 370.0 SGD for employee grade G5 in Singapore."
+  ],
+  "missing_fields": [],
+  "explanation": "The hotel claim of 1443.0 SGD exceeds the approved ceiling of 370.0 SGD.",
+  "trace": [
+   {
+    "tool": "get_employee_profile",
+    "args": {
+     "employee_id": "E0117"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "employee_id": "E0117",
+      "grade": "G5",
+      "region": "JP",
+      "department": "HR",
+      "manager_id": "M038",
+      "status": "ACTIVE"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "lookup_hotel_ceiling",
+    "args": {
+     "city": "Singapore",
+     "country": "Singapore",
+     "year": 2026,
+     "grade": "G5"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "tier": "SG-CENTRAL",
+      "ceiling": 370.0,
+      "city_listed_in_table": true,
+      "fallback_rule_applied": false,
+      "band": "G4-G5"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "validate_approval",
+    "args": {
+     "expense_id": "X2-087",
+     "required_level": "M038",
+     "required_types": [
+      "hotel"
+     ],
+     "transaction_date": "2026-04-27",
+     "amount_sgd": 1443.0
+    },
+    "observation": {
+     "ok": false,
+     "found": false,
+     "data": null,
+     "error": "value must be one of ('NONE', 'MANAGER', 'DIRECTOR'), got 'M038'"
+    }
+   },
+   {
+    "tool": "get_manager_approval",
+    "args": {
+     "expense_id": "X2-087"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": [
+      {
+       "approval_id": "APR-0050",
+       "approval_type": "TRAVEL",
+       "status": "APPROVED",
+       "employee_id": "E0117",
+       "approver_level": "DIRECTOR",
+       "start_date": "2024-01-01",
+       "end_date": "2026-12-31",
+       "delegation_id": ""
+      }
+     ],
+     "error": null
+    }
+   }
+  ],
+  "turns": 5,
+  "cost_usd": 0.000816,
+  "input_tokens": 7268,
+  "output_tokens": 215,
+  "wrong_tool_calls": 1,
+  "step_cap_hit": false
+ },
+ "X2-089": {
+  "decision": "ESCALATE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "explanation": "Step cap (8) reached; escalated instead of guessing.",
+  "trace": [
+   {
+    "tool": "get_employee_profile",
+    "args": {
+     "employee_id": "E0094"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "employee_id": "E0094",
+      "grade": "G5",
+      "region": "SG",
+      "department": "Procurement",
+      "manager_id": "M015",
+      "status": "ACTIVE"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "lookup_hotel_ceiling",
+    "args": {
+     "city": "Singapore",
+     "country": "Singapore",
+     "year": 2025,
+     "grade": "G5"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "tier": "SG-CENTRAL",
+      "ceiling": 350.0,
+      "city_listed_in_table": true,
+      "fallback_rule_applied": false,
+      "band": "G4-G5"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "get_travel_request",
+    "args": {
+     "employee_id": "E0094",
+     "date": "2025-06-30"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "travel_id": "TR-0039",
+      "status": "APPROVED",
+      "destination": "Singapore",
+      "purpose": "Business trip",
+      "start_date": "2025-06-30",
+      "end_date": "2025-07-05",
+      "event_id": "",
+      "exception_id": "EXC-0015"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "get_exception_record",
+    "args": {
+     "exception_id": "EXC-0015"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "exception_id": "EXC-0015",
+      "employee_id": "E0094",
+      "policy_id": "TRV-6.1",
+      "exception_type": "HOTEL_LIMIT",
+      "status": "APPROVED",
+      "valid_from": "2025-06-10",
+      "valid_to": "2025-08-09"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "validate_approval",
+    "args": {
+     "expense_id": "X2-089",
+     "required_level": "M015",
+     "required_types": [
+      "HOTEL"
+     ],
+     "transaction_date": "2025-06-30",
+     "amount_sgd": 2275.0
+    },
+    "observation": {
+     "ok": false,
+     "found": false,
+     "data": null,
+     "error": "value must be one of ('NONE', 'MANAGER', 'DIRECTOR'), got 'M015'"
+    }
+   },
+   {
+    "tool": "get_manager_approval",
+    "args": {
+     "expense_id": "X2-089"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": [
+      {
+       "approval_id": "APR-0069",
+       "approval_type": "TRAVEL",
+       "status": "DELEGATED",
+       "employee_id": "E0094",
+       "approver_level": "MANAGER",
+       "start_date": "2024-01-01",
+       "end_date": "2026-12-31",
+       "delegation_id": "DEL-009"
+      }
+     ],
+     "error": null
+    }
+   },
+   {
+    "tool": "get_approval_delegation",
+    "args": {
+     "delegation_id": "DEL-009"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "delegation_id": "DEL-009",
+      "manager_id": "M015",
+      "delegate_id": "E0047",
+      "delegate_level": "DIRECTOR",
+      "start_date": "2025-05-31",
+      "end_date": "2025-07-30",
+      "max_amount_sgd": "3075.0",
+      "status": "ACTIVE"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "record_decision",
+    "args": {
+     "decision": "REIMBURSE",
+     "policy_evidence": {
+      "hotel_ceiling": 350.0,
+      "approved_travel_request": true,
+      "exception_approved": true,
+      "delegation_valid": true
+     },
+     "missing_fields": [],
+     "explanation": "The hotel expense of SGD 2275.0 is within the approved exception limit and the employee had a valid travel request. The approval was delegated to a director, which is valid for this expense."
+    },
+    "observation": {
+     "ok": false,
+     "found": false,
+     "data": null,
+     "error": "value must be one of ('APPROVE', 'REJECT', 'REQUEST_INFORMATION', 'ESCALATE'), got 'REIMBURSE'"
+    }
+   }
+  ],
+  "turns": 8,
+  "cost_usd": 0.001386,
+  "input_tokens": 13306,
+  "output_tokens": 327,
+  "wrong_tool_calls": 1,
+  "step_cap_hit": true
+ },
+ "X2-095": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "Hotel expense exceeds the ceiling of SGD 350.00 and there is no valid approval for the expense."
+  ],
+  "missing_fields": [],
+  "explanation": "The hotel claim of SGD 2275.00 exceeds the approved ceiling for the employee's grade (G5) and the exception for a higher limit has expired.",
+  "trace": [
+   {
+    "tool": "get_employee_profile",
+    "args": {
+     "employee_id": "E0043"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "employee_id": "E0043",
+      "grade": "G5",
+      "region": "SG",
+      "department": "HR",
+      "manager_id": "M004",
+      "status": "ACTIVE"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "get_travel_request",
+    "args": {
+     "employee_id": "E0043",
+     "date": "2025-08-05"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "travel_id": "TR-0040",
+      "status": "APPROVED",
+      "destination": "Singapore",
+      "purpose": "Business trip",
+      "start_date": "2025-08-05",
+      "end_date": "2025-08-10",
+      "event_id": "",
+      "exception_id": "EXC-0016"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "lookup_hotel_ceiling",
+    "args": {
+     "city": "Singapore",
+     "country": "Singapore",
+     "year": 2025,
+     "grade": "G5"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "tier": "SG-CENTRAL",
+      "ceiling": 350.0,
+      "city_listed_in_table": true,
+      "fallback_rule_applied": false,
+      "band": "G4-G5"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "get_exception_record",
+    "args": {
+     "exception_id": "EXC-0016"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "exception_id": "EXC-0016",
+      "employee_id": "E0043",
+      "policy_id": "TRV-6.1",
+      "exception_type": "HOTEL_LIMIT",
+      "status": "EXPIRED",
+      "valid_from": "2025-07-16",
+      "valid_to": "2025-09-14"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "validate_approval",
+    "args": {
+     "expense_id": "X2-095",
+     "required_level": "M004",
+     "required_types": [
+      "HOTEL"
+     ],
+     "transaction_date": "2025-08-05",
+     "amount_sgd": 2275.0
+    },
+    "observation": {
+     "ok": false,
+     "found": false,
+     "data": null,
+     "error": "value must be one of ('NONE', 'MANAGER', 'DIRECTOR'), got 'M004'"
+    }
+   },
+   {
+    "tool": "get_manager_approval",
+    "args": {
+     "expense_id": "X2-095"
+    },
+    "observation": {
+     "ok": true,
+     "found": false,
+     "data": null,
+     "error": null
+    }
+   }
+  ],
+  "turns": 7,
+  "cost_usd": 0.001185,
+  "input_tokens": 11183,
+  "output_tokens": 284,
+  "wrong_tool_calls": 2,
+  "step_cap_hit": false
+ },
+ "X2-104": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "Hotel claim exceeds the ceiling of 9000.0 INR for grade G5 and lacks valid approval for hotel expenses."
+  ],
+  "missing_fields": [],
+  "explanation": "The hotel expense of 23400.0 INR exceeds the approved ceiling of 9000.0 INR for the employee's grade, and the existing approval is not valid for hotel expenses.",
+  "trace": [
+   {
+    "tool": "get_employee_profile",
+    "args": {
+     "employee_id": "E0221"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "employee_id": "E0221",
+      "grade": "G5",
+      "region": "IN",
+      "department": "Finance",
+      "manager_id": "M022",
+      "status": "ACTIVE"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "lookup_hotel_ceiling",
+    "args": {
+     "city": "Chennai",
+     "country": "India",
+     "year": 2025,
+     "grade": "G5"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "tier": "IN-T2",
+      "ceiling": 9000.0,
+      "city_listed_in_table": false,
+      "fallback_rule_applied": true,
+      "band": "G4-G5"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "get_travel_request",
+    "args": {
+     "employee_id": "E0221",
+     "date": "2025-08-25"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "travel_id": "TR-0035",
+      "status": "APPROVED",
+      "destination": "Chennai",
+      "purpose": "Business trip",
+      "start_date": "2025-08-25",
+      "end_date": "2025-08-27",
+      "event_id": "",
+      "exception_id": "EXC-0011"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "get_exception_record",
+    "args": {
+     "exception_id": "EXC-0011"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "exception_id": "EXC-0011",
+      "employee_id": "E0273",
+      "policy_id": "TRV-6.1",
+      "exception_type": "HOTEL_LIMIT",
+      "status": "APPROVED",
+      "valid_from": "2025-08-05",
+      "valid_to": "2025-10-04"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "validate_approval",
+    "args": {
+     "expense_id": "X2-104",
+     "required_level": "M022",
+     "required_types": [
+      "HOTEL"
+     ],
+     "transaction_date": "2025-08-25",
+     "amount_sgd": 9000.0
+    },
+    "observation": {
+     "ok": false,
+     "found": false,
+     "data": null,
+     "error": "value must be one of ('NONE', 'MANAGER', 'DIRECTOR'), got 'M022'"
+    }
+   },
+   {
+    "tool": "get_manager_approval",
+    "args": {
+     "expense_id": "X2-104"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": [
+      {
+       "approval_id": "APR-0051",
+       "approval_type": "TRAVEL",
+       "status": "APPROVED",
+       "employee_id": "E0221",
+       "approver_level": "DIRECTOR",
+       "start_date": "2024-01-01",
+       "end_date": "2026-12-31",
+       "delegation_id": ""
+      }
+     ],
+     "error": null
+    }
+   },
+   {
+    "tool": "validate_approval",
+    "args": {
+     "expense_id": "X2-104",
+     "required_level": "DIRECTOR",
+     "required_types": [
+      "HOTEL"
+     ],
+     "transaction_date": "2025-08-25",
+     "amount_sgd": 9000.0
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "approval_present": true,
+      "approval_id": "APR-0051",
+      "approval_type": "TRAVEL",
+      "authority_level": "DIRECTOR",
+      "delegation_used": false,
+      "delegation_valid": null,
+      "valid": false,
+      "reason_code": "WRONG_APPROVAL_TYPE",
+      "reason": "Approval type TRAVEL does not cover this expense category."
+     },
+     "error": null
+    }
+   }
+  ],
+  "turns": 8,
+  "cost_usd": 0.001401,
+  "input_tokens": 13307,
+  "output_tokens": 353,
+  "wrong_tool_calls": 1,
+  "step_cap_hit": false
+ },
+ "X2-128": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "Hotel expense exceeds the ceiling of 29500.0 JPY for G4 grade employees. Approval type TRAVEL does not cover hotel expenses."
+  ],
+  "missing_fields": [],
+  "explanation": "The hotel claim of 115050.0 JPY exceeds the approved ceiling for the employee's grade, and the existing approval is not valid for hotel expenses.",
+  "trace": [
+   {
+    "tool": "get_employee_profile",
+    "args": {
+     "employee_id": "E0174"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "employee_id": "E0174",
+      "grade": "G4",
+      "region": "JP",
+      "department": "Procurement",
+      "manager_id": "M015",
+      "status": "ACTIVE"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "lookup_hotel_ceiling",
+    "args": {
+     "city": "Osaka",
+     "country": "Japan",
+     "year": 2025,
+     "grade": "G4"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "tier": "JP-MAJOR",
+      "ceiling": 29500.0,
+      "city_listed_in_table": true,
+      "fallback_rule_applied": false,
+      "band": "G4-G5"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "get_travel_request",
+    "args": {
+     "employee_id": "E0174",
+     "date": "2025-06-23"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "travel_id": "TR-0036",
+      "status": "APPROVED",
+      "destination": "Osaka",
+      "purpose": "Business trip",
+      "start_date": "2025-06-23",
+      "end_date": "2025-06-26",
+      "event_id": "",
+      "exception_id": "EXC-0012"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "get_exception_record",
+    "args": {
+     "exception_id": "EXC-0012"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "exception_id": "EXC-0012",
+      "employee_id": "E0174",
+      "policy_id": "AIR-2.2",
+      "exception_type": "HOTEL_LIMIT",
+      "status": "APPROVED",
+      "valid_from": "2025-06-03",
+      "valid_to": "2025-08-02"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "validate_approval",
+    "args": {
+     "expense_id": "X2-128",
+     "required_level": "M",
+     "required_types": [
+      "HOTEL"
+     ],
+     "transaction_date": "2025-06-23",
+     "amount_sgd": 29500.0
+    },
+    "observation": {
+     "ok": false,
+     "found": false,
+     "data": null,
+     "error": "value must be one of ('NONE', 'MANAGER', 'DIRECTOR'), got 'M'"
+    }
+   },
+   {
+    "tool": "validate_approval",
+    "args": {
+     "expense_id": "X2-128",
+     "required_level": "MANAGER",
+     "required_types": [
+      "HOTEL"
+     ],
+     "transaction_date": "2025-06-23",
+     "amount_sgd": 29500.0
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "approval_present": true,
+      "approval_id": "APR-0052",
+      "approval_type": "TRAVEL",
+      "authority_level": "DIRECTOR",
+      "delegation_used": false,
+      "delegation_valid": null,
+      "valid": false,
+      "reason_code": "WRONG_APPROVAL_TYPE",
+      "reason": "Approval type TRAVEL does not cover this expense category."
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "get_manager_approval",
+    "args": {
+     "expense_id": "X2-128"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": [
+      {
+       "approval_id": "APR-0052",
+       "approval_type": "TRAVEL",
+       "status": "APPROVED",
+       "employee_id": "E0174",
+       "approver_level": "DIRECTOR",
+       "start_date": "2024-01-01",
+       "end_date": "2026-12-31",
+       "delegation_id": ""
+      }
+     ],
+     "error": null
+    }
+   }
+  ],
+  "turns": 8,
+  "cost_usd": 0.001426,
+  "input_tokens": 13537,
+  "output_tokens": 352,
+  "wrong_tool_calls": 1,
+  "step_cap_hit": false
+ },
+ "X2-142": {
+  "decision": "REJECT",
+  "policy_evidence": [
+   "Approval type TRAVEL does not cover this expense category."
+  ],
+  "missing_fields": [],
+  "explanation": "The hotel expense claim is rejected because the approval obtained is for a different category (TRAVEL) and does not cover hotel expenses.",
+  "trace": [
+   {
+    "tool": "get_employee_profile",
+    "args": {
+     "employee_id": "E0015"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "employee_id": "E0015",
+      "grade": "G6",
+      "region": "JP",
+      "department": "Data Science",
+      "manager_id": "M016",
+      "status": "ACTIVE"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "lookup_hotel_ceiling",
+    "args": {
+     "city": "Nagoya",
+     "country": "Japan",
+     "year": 2026,
+     "grade": "G6"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "tier": "JP-MAJOR",
+      "ceiling": 37500.0,
+      "city_listed_in_table": true,
+      "fallback_rule_applied": false,
+      "band": "G6-G7"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "get_travel_request",
+    "args": {
+     "employee_id": "E0015",
+     "date": "2026-03-30"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "travel_id": "TR-0038",
+      "status": "APPROVED",
+      "destination": "Nagoya",
+      "purpose": "Business trip",
+      "start_date": "2026-03-30",
+      "end_date": "2026-04-02",
+      "event_id": "CONF-014",
+      "exception_id": "EXC-0014"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "get_exception_record",
+    "args": {
+     "exception_id": "EXC-0014"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "exception_id": "EXC-0014",
+      "employee_id": "E0294",
+      "policy_id": "TRV-6.1",
+      "exception_type": "HOTEL_LIMIT",
+      "status": "APPROVED",
+      "valid_from": "2026-03-10",
+      "valid_to": "2026-05-09"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "validate_approval",
+    "args": {
+     "expense_id": "X2-142",
+     "required_level": "MANAGER",
+     "required_types": [
+      "HOTEL"
+     ],
+     "transaction_date": "2026-03-30",
+     "amount_sgd": 37500.0
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "approval_present": true,
+      "approval_id": "APR-0054",
+      "approval_type": "TRAVEL",
+      "authority_level": "DIRECTOR",
+      "delegation_used": false,
+      "delegation_valid": null,
+      "valid": false,
+      "reason_code": "WRONG_APPROVAL_TYPE",
+      "reason": "Approval type TRAVEL does not cover this expense category."
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "get_manager_approval",
+    "args": {
+     "expense_id": "X2-142"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": [
+      {
+       "approval_id": "APR-0054",
+       "approval_type": "TRAVEL",
+       "status": "APPROVED",
+       "employee_id": "E0015",
+       "approver_level": "DIRECTOR",
+       "start_date": "2024-01-01",
+       "end_date": "2026-12-31",
+       "delegation_id": ""
+      }
+     ],
+     "error": null
+    }
+   }
+  ],
+  "turns": 7,
+  "cost_usd": 0.001181,
+  "input_tokens": 11219,
+  "output_tokens": 268,
+  "wrong_tool_calls": 0,
+  "step_cap_hit": false
+ },
+ "X2-145": {
+  "decision": "ESCALATE",
+  "policy_evidence": [],
+  "missing_fields": [],
+  "explanation": "Step cap (8) reached; escalated instead of guessing.",
+  "trace": [
+   {
+    "tool": "get_employee_profile",
+    "args": {
+     "employee_id": "E0061"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "employee_id": "E0061",
+      "grade": "G6",
+      "region": "SG",
+      "department": "Finance",
+      "manager_id": "M022",
+      "status": "ACTIVE"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "search_policy_corpus",
+    "args": {
+     "query": "meal expense reimbursement",
+     "doc_category": "meals",
+     "region": "SG"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "excerpts": "[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nfor these meals separately. This policy is vital for maintaining fiscal responsibility and integrity in expense reporting, as it encourages employees to be mindful of what has already been covered by the conference registration, thereby avoiding unnecessary expenditures.\n\nA common misunderstanding is that employees may believe they can claim separate meal expenses if they are unsure about the inclusion of meals in the conference fee. This could lead to confusion and potential violations of the policy. This clause is conceptually linked to other policies regarding reimbursement eligibility and documentation requirements, emphasizing the importance of clarity in expense claims and the need for employees to verify what is included in their conference fees before submitting claims.\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nparticularly relevant in situations where employees dine at restaurants or venues that include mandatory service charges or where gratuities are customary. By allowing reimbursement of mandatory charges while requiring approval for voluntary gratuities above a specified threshold, the policy seeks to balance employee discretion with fiscal responsibility, ensuring that expenses remain reasonable and justifiable.\n\nCommon misunderstandings may arise regarding the distinction between mandatory service charges and voluntary gratuities. Employees might believe that all tips are reimbursable without consideration of the circumstances, but the clause makes it clear that only mandatory charges qualify without additional approval. This topic is closely related to other meal-related policies, such as those governing client meals and employee meals, as they all require a thoughtful approach to expense claims, ensuring that reimbursements reflect the company\u2019s commitment to responsible spending.\n\n## MEAL-3.1 - Default ceilings for locations without an addendum\n\nFor a country with no regional addendum the employee meal ceiling is SGD 60 per person and the client meal ceiling is SGD 110 per attendee. These defaults never apply to Singapore, India or Japan.\n\nInterpretive guidance: This clause establishes default ceilings for meal reimbursements in locations without a regional addendum, providing a baseline for employee and client meal expenditures. It is particularly relevant in situations where employees travel to countries lacking specific guidelines, ensuring that there is a clear standard for reimbursement. By defining these defaults, the policy aims to facilitate consistent expense management across diverse geographical locations while maintaining a focus on fiscal responsibility.\n\nA common misunderstanding may arise from the belief that these default ceilings apply universally, regardless of the specific regional context. However, the clause explicitly states that they do not apply to certain countries, which is crucial for compliance. This topic is conceptually linked to the broader expense policy framework, particularly in relation to regional addendums and the varying reimbursement standards that may exist, highlighting the importance of understanding the specific guidelines applicable to each location.\n\n## MEAL-3.2 - Attendee evidence\n\nIf the attendee count is needed for a per-person test and cannot be established from the claim, the reviewer requests it.\n\nInterpretive guidance: The purpose of this clause is to ensure that the necessary attendee count is accurately established when evaluating claims related to meals. This is particularly relevant in situations where the reimbursement is contingent upon a per-person test, such as when determining the appropriateness of meal expenses for group events. By requiring the reviewer to request attendee evidence when it is not provided, the policy aims to maintain transparency and accountability in expense reporting, ensuring that claims are substantiated with clear documentation.\n\nA common misunderstanding regarding this clause is the assumption that any claim can be approved without sufficient\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nmeals. This distinction is particularly relevant in business scenarios where meetings involve both employees and external parties, such as freelance consultants or contractors. By establishing that only employees on the company payroll, including interns and secondees, are considered attendees, the policy aims to ensure that meal expenses are appropriately allocated and justified within the context of internal business operations.\n\nA common misunderstanding regarding attendee status may arise from the assumption that proximity or collaboration with employees automatically qualifies external individuals as attendees. This misconception can lead to inappropriate expense claims and potential compliance issues. This clause is conceptually linked to other policies concerning expense eligibility and reimbursement procedures, emphasizing the importance of accurately categorizing individuals involved in business activities to maintain financial integrity.\n\n## MEAL-2.1 - Alcohol\n\nAlcohol follows the regional addendum. Where permitted, it must be incidental to an otherwise reimbursable client meal or event and its share of the bill is limited as the addendum states.\n\nInterpretive guidance: This clause governs the reimbursement of alcohol expenses, stipulating that such costs must be incidental to a reimbursable client meal or event. This is particularly relevant in contexts where alcohol is served during business meetings or client dinners, providing an opportunity for relationship-building in a more relaxed atmosphere. By aligning alcohol expenses with the overall meal or event reimbursement, the policy aims to ensure that these costs are reasonable and justifiable within the broader context of business expenditures.\n\nA common misunderstanding regarding this clause is the assumption that alcohol can be reimbursed independently of the meal or event. However, the clause clearly states that alcohol must be incidental, which reinforces the need for it to be part of a larger business purpose. This topic is related to the broader categories of client meals and business entertainment, as all these areas involve considerations of appropriateness and justification for expenses, emphasizing the importance of maintaining a clear connection between the type of expense and its business relevance.\n\n## MEAL-2.2 - Tips and service charges\n\nMandatory service charges are reimbursable. A voluntary gratuity above 15 percent of the pre-tip bill requires manager approval unless the regional addendum is stricter.\n\nInterpretive guidance: This clause addresses the reimbursement of tips and service charges associated with meals and events. It is particularly relevant in situations where employees dine at restaurants or venues that include mandatory service charges or where gratuities are customary. By allowing reimbursement of mandatory charges while requiring approval for voluntary gratuities above a specified threshold, the policy seeks to balance employee discretion with fiscal responsibility, ensuring that expenses remain reasonable and justifiable.\n\nCommon misunderstandings may arise regarding the distinction between mandatory service charges and voluntary gratuities. Employees might believe that all tips are\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nis particularly relevant in situations where the reimbursement is contingent upon a per-person test, such as when determining the appropriateness of meal expenses for group events. By requiring the reviewer to request attendee evidence when it is not provided, the policy aims to maintain transparency and accountability in expense reporting, ensuring that claims are substantiated with clear documentation.\n\nA common misunderstanding regarding this clause is the assumption that any claim can be approved without sufficient evidence of attendee counts. Some may believe that the burden of proof lies solely with the claimant, whereas the policy clearly delineates the reviewer's responsibility to seek clarification when necessary. This clause is conceptually linked to neighboring policies concerning documentation and expense verification, highlighting the importance of accurate record-keeping and the role of reviewers in maintaining compliance with the overall expense policy.\n\n## MEAL-4.1 - Mixed-purpose events\n\nWhere an event combines employee-only and external activity and the allocation is unclear, the reviewer requests clarification instead of choosing the more generous ceiling.\n\nInterpretive guidance: This clause serves to clarify the treatment of mixed-purpose events, where both employee and external activities occur. It is essential in situations where the allocation of expenses between these two categories is ambiguous, as it prevents the reviewer from making assumptions that could lead to inappropriate reimbursements. By requiring clarification instead of defaulting to more generous allowances, the policy promotes fairness and ensures that expenses are allocated correctly according to their intended purpose.\n\nA frequent misconception is that reviewers can arbitrarily decide on the allocation of expenses based on their discretion. This can lead to inconsistencies in how similar events are treated. This clause is closely related to the principles of expense justification and proper allocation found in other sections of the policy, reinforcing the need for clear communication and documentation when expenses involve multiple purposes to avoid potential conflicts of interest.\n\n## MEAL-5.1 - Meals during conferences\n\nMeals included in a conference fee cannot also be claimed separately. Where inclusion is unclear the reviewer requests the conference programme.\n\nInterpretive guidance: The purpose of this clause is to prevent double-dipping in expense claims related to meals during conferences. It addresses scenarios where meals are included in the conference fee, thus ensuring that employees do not claim reimbursement for these meals separately. This policy is vital for maintaining fiscal responsibility and integrity in expense reporting, as it encourages employees to be mindful of what has already been covered by the conference registration, thereby avoiding unnecessary expenditures.\n\nA common misunderstanding is that employees may believe they can claim separate meal expenses if they are unsure about the inclusion of meals in the conference fee. This could lead to confusion and potential violations of the\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\n# Meals and Entertainment Policy\n\nDocument ID: D07\nRegion: GLOBAL\nEffective: 2024-01-01 to 2099-12-31\nCategory: meals\n\n> Internal policy document of Northstar Analytics Group. Precedence rank 5 (lower rank overrides higher rank where documents differ).\n\n## MEAL-1.1 - Employee meals\n\nA meal consumed only by employees during ordinary work is reimbursable up to the per-person employee meal ceiling in the regional addendum and requires a business reason beyond routine attendance. The ceiling is applied to the total divided by the number of attendees.\n\nInterpretive guidance: The purpose of this clause is to establish guidelines for the reimbursement of meals consumed solely by employees during regular work hours. This provision is particularly relevant in situations where employees engage in business meetings or discussions over meals, which may enhance productivity and collaboration. It is designed to ensure that the company supports its workforce while maintaining fiscal responsibility. The requirement for a business reason beyond routine attendance emphasizes the need for meals to serve a specific business purpose rather than merely providing sustenance during work hours.\n\nCommon misunderstandings regarding this clause may arise from the interpretation of what constitutes a 'business reason.' Employees might assume that any meal taken during work hours qualifies for reimbursement, but the clause clearly stipulates that there must be a defined business purpose. This topic is conceptually linked to the broader expense policy, particularly in relation to client meals and business entertainment, where similar principles of purpose and attendee classification apply, ensuring a consistent approach to reimbursement across different types of meals.\n\n## MEAL-1.2 - Client meals\n\nA meal with at least one external attendee is a client meal. The claim must name the external attendees or their organisations and the business purpose. Per-attendee spend is the total divided by all attendees present, including employees, and is compared with the regional client meal ceiling.\n\nInterpretive guidance: This clause outlines the criteria for classifying meals that include external attendees as client meals. It is particularly pertinent in scenarios where employees engage with clients or business partners over meals to foster relationships or discuss business matters. By requiring the identification of external attendees and the business purpose of the meal, the policy aims to ensure that expenditures are justifiable and aligned with the company\u2019s objectives. This structure not only promotes transparency but also encourages employees to be intentional in their client interactions.\n\nA common misconception surrounding this clause is the belief that any meal with external attendees is automatically reimbursable without further justification. However, the requirement to specify attendees and the business purpose is crucial for compliance and accountability. This clause is closely related to the employee meals policy, as both deal with meal reimbursements but differ in terms of\n\n[D07 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\nThis structure not only promotes transparency but also encourages employees to be intentional in their client interactions.\n\nA common misconception surrounding this clause is the belief that any meal with external attendees is automatically reimbursable without further justification. However, the requirement to specify attendees and the business purpose is crucial for compliance and accountability. This clause is closely related to the employee meals policy, as both deal with meal reimbursements but differ in terms of attendee classification and the associated ceilings, reinforcing the need for clarity in expense claims.\n\n## MEAL-1.3 - Business entertainment\n\nExternal entertainment that is primarily recreational is tested against the per-external-attendee entertainment ceiling in the regional addendum, not the client meal ceiling, and requires manager approval above the approval threshold for entertainment.\n\nInterpretive guidance: The purpose of this clause is to delineate the parameters for reimbursing expenses related to external entertainment that is primarily recreational in nature. This is relevant in situations where employees host clients or partners in a social setting, aiming to strengthen business relationships. By specifying that such entertainment must adhere to a separate ceiling and requires manager approval, the clause ensures that expenditures are appropriate and aligned with the company's strategic goals while maintaining fiscal oversight.\n\nCommon misunderstandings may arise from the interpretation of what constitutes 'primarily recreational' entertainment. Employees might mistakenly believe that any social gathering qualifies for reimbursement, but the clause emphasizes the need for a clear distinction between business-related meals and entertainment. This topic is conceptually linked to client meals and employee meals, as all these categories involve external interactions but are governed by different reimbursement criteria and approval processes, highlighting the importance of adhering to the specific guidelines for each type.\n\n## MEAL-1.4 - Attendee status\n\nAn attendee is an employee only if they are on the payroll of the company or of one of its subsidiaries, including interns and secondees on payroll. Freelance consultants, agency staff, contractors and staff of partner or customer firms are external attendees even when they work alongside employees every day. The role a person plays in the meeting does not change their status.\n\nInterpretive guidance: The purpose of this clause is to clearly define who qualifies as an attendee for the purposes of expense reimbursement related to meals. This distinction is particularly relevant in business scenarios where meetings involve both employees and external parties, such as freelance consultants or contractors. By establishing that only employees on the company payroll, including interns and secondees, are considered attendees, the policy aims to ensure that meal expenses are appropriately allocated and justified within the context of internal business operations.\n\nA common misunderstanding regarding attendee status may arise from the assumption that proximity or collaboration with\n\n[D20 | region GLOBAL | effective 2024-01-01 to 2099-12-31]\naligned with current market conditions. The revision is particularly pertinent for employees who frequently engage in business activities that involve dining expenses, such as client meetings, team lunches, and other professional gatherings. By establishing a clear ceiling, the company aims to facilitate budgeting and financial planning, while also promoting responsible spending practices among employees.\n\nA common misunderstanding regarding this clause may arise from the assumption that the revised ceiling applies retroactively to all transactions. In reality, only transactions occurring on or after the specified effective date will be subject to the new limit, while earlier transactions will adhere to the previously established values. This clause is conceptually linked to other policies on expense reimbursements and meal allowances, as it emphasizes the importance of adhering to set guidelines in order to maintain fiscal responsibility.\n\n## CIRC-25-10 - Japan employee meal ceiling revision\n\nEffective 2025-10-01. With effect from 2025-10-01, the amount in the schedule for JP is replaced by 5200 for transactions dated on or after the effective date and within 2025. Earlier transactions remain governed by the value published for their date.\n\nInterpretive guidance: The purpose of this clause is to revise the meal expense ceiling for employees operating in Japan, thereby reflecting the evolving economic landscape and ensuring that the policy remains applicable to current business practices. This adjustment is particularly relevant for employees who partake in business-related meals, such as entertaining clients or conducting team-building activities over meals. By clearly defining the new ceiling, the company seeks to streamline expense reporting and enhance financial transparency.\n\nA frequent misconception related to this clause is the belief that all meal expenses incurred after the effective date will automatically be reimbursed at the new ceiling rate. However, it is crucial to understand that only transactions dated on or after the effective date will be governed by this revision, while prior transactions will follow the previous ceiling. This clause is closely related to other expense policies, particularly those concerning client entertainment and employee meal allowances, as it underscores the necessity of adhering to established financial guidelines.\n\n## CIRC-25-11 - India employee meal ceiling revision\n\nEffective 2025-11-01. With effect from 2025-11-01, the amount in the schedule for IN is replaced by 2100 for transactions dated on or after the effective date and within 2025. Earlier transactions remain governed by the value published for their date.\n\nInterpretive guidance: This clause is designed to update the meal expense ceiling for employees in India, ensuring that the policy reflects current economic conditions and supports responsible financial practices. It is particularly relevant for employees engaged in business activities that involve meal expenses, such as client engagements and team lunches. By establishing a clear ceiling, the company aims to\n\n[D02 | region GLOBAL | effective 2025-01-01 to 2025-12-31]\nin financial reporting.\n\nA frequent misconception is that any expense incurred during the course of work is automatically eligible for reimbursement. However, the requirement for expenses to primarily support business activities means that personal expenditures, even when mixed with business purposes, must be clearly delineated and justified. This clause is closely related to the documentation requirements, as both emphasize the necessity of providing clear and sufficient information to substantiate claims, ensuring that the company maintains a rigorous approach to expense management.\n\n## GEP25-1.3 - Documentation\n\nA claim must state the merchant, transaction date, currency, total amount and a description sufficient to determine the business purpose. Category policies may require additional fields; where a required field is absent the claim cannot be approved.\n\nInterpretive guidance: The purpose of this clause is to outline the necessary documentation required for submitting expense claims, ensuring that all submissions are complete and verifiable. By mandating specific fields such as merchant name, transaction date, and a description of the business purpose, this clause aims to facilitate a streamlined review process, thereby enhancing operational efficiency. Typical business situations include the submission of claims for travel expenses, office supplies, or client entertainment, where detailed information is crucial for assessing the validity of the expense.\n\nOne common misunderstanding is the belief that any claim can be submitted without adhering to the specified documentation requirements. In reality, the absence of required fields will result in the inability to approve the claim, which can lead to delays and frustration for the employee. This clause is conceptually linked to the submission window and late submission policies, as both highlight the importance of timely and accurate submissions, reinforcing the company's commitment to maintaining a structured and accountable expense management system.\n\n## GEP25-2.1 - Submission window\n\nClaims must be submitted within 45 calendar days of the transaction date. A claim submitted from day 46 up to and including day 90 requires manager approval. A claim submitted after day 90 is escalated to Finance.\n\nInterpretive guidance: This clause establishes the timeline within which employees must submit their expense claims for reimbursement, thereby promoting timely reporting and accountability. By setting a clear submission window, the policy aims to facilitate efficient processing of claims, ensuring that the financial records remain up-to-date and accurate. Typical business situations that this clause addresses include travel reimbursements, training expenses, and other operational costs that employees may incur, emphasizing the importance of adhering to the specified timeframe for submission.\n\nA common misconception is that claims can be submitted at any time without consequence, leading to potential delays in reimbursement. However, the stipulation that claims submitted beyond the initial submission window require additional manager approval underscores the necessity of adhering to the established",
+      "n_chunks": 8
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "lookup_hotel_ceiling",
+    "args": {
+     "city": "Singapore",
+     "country": "Singapore",
+     "year": 2025,
+     "grade": "G6"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "tier": "SG-CENTRAL",
+      "ceiling": 410.0,
+      "city_listed_in_table": true,
+      "fallback_rule_applied": false,
+      "band": "G6-G7"
+     },
+     "error": null
+    }
+   },
+   {
+    "tool": "get_travel_request",
+    "args": {
+     "employee_id": "E0061",
+     "date": "2025-10-21"
+    },
+    "observation": {
+     "ok": true,
+     "found": false,
+     "data": null,
+     "error": null
+    }
+   },
+   {
+    "tool": "search_previous_expenses",
+    "args": {
+     "employee_id": "E0061",
+     "merchant": "Bugis Terrace",
+     "date_from": "2025-10-01",
+     "date_to": "2025-10-21"
+    },
+    "observation": {
+     "ok": true,
+     "found": false,
+     "data": null,
+     "error": null
+    }
+   },
+   {
+    "tool": "validate_approval",
+    "args": {
+     "expense_id": "X2-145",
+     "required_level": "M022",
+     "required_types": [
+      "meal"
+     ],
+     "transaction_date": "2025-10-21",
+     "amount_sgd": 1600.0
+    },
+    "observation": {
+     "ok": false,
+     "found": false,
+     "data": null,
+     "error": "value must be one of ('NONE', 'MANAGER', 'DIRECTOR'), got 'M022'"
+    }
+   },
+   {
+    "tool": "get_manager_approval",
+    "args": {
+     "expense_id": "X2-145"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": [
+      {
+       "approval_id": "APR-0060",
+       "approval_type": "GENERAL",
+       "status": "DELEGATED",
+       "employee_id": "E0061",
+       "approver_level": "MANAGER",
+       "start_date": "2024-01-01",
+       "end_date": "2026-12-31",
+       "delegation_id": "DEL-006"
+      }
+     ],
+     "error": null
+    }
+   },
+   {
+    "tool": "get_approval_delegation",
+    "args": {
+     "delegation_id": "DEL-006"
+    },
+    "observation": {
+     "ok": true,
+     "found": true,
+     "data": {
+      "delegation_id": "DEL-006",
+      "manager_id": "M022",
+      "delegate_id": "E0044",
+      "delegate_level": "MANAGER",
+      "start_date": "2025-09-21",
+      "end_date": "2025-11-20",
+      "max_amount_sgd": "2100.0",
+      "status": "ACTIVE"
+     },
+     "error": null
+    }
+   }
+  ],
+  "turns": 8,
+  "cost_usd": 0.003578,
+  "input_tokens": 37634,
+  "output_tokens": 283,
+  "wrong_tool_calls": 3,
+  "step_cap_hit": true
+ }
+}

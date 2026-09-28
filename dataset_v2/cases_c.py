@@ -11,7 +11,7 @@ G = "C_AGENT_DYNAMIC"
 def hotel_dyn(b, arch, want, city, t, grade, nights, fac, event=None, exc=None, approval="director", trip="APPROVED"):
     """Hotel claim with NO reference on the claim; the travel record carries the linked event / exception identifiers.
     event: None or (status, partner_ok). exc: None or kind in ok|expired|policy|employee|missing."""
-    rng = b.rng; loc = W.CITY_LOC[city]; reg = W.CITY_REGION[city]; e = b.emp(None, grade, grade); key = b.key()
+    rng = b.rng; loc = W.city_tier(city); reg = W.CITY_REGION[city]; e = b.emp(None, grade, grade); key = b.key()
     base, _, _ = W.HOTEL.get((loc, W.band(grade)), t)
     nightly = round(base * fac, 2) if reg == "SG" else round(base * fac); total = round(nightly * nights, 2)
     hn = b.hotel(city); other_h = b.hotel(city); ev_id = exc_id = None
@@ -32,13 +32,17 @@ def hotel_dyn(b, arch, want, city, t, grade, nights, fac, event=None, exc=None, 
 def build(b):
     rng = b.rng
     # C1 hotel discovery (10): travel request -> conference and/or exception, depending on what it links
+    # 4 of the 10 use a city not in TRV-2.2's tier table (Chennai/Kobe): its ceiling is resolvable only by
+    # retrieving and applying TRV-2.2's stated fallback rule (see world.city_tier's docstring); the
+    # deterministic engine cannot resolve them at all (src/rules_v2.py's TIER lookup has no entry for
+    # them and returns None), so these are genuinely RAG-necessary, not just RAG-assisted.
     hotel_dyn(b, "C1", "APPROVE", "Singapore", "2025-05-19", 5, 3, 1.15, event=("REGISTERED", True))
-    hotel_dyn(b, "C1", "REQUEST_INFORMATION", "Bengaluru", "2026-06-08", 4, 3, 1.3, exc="missing")
-    hotel_dyn(b, "C1", "REJECT", "Osaka", "2026-02-16", 5, 3, 1.12, event=("NOT_REGISTERED", True))
+    hotel_dyn(b, "C1", "REQUEST_INFORMATION", "Chennai", "2026-06-08", 4, 3, 1.3, exc="missing")
+    hotel_dyn(b, "C1", "REJECT", "Kobe", "2026-02-16", 5, 3, 1.12, event=("NOT_REGISTERED", True))
     hotel_dyn(b, "C1", "REJECT", "Singapore", "2025-09-01", 6, 4, 1.1, event=("REGISTERED", False))
-    hotel_dyn(b, "C1", "APPROVE", "Tokyo", "2025-11-17", 6, 3, 1.2, event=("NOT_REGISTERED", True), exc="ok")
+    hotel_dyn(b, "C1", "APPROVE", "Kobe", "2025-11-17", 6, 3, 1.2, event=("NOT_REGISTERED", True), exc="ok")
     hotel_dyn(b, "C1", "ESCALATE", "Singapore", "2026-04-27", 5, 3, 1.3, event=("REGISTERED", False), exc="policy")
-    hotel_dyn(b, "C1", "ESCALATE", "Mumbai", "2025-08-25", 5, 2, 1.3, exc="employee")
+    hotel_dyn(b, "C1", "ESCALATE", "Chennai", "2025-08-25", 5, 2, 1.3, exc="employee")
     hotel_dyn(b, "C1", "ESCALATE", "Osaka", "2025-06-23", 4, 3, 1.3, exc="policy")
     hotel_dyn(b, "C1", "ESCALATE", "Singapore", "2024-10-14", 5, 2, 1.3, exc="policy")
     hotel_dyn(b, "C1", "ESCALATE", "Nagoya", "2026-03-30", 6, 3, 1.5, event=("REGISTERED", True), exc="employee")

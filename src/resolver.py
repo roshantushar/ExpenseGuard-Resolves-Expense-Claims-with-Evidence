@@ -83,3 +83,33 @@ def resolve_batch(cases: list, model: str | None = None) -> dict:
     for r in recs:
         out[r["case_id"]] = {**r, "decision": r["predicted_decision"], "path": "llm_residual"}
     return out
+
+
+def resolve_batch_v2(cases: list, model: str | None = None, max_steps: int = 8) -> dict:
+    """V2 residual step (post-Exp-44): same deterministic routing as resolve_batch (unchanged, still the
+    visible-only conclusiveness signal from Exp 12B/29), but the residual claims go to the bounded ReAct
+    agent with guarded, argument-minimal tools (src/agent_variants.py: check_approval, check_hotel_compliance,
+    check_project_budget, each computing its policy_disposition in code and refusing to fire outside its
+    own domain) plus the disposition gate, instead of the single-shot RAG+facts prompt. Validated on the
+    C_AGENT_DYNAMIC family only so far (Exp 40-44: 17/19, 0% FAR); this function is how that design is run
+    against the FULL claim population (any expense type, not just the dynamic-chain families) so it can be
+    checked on the complete dev/validation residual set before any claim to a new frozen result."""
+    from . import agent, agent_variants as V
+    model = model or os.environ["PAID_MODEL"]
+    det = {c["case_id"]: deterministic(c) for c in cases}
+    residual = [c for c in cases if not det[c["case_id"]][1]]
+    out = {}
+    for c in cases:
+        d, conclusive = det[c["case_id"]]
+        if conclusive:
+            out[c["case_id"]] = {"decision": d["decision"], "policy_evidence": d.get("policy_evidence", []), "missing_fields": d.get("missing_fields", []),
+                                  "manual_review_required": d["decision"] == "ESCALATE", "path": "deterministic", "latency_ms": 0, "input_tokens": 0, "output_tokens": 0, "model_cost_usd": 0.0, "error": None}
+    for c in residual:
+        specs, case_tools = V.specs_and_tools_42(c)
+        r = agent.run(c, model=model, system_template=V.SYSTEM_42, specs=specs, case_tools=case_tools, max_steps=max_steps, tag="RESOLVER_V2")
+        r = V.gate_disposition(V.gate_approve(r))
+        out[c["case_id"]] = {"decision": r["decision"], "policy_evidence": r.get("policy_evidence", []), "missing_fields": r.get("missing_fields", []),
+                              "manual_review_required": r["decision"] == "ESCALATE", "path": "llm_residual_v2", "latency_ms": 0,
+                              "input_tokens": r.get("input_tokens", 0), "output_tokens": r.get("output_tokens", 0), "model_cost_usd": r.get("cost_usd", 0.0), "error": None,
+                              "turns": r.get("turns"), "trace": r.get("trace")}
+    return out

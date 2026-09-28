@@ -61,7 +61,7 @@
   {
    "check": "temporal-amendment cases present (>= 20)",
    "passed": true,
-   "detail": "28"
+   "detail": "26"
   },
   {
    "check": "20-22 policy documents",

@@ -152,8 +152,9 @@ def _hotel(R):
     S, c = R.S, R.c
     b, f = c["bill"], c["form"]; t = c["transaction_date"]; y = int(t[:4]); total = float(b["total"])
     prof = R.call("get_employee_profile", employee_id=c["employee_id"]); R.need("get_employee_profile")
-    band = W.band(int(prof["grade"][1:])); loc = W.CITY_LOC[f["city"]]
+    band = W.band(int(prof["grade"][1:])); loc = W.city_tier(f["city"])
     base, ctrl, cx = W.HOTEL.get((loc, band), t); R.cite(ctrl + ["TRV-2.1"], cx + ["TRV-1.1"])
+    if f["city"] not in W.CITY_LOC: R.cite([], ["TRV-2.2"])  # unlisted city: ceiling only follows from TRV-2.2's fallback rule
     tr = R.call("get_travel_request", employee_id=c["employee_id"], date=t); R.need("get_travel_request")
     if not tr or tr["status"] != "APPROVED": R.cite(["TRV-1.1", "TRV-1.2"]); R.done("REQUEST_INFORMATION", "No approved travel request covers the stay.", ["approved_travel_request"])
     nightly = total / int(f["nights"]); R.facts["nightly_rate"] = round(nightly, 2)
