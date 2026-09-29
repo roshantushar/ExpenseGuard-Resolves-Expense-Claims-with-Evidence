@@ -1,3 +1,13 @@
+> **Superseded by individual experiment docs.** Per the project's documentation standard (every distinct
+> design change gets its own row/doc), this combined write-up is kept for narrative chronology only. The
+> authoritative per-experiment records are: `exp47_workflow_reuse_regression.md`,
+> `exp48_allowlist_redesign.md`, `exp49_ground_transport_placeholder_bug.md`,
+> `exp50_gift_hotel_dates_merchant_metadata.md`, `exp51_dev_confirmed_clean.md`,
+> `exp52_validation_tuned_candidate.md`. Note also: this doc's "fully validated" language in its Decision
+> section is imprecise — see the methodology note in `docs/v2/README.md` on why a design changed in
+> response to validation-split behavior is a **development-and-validation-selected candidate**, not an
+> independently validated one.
+
 # Exp 47–52 — closing the gap: the guarded agent reaches full-dataset coverage at 0% FAR
 
 Exp 45 showed the guarded-tool design (Exp 40-44) helps accuracy system-wide but breaks the 0%-FAR

@@ -10,11 +10,19 @@
 
 # 1. Problem statement
 
-Employees and finance teams lose significant time and money to expense-reimbursement processes that are slow, error-prone, and opaque.
+> **In one sentence: given an expense claim (a bill and a free-text note) and a company's policy and
+> enterprise records, decide whether it is safe to auto-approve, reject, request more information from
+> the employee, or send to a human finance reviewer — without ever confidently approving a claim that
+> should not have been approved.**
 
-Routine claims, incomplete claims, policy exceptions, duplicate submissions, split transactions, and genuinely ambiguous cases often enter the same manual review queue. Finance reviewers may need to inspect company policy, previous expense history, employee/travel records, approvals, exceptions, and other enterprise data before reaching a decision.
+I am not building expense classification, fraud detection, OCR, or general finance automation — those are
+explicitly out of scope (§7). This is one decision, made safely, for one kind of input.
 
-ExpenseGuard is designed to determine whether an expense claim is **ready for reimbursement** and, if not, identify exactly what prevents it from being safely resolved.
+Routine claims, incomplete claims, policy exceptions, duplicate submissions, split transactions, and
+genuinely ambiguous cases often enter the same manual review queue today. A finance reviewer may need to
+inspect company policy, previous expense history, employee/travel records, approvals, exceptions, and other
+enterprise data before reaching a decision. ExpenseGuard automates that decision where it can be made
+safely, and routes the rest to a human — it does not try to automate everything.
 
 The system must return exactly one of:
 
@@ -31,9 +39,17 @@ The product objective is:
 
 # 2. Why the problem matters
 
-Expense processing consumes both employee and finance-team time.
+Expense processing consumes both employee and finance-team time. This is an **external, assumed industry
+figure, not a measured ExpenseGuard result** — labeled as such throughout this project, per the
+measured-vs-assumed distinction in §37: the GBTA Foundation's "Expense Reporting: Global Practices and Pain
+Points" study found manual expense-report processing costs **$58 and 20 minutes per report** on average,
+and that **19% of reports contain errors or missing information**, each costing an additional **$52 and 18
+minutes** to correct — a company processing 10,000 reports/month would spend roughly $580,000/month on
+processing alone under this figure, before counting the ~1,900 error reports' extra $98,800 in rework. This
+is the pain ExpenseGuard targets: reducing the reports that need a human's full 20 minutes, and catching
+the ~19% error rate earlier and more cheaply than a full manual re-review cycle.
 
-The project framing uses published industry estimates that manual expense processing can involve substantial per-report administrative cost and rework. The system is therefore not justified merely because AI can be applied; it is justified only if it can:
+The system is therefore not justified merely because AI can be applied; it is justified only if it can:
 
 1. increase correct claim disposition;
 2. reduce unnecessary finance review;
@@ -201,9 +217,42 @@ The following are not part of the project:
 
 Duplicate and split-transaction checks are framed as **claim-level compliance checks**, not fraud detection.
 
+## 7.1 Intended use
+
+> **ExpenseGuard is decision support and selective automation for a finance expense reviewer**: it
+> auto-resolves the claims it can resolve safely (deterministically or with grounded evidence), and routes
+> everything else — ambiguous, incomplete, or policy-mandated — to that human reviewer with a specific
+> reason and the evidence already assembled.
+
+## 7.2 Explicit non-use
+
+> **ExpenseGuard is explicitly not**: an autonomous financial authority that pays or executes reimbursement
+> without a human in the loop; a fraud-accusation or employee-risk-scoring system; a system authorized to
+> take any irreversible action; or a production deployment as shipped — it is a research/evaluation system
+> against a synthetic benchmark (§46), and would need a real-world validation pass, real enterprise
+> integrations in place of the synthetic tools, and a human-in-the-loop rollout plan before any real
+> reimbursement decision was made on its output alone.
+
 ---
 
 # 8. Core design principle
+
+## 8.0 The smallest first version (required, not optional)
+
+Before any retrieval, rules, or architecture comparison, I built the smallest possible end-to-end slice and
+defined in advance what would count as it working: **Exp 1** (`docs/v2/exp01_smallest_slice.md`) — one
+claim in, the exact correct policy clauses handed to it directly (no retrieval yet), one LLM call out, one
+structured decision. Nine development claims, two models (`gpt-4o-mini`, `llama3.2:3b`), temperature 0.
+**What counted as working**, decided before running it: every one of the 9 outputs had to be schema-valid
+JSON with a decision from the four allowed values, and it had to run start-to-finish without an
+unhandled error. Both models hit 18/18 valid outputs, 0 errors — the slice worked, but the accuracy on it
+(55.6%/44.4%, both over-rejecting even with the correct clauses handed to them) was explicitly *not* the
+bar Exp 1 was testing; it was a feasibility gate, not a performance claim, and the doc says so. Only once
+that one-input/one-path/one-output slice was confirmed working did the project add retrieval (Exp 5+),
+rules (Exp 2+), a workflow (Exp 18), and eventually an agent (Exp 20+) — each layer added only after the
+smaller one beneath it was proven to work, per §8.1 below.
+
+## 8.1 Climb the complexity ladder only when justified
 
 The project does **not** begin by assuming that an agent is required.
 
@@ -307,28 +356,63 @@ If long context performs equally well at the current corpus size, that is a vali
 
 ---
 
-# 11. Final dataset design
+# 11. Final dataset design (V2)
 
-The current final dataset contains:
+The current dataset (V2, `ExpenseGuard_V2_DATASET/`) contains:
 
-- **120 expense claims**
-- **65 self-contained / RAG-solvable cases**
-- **40 fixed-workflow cases**
-- **15 dynamic agent-candidate cases**
+- **150 expense claims**
+- **40 self-contained / RAG-solvable cases** (`A_SELF_CONTAINED`)
+- **80 fixed-workflow cases** (`B_WORKFLOW`)
+- **30 dynamic agent-candidate cases** (`C_AGENT_DYNAMIC`)
+- **22+ policy documents**
+- **11 enterprise tables**
 
 Frozen split:
 
-- 60 development
-- 20 validation
-- 40 final test
+- 70 development
+- 30 validation
+- 50 final test
 
-The final-test set includes:
+The final-test set includes independently worded/reviewed challenge cases (see `docs/v2/exp32_final_test.md`
+for the exact count and result on that subset).
 
-- 10 independently worded/reviewed challenge cases.
+The dataset is fully synthetic and reproducible. No real employee or company data is used. It was
+hardened across three rounds so decision-critical facts (nights, attendee counts, exception references,
+even the expense category) live only in free text rather than in structured fields, specifically to make
+retrieval and reasoning — not shallow field-matching — the thing under test.
 
-The dataset is fully synthetic and reproducible.
+## 11.1 Official final result (V2)
 
-No real employee or company data is used.
+The official architecture is **Exp 30, the selective resolver**: deterministic rules decide whenever they
+can; an LLM handles only the residual cases. The official final evaluation is **Exp 32**, a one-shot,
+hash-manifest-verified run against the 50-claim held-out final test:
+
+- **30/50 correct (60%)**
+- **0/37 non-approvable cases falsely approved (0% observed FAR)**
+- Deterministic path: **22/22 (100%)**
+- LLM-residual path: **8/28 (28.6%)**
+
+Full detail: `docs/v2/exp32_final_test.md` and `docs/v2/README.md`.
+
+## 11.2 Post-final guarded-agent research (not official)
+
+A later line of experiments (Exp 34-52) built a bounded agent whose tools compute the policy disposition
+in code instead of asking the model to judge it, and used development and validation feedback to find and
+fix seven real bugs. On the splits it has been evaluated against — 44/70 dev and 21/30 validation, 0%
+observed FAR on both — it beats the official architecture's own development accuracy by one point at
+matching FAR. **This is an accuracy/FAR-scoped comparison only**: it escalates roughly 1.5-1.8x more often
+than the official architecture, and a risk-adjusted cost model (`docs/v2/cost_and_business_impact.md`)
+finds its total expected operational cost is currently higher, not lower, than the official architecture's
+at every scale tested, because the added human-review load outweighs its accuracy and AI-cost advantages.
+It is a
+**development-and-validation-selected candidate**, not an independently validated replacement: it has
+never been run against the final test, has no freeze manifest, and its design was changed in direct
+response to observing validation-split behavior. See `docs/v2/README.md` for the full methodology note on
+why the original 50-claim final test cannot simply be reused to promote this candidate to official status.
+
+> A prior dataset generation (V1: 120 claims, 60/20/40 split) preceded this one and is retained only for
+> historical experiment evidence in `archive/v1/`. It is not the current dataset and its numbers should
+> not be cited as current performance.
 
 ---
 
@@ -950,6 +1034,26 @@ Report:
 - percentage;
 - 95% Wilson confidence interval.
 
+## Metric family, target, and baseline
+
+The headline metric is never Correct Disposition Rate alone. The full metric family used for architecture
+selection is **accuracy + False Approval Rate + Safe Automation Rate + escalation rate + risk-adjusted
+cost per 1,000 claims** (`docs/v2/cost_and_business_impact.md`). The **majority-class baseline** — always
+predicting the single most common ground-truth outcome for a split — is computed directly from
+`ground_truth.jsonl`, not assumed: **26-27% accuracy** on every split, and, critically, an
+APPROVE-majority baseline on validation would carry **100% FAR** despite similar raw accuracy to a
+REJECT-majority baseline on dev at 0% FAR — direct evidence accuracy alone cannot be the metric
+(`docs/v2/master_comparison.md`).
+
+**Target, stated explicitly here rather than left implicit:** the bar this project holds every architecture
+to, adopted at the Exp 30 freeze decision and applied consistently afterward, is **0 observed false
+approvals on the evaluation population, at the best accuracy achievable without violating that constraint**
+— not a specific accuracy percentage. This is why Exp 18's fixed workflow (64.3% dev accuracy, the highest
+raw accuracy of any architecture tested) was rejected in favor of Exp 30's selective resolver (61.4% dev
+accuracy, 0% FAR): the target was never "maximize accuracy," it was "maximize accuracy subject to 0 observed
+false approvals," and every later architecture decision in this project (including rejecting the
+higher-accuracy guarded-agent candidate on cost grounds, §42.1) follows the same rule.
+
 ---
 
 # 30. Safety/business guardrails
@@ -1084,11 +1188,32 @@ Therefore, safety must always be evaluated together with Human Review Rate.
 
 # 34. Silent failure
 
-The most serious silent failure is:
+**The clearest silent failure this project actually found**, not a hypothetical one: `X2-013` ("personal
+spend") was a false approval that survived Exp 45 through Exp 49 unnoticed inside the aggregate accuracy
+number — the guarded agent confidently approved it because `workflow_v2.decide()` only sees the hardened,
+*visible* merchant category ("OTHER"), while the true category sat in `get_merchant_metadata`, an
+enterprise tool the agent already had access to but never consulted. Nothing about the decision looked
+wrong in isolation: schema-valid, confident, evidence cited. It was found only because this project holds
+ground truth and could compare against it (Exp 50) — **in a real deployment, with no ground truth to check
+against, this exact failure would have paid out silently.**
 
-> **A confident APPROVE decision based on the wrong policy version, missed override, false duplicate conclusion, or misread enterprise evidence.**
+A second, structurally identical case: `check_hotel_compliance` and `check_project_budget` (Exp 42) firing
+confidently on claim types they were never built for, before the domain guards (Exp 43) existed — the tool
+returned a full disposition with no error, no low-confidence flag, nothing to distinguish it from a correct
+answer.
 
-Mitigations include:
+**How I would detect this class of failure in production, without ground truth:** (1) cross-check every
+tool's stated input category against at least one independent source (exactly the fix that closed X2-013 —
+comparing a hardened/visible field against an enterprise-system field that should agree with it) as a
+standing consistency check, not a one-time fix; (2) periodic human audit sampling of a random subset of
+auto-approved claims, specifically weighted toward categories with no dedicated guarded tool (the
+`check_workflow_compliance` allowlist in `docs/v2/exp48_allowlist_redesign.md` names exactly which
+categories those are); (3) track False Approval Rate by category over time, not just in aggregate, since
+this project's own evidence (Exp 45) shows FAR failures cluster entirely in specific under-guarded
+categories rather than spreading evenly; (4) a domain-guard precondition check on every tool (Exp 43's
+pattern) as a structural default, not an afterthought added after a live incident.
+
+Mitigations already in place include:
 
 - version/region metadata;
 - evidence-required outputs;
@@ -1110,14 +1235,23 @@ Prompt injection must be tested in:
 - retrieved policy text;
 - tool output.
 
-Security testing should be informed by:
-
-- **OWASP Top 10 for LLM Applications (2025)**
-- especially **LLM01: Prompt Injection**
+Security testing is framed against, and honestly scored against, the **OWASP Top 10 for LLM Applications
+(2025)** — the current official edition (there is no published 2026 edition; verified by direct lookup, not
+assumed). **All 10 categories now have real test evidence** (`docs/v2/owasp_llm_top10_2025.md`): **LLM06:
+Excessive Agency** is directly mitigated (read-only tools, step cap, call deduplication, Exp 41's
+disposition gate, Exp 43's domain guards); **LLM01: Prompt Injection** was adversarially tested (Exp 28)
+and found only partially addressed — retrieval-text injection can still defeat the current prompt-level
+defense, disclosed as an open risk rather than claimed as solved; **LLM04: Data/Model Poisoning** is scoped
+as not applicable (no model is fine-tuned or trained in this project); and **LLM02, LLM03, LLM05, LLM07,
+LLM08, LLM09, LLM10** were each directly tested or scoped in a dedicated pass at $0 cost, with no new
+unmitigated vulnerability found — see `docs/v2/owasp_llm_top10_2025.md` for the full results, including the
+honest disclosure that two of those tests' clean results rest on a parse-failure fallback rather than a
+demonstrated deliberate model refusal.
 
 Responsible-use design should also align with principles from:
 
-- **Singapore IMDA Model AI Governance Framework**
+- **Singapore IMDA Model AI Governance Framework** (for agentic AI / human-over-the-loop accountability)
+- **the EU AI Act** (human oversight and transparency for workplace/financial systems)
 
 Key responsible-use principles in this project include:
 
@@ -1350,3 +1484,17 @@ The project is complete when:
 # 42. Final one-sentence project story
 
 > **ExpenseGuard evaluates whether an expense claim is ready for reimbursement and experimentally determines the cheapest reliable architecture — rules, RAG, workflow, or bounded agentic investigation — needed to resolve it safely with minimal unnecessary finance review.**
+
+## 42.1 Final conclusion, after the cost/business-impact analysis
+
+A later analysis (`docs/v2/cost_and_business_impact.md`) sharpened this story with its strongest finding:
+**the best-performing AI architecture was not the best operating architecture.** The post-final
+guarded-agent candidate improved decision accuracy while preserving the observed 0%-false-approval safety
+constraint, but its escalation rate rose enough that human-review cost outweighed those gains — its total
+risk-adjusted operating cost is higher than the official frozen resolver's at every scale tested. The
+frozen selective resolver therefore remains the preferred operating architecture, and no new held-out set
+was created for the candidate, since doing so would answer a question this cost analysis already closed as
+not currently decision-relevant.
+
+> **ExpenseGuard demonstrates that enterprise AI architecture should be selected on safe automation and
+> total operating cost — not benchmark accuracy alone.**

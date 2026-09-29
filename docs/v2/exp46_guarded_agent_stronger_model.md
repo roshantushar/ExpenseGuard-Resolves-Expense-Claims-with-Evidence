@@ -16,8 +16,9 @@ cases — 30x).
 **The stronger model did worse, at 30x the cost — but false approvals stayed at 0% either way.** That
 second point is the real finding: Exp 35B showed the *unguarded* agent's FAR jumping to 50% with gpt-4o
 (more confident, more wrong); here, with the guards in place, model strength has no effect on the safety
-property at all. The guards make FAR a property of the system design, not of which model happens to be
-running it.
+property at all. Across the two models tested here, the observed safety improvement was primarily
+associated with architectural guards rather than model size — not a proven general law about guards vs.
+models, since only two models were compared on one claim population.
 
 ## Why gpt-4o still got 2 cases wrong that gpt-4o-mini got right
 - **X2-026** (`DYNAMIC_DEEP_HOTEL_CHAIN`, expected ESCALATE): gpt-4o stopped after 3 turns — called

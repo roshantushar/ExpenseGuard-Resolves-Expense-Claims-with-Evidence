@@ -45,6 +45,33 @@ touched for the first and only time here?
 
 Challenge subset (15 independently-worded cases): 10/15 correct (67%).
 
+### Confusion matrix and class-level metrics (item 28)
+
+Computed directly from `predictions.jsonl` against `ground_truth.jsonl` (rows = ground truth, columns =
+predicted):
+
+| Truth \ Predicted | APPROVE | REJECT | REQUEST_INFORMATION | ESCALATE |
+|---|---|---|---|---|
+| **APPROVE** (13) | **0** | 8 | 4 | 1 |
+| **REJECT** (13) | 0 | **12** | 1 | 0 |
+| **REQUEST_INFORMATION** (12) | 0 | 2 | **9** | 1 |
+| **ESCALATE** (12) | 0 | 3 | 0 | **9** |
+
+| Class | Precision | Recall | F1 |
+|---|---|---|---|
+| APPROVE | 0.000 | **0.000** | 0.000 |
+| REJECT | 0.480 | 0.923 | 0.632 |
+| REQUEST_INFORMATION | 0.643 | 0.750 | 0.692 |
+| ESCALATE | 0.818 | 0.750 | 0.783 |
+| **Macro-F1** | — | — | **0.527** |
+
+APPROVE recall is visibly 0.00 — the system never once correctly predicted APPROVE on the final test, and
+the confusion matrix shows exactly why: every one of the 13 truly-approvable claims was instead predicted
+REJECT (8), REQUEST_INFORMATION (4), or ESCALATE (1). APPROVE's 0% precision-and-recall combination means
+its F1 is undefined-in-practice (0.000 here since no true positives exist) — the system is safe (it never
+falsely approves) but functionally unable to affirmatively confirm a clean claim, consistent with the
+"reading the result" discussion below.
+
 ## Reading the result
 The deterministic half of the architecture generalized perfectly to unseen data (100%, vs. 88.2% on
 dev — no leakage, no overfitting signal). Zero false approvals held, matching the design goal. The

@@ -1,4 +1,11 @@
-# ExpenseGuard — Detailed Experiment Plan
+> **LEGACY V1 — superseded by ExpenseGuard V2. Retained only for historical experiment evidence.**
+> This plan describes the original 120-claim (60 development / 20 validation / 40 final test) V1 dataset
+> and experiment sequence. The current project uses the 150-claim V2 dataset (70/30/50) described in
+> [`problem.md`](../../problem.md) and [`docs/v2/README.md`](../../docs/v2/README.md); V1's own final
+> result (Exp 30/32 for that dataset generation) is a chronological predecessor to V2's Exp 30/32, not the
+> current official result. Do not cite numbers from this file as current performance.
+
+# ExpenseGuard — Detailed Experiment Plan (V1)
 
 **Project:** PE6201 Emerging AI Technologies — End-of-Course Project  
 **System:** ExpenseGuard  

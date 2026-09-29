@@ -22,21 +22,24 @@ correct (`REQUEST_INFORMATION`, confirmed live, cost $0.002).
 |---|---|---|
 | Development (13, tuned on) | 11/13 (84.6%) | 2 residual errors, both already diagnosed |
 | **Validation (6, touched once)** | **6/6 (100%)** | Every fresh case correct — no new failure mode appeared |
-| **Combined (19)** | **17/19 (89.5%)** | **FAR 0.0%** |
+| **Combined (19)** | **17/19 (89.5%)** | **0/15 falsely approved (0% observed FAR)** |
 
-| System | Correct (of comparable set) | FAR |
-|---|---|---|
-| Fixed workflow (Exp 18, 13 dev claims) | 7/13 (53.8%) | 10.0% |
-| Selective resolver, LLM-residual path (Exp 30, dev) | ~36% | n/a |
-| **This design (Exp 40-44), 19 dev+validation claims** | **17/19 (89.5%)** | **0.0%** |
+(19-claim population: 15 of the 19 are ground-truth non-`APPROVE`.)
 
-## Why this generalizes rather than overfits
+| System | Evaluation population | Correct/N | False approvals / non-approvable | FAR |
+|---|---|---|---|---|
+| Fixed workflow (Exp 18, `C_AGENT_DYNAMIC` dev subset) | 13 dev claims | 7/13 (53.8%) | 1/10 | 10.0% |
+| Selective resolver, LLM-residual path (Exp 30, whole dev) | 36 dev claims (different population — not directly comparable to the row above) | ~36% | n/a | n/a |
+| **This design (Exp 40-44)** | 19 dev+validation `C_AGENT_DYNAMIC` claims | **17/19 (89.5%)** | **0/15** | **0.0%** |
+
+## Encouraging validation evidence, on a small sample
 The validation cases were never inspected while building any of these tools — `check_hotel_ceiling`,
 `check_approval`, `check_hotel_compliance`, `check_project_budget` and the two domain guards were all
 designed and debugged against development-set traces only (X2-005, X2-018, X2-037, and the two
 mis-firing-tool incidents caught live in Exp 42/43). None of the fixes reference a specific validation
-case_id or its expected answer. **All 6 validation cases passing on the first and only attempt is exactly
-what generalization should look like**, in contrast to Exp 35A's prompt tweak or Exp 35B's model swap,
+case_id or its expected answer. **All 6 validation cases passing on the first and only attempt provides
+encouraging validation evidence** — but n=6 is small, and this is not proof of generalization, in contrast
+to Exp 35A's prompt tweak or Exp 35B's model swap,
 neither of which held up even on the same 13 cases they were tuned against.
 
 ## The 2 remaining errors (both development-set, both previously diagnosed)

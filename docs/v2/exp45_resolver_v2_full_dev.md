@@ -23,7 +23,7 @@ disposition gate.
 | Deterministic (unchanged) | 30/34 | 88.2% |
 | LLM-residual v2 (guarded agent) | 21/36 | **58.3%** (vs. Exp 30's original 13/36 = 36.1%) |
 | **Overall** | **51/70 (72.9%)** | vs. Exp 30's 43/70 (61.4%) |
-| **FAR** | **11.5%** | vs. Exp 30's **0%** |
+| **FAR** | **6/52 = 11.5%** | vs. Exp 30's **0/52 = 0.0%** |
 
 Residual-path accuracy nearly doubled system-wide, not just on the 19 cases it was tuned against — real
 evidence the guarded-tool pattern generalizes. But false approvals rose to 11.5%, and every single one
@@ -34,12 +34,12 @@ category a guarded tool actually covers (hotel, approval, software-project-budge
 ## A tested, rejected stopgap
 A blunt patch — refuse any agent-issued APPROVE outside the guarded categories (hotel, software) and
 downgrade it to ESCALATE — was tested retroactively (free, no new LLM calls) against this run's own
-saved trace: it brought FAR down to 1.9%, but accuracy fell back to 43/70 (61.4%), matching the old
+saved trace: it brought FAR down to 1/52 = 1.9%, but accuracy fell back to 43/70 (61.4%), matching the old
 baseline almost exactly. It works by blocking legitimate approvals along with the bad ones, so it isn't
 a real improvement, just a wash. **Not adopted.**
 
 ## Decision
-**Not frozen.** The frozen system remains Exp 30/32 (43/70 dev, 30/50 final test, 0% FAR) — this
+**Not frozen.** The frozen system remains Exp 30/32 (43/70 dev, 30/50 final test, 0/37 falsely approved) — this
 project's standing priority has been 0% false approvals over raw accuracy since Exp 30 was chosen over
 the more-accurate fixed workflow for exactly that reason, and this result would reverse that trade-off
 without equivalent justification. The real fix is building the missing category-specific guards (meal

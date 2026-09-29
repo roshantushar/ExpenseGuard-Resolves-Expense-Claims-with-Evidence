@@ -20,10 +20,52 @@ One `.md` file per experiment (hypothesis → method → result → decision), a
 almost every one, and every number traceable to a file under `results/v2/`. Nothing here is hand-typed.
 No git commit/push has been made on the user's behalf.
 
+## Terminology used consistently below
+- **False Approval Rate (FAR)** = false `APPROVE` decisions ÷ all ground-truth non-`APPROVE` cases.
+  Reported as a count wherever possible (`0/37` = 0% observed FAR), not as a bare percentage.
+- **Safe Automation Rate** = claims automatically resolved correctly without a false approval ÷ total
+  claims. This is a headline product metric alongside accuracy and FAR, not a secondary diagnostic — a
+  design can raise accuracy while lowering this number if it escalates more of the cases it would
+  otherwise have gotten right, which is exactly what the guarded-agent candidate does (see the cost
+  model's headline conclusion below). Architecture selection in this project is judged jointly on
+  **accuracy + FAR + Safe Automation Rate + escalation rate + cost per 1,000 claims**, not on accuracy or
+  FAR alone.
+- **"Observed 0% FAR"**, never "guaranteed safety" or "proven safe" — every FAR figure in this project is
+  an empirical count on a specific, finite evaluation population, not a guarantee about unseen traffic.
+- **Official frozen architecture**: Exp 30/32 only — the selective resolver, tested exactly once against
+  the real held-out final test.
+- **Development-and-validation-selected candidate architecture**: the guarded-agent design (Exp 40-52). It
+  is *not* called "fully validated" or "independently validated" anywhere in this project's docs, because
+  its Exp 52 fix was made in direct response to observing validation-split behavior — see the methodology
+  note below. Its validation-split number is a development signal, not an unbiased generalization estimate.
+- **Rejected experimental variants**: designs tried and abandoned for a measured reason (Exp 34-36, 45-47,
+  and others), kept in the record because the reason they were rejected is itself a finding.
+- Every architecture-comparison table names its evaluation population explicitly (N and split) rather than
+  placing differently-denominated fractions side by side without labels.
+
+## Why the original 50-claim final test cannot be reused as a new blind evaluation
+Exp 32 evaluated the frozen selective resolver against the original final-test set, one time, per the
+freeze manifest's own rule. Exp 33 then inspected and categorized every one of its 20 errors. Every
+architecture built afterward — Exp 34 onward, including the guarded-agent line in Exp 40-52 — was shaped
+by knowledge of those error categories (tier substitution, missing prerequisite checks, argument
+hallucination patterns, and so on). That makes the original final-test set no longer unseen with respect
+to those later architectures, even though no case in it was ever individually re-inspected or its labels
+touched. Rerunning it against a newer design (as happened once, informally, for the guarded agent) is
+useful diagnostically — it shows whether the new design at least doesn't regress on cases the old one
+covered — but it must never be reported as a new, unbiased blind final evaluation. Promoting any newer
+design to official status requires a genuinely new, untouched holdout, frozen before that design sees it.
+
 ## Governance & security alignment
 
 Framed against recognized frameworks — this is an honest mapping of what was actually built and
 adversarially tested to the risk categories they name, not a compliance certification.
+
+**All 10 OWASP Top 10 for LLM Applications (2025) categories now have real test evidence** — not just the
+two headlined below. Full results for all ten, including the six newly tested this pass (LLM02, 03, 05,
+07, 09, 10) and the two scoped-as-reasoned ones (LLM04, LLM08): [`docs/v2/owasp_llm_top10_2025.md`](owasp_llm_top10_2025.md).
+(Note: the current official edition is "(2025)," not "(2026)" — corrected from an earlier labeling error
+in this project's docs; there is no published 2026 edition.) The two below remain the two with the most
+significant, architecture-shaping findings.
 
 - **OWASP Top 10 for LLM Applications — LLM06: Excessive Agency.** Directly and concretely mitigated:
   every tool is read-only, bounded by a step cap and call deduplication (Exp 20, 28), and — the core
@@ -48,15 +90,68 @@ adversarially tested to the risk categories they name, not a compliance certific
 
 ## The two designs, and which one is actually running
 
-| | Frozen & final-tested | Best validated |
+| | Official frozen architecture | Development-and-validation-selected candidate |
 |---|---|---|
 | **What** | Selective resolver (Exp 30/32) | Guarded agent (Exp 40-52) |
 | **Mechanism** | Deterministic rules → conclusive? code decides : single-shot LLM decides | Deterministic rules → conclusive? code decides : bounded ReAct agent with code-computed disposition tools |
-| **Result** | 30/50 final test (60%), **0% FAR** | 44/70 dev (62.9%) **and** 21/30 validation (70.0%), **0% FAR on both** |
-| **Status** | **This is what's shipped.** Tested once on the real held-out final test, hash-manifest-verified, never rerun. | Fully validated, beats the frozen design's own dev accuracy at matching safety — but never run against final test, no freeze manifest. |
+| **Evaluation population** | 50-claim final test (touched once, official) | 70-claim dev + 30-claim validation (both touched during development of this design) |
+| **Result** | 30/50 (60%), 0/37 non-approvable cases falsely approved (0% observed FAR) | 44/70 dev (62.9%), 0/52 falsely approved; 21/30 validation (70.0%), 0/22 falsely approved |
+| **Status** | **This is what's shipped.** Tested once on the real held-out final test, hash-manifest-verified, never rerun. | The best-performing candidate found on accuracy/FAR, on the splits it has seen — but its Exp 52 design change was made *after* observing validation-split behavior (not an independent generalization estimate; see the methodology note above), and a full risk-adjusted cost model finds it currently costs *more* to operate than the frozen design at every scale, because it escalates far more often. Never run against final test; no freeze manifest. |
+
+Full automation and cost breakdown, with the "does the complexity earn its keep" question answered directly: [`docs/v2/cost_and_business_impact.md`](cost_and_business_impact.md).
+
+## Responsible AI and build-vs-buy
+- [`docs/v2/responsible_ai_risk_table.md`](responsible_ai_risk_table.md): risk / failure mode / current
+  mitigation / residual risk / human control for every risk category this project tested or scoped,
+  including the honest disclosure that prompt injection and retrieval poisoning remain unresolved.
+- [`docs/v2/owasp_llm_top10_2025.md`](owasp_llm_top10_2025.md): the completed, non-negotiable OWASP Top 10
+  for LLM Applications (2025) test pass — all 10 categories, all evidenced, $0 cost, including the
+  self-caught correction of a false "13.6% fabricated citation" finding down to zero once the check was
+  fixed.
+- [`docs/v2/build_vs_buy.md`](build_vs_buy.md): what was rented (commodity models/embeddings) vs. owned
+  (policy logic, safety controls, evaluation harness, business-logic tools) across every architectural
+  layer, and why.
+- [`docs/v2/synthetic_data_provenance.md`](synthetic_data_provenance.md): exactly how the dataset was
+  generated (generator, model, seed, hardening rounds, freeze process), its honest limitations, and how
+  leakage was prevented.
+- [`docs/v2/reproducibility_and_repo_map.md`](reproducibility_and_repo_map.md): every command needed to
+  run this repo, which ones cost money, and a map of every top-level directory.
+- [`docs/v2/FINAL_REPORT.md`](FINAL_REPORT.md): the ~1,200-word decision-flow report (problem → dataset →
+  baselines → retrieval diagnosis → workflow/agent gate → official architecture → final test → failure
+  analysis → guarded-agent research → cost trade-off → Responsible AI → conclusion), naming only the
+  pivotal experiments; everything else stays in this index.
+- [`docs/v2/demo_script.md`](demo_script.md): the four verified cases (plus one honestly-shown failed
+  architecture) to walk through in the `ui/` demo, instead of scrolling the full case list.
 
 **If asked "what does the system do," the honest answer is the selective resolver, exactly as frozen.**
-The guarded agent is the better, proven candidate to replace it, pending a deliberate freeze decision.
+The guarded agent is the strongest candidate to replace it, pending a deliberate decision to create a
+fresh, untouched holdout and freeze it before this candidate sees it.
+
+## Two architecture diagrams, clean (item 53)
+
+**Diagram A — official frozen architecture (Exp 30/32):**
+```
+Claim
+ -> deterministic extraction/rules
+ -> conclusive?
+      -> yes: deterministic decision
+      -> no: M4 RAG + enterprise facts + single-shot LLM
+ -> decision / human escalation
+```
+
+**Diagram B — guarded candidate (Exp 40-52):**
+```
+Claim
+ -> agent orchestration
+ -> domain-specific compliance tools
+ -> tool-computed disposition
+ -> disposition gate
+ -> LLM cannot override reliable tool decision
+ -> human escalation when unresolved/conflicting
+```
+**Diagram B is a candidate — not independently final-tested**, and per the cost analysis above, not
+currently the preferred operating architecture despite its accuracy/FAR profile (see
+`docs/v2/cost_and_business_impact.md`).
 
 ## The flow, end to end
 
@@ -149,7 +244,9 @@ Exp 34: rebuild as a full agent → WORSE than a fixed workflow (4/13 vs 7/13)
                                    ▼
                  44/70 dev (62.9%) AND 21/30 validation (70.0%)
                           0% false approvals on both
-                 ── beats the frozen system's own dev number ──
+       ── beats the frozen system's own dev accuracy by 1 point, at matching FAR ──
+       ── but escalates ~1.5-1.8x more often; a full cost model finds it is NOT
+          yet the cheaper design operationally (docs/v2/cost_and_business_impact.md) ──
 ```
 
 ## Full experiment index
@@ -159,19 +256,19 @@ Exp 34: rebuild as a full agent → WORSE than a fixed workflow (4/13 vs 7/13)
 |---|---|---|
 | 0 | Dataset validation + EDA | 0 critical errors; hardened 3x so facts live in free text |
 | 1 | End-to-end sanity | *(stale — pre-hardening)* |
-| 2 | Deterministic rules baseline | Regex-only rules collapse once facts move to free text |
+| 2 | Deterministic rules baseline | Early rule-baseline failures motivated the hardening process; after hardening, regex-only extraction degraded substantially (69%→halved once facts left structured fields) |
 | 3 | Generic LLM, no policy | Confident, unsupported answers |
 | 4A/4B | Long-context feasibility/baseline | Feasible, $0.77/run, doesn't beat RAG |
 | 5–10 | RAG tuning ladder | 600/100 chunking, K=8, dense, M4 metadata filter → Recall@8 0.56 |
-| 11 | Policy oracle | Perfect retrieval only 22→25/70 — **reasoning, not retrieval, is the bottleneck** |
+| 11 | Policy oracle | Perfect retrieval only 22→25/70 — retrieval was not the dominant downstream bottleneck; oracle policy evidence produced only a modest accuracy gain |
 | 12, 12B | Hybrid rules + RAG; router probe | Motivated pulling mechanics into code; proved the routing concept |
 | 13–17 | Component qualification | Missing-info, duplicates, enterprise facts, typed tools — each qualified |
 | 18–20 | Workflow vs. agent | Workflow 64% beats a real agent (7/13, 30% FAR) → **agent gate closed** |
 | 28 | Guardrail suite | Found & fixed a real bug; retrieval-injection logged as open risk |
 | 29 | Abstention/escalation | Quantified risk-coverage behavior |
-| **30** | **Architecture freeze** | **Selective resolver frozen**: 0% FAR, 61% dev |
-| 31 | Cost-to-serve | $0.00043/claim — cost is a non-issue |
-| **32** | **Frozen final test** | **30/50 (60%), 0% FAR** — *(dataset snapshot caveat: see the doc)* |
+| **30** | **Architecture freeze** | **Selective resolver frozen**: 0/52 falsely approved (0% observed FAR), 61% dev |
+| 31 | Cost-to-serve | $0.00043/claim measured — at this pricing and workload, model inference cost was not a material architecture-selection constraint (see the full cost model in the business-impact analysis for the fuller picture including human-review and error costs) |
+| **32** | **Frozen final test** | **30/50 (60%), 0/37 falsely approved (0% observed FAR)** — *(dataset snapshot caveat: see the doc)* |
 | 33 | Failure analysis | 20 errors: 9 reasoning, 5 over-asking, 4 fact gaps, 0 retrieval |
 
 ### Part 2 — the agentic-RAG diagnostic line (Exp 34–39): ruling things out
@@ -180,9 +277,9 @@ Exp 34: rebuild as a full agent → WORSE than a fixed workflow (4/13 vs 7/13)
 | 34 | Agentic RAG rebuild | Worse than the workflow: 4/13, tier-substitution false approval |
 | 35 | Prompt / model / tool-interface isolated | None fixed it alone |
 | 36 | Parallel turns + poka-yoke v2 | Bug fixed for its one target; step-cap hits got worse |
-| 37 | Perfect policy oracle (diagnostic) | Same accuracy, FAR quadrupled — rules out evidence quality |
-| 38 | $0 RAG trace audit | Agent's own queries: 33.6% recall, 0/13 ever re-queried |
-| 39 | Fixed retrieval | Recall improved to 45.4% — **accuracy still fell** |
+| 37 | Perfect policy oracle (diagnostic) | Same accuracy, FAR quadrupled — perfect policy evidence was insufficient to resolve the agent's decision failures, showing retrieval quality alone did not explain the problem |
+| 38 | $0 RAG trace audit | Agent's own queries: 33.6% recall, 0/13 ever re-queried — the agent's self-issued queries were objectively weak, so retrieval was a genuine secondary problem |
+| 39 | Fixed retrieval | Recall improved to 45.4% — accuracy still fell, showing that improving retrieval alone did not improve final decision accuracy: **retrieval and reasoning were separate failure modes** |
 
 ### Part 3 — the fix, and closing the gap (Exp 40–52)
 | # | Experiment | Result |
@@ -192,11 +289,18 @@ Exp 34: rebuild as a full agent → WORSE than a fixed workflow (4/13 vs 7/13)
 | 42 | + project-budget tool | Caught a tool firing on the wrong claim type, live |
 | **43** | Guarded tools, corrected | 11/13 (84.6%) |
 | **44** | Full confirmation | **17/19 (89.5%), 0% FAR** — 6/6 validation cases correct |
-| 45 | Full-dataset extension | *(superseded)* accuracy up, FAR breaks to 11.5% |
-| 46 | + stronger model | Still no: worse accuracy, 30x cost, FAR held at 0% by the guards |
-| **47–52** | **Closing the gap** | 7 more real bugs found and fixed → **44/70 dev + 21/30 validation, 0% FAR on both** |
+| 45 | Full-dataset extension | *(rejected)* accuracy up, FAR breaks to 11.5% |
+| 46 | + stronger model | *(rejected)* worse accuracy, 30x cost; FAR held at 0% by the guards, showing the observed safety improvement was primarily associated with architectural guards rather than model size |
+| 47 | Workflow-reuse denylist | *(rejected — regression)* 46/70, down from Exp 45's 51/70; trusted a tool with the same free-text fragility it was meant to route around |
+| 48 | Allowlist redesign | 45/70, FAR 3.9% — trust only checks independent of hardened free text |
+| 49 | Ground-transport tool | Placeholder-string bug found and fixed live; 40/70 before the fix |
+| 50 | Gift tool + hotel-date fix + merchant-metadata check | 43/70, FAR 1.9% — ties frozen baseline's dev accuracy |
+| 51 | Dev confirmed clean | **44/70 (62.9%), 0/52 falsely approved (0% observed FAR)** |
+| **52** | **Validation run + 7th bug found** | **21/30 validation (70.0%), 0/22 falsely approved (0% observed FAR)** — development-and-validation-selected candidate, not independently validated |
 
-Full detail: `docs/v2/expNN_*.md`.
+Full detail: `docs/v2/expNN_*.md`. Standardized master comparison table (every architecture, every column
+required by the project's reporting standard, every number traced to a `summary.json` file, plus the
+majority-class baseline): [`docs/v2/master_comparison.md`](master_comparison.md).
 
 ## Key findings, distilled
 1. **RAG quality was never the dominant bottleneck** — perfect retrieval barely moves accuracy (Exp 11, 37).
@@ -204,12 +308,17 @@ Full detail: `docs/v2/expNN_*.md`.
 3. **The fix that worked: stop asking the model to decide, give it the answer.** Every point of accuracy gained from Exp 40 onward came from a tool computing the disposition in code, gated so the model can't override it.
 4. **A tool is only safe to trust if its own inputs are reliable** — found and fixed at every level: the model's own reasoning (Exp 33), a poorly-scoped tool (Exp 42), and even a *reused, previously-tested* piece of code (`workflow_v2.decide()`, Exp 47) that turned out to share the same fragile free-text parsing it was meant to route around.
 5. **Validation caught a real bug, and that's it working as intended** — the very first validation run (Exp 51→52) found a missing prerequisite check (`check_hotel_compliance` never verified there was an approved travel request). Fixed, re-verified, re-confirmed — exactly the discipline validation exists for.
-6. **The dataset is not the problem.** The deterministic path scores 100% on unseen final-test data; every improvement this session came from fixing code, never from touching the data.
+6. **The observed evidence does not indicate dataset construction as the primary performance bottleneck.** The deterministic path scores 100% on unseen final-test data; major improvements came from architecture and tool-design changes rather than relabelling the data.
 
 ## Where things stand
-- **Frozen and tested on the real final test:** Exp 30/32 — 30/50, 0% FAR. This is what's shipped.
-- **Fully validated, not yet frozen:** the guarded-agent design (Exp 40-52) for the *entire* claim
-  population — 44/70 dev, 21/30 validation, 0% FAR on both. Beats the frozen design's own dev number.
-- **Not yet done:** a new freeze manifest and a one-shot run against the real final test. That is the
-  next deliberate decision, not something to do implicitly.
+- **Official frozen architecture, tested on the real final test:** Exp 30/32 — 30/50, 0/37 falsely
+  approved (0% observed FAR). This is what's shipped.
+- **Development-and-validation-selected candidate, not yet frozen:** the guarded-agent design (Exp 40-52)
+  for the *entire* claim population — 44/70 dev, 0/52 falsely approved; 21/30 validation, 0/22 falsely
+  approved (0% observed FAR on both splits it has seen). One more correct case than the frozen design's
+  own dev number (43/70) at matching observed safety — see the methodology note above on why this is
+  encouraging validation evidence, not a proven generalization result.
+- **Not yet done:** a decision on whether this candidate's value justifies a new, untouched holdout,
+  frozen before the candidate sees it, and a one-shot run against it labeled Final Evaluation 2 (never a
+  replacement for Exp 32). That is the next deliberate decision, not something to do implicitly.
 - **Budget:** $4.36 of $5.00 spent (raised once this session from the original $3.50 cap).

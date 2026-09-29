@@ -1,20 +1,45 @@
-# ExpenseGuard — Resolves Expense Claims with Evidence
+# ExpenseGuard V2 — Resolves Expense Claims with Evidence
 
 An employee expense claim (a bill + a free-text note, nothing else structured) has to be decided as
-**APPROVE / REJECT / REQUEST_INFORMATION / ESCALATE**, using a 22-document policy corpus, 11 enterprise
-tables, and the note itself — deliberately hardened so decision-critical facts (nights, attendee counts,
-exception references, even the expense category) live only in prose, sometimes beside a sentence that
-states something else. This project experimentally finds the architecture that gets this right, safely.
+**APPROVE / REJECT / REQUEST_INFORMATION / ESCALATE**, using **150 claims** (70 development / 30
+validation / 50 final test), **22+ policy documents**, and **11 enterprise tables** — the note itself
+deliberately hardened so decision-critical facts (nights, attendee counts, exception references, even the
+expense category) live only in prose, sometimes beside a sentence that states something else. This
+project experimentally finds the architecture that gets this right, safely.
 
-**Frozen result (one-shot final test, 50 claims):** selective resolver (deterministic rules, code
-decides when it can, an LLM only for the residual cases) — **30/50 correct (60%), 0% false approvals.**
-The single-shot LLM step it falls back to is the one weak component (28.6% accurate on its own), and
-most of this project's later experiments exist to diagnose and fix exactly that.
+**Official architecture: Exp 30, the selective resolver** — deterministic rules decide whenever they can
+(the deterministic path); an LLM handles only the residual cases it can't. **Official final evaluation:
+Exp 32**, the one-shot, hash-manifest-verified run against the 50-claim held-out final test:
 
-**Best validated design (not yet frozen):** the same routing, but the residual step is a bounded agent
-using tools that compute the policy disposition in code instead of asking the model to judge it —
-**44/70 dev (62.9%) and 21/30 validation (70.0%), 0% false approvals on both.** Full diagnostic story,
-every experiment, and the flowchart of how this was found: [docs/v2/README.md](docs/v2/README.md).
+| Metric | Value |
+|---|---|
+| Correct/N | **30/50 = 60%** |
+| Observed false approvals | **0/37 non-approvable cases (0% observed FAR)** |
+| Deterministic path | **22/22 (100%)** |
+| LLM residual path | **8/28 (28.6%)** |
+
+The LLM-residual step is the one weak component this architecture relies on, and most of this project's
+later experiments (Exp 34 onward) exist to diagnose and fix exactly that.
+
+**Headline finding: the best-performing AI architecture was not the best operating architecture.**
+ExpenseGuard found that safe automation must be judged jointly on accuracy, false approvals, escalation
+burden, and total cost-to-serve — not on accuracy or FAR alone. A post-final guarded-agent candidate
+(Exp 34-52) replaces the residual LLM step with a bounded agent whose tools compute the policy disposition
+in code, and on the splits it has been evaluated on — 44/70 dev, 0/52 falsely approved; 21/30 validation,
+0/22 falsely approved (0% observed FAR on both) — it beats the frozen architecture's own development
+accuracy (43/70) by one point at matching FAR. **But it escalates 1.5-1.8x more often** (34% vs. 19-22%),
+and a risk-adjusted cost model ([docs/v2/cost_and_business_impact.md](docs/v2/cost_and_business_impact.md))
+finds its total expected operating cost is *higher* than the frozen design's at every scale tested (low,
+base, and high claim-volume scenarios), because the added human-review load outweighs its accuracy and
+AI-cost advantages. It is also a **development-and-validation-selected candidate**, not an independently
+validated architecture — its design was changed in direct response to what the validation run revealed
+(see the methodology note in [docs/v2/README.md](docs/v2/README.md)). **It has never been run against the
+final test and carries no freeze manifest.** Given the cost finding, a new frozen holdout for this
+candidate is not currently justified — see the held-out-set decision in the cost doc — so Exp 30/32 remains
+the sole official result and the frozen selective resolver remains the preferred operating architecture.
+
+Full diagnostic story, every experiment, and the flowchart of how this was found:
+[docs/v2/README.md](docs/v2/README.md). Business problem and scope: [problem.md](problem.md).
 
 ## Layout
 - `ExpenseGuard_V2_DATASET/` the dataset: 150 claims (70 dev / 30 validation / 50 final test), 22 policy

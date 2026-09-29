@@ -1,9 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
+
+// search_policy_corpus's `excerpts` field is one big string: every retrieved chunk concatenated,
+// each preceded by a "[doc_id | region ... | effective ...]" header. Split them back apart so the UI
+// can show a clean, collapsed list instead of dumping the whole blob as raw JSON.
+function parseChunks(excerpts) {
+  if (typeof excerpts !== "string" || !excerpts.trim()) return [];
+  return excerpts
+    .split(/\n\n(?=\[)/)
+    .map((block) => {
+      const m = block.match(/^\[(.+?)\]\n([\s\S]*)$/);
+      if (!m) return { header: "", text: block };
+      return { header: m[1], text: m[2] };
+    })
+    .filter((c) => c.text.trim());
+}
+
+function ChunkList({ excerpts, nChunks }) {
+  const [expanded, setExpanded] = useState(false);
+  const chunks = parseChunks(excerpts);
+  const count = nChunks ?? chunks.length;
+  if (!chunks.length) return <span>{count} chunk(s) retrieved</span>;
+  return (
+    <div>
+      <button className="chunk-toggle" onClick={() => setExpanded((v) => !v)}>
+        {expanded ? "▾" : "▸"} {count} chunk{count === 1 ? "" : "s"} retrieved — {expanded ? "hide" : "show"}
+      </button>
+      {expanded && (
+        <div className="chunk-list">
+          {chunks.map((c, i) => (
+            <div className="chunk-card" key={i}>
+              <div className="chunk-head">{c.header || `chunk ${i + 1}`}</div>
+              <div className="chunk-text">{c.text.length > 260 ? c.text.slice(0, 260) + "…" : c.text}</div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function summarizeObs(step) {
   if (step.error) return <span style={{ color: "var(--bad)" }}>error: {step.error}</span>;
   const d = step.data;
   if (d && typeof d === "object" && !Array.isArray(d)) {
+    if (typeof d.excerpts === "string") {
+      return <ChunkList excerpts={d.excerpts} nChunks={d.n_chunks} />;
+    }
     if (d.policy_disposition) {
       return (
         <span>

@@ -1,6 +1,15 @@
 import React, { useMemo, useState } from "react";
 import DesignPanel from "./DesignPanel.jsx";
 
+// Verified against real saved predictions (not picked from memory) — see docs/v2/demo_script.md.
+const RECOMMENDED = [
+  { id: "X2-060", label: "Deterministic, easy", note: "$0, no LLM call" },
+  { id: "X2-006", label: "RAG / evidence case", note: "retrieval-grounded LLM call" },
+  { id: "X2-005", label: "Guarded-tool agent", note: "the case debugged across 5 prior experiments" },
+  { id: "X2-059", label: "Human review / escalation", note: "correctly routed, not a failure" },
+  { id: "X2-026", label: "A failed architecture, shown honestly", note: "gpt-4o regressed here — toggle live model to gpt-4o to reproduce" }
+];
+
 export default function Explorer({ cases }) {
   const [query, setQuery] = useState("");
   const [split, setSplit] = useState("ALL");
@@ -23,6 +32,17 @@ export default function Explorer({ cases }) {
   return (
     <div className="explorer">
       <div className="sidebar">
+        <div className="recommended">
+          <div className="recommended-label">Start here — 5 verified cases</div>
+          {RECOMMENDED.map((r) => (
+            <div key={r.id} className={`rec-row ${selectedId === r.id ? "selected" : ""}`} onClick={() => setSelectedId(r.id)}>
+              <div>
+                <span className="rec-id">{r.id}</span> <span className="rec-label">{r.label}</span>
+              </div>
+              <div className="rec-note">{r.note}</div>
+            </div>
+          ))}
+        </div>
         <div className="search">
           <input placeholder="Search case id or merchant…" value={query} onChange={(e) => setQuery(e.target.value)} />
         </div>

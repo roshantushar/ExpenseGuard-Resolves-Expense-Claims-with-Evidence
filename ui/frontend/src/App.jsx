@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Overview from "./components/Overview.jsx";
 import Explorer from "./components/Explorer.jsx";
-import StoryTimeline from "./components/StoryTimeline.jsx";
+import BuildDetails from "./components/BuildDetails.jsx";
 
 const TABS = [
-  { id: "overview", label: "Overview" },
+  { id: "overview", label: "Overview & Story" },
   { id: "explorer", label: "Case Explorer" },
-  { id: "story", label: "Experiment Story" }
+  { id: "build", label: "Build & Architecture" }
 ];
 
 export default function App() {
@@ -50,7 +50,7 @@ export default function App() {
         {!loadError && !cases && <div className="detail">Loading {cases ? "" : "cases…"}</div>}
         {!loadError && cases && tab === "overview" && <Overview cases={cases} />}
         {!loadError && cases && tab === "explorer" && <Explorer cases={cases} />}
-        {!loadError && cases && tab === "story" && <StoryTimeline />}
+        {!loadError && cases && tab === "build" && <BuildDetails />}
       </div>
     </div>
   );

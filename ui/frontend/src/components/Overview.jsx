@@ -1,5 +1,12 @@
 import React, { useMemo } from "react";
 import FlowChart from "./FlowChart.jsx";
+import Competitors from "./Competitors.jsx";
+import ErrorAnalysis from "./ErrorAnalysis.jsx";
+import CostAtScale from "./CostAtScale.jsx";
+import LadderChart from "./LadderChart.jsx";
+import RiskTable from "./RiskTable.jsx";
+import useReveal from "../hooks/useReveal.js";
+import { ACTS } from "../storyData.js";
 
 function stats(cases, key, split) {
   const rows = split ? cases.filter((c) => c.split === split) : cases;
@@ -8,7 +15,7 @@ function stats(cases, key, split) {
   const approvableWrongApprovals = rows.filter((c) => c[key].decision === "APPROVE" && c.ground_truth.expected_decision !== "APPROVE").length;
   const nonApprovable = rows.filter((c) => c.ground_truth.expected_decision !== "APPROVE").length;
   const far = nonApprovable ? (100 * approvableWrongApprovals) / nonApprovable : 0;
-  return { n, correct, pct: n ? ((100 * correct) / n).toFixed(1) : "0.0", far: far.toFixed(1) };
+  return { n, correct, pct: n ? ((100 * correct) / n).toFixed(1) : "0.0", far: far.toFixed(1), farCount: approvableWrongApprovals, farDenom: nonApprovable };
 }
 
 const StatCard = ({ label, s, tone }) => (
@@ -18,10 +25,48 @@ const StatCard = ({ label, s, tone }) => (
       {s.correct}/{s.n}
     </div>
     <div className="label">
-      {s.pct}% · FAR {s.far}%
+      {s.pct}% · FAR {s.farCount}/{s.farDenom} = {s.far}%
     </div>
   </div>
 );
+
+const BADGES = [
+  { n: "52+", l: "experiments run" },
+  { n: "150", l: "claims, 22+ policies, 11 tables" },
+  { n: "7", l: "real live-found bugs, fixed" },
+  { n: "0", l: "observed false approvals (official)" },
+  { n: "10/10", l: "OWASP LLM categories tested" },
+  { n: "$4.65", l: "total API spend, all of it" }
+];
+
+function ActCard({ act, index }) {
+  const [ref, visible] = useReveal();
+  return (
+    <div ref={ref} className={`act-row ${visible ? "in" : ""}`}>
+      <div className="act-dot-col">
+        <div className="act-dot">{index + 1}</div>
+        {index < ACTS.length - 1 && <div className="act-line" />}
+      </div>
+      <div className="act-card">
+        <h3>{act.title}</h3>
+        <div style={{ marginBottom: 10 }}>
+          {act.tags.map((t) => (
+            <span className="tag" key={t}>
+              {t}
+            </span>
+          ))}
+        </div>
+        <ul className="bullets">
+          {act.points.map((p, i) => (
+            <li key={i} className={p.startsWith("⟶") ? "punchline" : ""}>
+              {p.replace(/^⟶\s*/, "")}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
 
 export default function Overview({ cases }) {
   const frozenDev = useMemo(() => stats(cases, "frozen", "DEVELOPMENT"), [cases]);
@@ -33,100 +78,157 @@ export default function Overview({ cases }) {
 
   return (
     <div className="overview">
-      <h1>The problem</h1>
+      <div className="overview-inner">
+      <h1>The problem, in one sentence</h1>
       <p className="lede">
-        An employee expense claim — a bill and a free-text note, nothing else structured — has to be
-        decided as <b>APPROVE / REJECT / REQUEST_INFORMATION / ESCALATE</b>, using a 22-document policy
-        corpus, 11 enterprise tables, and the note itself, deliberately hardened so decision-critical
-        facts (nights, attendee counts, exception references, even the expense category) live only in
-        prose — sometimes next to a sentence that states something else entirely.
+        Given an expense claim — a bill and a free-text note, nothing else structured — decide whether it's
+        safe to <b>APPROVE</b>, <b>REJECT</b>, <b>REQUEST_INFORMATION</b>, or <b>ESCALATE</b> it to a human —
+        and never confidently approve a claim that should not have been approved.
+      </p>
+      <div className="badge-strip">
+        {BADGES.map((b) => (
+          <div className="badge-stat" key={b.l}>
+            <div className="badge-n">{b.n}</div>
+            <div className="badge-l">{b.l}</div>
+          </div>
+        ))}
+      </div>
+
+      <h1 style={{ marginTop: 36 }}>Who this is for</h1>
+      <div className="persona-grid">
+        <div className="persona-card primary">
+          <div className="persona-role">Primary user</div>
+          <div className="persona-name">Maya — Corporate Finance Expense Reviewer</div>
+          <ul className="bullets">
+            <li>Today: manually inspects policy, travel records, approvals, exceptions, prior claims, merchant data — for every claim</li>
+            <li>With ExpenseGuard: only sees claims that genuinely need her — missing evidence, conflicting evidence, ambiguity, or a policy-mandated review</li>
+            <li>Evidence is already assembled by the time it reaches her</li>
+          </ul>
+        </div>
+        <div className="persona-card">
+          <div className="persona-role">Secondary beneficiary</div>
+          <div className="persona-name">The employee submitting the claim</div>
+          <ul className="bullets">
+            <li>Faster resolution on routine claims</li>
+            <li>A specific request when something's missing, not a vague "more info needed"</li>
+            <li>An evidence-backed reason whenever a claim is rejected or escalated</li>
+          </ul>
+        </div>
+      </div>
+      <p className="lede" style={{ fontSize: 12.5 }}>
+        External industry estimate (GBTA Foundation, not a measured result): manual processing costs ~$58 /
+        20 min per report; 19% contain errors, costing a further $52 / 18 min to correct. See{" "}
+        <code>problem.md</code> §2.
       </p>
 
-      <h1 style={{ marginTop: 32 }}>How a claim actually gets decided</h1>
+      <h1 style={{ marginTop: 36 }}>How a claim actually gets decided</h1>
       <FlowChart />
 
-      <h1 style={{ marginTop: 32 }}>About this project</h1>
+      <h1 style={{ marginTop: 36 }}>Climbing the complexity ladder — only when justified</h1>
+      <p className="lede" style={{ fontSize: 13 }}>
+        Every rung below was measured, not assumed. Higher accuracy alone was never enough to win.
+      </p>
+      <LadderChart />
+
+      <h1 style={{ marginTop: 36 }}>Who else does this, and what's different here</h1>
+      <Competitors />
+
+      <h1 style={{ marginTop: 36 }}>About this project</h1>
       <div className="about-grid">
         <div className="about-card">
           <h4>What was actually tried</h4>
-          <p>
-            Over 50 experiments: tuning retrieval, building a deterministic rule engine, a fixed tool
-            workflow, three generations of a ReAct agent, and dozens of targeted bug hunts — each one
-            changing exactly one variable and measuring the result, never assumed.
-          </p>
+          <ul className="bullets">
+            <li>Retrieval tuning ladder (chunking, top-K, retriever, metadata filter)</li>
+            <li>A deterministic rule engine, hardened and re-tested 3 times</li>
+            <li>A fixed, pre-declared tool workflow</li>
+            <li>Three generations of a ReAct agent</li>
+            <li>Dozens of targeted live bug hunts — one variable changed at a time, always measured</li>
+          </ul>
         </div>
         <div className="about-card">
           <h4>What actually mattered</h4>
-          <p>
-            Retrieval quality was never the bottleneck — handing the model perfect evidence barely moved
-            accuracy. The real fix was moving decisions out of the model's hands into code wherever
-            possible, and gating the model so it can't override a tool that already had the right answer.
-          </p>
+          <ul className="bullets">
+            <li>Retrieval was never the bottleneck — perfect evidence barely moved accuracy</li>
+            <li>The real fix: move decisions out of the model's hands into code</li>
+            <li>Gate the model so it can't override a tool that already had the right answer</li>
+          </ul>
         </div>
         <div className="about-card">
           <h4>What's actually shipped</h4>
-          <p>
-            The frozen design (left branch of the diagram above): deterministic rules decide whenever
-            they can, and a single-shot LLM handles the rest. Tested exactly once against 50 held-out
-            claims, hash-manifest-verified: 30/50 correct, 0% false approvals.
-          </p>
+          <ul className="bullets">
+            <li>Deterministic rules decide whenever they can</li>
+            <li>A single-shot LLM handles the rest</li>
+            <li>Tested once, frozen, hash-manifest-verified: 30/50 correct, 0 observed false approvals</li>
+          </ul>
         </div>
         <div className="about-card">
-          <h4>What's better, but not yet frozen</h4>
-          <p>
-            The guarded agent replaces that single-shot LLM step with a bounded agent whose tools compute
-            the decision in code. It beats the frozen design's own accuracy on development and validation
-            claims at matching safety — but has never been run against the real final test as an official
-            result.
-          </p>
+          <h4>The twist</h4>
+          <ul className="bullets">
+            <li>A guarded agent scored higher on accuracy at matching safety</li>
+            <li>But it escalates far more often — a full cost model</li>
+            <li>Result: more expensive to operate than the frozen design, at every scale</li>
+          </ul>
         </div>
       </div>
 
-      <h1 style={{ marginTop: 32 }}>Governance &amp; security alignment</h1>
+      <h1 style={{ marginTop: 36 }}>Where the frozen system got it wrong — error analysis</h1>
+      <ErrorAnalysis />
+
+      <h1 style={{ marginTop: 36 }}>What each architecture actually costs, at scale</h1>
+      <CostAtScale />
+
+      <h1 style={{ marginTop: 36 }}>Governance &amp; security alignment</h1>
       <p className="lede" style={{ fontSize: 13 }}>
-        Framed against recognized frameworks — not a compliance certification, but an honest mapping of
-        what was actually built and tested to the risk categories they name.
+        Framed against recognized frameworks — an honest mapping of what was tested, not a compliance
+        certification. All 10 OWASP Top 10 for LLM Applications (2025) categories have real test evidence.
       </p>
       <div className="about-grid">
         <div className="about-card">
-          <h4>OWASP Top 10 for LLM Applications — LLM06: Excessive Agency</h4>
-          <p>
-            Directly and concretely mitigated: every tool is read-only, bounded by a step cap and call
-            deduplication, and — the core mechanism — the disposition gate (Exp 41) structurally prevents
-            the model from overriding a tool that already computed the correct answer, with domain guards
-            (Exp 43) restricting each tool to only the claim types it actually applies to.
-          </p>
+          <h4>LLM06: Excessive Agency — mitigated</h4>
+          <ul className="bullets">
+            <li>Every tool is read-only, bounded by a step cap and call deduplication</li>
+            <li>Disposition gate structurally prevents overriding a tool with the correct answer</li>
+            <li>Domain guards restrict each tool to only the claim types it applies to</li>
+          </ul>
         </div>
         <div className="about-card">
-          <h4>OWASP Top 10 for LLM Applications — LLM01: Prompt Injection</h4>
-          <p>
-            Identified and adversarially tested (Exp 28: injection, fake authority, malicious tool-embedded
-            text), with a prompt-level defense in place (retrieved and user text is treated as data, never
-            instructions). <b>Not fully solved</b>: Exp 28 found retrieval-text injection can still defeat
-            that defense, and this remains a documented, disclosed open risk rather than a mitigated one.
-          </p>
+          <h4>LLM01: Prompt Injection — not fully solved</h4>
+          <ul className="bullets">
+            <li>Adversarially tested (Exp 28): injection, fake authority, malicious tool-embedded text</li>
+            <li>Retrieved/user text is treated as data, never instructions</li>
+            <li><b>Retrieval-text injection can still defeat that defense</b> — disclosed, not hidden</li>
+          </ul>
         </div>
         <div className="about-card">
-          <h4>Human oversight (Singapore IMDA / EU AI Act principles)</h4>
-          <p>
-            ESCALATE is a first-class, deliberately safe outcome, not a failure — any claim the system
-            can't resolve with confidence routes to a human reviewer by design. The frozen architecture
-            was chosen specifically because it drives false approvals to 0%, at the cost of some raw
-            accuracy, over a more "accurate" design that approved bad claims 13.5% of the time.
-          </p>
+          <h4>Human oversight (IMDA / EU AI Act principles)</h4>
+          <ul className="bullets">
+            <li>ESCALATE is a first-class, deliberately safe outcome, not a failure</li>
+            <li>Frozen architecture chosen specifically to drive false approvals to 0%</li>
+            <li>Traded some raw accuracy for that — a "more accurate" design approved bad claims 13.5% of the time</li>
+          </ul>
         </div>
         <div className="about-card">
           <h4>Transparency &amp; auditability</h4>
-          <p>
-            Every decision's full evidence trail — retrieved clauses, resolved facts, every tool call —
-            is logged and inspectable; this UI is that transparency mechanism made visible. Ground truth
-            is never read by runtime code (enforced by automated leakage tests), so no decision path can
-            see the answer it's being graded against.
-          </p>
+          <ul className="bullets">
+            <li>Every retrieved clause, resolved fact, and tool call is logged and inspectable</li>
+            <li>This UI is that transparency mechanism made visible</li>
+            <li>Ground truth is never read by runtime code — enforced by automated leakage tests</li>
+          </ul>
         </div>
       </div>
 
-      <h1 style={{ marginTop: 32 }}>Two designs, live numbers from this export</h1>
+      <h1 style={{ marginTop: 36 }}>Full risk table — risk → mitigation → residual risk → human control</h1>
+      <p className="lede" style={{ fontSize: 13 }}>
+        14 risk categories. Click a row to expand. A disclaimer is not a mitigation — every row states what
+        was actually built, including where the residual risk is real and unsolved.
+      </p>
+      <RiskTable />
+
+      <h1 style={{ marginTop: 36 }}>Two designs, live numbers from this export</h1>
+      <p className="lede" style={{ fontSize: 13 }}>
+        <b>The target, stated explicitly:</b> 0 observed false approvals on the evaluation population, at
+        the best accuracy achievable without violating that constraint — never "maximize accuracy" alone.
+      </p>
       <div className="stat-grid">
         <StatCard label="Frozen · dev" s={frozenDev} />
         <StatCard label="Frozen · validation" s={frozenVal} />
@@ -137,12 +239,21 @@ export default function Overview({ cases }) {
       </div>
       <p className="lede" style={{ fontSize: 13 }}>
         The frozen design is the one actually shipped — tested once, officially, against the real
-        held-out final test. The guarded agent is the best-validated candidate to replace its weak
-        residual step: it beats the frozen design on development and validation at matching safety, but
-        its final-test number here is a first-ever, demo-only look — not an official result, and not yet
-        debugged to the same safety standard on that split. Open any case in <b>Case Explorer</b> to see
-        exactly how each one arrived at its answer.
+        held-out final test. Open any case in <b>Case Explorer</b> to see exactly how each one arrived at
+        its answer.
       </p>
+
+      <h1 style={{ marginTop: 44 }}>The full story, from data to decision</h1>
+      <p className="lede" style={{ fontSize: 13, marginBottom: 24 }}>
+        Every number below traces back to a saved result file and a written doc under <code>docs/v2/</code>.
+        Scroll down.
+      </p>
+      <div className="timeline">
+        {ACTS.map((act, i) => (
+          <ActCard act={act} index={i} key={act.title} />
+        ))}
+      </div>
+      </div>
     </div>
   );
 }

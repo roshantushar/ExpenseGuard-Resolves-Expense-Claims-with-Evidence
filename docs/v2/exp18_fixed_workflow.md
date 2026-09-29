@@ -8,11 +8,13 @@ Notebook: `notebooks/v2/exp18_fixed_workflow.ipynb`. Code: `src/workflow_v2.py` 
 
 **Three-way comparison (isolates orchestration overhead):**
 
-| System | Policy logic | Enterprise access | Correct/N | FAR | Escalate recall |
-|---|---|---|---|---|---|
-| 2c | same | direct table access | 48/70 (69%) | 11.5% | 0.647 |
-| **Exp 18** | same | **typed tools + guardrails** | **45/70 (64%)** | 13.5% | 0.529 |
-| R2 (Exp 12B) | mixed | tools/resolved facts + LLM residual | 43/70 (61%) | 0% | 0.765 |
+| System | Policy logic | Enterprise access | Correct/N | False approvals / non-approvable | FAR | Escalate recall |
+|---|---|---|---|---|---|---|
+| 2c | same | direct table access | 48/70 (69%) | 6/52 | 11.5% | 0.647 |
+| **Exp 18** | same | **typed tools + guardrails** | **45/70 (64%)** | 7/52 | 13.5% | 0.529 |
+| R2 (Exp 12B) | mixed | tools/resolved facts + LLM residual | 43/70 (61%) | 0/52 | 0.0% | 0.765 |
+
+(Population: full 70-claim development split; 52 of the 70 are ground-truth non-`APPROVE`.)
 
 **Group C (13 agent-candidate claims), the key output for Exp 19:** 2c 8/13, **Exp 18 7/13**, R2 7/13. Group B (workflow, 39): 2c 31, Exp 18 28, R2 27.
 

@@ -1,5 +1,13 @@
 > **Stale:** this run used the earlier (easy) V2 with structured form fields. It has not been re-run on the semantic edition.
 
+**This is the project's required smallest first version**: one claim in, the correct policy clauses
+handed to it directly (no retrieval, no rules, no agent), one LLM call, one structured decision out.
+**Defined before running it, what counted as "working"**: every output schema-valid JSON with a decision
+from the four allowed values, zero unhandled errors across all 9 cases and both models. That bar was met
+(18/18 valid, 0 errors) — accuracy was explicitly not the bar this experiment was testing (see Findings
+below), only end-to-end feasibility. Every later layer (RAG, rules, workflow, agent) was added only after
+this slice was confirmed working.
+
 # V2 Exp 1 — End-to-end sanity
 
 Notebook: `notebooks/v2/exp01_sanity.ipynb`. Results: `results/v2/development/exp01_slice/` (earlier run kept in `exp01_slice_previous_run/`). Plot: `results/v2/plots/exp01_slice_development.png`.

@@ -1,3 +1,13 @@
+> **Correction (post-hoc documentation audit):** this doc originally described only one of the two
+> non-correct cases in this 13-case run. `results/v2/development/exp43_guarded_tools_final/summary.json`'s
+> confusion matrix shows two errors, not one: `REQUEST_INFORMATION→APPROVE` (X2-037, the false approval
+> described below) and `REJECT→REQUEST_INFORMATION` (**X2-095**, `DYNAMIC_DEEP_HOTEL_CHAIN`, ground truth
+> REJECT — the system asked for more information instead of rejecting outright). The 11/13 headline count
+> was always correct; the prose was incomplete. X2-095 is not a tool failure or an escalation — it is a
+> case where `check_hotel_compliance` returned a disposition milder than warranted, a miscalibration
+> distinct from X2-037's missing-rule gap, and it is not counted in this run's FAR (a REJECT misread as
+> REQUEST_INFORMATION is not a false approval).
+
 # Exp 43 — Guarded tools: 11/13 (84.6%), the best result this session
 
 Combines Exp 41's disposition gate with two domain guards found necessary live in Exp 42: neither
@@ -29,7 +39,7 @@ reasoning badly on its own). The same domain-guard idea already applied to `chec
 
 **11/13 — 31 points above the fixed workflow, more than double Exp 34's original agentic-RAG baseline.**
 
-## The one remaining error is a genuinely missing rule, not a reasoning failure
+## Error 1 of 2 (X2-037): a genuinely missing rule, not a reasoning failure
 `X2-037`'s gold reason is "Remaining budget is smaller than the claim; budget-owner approval requested"
 (clauses `APR-5.1`/`APR-5.2`) — a **different** CIRC-26-02 nuance than the one `check_project_budget`
 implements: it compares the claim amount against the cost centre's *remaining* budget
@@ -39,6 +49,12 @@ this system can answer it, and the model defaults to APPROVE (a false approval �
 this run). This is a concrete, scoped gap: add a `budget_sufficient` check to `check_project_budget`
 comparing `amount_sgd` against `budget_sgd - committed_sgd`, returning `policy_disposition:
 "REQUEST_INFORMATION"` (per `APR-5.1`) when insufficient.
+
+## Error 2 of 2 (X2-095): a miscalibrated disposition, not counted in FAR
+Ground truth REJECT; the system returned REQUEST_INFORMATION. `check_hotel_compliance` treated a
+condition that should have been a firm rejection as merely missing evidence — milder than warranted, but
+not unsafe (it does not admit a claim that should have been rejected; it routes it toward more scrutiny
+instead). No dedicated fix was scoped for this at the time; it remains open alongside X2-037.
 
 ## Honest caveats (unchanged from Exp 40/41)
 - **n=13.** 84.6% on 13 cases is 2 points different from 76.9% (one case) — this needs confirmation on

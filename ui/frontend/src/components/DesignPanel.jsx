@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import TraceStep from "./TraceStep.jsx";
+import PipelineDiagram from "./PipelineDiagram.jsx";
 
 const MODELS = ["openai/gpt-4o-mini", "openai/gpt-4o"];
 
@@ -44,6 +45,8 @@ export default function DesignPanel({ title, subtitle, caseObj, designKey, backe
         {decision && <span className={`decision-pill ${decision}`}>{decision}</span>}
       </div>
 
+      {shown && <PipelineDiagram design={designKey} result={shown} />}
+
       <div className="live-panel">
         <label style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <input type="checkbox" checked={live} onChange={(e) => setLive(e.target.checked)} />
@@ -74,7 +77,8 @@ export default function DesignPanel({ title, subtitle, caseObj, designKey, backe
           {shown.turns !== undefined && shown.turns !== null && (
             <div style={{ fontSize: 11.5, color: "var(--text-dim)", marginTop: 8 }}>{shown.turns} agent turn(s)</div>
           )}
-          <div style={{ marginTop: 12 }}>
+          <div style={{ marginTop: 16 }}>
+            {(shown.trace || []).length > 0 && <div className="trace-label">Live execution trace for this run</div>}
             {(shown.trace || []).length === 0 ? (
               <div style={{ fontSize: 12.5, color: "var(--text-dim)" }}>
                 {shown.path === "deterministic" ? "Resolved deterministically — no LLM call, no tools." : "No tool trace for this path."}
