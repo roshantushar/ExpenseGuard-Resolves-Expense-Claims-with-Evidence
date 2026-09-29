@@ -1,4 +1,15 @@
 import React from "react";
+import ExperimentLog from "./ExperimentLog.jsx";
+
+const GUARD_TOOLS = [
+  { tool: "check_approval", does: "Validates approval type, level, expiry, and delegation status against enterprise records — never trusts a raw row without checking it.", exp: "Exp 17, 40" },
+  { tool: "check_hotel_compliance", does: "Computes the nightly-rate ceiling from check-in/check-out dates (never a model-supplied night count), checks for a valid exception, and verifies an approved travel request actually exists (TRV-1.1).", exp: "Exp 40, 43, 50, 52" },
+  { tool: "check_project_budget", does: "Compares the claim against remaining cost-centre budget (not just OPEN/CLOSED status), gated to only fire on SOFTWARE-type claims.", exp: "Exp 42, 43, 44" },
+  { tool: "check_meal_compliance", does: "Applies employee/client meal ceilings, deriving client-meal status from multiple signals rather than one fragile field.", exp: "Exp 47, 48" },
+  { tool: "check_ground_transport_compliance", does: "Applies ground-transport policy; normalizes placeholder strings like \"unknown\" so they aren't mistaken for real values.", exp: "Exp 49" },
+  { tool: "check_gift_compliance", does: "Applies per-gift and annual gift ceilings from model-supplied recipient/gift-form fields.", exp: "Exp 50" },
+  { tool: "check_workflow_compliance", does: "Allowlisted fallback for categories with no dedicated tool — trusts only checks with no dependency on hardened free text (duplicates, submission window, restricted merchant, mandatory documentation).", exp: "Exp 47 (rejected denylist) → Exp 48 (adopted allowlist)" },
+];
 
 const LAYERS = [
   { layer: "UI / interface", choice: "Own", tech: "React + Vite frontend, stdlib-only Python backend", reason: "Needs to expose this project's own trace format and disposition gate — no off-the-shelf tool understands those concepts." },
@@ -69,6 +80,43 @@ export default function BuildDetails() {
         ))}
       </div>
 
+      <h1 style={{ marginTop: 36 }}>The 7 guarded tools (guarded-agent candidate)</h1>
+      <p className="lede" style={{ fontSize: 13 }}>
+        Each tool computes a policy disposition in code rather than asking the model to judge it, and each
+        is domain-guarded to only the claim types it actually applies to (Exp 43) — the fix for two tools
+        found firing on the wrong claim type in Exp 42.
+      </p>
+      <div className="build-table">
+        <div className="build-row" style={{ gridTemplateColumns: "220px 1fr 160px" }}>
+          <div style={{ fontWeight: 700, fontSize: 11, textTransform: "uppercase", color: "var(--text-dim)" }}>Tool</div>
+          <div style={{ fontWeight: 700, fontSize: 11, textTransform: "uppercase", color: "var(--text-dim)" }}>What it computes</div>
+          <div style={{ fontWeight: 700, fontSize: 11, textTransform: "uppercase", color: "var(--text-dim)" }}>Built/fixed in</div>
+        </div>
+        {GUARD_TOOLS.map((t) => (
+          <div className="build-row" style={{ gridTemplateColumns: "220px 1fr 160px" }} key={t.tool}>
+            <div className="mono-cell">{t.tool}</div>
+            <div>{t.does}</div>
+            <div className="mono-cell">{t.exp}</div>
+          </div>
+        ))}
+      </div>
+
+      <h1 style={{ marginTop: 36 }}>The disposition gate — mechanism and real usage rate</h1>
+      <ul className="bullets">
+        <li>If a tool already returned a <code>policy_disposition</code> and the model's own final decision disagrees, the tool wins (Exp 41)</li>
+        <li>If two tools disagree with each other, that's a genuine conflict — the safe answer is ESCALATE, not a guess</li>
+        <li>Separately, any model-attempted APPROVE is checked against every tool's signal before being accepted at all (Exp 40's <code>gate_approve</code>)</li>
+      </ul>
+      <div className="callout-card">
+        <div className="risk-k" style={{ marginBottom: 6 }}>How often does it actually fire? Audited directly, not estimated.</div>
+        <ul className="bullets">
+          <li>2 of 51 residual dev+validation cases (3.9%) — computed by re-running the real pipeline at $0 marginal cost (cached replay)</li>
+          <li>Both times: the model wanted to APPROVE, the gate overrode it, and the override matched ground truth exactly</li>
+          <li>This is rare but load-bearing: without it, this design's 0% FAR would have been ~3.9% instead</li>
+          <li>Full audit: <code>docs/v2/gate_override_audit.md</code></li>
+        </ul>
+      </div>
+
       <h1 style={{ marginTop: 36 }}>Measured cost per claim</h1>
       <div className="kv-grid">
         {COST.map((c) => (
@@ -135,6 +183,14 @@ python3 scripts/v2/cost_model.py                 # $0 — regenerates the cost/b
           </ul>
         </div>
       </div>
+
+      <h1 style={{ marginTop: 40 }}>The full experiment log</h1>
+      <p className="lede" style={{ fontSize: 13 }}>
+        Every one of the 45+ experiments this project ran, in order: what was tested, what was actually
+        found, and why that finding led to the next experiment rather than a different one. Click a phase,
+        then click any experiment to expand it.
+      </p>
+      <ExperimentLog />
       </div>
     </div>
   );

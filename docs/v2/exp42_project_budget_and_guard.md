@@ -8,10 +8,10 @@ development claims. Cost: $0.027 (plus $0.001 for a 3-case confirmation re-run a
 
 ## Result: same accuracy, worse safety — a new tool without a domain guard
 
-| System | Correct/13 | FAR |
-|---|---|---|
-| + disposition gate (Exp 41) | 9 (69.2%) | 0.0% |
-| **+ project-budget tool, unguarded (this experiment)** | 9 (69.2%) | **10.0%** |
+| System | Correct/13 | FAR | HRR |
+|---|---|---|---|
+| + disposition gate (Exp 41) | 9 (69.2%) | 0.0% | 53.8% |
+| **+ project-budget tool, unguarded (this experiment)** | 9 (69.2%) | **10.0%** | 61.5% |
 
 Accuracy held, but a live regression appeared immediately: `check_project_budget` had no domain guard
 (unlike `check_hotel_compliance`, already guarded after an earlier incident) and fired on **two hotel

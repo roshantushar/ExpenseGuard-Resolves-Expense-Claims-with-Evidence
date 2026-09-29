@@ -24,6 +24,7 @@ disposition gate.
 | LLM-residual v2 (guarded agent) | 21/36 | **58.3%** (vs. Exp 30's original 13/36 = 36.1%) |
 | **Overall** | **51/70 (72.9%)** | vs. Exp 30's 43/70 (61.4%) |
 | **FAR** | **6/52 = 11.5%** | vs. Exp 30's **0/52 = 0.0%** |
+| **HRR** | **21.4%** | vs. Exp 30's 18.6% |
 
 Residual-path accuracy nearly doubled system-wide, not just on the 19 cases it was tuned against — real
 evidence the guarded-tool pattern generalizes. But false approvals rose to 11.5%, and every single one

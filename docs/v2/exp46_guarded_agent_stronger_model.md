@@ -8,10 +8,10 @@ cases — 30x).
 
 ## Result
 
-| Model | Correct/19 | FAR | Avg turns | Cost |
-|---|---|---|---|---|
-| gpt-4o-mini (Exp 44) | **17 (89.5%)** | 0% | ~6 | $0.021 |
-| gpt-4o (this experiment) | 15 (79.0%) | **0%** | 3.89 | $0.628 |
+| Model | Correct/19 | FAR | HRR | Avg turns | Cost |
+|---|---|---|---|---|---|
+| gpt-4o-mini (Exp 44) | **17 (89.5%)** | 0% | 47.4% | ~6 | $0.021 |
+| gpt-4o (this experiment) | 15 (79.0%) | **0%** | 42.1% | 3.89 | $0.628 |
 
 **The stronger model did worse, at 30x the cost — but false approvals stayed at 0% either way.** That
 second point is the real finding: Exp 35B showed the *unguarded* agent's FAR jumping to 50% with gpt-4o

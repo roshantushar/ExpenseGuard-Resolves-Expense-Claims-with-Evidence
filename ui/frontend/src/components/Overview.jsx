@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import FlowChart from "./FlowChart.jsx";
+import BeforeAfterCases from "./BeforeAfterCases.jsx";
 import Competitors from "./Competitors.jsx";
 import ErrorAnalysis from "./ErrorAnalysis.jsx";
 import CostAtScale from "./CostAtScale.jsx";
@@ -120,6 +121,13 @@ export default function Overview({ cases }) {
         20 min per report; 19% contain errors, costing a further $52 / 18 min to correct. See{" "}
         <code>problem.md</code> §2.
       </p>
+
+      <h1 style={{ marginTop: 36 }}>Four real decisions, before and after</h1>
+      <p className="lede" style={{ fontSize: 13 }}>
+        One real case per outcome, step by step — how it would be handled manually vs. with ExpenseGuard.
+        Every case is real, verified against the actual saved results, not staged for effect.
+      </p>
+      <BeforeAfterCases />
 
       <h1 style={{ marginTop: 36 }}>How a claim actually gets decided</h1>
       <FlowChart />

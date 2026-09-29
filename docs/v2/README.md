@@ -71,7 +71,11 @@ significant, architecture-shaping findings.
   every tool is read-only, bounded by a step cap and call deduplication (Exp 20, 28), and — the core
   mechanism — Exp 41's disposition gate structurally prevents the model from overriding a tool that
   already computed the correct answer, with Exp 43's domain guards restricting each tool to only the
-  claim types it actually applies to.
+  claim types it actually applies to. **How often does this actually fire?** Audited directly (not
+  estimated): 2 of 51 residual dev+validation cases (3.9%) — rare, but both times it fired it corrected a
+  would-be false approval exactly to ground truth. See
+  [`docs/v2/gate_override_audit.md`](gate_override_audit.md) for the full, honest accounting of what this
+  does and doesn't prove about how "agentic" the design really is.
 - **OWASP Top 10 for LLM Applications — LLM01: Prompt Injection.** Identified and adversarially tested
   (Exp 28: injection, fake authority, malicious tool-embedded text), with a prompt-level defense in
   place (retrieved/user text is treated as data, never instructions). **Not fully solved**: Exp 28 found
@@ -108,6 +112,10 @@ Full automation and cost breakdown, with the "does the complexity earn its keep"
   for LLM Applications (2025) test pass — all 10 categories, all evidenced, $0 cost, including the
   self-caught correction of a false "13.6% fabricated citation" finding down to zero once the check was
   fixed.
+- [`docs/v2/gate_override_audit.md`](gate_override_audit.md): does the disposition gate actually fire, and
+  does it matter when it does? Audited directly at $0 cost (cached replay): 2/51 residual dev+validation
+  cases (3.9%), both correcting a would-be false approval exactly to ground truth — a rare but load-bearing
+  safety backstop, not the primary source of the design's accuracy.
 - [`docs/v2/build_vs_buy.md`](build_vs_buy.md): what was rented (commodity models/embeddings) vs. owned
   (policy logic, safety controls, evaluation harness, business-logic tools) across every architectural
   layer, and why.
@@ -288,7 +296,7 @@ Exp 34: rebuild as a full agent → WORSE than a fixed workflow (4/13 vs 7/13)
 | **41** | Disposition gate ($0) | Beats the workflow: 9/13, 0% FAR |
 | 42 | + project-budget tool | Caught a tool firing on the wrong claim type, live |
 | **43** | Guarded tools, corrected | 11/13 (84.6%) |
-| **44** | Full confirmation | **17/19 (89.5%), 0% FAR** — 6/6 validation cases correct |
+| **44** | Best result on its own slice (not yet confirmed beyond it) | **17/19 (89.5%), 0% FAR** on `C_AGENT_DYNAMIC` only — broke immediately when generalized (Exp 45) |
 | 45 | Full-dataset extension | *(rejected)* accuracy up, FAR breaks to 11.5% |
 | 46 | + stronger model | *(rejected)* worse accuracy, 30x cost; FAR held at 0% by the guards, showing the observed safety improvement was primarily associated with architectural guards rather than model size |
 | 47 | Workflow-reuse denylist | *(rejected — regression)* 46/70, down from Exp 45's 51/70; trusted a tool with the same free-text fragility it was meant to route around |

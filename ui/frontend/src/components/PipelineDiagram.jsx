@@ -1,4 +1,5 @@
 import React from "react";
+import { COSTS } from "../architectureData.js";
 
 const GUARD_TOOLS = new Set([
   "check_workflow_compliance", "check_approval", "check_meal_compliance", "check_hotel_compliance",
@@ -110,6 +111,22 @@ export default function PipelineDiagram({ design, result }) {
       )}
       <Arrow />
       <Stage n="out" title="Output" choice="decision + policy_evidence + explanation, fully logged and inspectable" reached terminal />
+      {(() => {
+        const c = COSTS[design === "frozen" ? "Frozen resolver — dev" : "Guarded agent (candidate)"];
+        if (!c) return null;
+        return (
+          <div className="mini-flow-cost" style={{ marginTop: 10 }}>
+            <div className="risk-k">This architecture's business cost per 1,000 claims (base scenario)</div>
+            <div className="cost-mini-grid">
+              <div><span className="cost-mini-k">AI cost</span><span className="cost-mini-v">${c.ai.toFixed(2)}</span></div>
+              <div><span className="cost-mini-k">Human review</span><span className="cost-mini-v">${c.human.toLocaleString()}</span></div>
+              <div><span className="cost-mini-k">False approval</span><span className="cost-mini-v">${c.falseApproval.toLocaleString()}</span></div>
+              <div className="cost-mini-total"><span className="cost-mini-k">Total</span><span className="cost-mini-v">${c.total.toLocaleString()}</span></div>
+            </div>
+            <div className="cost-mini-meta">Architecture-level figure (not specific to this one case) · escalation rate {c.escalation} · FAR {c.far} · full model: docs/v2/cost_and_business_impact.md</div>
+          </div>
+        );
+      })()}
     </div>
   );
 }

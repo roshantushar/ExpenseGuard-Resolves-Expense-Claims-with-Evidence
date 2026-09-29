@@ -1,4 +1,12 @@
-# Exp 44 — Full confirmation: 17/19 (89.5%), 0% FAR, validation touched once
+> **Correction, per external review:** "Full confirmation" overstated this result even at the time, and
+> Exp 45/47 subsequently proved it — extending this exact design beyond the `C_AGENT_DYNAMIC` family it
+> was built for broke immediately (Exp 45: FAR rose to 11.5%; Exp 47: a further regression). The accurate
+> label for this result is **the best result on the narrow slice it was built for, unconfirmed beyond
+> that** — not a validated, generalizing design. It took Exp 47-52 (seven more real bugs, found live) to
+> actually reach a safe, full-dataset version. Read this doc as a checkpoint in that process, not as a
+> standalone claim.
+
+# Exp 44 — Best result on its own slice (not yet confirmed beyond it): 17/19 (89.5%), 0% FAR
 
 Closes X2-037's gap (a `check_project_budget` extension implementing APR-5.1's remaining-budget and
 budget-owner-approval rule, plus APR-5.2's parent-project cost-centre lookup) and confirms the whole

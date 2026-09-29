@@ -12,14 +12,16 @@ $0.015 — the cheapest agent run of the whole session, because it also needed t
 
 ## Result: the first agent to match the fixed workflow
 
-| System | Correct/13 | FAR | Avg turns | Step-cap hits | Cost |
-|---|---|---|---|---|---|
-| Fixed workflow (Exp 18) | 7 (53.8%) | 10.0% | — | — | $0 |
-| Old agent, pre-fetched RAG (Exp 20) | 7 (53.8%) | 30.0% | 5.69 | 3/13 | $0.043 |
-| Agentic RAG v1 (Exp 34) | 4 (30.8%) | 10.0% | 7.31 | 5/13 | $0.038 |
-| Agentic RAG v2, parallel + poka-yoke ceiling (Exp 36) | 4 (30.8%) | 0.0% | 7.38 | 8/13 | $0.046 |
-| True two-hop RAG + poka-yoke ceiling (Exp 39) | 3 (23.1%) | 20.0% | — | — | $0.038 |
-| **Decision-in-code (Exp 40)** | **7 (53.8%)** | **0.0%** | **5.54** | **0/13** | **$0.015** |
+| System | Correct/13 | FAR | HRR | Avg turns | Step-cap hits | Cost |
+|---|---|---|---|---|---|---|
+| Fixed workflow (Exp 18) | 7 (53.8%) | 10.0% | 30.8% | — | — | $0 |
+| Old agent, pre-fetched RAG (Exp 20) | 7 (53.8%) | 30.0% | 23.1% | 5.69 | 3/13 | $0.043 |
+| Agentic RAG v1 (Exp 34) | 4 (30.8%) | 10.0% | 38.5% | 7.31 | 5/13 | $0.038 |
+| Agentic RAG v2, parallel + poka-yoke ceiling (Exp 36) | 4 (30.8%) | 0.0% | 61.5% | 7.38 | 8/13 | $0.046 |
+| True two-hop RAG + poka-yoke ceiling (Exp 39) | 3 (23.1%) | 20.0% | 7.7% | — | — | $0.038 |
+| **Decision-in-code (Exp 40)** | **7 (53.8%)** | **0.0%** | **30.8%** | **5.54** | **0/13** | **$0.015** |
+
+HRR here means the fraction of the 13 cases the system itself chose to ESCALATE — a high HRR (e.g. Exp 36's 61.5%) is not automatically good: it can mean the system is correctly deferring hard cases, or it can mean 0% FAR was bought cheaply by escalating almost everything ambiguous. Compare against each row's own accuracy to tell which.
 
 **Exp 40 ties the fixed workflow's accuracy and beats it on every safety and efficiency metric.** Zero
 false approvals (vs. the workflow's 10%), zero step-cap hits (vs. Exp 34's 5/13 and Exp 36's 8/13),

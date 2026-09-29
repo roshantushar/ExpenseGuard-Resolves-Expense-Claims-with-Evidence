@@ -54,6 +54,7 @@ body {
 .stat-card .value { font-size: 26px; font-weight: 700; margin-top: 6px; }
 .stat-card.good .value { color: var(--good); }
 .stat-card.bad .value { color: var(--bad); }
+.stat-card.warn .value { color: var(--warn); }
 .flow {
   background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 24px;
   font-family: var(--mono); font-size: 12.5px; line-height: 1.7; white-space: pre; overflow-x: auto; color: #c9d1e0;
@@ -255,6 +256,75 @@ body {
 .ladder-status-diagnostic { color: var(--warn); }
 .ladder-status-official { color: var(--good); }
 .ladder-status-candidate { color: var(--accent); }
+.ladder-row.clickable { cursor: pointer; padding: 4px 6px; border-radius: 8px; }
+.ladder-row.clickable:hover { background: var(--panel-2); }
+.ladder-caret { color: var(--accent); font-size: 10px; }
+
+/* ---- per-architecture mini flowchart (ladder chart expand) ---- */
+.mini-flow { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin: 6px 0 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 800px) { .mini-flow { grid-template-columns: 1fr; } }
+.mini-flow-exp { grid-column: 1 / -1; font-family: var(--mono); font-size: 11px; color: var(--accent); font-weight: 700; margin-bottom: -6px; }
+.mini-flow-steps { display: flex; flex-direction: column; align-items: center; }
+.mini-flow-step { background: var(--panel-2); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 11.5px; text-align: center; width: 100%; }
+.mini-flow-arrow { color: var(--border); font-size: 13px; padding: 2px 0; }
+.mini-flow-hp { padding-top: 4px; }
+.mini-flow-cost { grid-column: 1 / -1; border-top: 1px solid var(--border); padding-top: 12px; margin-top: 4px; }
+.cost-mini-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 8px; }
+@media (max-width: 700px) { .cost-mini-grid { grid-template-columns: repeat(2, 1fr); } }
+.cost-mini-grid > div { background: var(--panel-2); border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; gap: 2px; }
+.cost-mini-total { border: 1px solid var(--accent) !important; background: var(--accent-dim) !important; }
+.cost-mini-k { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.3px; }
+.cost-mini-v { font-size: 14px; font-weight: 700; }
+.cost-mini-meta { font-size: 11px; color: var(--text-dim); margin-top: 8px; }
+.cost-mini-warn { font-size: 11px; color: var(--warn); margin-top: 6px; font-style: italic; }
+
+/* ---- full experiment log (build & architecture tab) ---- */
+.exp-phase-head { cursor: pointer; padding: 10px 14px; background: var(--panel-2); border: 1px solid var(--border); border-radius: 10px; font-size: 13px; display: flex; gap: 8px; align-items: baseline; }
+.exp-phase-head:hover { border-color: var(--accent); }
+.exp-phase-range { color: var(--text-dim); font-size: 11.5px; }
+.exp-list { display: flex; flex-direction: column; gap: 5px; margin-top: 8px; }
+.exp-row { border: 1px solid var(--border); border-radius: 8px; background: var(--panel); overflow: hidden; }
+.exp-summary { display: flex; gap: 10px; align-items: baseline; padding: 8px 12px; cursor: pointer; }
+.exp-summary:hover { background: var(--panel-2); }
+.exp-toggle { color: var(--accent); font-size: 10.5px; flex-shrink: 0; }
+.exp-num { font-family: var(--mono); font-size: 11px; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+.exp-title { font-size: 12.5px; }
+.exp-detail { padding: 4px 14px 14px 34px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+@media (max-width: 900px) { .exp-detail { grid-template-columns: 1fr; } }
+.exp-detail p { font-size: 12px; color: #d6dae3; line-height: 1.55; margin: 0; }
+
+/* ---- before/after four-cases section ---- */
+.ba-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.ba-tab { border: 1px solid var(--border); cursor: pointer; opacity: 0.5; font-family: inherit; }
+.ba-tab-active { opacity: 1; outline: 2px solid var(--accent); }
+.ba-claim { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; margin-bottom: 14px; }
+.ba-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; align-items: start; }
+@media (max-width: 800px) { .ba-grid { grid-template-columns: 1fr; } .ba-arrow-mid { display: none; } }
+.ba-col { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; }
+.ba-before { border-color: #4a3a2a; }
+.ba-after { border-color: #245a44; }
+.ba-col-head { font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dim); font-weight: 700; margin-bottom: 8px; }
+.ba-before .ba-col-head { color: var(--warn); }
+.ba-after .ba-col-head { color: var(--good); }
+.ba-arrow-mid { color: var(--accent); font-size: 22px; align-self: center; }
+
+/* ---- Project Story tab ---- */
+.project-story .overview-inner { max-width: 1100px; }
+.ps-nav { position: sticky; top: 0; z-index: 5; background: var(--panel); border-bottom: 1px solid var(--border); }
+.ps-nav-inner { display: flex; flex-wrap: wrap; gap: 2px; padding: 8px 24px; max-width: 1100px; margin: 0 auto; align-items: center; }
+.ps-nav-link { font-size: 11px; color: var(--text-dim); text-decoration: none; padding: 4px 8px; border-radius: 6px; white-space: nowrap; }
+.ps-nav-link:hover { background: var(--panel-2); color: var(--text); }
+.ps-present-btn { margin-left: auto; background: var(--accent); color: white; border: none; border-radius: 8px; padding: 6px 14px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.ps-section { padding-top: 46px; margin-top: -46px; margin-bottom: 48px; scroll-margin-top: 46px; }
+.ps-section h1 { border-bottom: 2px solid var(--accent-dim); padding-bottom: 10px; }
+
+/* Presentation mode: hide the app's own tab chrome, enlarge type, keep only Project Story content and nav */
+.presentation-mode { font-size: 17px; }
+.presentation-mode .ps-section h1 { font-size: 40px; }
+.presentation-mode .lede { font-size: 18px !important; }
+.presentation-mode .bullets li { font-size: 16px !important; }
+.presentation-mode .badge-n { font-size: 30px; }
+body:has(.presentation-mode) .topbar { display: none; }
 
 /* ---- responsible-ai risk table (accordion) ---- */
 .risk-table { display: flex; flex-direction: column; gap: 6px; }

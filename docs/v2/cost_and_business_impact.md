@@ -135,6 +135,34 @@ blind result is Exp 32's 30/50 (60%), 0 observed false approvals; the guarded ag
 technically interesting — higher accuracy, matching safety — but operationally rejected because its
 escalation burden increases total cost.
 
+## Full architecture-ladder cost (base scenario), not just the three shipped candidates
+
+Extending the same measured methodology (automated-decision rate, escalation rate, FAR-among-automated,
+each computed from real predictions and ground truth) to every rung on the complexity ladder, not just the
+three main candidates above — base scenario only ($35/hr reviewer, 6 min/review, $150/false approval):
+
+| Architecture | Escalation rate | FAR | AI cost/1,000 | Human-review cost/1,000 | False-approval cost/1,000 | **Total/1,000** |
+|---|---|---|---|---|---|---|
+| Rules only (Exp 2c) | 15.7% | 6/41 | $0.0 | $3,692.86 | $12,857.14 | **$16,550.00** |
+| Fixed workflow (Exp 18) | 14.3% | 7/42 | $0.0 | $3,357.14 | $15,000.00 | **$18,357.14** |
+| Hybrid rules+RAG (Exp 12) | 20.0% | 2/38 | $0.83 | $4,700.00 | $4,285.71 | **$8,986.55** |
+| Policy oracle (Exp 11, diagnostic) | 2.9% | 0/50 | $0.29 | $671.43 | $0.0 | **$671.72** |
+| Tuned RAG (Exp 9) | 4.3% | 0/49 | $0.76 | $1,007.14 | $0.0 | **$1,007.90** |
+| Long context (Exp 4B) | 0.0% | 0/52 | $3.87 | $0.0 | $0.0 | **$3.87** |
+| Naive RAG (Exp 5) | 1.4% | 0/52 | $0.25 | $335.71 | $0.0 | **$335.97** |
+| Frozen resolver — dev (Exp 30) | 18.6% | 0/39 | $0.43 | $4,364.29 | $0.0 | **$4,364.71** |
+| Frozen resolver — final test (Exp 32) | 22.0% | 0/27 | $0.46 | $5,170.00 | $0.0 | **$5,170.46** |
+| Guarded agent — dev (Exp 52) | 34.3% | 0/35 | $1.27 | $8,057.14 | $0.0 | **$8,058.42** |
+
+**Read the near-zero totals for long context, naive RAG, and the policy oracle with real caution, not as a
+win.** Their low cost here comes from near-zero escalation and zero *false-approval* cost in this cost
+model — but this model still does not price false-rejection or unnecessary-information-request cost (the
+same disclosed limitation as above), and their raw accuracy was 30-36%, far below the frozen design's
+60-61%. A system that rarely escalates and rarely falsely approves but is also rarely *correct* is not
+cheap in any complete sense — it is simply not yet penalized by the components this model currently prices.
+The policy oracle additionally requires ground truth to run at all and cannot be deployed. These rows exist
+to show the full ladder, not to argue any of them beat the frozen design.
+
 ## Does the guarded agent's additional complexity earn its keep? (item 36)
 
 **Not on this cost model, at every scenario scale tested.** The official frozen resolver's total expected

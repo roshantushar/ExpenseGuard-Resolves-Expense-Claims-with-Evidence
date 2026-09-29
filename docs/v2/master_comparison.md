@@ -28,7 +28,7 @@ measured reason).
 | 40 | Decision-in-code (first guarded tool) | `C_AGENT_DYNAMIC` dev subset | 13 | 7/13 | 53.8% | 0/10 | 0.0% | 30.8% | gpt-4o-mini | $0.015 | rejected (superseded, step toward 41/43) |
 | 41 | + disposition gate | `C_AGENT_DYNAMIC` dev subset | 13 | 9/13 | 69.2% | 0/10 | 0.0% | 53.8% | gpt-4o-mini | $0 (cached) | rejected (superseded by 43) |
 | 43 | + domain guards (corrected) | `C_AGENT_DYNAMIC` dev subset | 13 | 11/13 | 84.6% | 1/10 | 10.0% | 46.2% | gpt-4o-mini | $0.027 | rejected (superseded by 44) |
-| **44** | **Full confirmation, dev+validation** | `C_AGENT_DYNAMIC` dev+val | 19 | 17/19 | 89.5% | 0/15 | 0.0% | 47.4% | gpt-4o-mini | $0.021 | candidate (subset only) |
+| **44** | **Best result on its own slice, unconfirmed beyond it** | `C_AGENT_DYNAMIC` dev+val | 19 | 17/19 | 89.5% | 0/15 | 0.0% | 47.4% | gpt-4o-mini | $0.021 | rejected as a generalizing claim — broke on Exp 45 |
 | 45 | Guarded design extended to full dataset | Dev | 70 | 51/70 | 72.9% | 6/52 | 11.5% | 21.4% | gpt-4o-mini | $0.086 | rejected (unsafe FAR) |
 | 46 | + stronger model (gpt-4o) | `C_AGENT_DYNAMIC` dev+val | 19 | 15/19 | 78.9% | 0/15 | 0.0% | 42.1% | gpt-4o | $0.694 | rejected (worse accuracy, 30x cost) |
 | 47 | Workflow-reuse denylist, full dataset | Dev | 70 | 46/70 | 65.7% | 3/52 | 5.8% | 25.7% | gpt-4o-mini | $0.056 | rejected (regression) |

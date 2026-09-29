@@ -28,6 +28,18 @@ C.load_env()
 _ALL_CASES = {c["case_id"]: c for split in ("DEVELOPMENT", "VALIDATION", "FINAL_TEST") for c in llm_exp.cases_for(split)}
 CASES_JSON = ROOT / "ui" / "frontend" / "public" / "data" / "cases.json"
 
+# Project Story tab's "Project Documents" links -- an explicit allowlist, not arbitrary filesystem access,
+# so /docs/<path> can never be used to read anything outside this fixed list.
+DOC_ALLOWLIST = {
+    "README.md", "problem.md", "CHANGELOG_FINAL.md",
+    "docs/v2/FINAL_REPORT.md", "docs/v2/README.md", "docs/v2/exp30_selective_router.md",
+    "docs/v2/exp32_final_test.md", "docs/v2/exp33_failure_analysis.md",
+    "docs/v2/cost_and_business_impact.md", "docs/v2/build_vs_buy.md",
+    "docs/v2/responsible_ai_risk_table.md", "docs/v2/owasp_llm_top10_2025.md",
+    "docs/v2/synthetic_data_provenance.md", "docs/v2/reproducibility_and_repo_map.md",
+    "docs/v2/demo_script.md", "docs/v2/gate_override_audit.md",
+}
+
 
 def _clean_trace(trace):
     out = []
@@ -72,6 +84,16 @@ class Handler(BaseHTTPRequestHandler):
         if self.path == "/api/cases":
             self.send_response(200); self.send_header("Content-Type", "application/json"); self._cors(); self.end_headers()
             self.wfile.write(CASES_JSON.read_bytes())
+            return
+        if self.path.startswith("/docs/"):
+            rel = self.path[len("/docs/"):]
+            if rel not in DOC_ALLOWLIST:
+                self.send_response(404); self._cors(); self.end_headers(); return
+            fpath = ROOT / rel
+            if not fpath.exists():
+                self.send_response(404); self._cors(); self.end_headers(); return
+            self.send_response(200); self.send_header("Content-Type", "text/plain; charset=utf-8"); self._cors(); self.end_headers()
+            self.wfile.write(fpath.read_bytes())
             return
         self.send_response(404); self._cors(); self.end_headers()
 
