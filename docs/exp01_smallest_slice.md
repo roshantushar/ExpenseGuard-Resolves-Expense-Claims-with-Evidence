@@ -1,4 +1,4 @@
-> **Stale:** this run used the earlier (easy) V2 with structured form fields. It has not been re-run on the semantic edition.
+> **Stale:** this run used the earlier (easy) dataset round with structured form fields. It has not been re-run on the semantic edition.
 
 **This is the project's required smallest first version**: one claim in, the correct policy clauses
 handed to it directly (no retrieval, no rules, no agent), one LLM call, one structured decision out.
@@ -8,9 +8,9 @@ from the four allowed values, zero unhandled errors across all 9 cases and both 
 below), only end-to-end feasibility. Every later layer (RAG, rules, workflow, agent) was added only after
 this slice was confirmed working.
 
-# V2 Exp 1 — End-to-end sanity
+# Exp 1 — End-to-end sanity
 
-Notebook: `notebooks/v2/exp01_sanity.ipynb`. Results: `results/v2/development/exp01_slice/` (earlier run kept in `exp01_slice_previous_run/`). Plot: `results/v2/plots/exp01_slice_development.png`.
+Notebook: `notebooks/exp01_sanity.ipynb`. Results: `results/current/development/exp01_slice/` (earlier run kept in `exp01_slice_previous_run/`). Plot: `results/current/plots/exp01_slice_development.png`.
 
 **Hypothesis:** a claim plus its correct policy clauses can be turned into a schema-valid decision by a model, end to end.
 

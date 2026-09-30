@@ -1,7 +1,7 @@
 // Business cost per 1,000 claims, base scenario ($35/hr reviewer, 6 min/review, $150/false approval) —
 // computed directly from each rung's real predictions + ground truth, same methodology as
-// scripts/v2/cost_model.py (verified: Fixed workflow/Frozen/Guarded rows match that script's output
-// exactly). See docs/v2/cost_and_business_impact.md's "Full architecture-ladder cost" section.
+// scripts/cost_model.py (verified: Fixed workflow/Frozen/Guarded rows match that script's output
+// exactly). See docs/cost_and_business_impact.md's "Full architecture-ladder cost" section.
 export const COSTS = {
   "Rules only": { escalation: "15.7%", far: "6/41", ai: 0.0, human: 3692.86, falseApproval: 12857.14, total: 16550.0 },
   "Fixed workflow": { escalation: "14.3%", far: "7/42", ai: 0.0, human: 3357.14, falseApproval: 15000.0, total: 18357.14 },
@@ -16,7 +16,7 @@ export const COSTS = {
 };
 
 // Per-architecture pipeline + hyperparameters, one entry per rung shown in LadderChart. Every value
-// traced to a specific experiment doc under docs/v2/ — nothing here is a guess.
+// traced to a specific experiment doc under docs/ — nothing here is a guess.
 export const ARCHITECTURES = {
   "Rules only": {
     exp: "Exp 2c",
@@ -61,7 +61,7 @@ export const ARCHITECTURES = {
   "Frozen resolver — final test": {
     exp: "Exp 32",
     steps: ["Same pipeline as dev, run once", "Hash-manifest-verified before the run", "Decision"],
-    hyperparams: ["Identical config to Exp 30 — frozen before this run, never tuned afterward", "50-claim held-out set — Exp 32 itself ran exactly once, but a later, undisclosed re-run of the pipeline against this split was found by audit (docs/v2/second_touch_disclosure.md); Exp 32's own saved result was not affected"]
+    hyperparams: ["Identical config to Exp 30 — frozen before this run, never tuned afterward", "50-claim held-out set — Exp 32 itself ran exactly once, but a later, undisclosed re-run of the pipeline against this split was found by audit (docs/second_touch_disclosure.md); Exp 32's own saved result was not affected"]
   },
   "Guarded agent (candidate)": {
     exp: "Exp 52",

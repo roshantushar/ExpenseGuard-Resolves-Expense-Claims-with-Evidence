@@ -4,7 +4,7 @@ import csv, hashlib, json, re, shutil, sys
 from collections import Counter
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "ExpenseGuard_V2_DATASET"
+OUT = ROOT / "ExpenseGuard_DATASET"
 jl = lambda p: [json.loads(l) for l in Path(p).read_text().splitlines() if l.strip()]
 
 
@@ -56,11 +56,11 @@ All: {oc(lambda g: True)}. Development: {oc(lambda g: g['split'] == 'DEVELOPMENT
 - **Mid-year circulars** amend values held in other documents without naming the category in their headings; the controlling value depends on the transaction date.
 - **Stale distractors**: a historical-schedules document, an expired 2023 schedule, withdrawn drafts, and worked examples that quote the value current when they were written.
 - **Vocabulary gap**: policy text uses formal terms (ground transportation, accommodation, hospitality); claims say cab, put up, hosted.
-- **Filler with a purpose**: each clause carries two paragraphs of qualitative interpretive guidance (written once by gpt-4o-mini and frozen in `dataset_v2/commentary_cache.json`; validated to contain no numbers, currency codes or new requirements) so relevant text is diluted by realistic prose.
+- **Filler with a purpose**: each clause carries two paragraphs of qualitative interpretive guidance (written once by gpt-4o-mini and frozen in `dataset_generator/commentary_cache.json`; validated to contain no numbers, currency codes or new requirements) so relevant text is diluted by realistic prose.
 - Document list: {', '.join(f"{d['doc_id']} {d['title']}" for d in meta)}.
 
 ## Ground truth
-Every label comes from `dataset_v2/engine.py`, a reference policy engine that reads the same structured schedules (`dataset_v2/world.py`) the policy text is rendered from, so the text and the labels cannot disagree. Thresholds in SGD equivalent use the monthly FX table exactly as the FX policy states, avoiding the raw-amount inconsistencies found in V1. Per case the ground truth records the decision, controlling clause ids (`required_policy_ids`), context clauses (`supporting_policy_ids`), the documents involved, missing fields, the tool path the engine walked, the minimum required tools, branch triggers and the human-review reason for escalations.
+Every label comes from `dataset_generator/engine.py`, a reference policy engine that reads the same structured schedules (`dataset_generator/world.py`) the policy text is rendered from, so the text and the labels cannot disagree. Thresholds in SGD equivalent use the monthly FX table exactly as the FX policy states, avoiding the raw-amount inconsistencies found in V1. Per case the ground truth records the decision, controlling clause ids (`required_policy_ids`), context clauses (`supporting_policy_ids`), the documents involved, missing fields, the tool path the engine walked, the minimum required tools, branch triggers and the human-review reason for escalations.
 
 ## Retrieval difficulty (same retrievers, chunking and query builder on both datasets; recall / all-required-clauses-retrieved)
 | Retriever | V1 (23 chunks) | V2 ({v2['n_chunks']} chunks) |
@@ -76,7 +76,7 @@ voyage-4-lite embeddings, recursive 300/50 chunks. V2 cases need {v2['avg_requir
 {', '.join(f'{k} {v}' for k, v in rows.items())}.
 
 ## Validation
-`python -m dataset_v2.validate` runs {rep['n_checks']} checks ({rep['n_checks'] - rep['n_failed']} pass): split, group and outcome balance, clause existence, schedule values present in the corpus, PDF page count, referential integrity, uniqueness, leakage (labels absent from cases, corpus and tables; challenge cases unmarked), and **reproduction of every label by the reference engine from the packaged files**. Report: `06_docs/validation_report.json`.
+`python -m dataset_generator.validate` runs {rep['n_checks']} checks ({rep['n_checks'] - rep['n_failed']} pass): split, group and outcome balance, clause existence, schedule values present in the corpus, PDF page count, referential integrity, uniqueness, leakage (labels absent from cases, corpus and tables; challenge cases unmarked), and **reproduction of every label by the reference engine from the packaged files**. Report: `06_docs/validation_report.json`.
 
 ## Data boundaries
 Runtime and model-visible: `02_cases`, `01_policy_corpus`, approved read-only tools over `03_enterprise_data`. Evaluator-only: `04_ground_truth_PRIVATE`.
@@ -94,14 +94,14 @@ Runtime and model-visible: `02_cases`, `01_policy_corpus`, approved read-only to
     (OUT / "README.md").write_text(f"""# ExpenseGuard V2 Dataset Package
 
 Start with `DATASET_CARD.md`. Layout: `01_policy_corpus/` (22 documents as markdown plus one PDF), `02_cases/` (150 claims and frozen splits), `03_enterprise_data/` (11 read-only tables), `04_ground_truth_PRIVATE/` (evaluator only), `05_generation/`, `06_docs/` (validation and retrieval-difficulty reports).
-Rebuild: `python -m dataset_v2.build` (deterministic, seed 6202; corpus prose is frozen in `dataset_v2/commentary_cache.json`), then `python -m dataset_v2.validate` and `python -m dataset_v2.measure_retrieval`.
+Rebuild: `python -m dataset_generator.build` (deterministic, seed 6202; corpus prose is frozen in `dataset_generator/commentary_cache.json`), then `python -m dataset_generator.validate` and `python -m dataset_generator.measure_retrieval`.
 Never expose `04_ground_truth_PRIVATE/` to a model, an index or a runtime tool.
 """)
     (OUT / "CURRENT_DATASET_VERSION.md").write_text(f"# Current dataset version\n\nExpenseGuard V2, seed 6202: {len(gt)} claims (40 self-contained / 80 fixed-path / 30 dynamic), {len(meta)} policy documents, {cfg['corpus']['pages']}-page PDF, {cfg['historical_expenses']:,} historical expenses, 70/30/50 frozen split with 15 challenge cases in the final test. The V1 dataset in `ExpenseGuard_FINAL_CURRENT_DATASET/` is unchanged.\n")
-    (OUT / "05_generation" / "README.md").write_text("The generator is the Python package `dataset_v2/` at the repository root: `world.py` (schedules and amendments), `policy_text.py`, `faq.py` and `render.py` (corpus), `engine.py` (reference policy engine that derives every label), `builder.py`, `cases_a.py`, `cases_b.py`, `cases_c.py` and `assemble.py` (scenarios and enterprise state), `build.py`, `validate.py`, `measure_retrieval.py`, `write_docs.py`.\n")
-    (OUT / "05_generation" / "validate_dataset.py").write_text("import runpy, sys\nfrom pathlib import Path\nsys.path.insert(0, str(Path(__file__).resolve().parents[2]))\nrunpy.run_module('dataset_v2.validate', run_name='__main__')\n")
+    (OUT / "05_generation" / "README.md").write_text("The generator is the Python package `dataset_generator/` at the repository root: `world.py` (schedules and amendments), `policy_text.py`, `faq.py` and `render.py` (corpus), `engine.py` (reference policy engine that derives every label), `builder.py`, `cases_a.py`, `cases_b.py`, `cases_c.py` and `assemble.py` (scenarios and enterprise state), `build.py`, `validate.py`, `measure_retrieval.py`, `write_docs.py`.\n")
+    (OUT / "05_generation" / "validate_dataset.py").write_text("import runpy, sys\nfrom pathlib import Path\nsys.path.insert(0, str(Path(__file__).resolve().parents[2]))\nrunpy.run_module('dataset_generator.validate', run_name='__main__')\n")
     (OUT / "SHA256SUMS.txt").write_text("\n".join(f"{hashlib.sha256(p.read_bytes()).hexdigest()}  {p.relative_to(OUT)}" for p in sorted(OUT.rglob("*")) if p.is_file() and p.name != "SHA256SUMS.txt" and p.name != ".DS_Store") + "\n")
-    shutil.copy(OUT / "DATASET_CARD.md", ROOT / "docs" / "dataset_v2_card.md")
+    shutil.copy(OUT / "DATASET_CARD.md", ROOT / "docs" / "dataset_card.md")
     print(card[:3000])
 
 

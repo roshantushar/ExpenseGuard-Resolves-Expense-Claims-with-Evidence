@@ -1,6 +1,6 @@
-# V2 Exp 19 — Agent-necessity audit ($0)
+# Exp 19 — Agent-necessity audit ($0)
 
-Notebook: `notebooks/v2/exp19_agent_audit.ipynb`. Evaluator-side (reads private `branch_trigger`/`tool_path`; never used at runtime). $0.
+Notebook: `notebooks/exp19_agent_audit.ipynb`. Evaluator-side (reads private `branch_trigger`/`tool_path`; never used at runtime). $0.
 
 **Question:** do any of the 13 group-C ("agent-candidate") dev claims genuinely need a model to decide what to look up next?
 

@@ -1,14 +1,14 @@
 """ExpenseGuard V2 - strict dataset validator. Reads only the packaged files, rebuilds the enterprise state from the CSVs and re-derives every label with the reference engine.
-Usage: python -m dataset_v2.validate"""
+Usage: python -m dataset_generator.validate"""
 from __future__ import annotations
 import csv, json, re, sys
 from collections import Counter
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from dataset_v2 import engine, world as W
+from dataset_generator import engine, world as W
 
-OUT = ROOT / "ExpenseGuard_V2_DATASET"
+OUT = ROOT / "ExpenseGuard_DATASET"
 checks = []
 
 

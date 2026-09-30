@@ -10,12 +10,12 @@ cannot chase a discovered id (an exception_id or delegation_id only revealed by 
 and where 4 of the 10 DYNAMIC_HOTEL_DISCOVERY claims are now the V3 RAG-necessity cases (Chennai/Kobe)
 that rules_v2.py and workflow_v2.py cannot resolve via table lookup at all.
 
-Usage: python -m scripts.v2.exp34_agentic_rag
+Usage: python -m scripts.exp34_agentic_rag
 """
 from __future__ import annotations
 import json, sys, time
 from pathlib import Path
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from src import config as C, llm, llm_exp, evaluate, agent, workflow_v2, rules_text as RT, rules_v2 as RV2
 

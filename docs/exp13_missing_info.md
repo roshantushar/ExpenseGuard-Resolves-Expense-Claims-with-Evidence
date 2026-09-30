@@ -1,6 +1,6 @@
-# V2 Exp 13 — Missing-information detection (component qualification, $0)
+# Exp 13 — Missing-information detection (component qualification, $0)
 
-Notebook: `notebooks/v2/exp13_missing_info.ipynb`. Results: `results/v2/development/exp13_missing_info/`. Plot: `results/v2/plots/exp13_missing_info.png`. Cost: $0 (reused predictions from Exp 2, 9, 12, 12B). Development split only.
+Notebook: `notebooks/exp13_missing_info.ipynb`. Results: `results/current/development/exp13_missing_info/`. Plot: `results/current/plots/exp13_missing_info.png`. Cost: $0 (reused predictions from Exp 2, 9, 12, 12B). Development split only.
 
 **Question:** can any system ask for exactly what is missing? 16 positive REQUEST_INFORMATION cases, 54 negative controls, already present in the dev split.
 

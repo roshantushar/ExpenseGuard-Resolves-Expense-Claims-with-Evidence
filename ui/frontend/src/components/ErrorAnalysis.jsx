@@ -1,6 +1,6 @@
 import React from "react";
 
-// Real numbers from docs/v2/exp33_failure_analysis.md / results/v2/final_test/exp33_failure_analysis/
+// Real numbers from docs/exp33_failure_analysis.md / results/current/final_test/exp33_failure_analysis/
 // failure_classification.csv — a manual read of all 20 errors on the frozen final test, not a keyword
 // classifier (Exp 19 showed those can silently mislabel cases).
 const CATEGORIES = [
@@ -61,7 +61,7 @@ export default function ErrorAnalysis() {
       <ul className="bullets" style={{ marginTop: 16 }}>
         <li>A real example: <code>X2-070</code> — 25,000 JPY does not exceed a 45,000 JPY threshold; the model asserted the opposite and rejected for a nonexistent approval requirement</li>
         <li>A real example: <code>X2-002</code> — nightly rate was compliant (303.33 &lt; 350 ceiling), but the model compared the 3-night total against the per-night ceiling and rejected anyway</li>
-        <li>Full per-case breakdown, including every explanation quoted verbatim: <code>docs/v2/exp33_failure_analysis.md</code></li>
+        <li>Full per-case breakdown, including every explanation quoted verbatim: <code>docs/exp33_failure_analysis.md</code></li>
       </ul>
 
       <h3 className="sub-h" style={{ marginTop: 26 }}>The clearest silent failure this project actually found</h3>

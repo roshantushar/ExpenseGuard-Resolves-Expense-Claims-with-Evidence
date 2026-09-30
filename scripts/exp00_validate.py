@@ -3,11 +3,11 @@ from __future__ import annotations
 import json, subprocess, sys
 from collections import Counter
 from pathlib import Path
-ROOT = Path(__file__).resolve().parents[2]; sys.path.insert(0, str(ROOT))
+ROOT = Path(__file__).resolve().parents[1]; sys.path.insert(0, str(ROOT))
 from src import config as C
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 
-r = subprocess.run([sys.executable, "-m", "dataset_v2.validate"], cwd=ROOT, capture_output=True, text=True)
+r = subprocess.run([sys.executable, "-m", "dataset_generator.validate"], cwd=ROOT, capture_output=True, text=True)
 print(r.stdout[-400:])
 rep = json.loads((C.DATA / "06_docs" / "validation_report.json").read_text())
 jl = lambda p: [json.loads(l) for l in Path(p).read_text().splitlines() if l.strip()]

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-// Every number here is copied verbatim from docs/v2/cost_and_business_impact.md (scripts/v2/cost_model.py's
+// Every number here is copied verbatim from docs/cost_and_business_impact.md (scripts/cost_model.py's
 // output) — not recomputed in the browser. Changing the scenario only changes which pre-computed row is
 // shown; it never recalculates anything client-side.
 const SCENARIOS = {

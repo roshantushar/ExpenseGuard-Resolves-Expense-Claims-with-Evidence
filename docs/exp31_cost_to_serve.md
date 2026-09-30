@@ -1,6 +1,6 @@
-# V2 Exp 31 — Cost-to-serve ($0)
+# Exp 31 — Cost-to-serve ($0)
 
-Notebook: `notebooks/v2/exp31_cost_to_serve.ipynb`. Cost: $0 (arithmetic over Exp 30's measured numbers). Development split only.
+Notebook: `notebooks/exp31_cost_to_serve.ipynb`. Cost: $0 (arithmetic over Exp 30's measured numbers). Development split only.
 
 **31A, measured:** deterministic path $0/claim, instant. LLM-residual path **$0.000832/claim, 2,077 ms avg**. Blended: **$0.000428/claim**, 51% of claims invoke the LLM. Scaled: $0.43 / $4.28 / $42.81 at 1k / 10k / 100k claims per month — trivial at every scale.
 

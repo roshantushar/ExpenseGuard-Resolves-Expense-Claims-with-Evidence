@@ -1,5 +1,5 @@
 > **Correction (post-hoc documentation audit):** this doc originally described only one of the two
-> non-correct cases in this 13-case run. `results/v2/development/exp43_guarded_tools_final/summary.json`'s
+> non-correct cases in this 13-case run. `results/current/development/exp43_guarded_tools_final/summary.json`'s
 > confusion matrix shows two errors, not one: `REQUEST_INFORMATION→APPROVE` (X2-037, the false approval
 > described below) and `REJECT→REQUEST_INFORMATION` (**X2-095**, `DYNAMIC_DEEP_HOTEL_CHAIN`, ground truth
 > REJECT — the system asked for more information instead of rejecting outright). The 11/13 headline count
@@ -13,7 +13,7 @@
 Combines Exp 41's disposition gate with two domain guards found necessary live in Exp 42: neither
 `check_hotel_compliance` nor `check_project_budget` originally checked that the claim was actually the
 type of claim they apply to, and both were observed firing on the wrong claim type and returning a
-disposition that didn't belong there. Results: `results/v2/development/exp43_guarded_tools_final/`
+disposition that didn't belong there. Results: `results/current/development/exp43_guarded_tools_final/`
 (10 cases carried from Exp 42's run unchanged; 3 re-run after the second guard fix — X2-005, X2-037,
 X2-089 — since only `check_project_budget`'s behavior changed for those).
 

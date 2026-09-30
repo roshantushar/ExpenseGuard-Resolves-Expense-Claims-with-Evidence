@@ -1,8 +1,8 @@
-# V2 Exp 29 — Abstention and escalation behaviour ($0, evaluator-side)
+# Exp 29 — Abstention and escalation behaviour ($0, evaluator-side)
 
-Notebook: `notebooks/v2/exp29_abstention.ipynb` (results live only in this notebook's own executed cell
-outputs -- no separate `results/v2/` export exists for this experiment; a prior version of this line
-cited `results/v2/development/exp29_abstention/`, which was never written). Cost: $0 (reuses saved
+Notebook: `notebooks/exp29_abstention.ipynb` (results live only in this notebook's own executed cell
+outputs -- no separate `results/current/` export exists for this experiment; a prior version of this line
+cited `results/current/development/exp29_abstention/`, which was never written). Cost: $0 (reuses saved
 predictions and the run log from Exp 2, 9, 12, 12B, 18). Kept separate from Exp 28's security audit.
 
 **Risk-coverage table (development, 70 claims):**

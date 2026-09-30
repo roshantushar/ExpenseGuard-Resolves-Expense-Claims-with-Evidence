@@ -1,5 +1,5 @@
 // Every experiment, in order, with what was tested, what was found, and why that finding led to the
-// next one. Pulled directly from docs/v2/expNN_*.md — nothing paraphrased beyond tightening for bullets.
+// next one. Pulled directly from docs/expNN_*.md — nothing paraphrased beyond tightening for bullets.
 export const PHASES = [
   {
     name: "Phase 1 — build the frozen architecture",

@@ -1,6 +1,6 @@
-# V2 Exp 18 — Fixed workflow (V2 port), $0
+# Exp 18 — Fixed workflow, $0
 
-Notebook: `notebooks/v2/exp18_fixed_workflow.ipynb`. Code: `src/workflow_v2.py` (new), `tests/test_workflow_v2.py` (new), `tests/test_no_leakage.py` (coverage extended). Results: `results/v2/development/exp18_fixed_workflow/`. No LLM calls. Development split only.
+Notebook: `notebooks/exp18_fixed_workflow.ipynb`. Code: `src/workflow_v2.py` (new), `tests/test_workflow_v2.py` (new), `tests/test_no_leakage.py` (coverage extended). Results: `results/current/development/exp18_fixed_workflow/`. No LLM calls. Development split only.
 
 **Question:** does a fixed, pre-declared tool sequence (no model) handle enterprise-evidence cases well, including the 13 "agent-candidate" claims? This is the main agent-feasibility gate.
 

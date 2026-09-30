@@ -24,7 +24,7 @@ class NoLeakage(unittest.TestCase):
                 self.assertIsNone(re.search(rf"import .*\b{ev}\b|from \.{ev}|from \. import .*\b{ev}\b", src), f"{m}.py imports {ev}")
 
     def test_case_and_policy_files_carry_no_labels(self):
-        blob = (ROOT / "ExpenseGuard_V2_DATASET" / "02_cases" / "all_cases.jsonl").read_text()
+        blob = (ROOT / "ExpenseGuard_DATASET" / "02_cases" / "all_cases.jsonl").read_text()
         for bad in ("expected_decision", "required_policy_ids", "architecture_group", "independent_challenge"):
             self.assertNotIn(bad, blob)
 

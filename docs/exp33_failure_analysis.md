@@ -24,9 +24,9 @@ assigned one primary category — a judgement classification, disclosed as such 
 keyword-based classifier can silently mislabel cases; this analysis avoids that failure mode by
 reading each case directly instead of pattern-matching on text).
 
-Full per-case classification: `results/v2/final_test/exp33_failure_analysis/failure_classification.csv`.
-Notebook: `notebooks/v2/exp33_failure_analysis.ipynb`. Plot:
-`results/v2/plots/exp33_failure_categories.png`.
+Full per-case classification: `results/current/final_test/exp33_failure_analysis/failure_classification.csv`.
+Notebook: `notebooks/exp33_failure_analysis.ipynb`. Plot:
+`results/current/plots/exp33_failure_categories.png`.
 
 ## Results
 

@@ -40,5 +40,5 @@ confirmed working via X2-005's agent run.
 ## Why these five and not a notebook scroll
 Each case above is traceable to a specific experiment's saved `predictions.jsonl`, so the walkthrough is
 reproducible from files already in the repo, not curated after the fact for narrative effect. Full traces
-for all five: `ui/` (open by case ID), or directly via `results/v2/development/exp30_selective_router/`,
-`results/v2/development/exp43_guarded_tools_final/`, and `results/v2/development/exp46_guarded_gpt4o/`.
+for all five: `ui/` (open by case ID), or directly via `results/current/development/exp30_selective_router/`,
+`results/current/development/exp43_guarded_tools_final/`, and `results/current/development/exp46_guarded_gpt4o/`.

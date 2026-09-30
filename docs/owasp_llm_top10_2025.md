@@ -8,7 +8,7 @@ through LLM10) matches the actual 2025 edition exactly.
 
 This is the completion of the user's standing, non-negotiable requirement to test all ten categories, not
 just the two (LLM01, LLM06) that had real evidence before this pass. Script:
-`scripts/v2/exp_owasp_llm_top10.py`. Raw output: `results/v2/owasp_llm_top10_2025.json`. **Total cost: $0**
+`scripts/exp_owasp_llm_top10.py`. Raw output: `results/current/owasp_llm_top10_2025.json`. **Total cost: $0**
 — every live adversarial test used the free local model (`llama3.2:3b`); the two data-driven checks
 (LLM05, LLM09) and the two scoped/reasoned categories (LLM04, LLM08) used only saved files, static code
 inspection, or reasoning about the architecture, with zero new API calls, paid or free, beyond the two
@@ -36,4 +36,4 @@ new unmitigated vulnerability, though LLM02/LLM07's "pass" result rests on a par
 than a demonstrated deliberate refusal, which is disclosed above rather than claimed as a clean win.
 
 This replaces every prior "only 2 of 10 tested" statement in this project's docs
-(`docs/v2/README.md`, `docs/v2/responsible_ai_risk_table.md`, `problem.md`).
+(`docs/README.md`, `docs/responsible_ai_risk_table.md`, `problem.md`).

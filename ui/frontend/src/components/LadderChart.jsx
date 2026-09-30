@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ARCHITECTURES, COSTS } from "../architectureData.js";
 
-// Every value copied verbatim from docs/v2/master_comparison.md (traced to a summary.json each). Color
+// Every value copied verbatim from docs/master_comparison.md (traced to a summary.json each). Color
 // signals safety (FAR), not just accuracy — the whole point of this chart is that the tallest bar
 // (rules-only, 68.6%) is the one that got rejected, because it's also the least safe.
 const RUNGS = [
@@ -54,7 +54,7 @@ function MiniFlowchart({ name }) {
           </div>
           <div className="cost-mini-meta">Escalation rate {c.escalation} · FAR {c.far}</div>
           {(name === "Long context" || name === "Naive RAG" || name === "Policy oracle (diag.)") && (
-            <div className="cost-mini-warn">Low total here comes from near-zero escalation, not from being good — raw accuracy on this rung was 30-36%. Not a real win; see docs/v2/cost_and_business_impact.md.</div>
+            <div className="cost-mini-warn">Low total here comes from near-zero escalation, not from being good — raw accuracy on this rung was 30-36%. Not a real win; see docs/cost_and_business_impact.md.</div>
           )}
         </div>
       )}

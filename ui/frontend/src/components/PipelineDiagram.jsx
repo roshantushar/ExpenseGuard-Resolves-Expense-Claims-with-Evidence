@@ -123,7 +123,7 @@ export default function PipelineDiagram({ design, result }) {
               <div><span className="cost-mini-k">False approval</span><span className="cost-mini-v">${c.falseApproval.toLocaleString()}</span></div>
               <div className="cost-mini-total"><span className="cost-mini-k">Total</span><span className="cost-mini-v">${c.total.toLocaleString()}</span></div>
             </div>
-            <div className="cost-mini-meta">Architecture-level figure (not specific to this one case) · escalation rate {c.escalation} · FAR {c.far} · full model: docs/v2/cost_and_business_impact.md</div>
+            <div className="cost-mini-meta">Architecture-level figure (not specific to this one case) · escalation rate {c.escalation} · FAR {c.far} · full model: docs/cost_and_business_impact.md</div>
           </div>
         );
       })()}

@@ -1,7 +1,7 @@
 # Exp 38 — $0 trace audit: when agentic RAG collapses to single-shot RAG
 
 **Cost: $0.** Pure analysis of already-saved trace data from Exp 34
-(`results/v2/development/exp34_agentic_rag/agent_traces.json`) — no new LLM calls. Prompted by a direct
+(`results/current/development/exp34_agentic_rag/agent_traces.json`) — no new LLM calls. Prompted by a direct
 methodological gap: Exp 34/35/36/37 all measured end-to-end decision correctness only, and never
 independently checked whether the agent's own `search_policy_corpus` calls retrieved the right evidence.
 This audit does that, and corrects an overstated earlier claim ("retrieval isn't the bottleneck") that

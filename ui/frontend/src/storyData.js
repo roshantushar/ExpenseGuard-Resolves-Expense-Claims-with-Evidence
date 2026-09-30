@@ -1,6 +1,6 @@
 // The full experiment story, one "act" per phase, as scannable bullet points (not prose paragraphs).
 // Rendered as a scroll-revealed timeline on the Overview tab. Every number traces back to a saved
-// result file and a doc under docs/v2/.
+// result file and a doc under docs/.
 export const ACTS = [
   {
     title: "Act 1 — Meet the data, and watch every easy answer fail",

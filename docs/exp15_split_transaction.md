@@ -1,6 +1,6 @@
-# V2 Exp 15 — Split-transaction workflow decomposition (short confirmatory experiment, $0)
+# Exp 15 — Split-transaction workflow decomposition (short confirmatory experiment, $0)
 
-Notebook: `notebooks/v2/exp15_split_transaction.ipynb`. Cost: $0. Development split only.
+Notebook: `notebooks/exp15_split_transaction.ipynb`. Cost: $0. Development split only.
 
 **Question:** Exp 14 confirmed split *classification* (4/4). Exp 15 asks whether the complete chain — related-record retrieval, grouping, combined-amount calculation, policy consequence — works, not just the label.
 

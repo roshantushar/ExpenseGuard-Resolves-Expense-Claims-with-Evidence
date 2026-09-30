@@ -1,7 +1,7 @@
 # Exp 35 — Isolating the fix across layers: prompt vs. model vs. tool interface
 
-Code: `src/agent_variants.py` (35A prompt, 35C tool interface), `scripts/v2/exp35_isolate_fix.py`.
-Results: `results/v2/development/exp35_isolate_fix/`. Same 13 `C_AGENT_DYNAMIC` development claims as
+Code: `src/agent_variants.py` (35A prompt, 35C tool interface), `scripts/exp35_isolate_fix.py`.
+Results: `results/current/development/exp35_isolate_fix/`. Same 13 `C_AGENT_DYNAMIC` development claims as
 Exp 18/19/20/34, so every row below is directly comparable. One variable changes per row relative to
 the Exp 34 baseline (gpt-4o-mini, default prompt, default tools: 4/13).
 

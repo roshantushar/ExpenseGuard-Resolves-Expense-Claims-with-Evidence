@@ -7,7 +7,7 @@ tested mapping in `rules_v2`/`workflow_v2` rather than asking the model to re-de
 REQUEST_INFORMATION vs. ESCALATE, and (3) a code-level gate that overrides APPROVE to ESCALATE if the
 model answers APPROVE despite a negative `policy_disposition` already sitting in its own trace. Code:
 `src/agent_variants.py` (`make_check_approval`, `make_check_hotel_compliance`, `gate_approve`,
-`specs_and_tools_40`). Results: `results/v2/development/exp40_decision_in_code/`. Same 13 claims. Cost:
+`specs_and_tools_40`). Results: `results/current/development/exp40_decision_in_code/`. Same 13 claims. Cost:
 $0.020 — among the cheapest agent runs of the whole session, because it also needed the fewest turns.
 
 ## Result: the first agent to match the fixed workflow

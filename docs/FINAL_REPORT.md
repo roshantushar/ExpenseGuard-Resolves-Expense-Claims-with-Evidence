@@ -1,7 +1,7 @@
-# ExpenseGuard V2 — final report
+# ExpenseGuard — final report
 
 *Decision-flow structure, first person (individual work), ~1,200 words. Only pivotal experiments are named
-here — everything else is in `docs/v2/`, indexed at `docs/v2/README.md`.*
+here — everything else is in `docs/`, indexed at `docs/README.md`.*
 
 ## A. Problem and business value
 I built ExpenseGuard to decide, for a single expense claim (a bill + a free-text note, nothing else
@@ -13,11 +13,11 @@ an agent, or even an LLM, was required.
 
 ## B. Dataset and evaluation contract
 I generated 150 synthetic claims (70 development / 30 validation / 50 final test), deterministically (seed
-6202, `dataset_v2/`) and hardened them across three rounds so decision-critical facts live only in free
+6202, `dataset_generator/`) and hardened them across three rounds so decision-critical facts live only in free
 text, never a structured field. I physically isolated ground truth (`04_ground_truth_PRIVATE/`) and
 enforce with `tests/test_no_leakage.py` that runtime code never reads it. I ran the held-out final test
 once, ever, against a manifest I committed before that run — full provenance in
-`docs/v2/synthetic_data_provenance.md`.
+`docs/synthetic_data_provenance.md`.
 
 ## C. Rules / LLM / RAG baselines
 I found that deterministic rules alone (Exp 2) collapsed once I moved facts out of structured fields —
@@ -51,7 +51,7 @@ for eliminating false approvals versus both the fixed workflow (13.5% FAR) and a
 I ran this frozen system once, verified against a committed hash manifest at the time it ran, against the
 50-claim held-out final test (Exp 32) — *note: the dataset was regenerated once more afterward, so that
 manifest's hashes no longer match the files on disk today; this result is the honest record of that one
-run, not something the current dataset can still verify byte-for-byte (`docs/v2/exp32_final_test.md`)*:
+run, not something the current dataset can still verify byte-for-byte (`docs/exp32_final_test.md`)*:
 **30/50 (60%), 0/37 false approvals observed.** The deterministic path generalized perfectly (22/22, vs.
 88.2% on dev — no overfitting signal); the LLM-residual path never once correctly predicted APPROVE (0/13
 recall) and scored only 28.6% overall, confirming it as the one weak component I'd need to address.
@@ -81,11 +81,11 @@ by reasoning about the code in the abstract — to close that gap (Exp 47-52), r
 validation, 0% observed FAR on both authorized splits, one point above the frozen design's own dev
 accuracy.** *(Later disclosure: an audit found a real but unauthorized, partial run against 30 of the 50
 final-test claims, scoring materially worse — 50% accuracy, 17.6% FAR — than any of the authorized numbers
-above; see `docs/v2/second_touch_disclosure.md`.)*
+above; see `docs/second_touch_disclosure.md`.)*
 
 ## J. Cost/business trade-off
 This is the most important thing I found late in the project — in two parts. First, when I built a
-risk-adjusted cost model (`docs/v2/cost_and_business_impact.md`), I found the guarded candidate escalates
+risk-adjusted cost model (`docs/cost_and_business_impact.md`), I found the guarded candidate escalates
 1.5-1.8x more often than the frozen design (34% vs. 19-22%), and human-review cost dominates every scenario
 I tested — so I originally concluded its **total expected operating cost is higher than the frozen
 design's at low, base, and high claim-volume scenarios**, despite its accuracy/FAR advantage, and on that
@@ -100,9 +100,9 @@ false-reject far more often (36.8% dev / 50.0% final test vs. the candidate's 17
 — an error mode the original model never priced.
 
 **Second correction, found on later independent audit:** the guarded-agent candidate itself has real
-execution data against 30 of the 50 final-test claims (`docs/v2/second_touch_disclosure.md`), scoring 50%
+execution data against 30 of the 50 final-test claims (`docs/second_touch_disclosure.md`), scoring 50%
 accuracy and 17.6% FAR — materially worse than every authorized number for this design. A no-cost
-sensitivity analysis (`docs/v2/cost_and_business_impact.md`, existing data only) re-priced the cost model
+sensitivity analysis (`docs/cost_and_business_impact.md`, existing data only) re-priced the cost model
 using this diagnostic run's rates: **the candidate's cost advantage does not survive.** Once false
 approvals are priced at meaningful business cost, degraded unseen-data safety erases the modeled
 advantage.
@@ -118,12 +118,12 @@ from committed scripts/logging). No new held-out set was created for the candida
 not a decision I am making implicitly by omission.
 
 ## K. Responsible AI and limitations
-Full risk table: `docs/v2/responsible_ai_risk_table.md`. I directly mitigated Excessive Agency (OWASP
+Full risk table: `docs/responsible_ai_risk_table.md`. I directly mitigated Excessive Agency (OWASP
 LLM06) with read-only tools, step caps, and the disposition gate. I did **not** solve Prompt Injection
 (LLM01) — Exp 28 found retrieval-text injection can still defeat my current defense, disclosed as an open
-risk. I completed a full OWASP Top 10 (2025) pass (`docs/v2/owasp_llm_top10_2025.md`); this is a controlled
+risk. I completed a full OWASP Top 10 (2025) pass (`docs/owasp_llm_top10_2025.md`); this is a controlled
 synthetic benchmark, and results are not direct evidence of production performance
-(`docs/v2/synthetic_data_provenance.md`).
+(`docs/synthetic_data_provenance.md`).
 
 ## L. Final conclusion
 I found that reliability comes from assigning decision authority to the component best suited to each

@@ -1,6 +1,6 @@
-# V2 Exp 8 — BM25 vs dense vs hybrid retrieval (development only)
+# Exp 8 — BM25 vs dense vs hybrid retrieval (development only)
 
-Notebook: `notebooks/v2/exp08_retriever.ipynb`. Results: `results/v2/development/exp08_retriever/`. Plot: `results/v2/plots/exp08_retriever.png`. Cost: $0 (reused cached embeddings and an identical-config generation call). Development split only.
+Notebook: `notebooks/exp08_retriever.ipynb`. Results: `results/current/development/exp08_retriever/`. Plot: `results/current/plots/exp08_retriever.png`. Cost: $0 (reused cached embeddings and an identical-config generation call). Development split only.
 
 **Question:** can BM25 or hybrid (RRF) recover the evidence dense retrieval misses entirely? Frozen: chunking 600/100, K=8, voyage-4-lite for the dense side.
 

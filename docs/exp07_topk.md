@@ -1,6 +1,6 @@
-# V2 Exp 7 — Top-K retrieval sensitivity (development only)
+# Exp 7 — Top-K retrieval sensitivity (development only)
 
-Notebook: `notebooks/v2/exp07_topk.ipynb`. Results: `results/v2/development/exp07_topk/`. Plot: `results/v2/plots/exp07_topk.png`. Cost: about $0.125 (two downstream runs; retrieval sweep reused the frozen Exp 6 index). Development split only.
+Notebook: `notebooks/exp07_topk.ipynb`. Results: `results/current/development/exp07_topk/`. Plot: `results/current/plots/exp07_topk.png`. Cost: about $0.125 (two downstream runs; retrieval sweep reused the frozen Exp 6 index). Development split only.
 
 **Hypothesis:** higher K trades recall for distractors and cost; find where it plateaus.
 

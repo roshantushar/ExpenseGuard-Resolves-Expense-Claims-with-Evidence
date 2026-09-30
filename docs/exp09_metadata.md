@@ -1,6 +1,6 @@
-# V2 Exp 9 — Metadata-aware retrieval (development only)
+# Exp 9 — Metadata-aware retrieval (development only)
 
-Notebook: `notebooks/v2/exp09_metadata.ipynb`. Results: `results/v2/development/exp09_metadata/`. Plot: `results/v2/plots/exp09_metadata.png`. Cost: $0.098 (two downstream runs; the retrieval ladder was free). Development split only.
+Notebook: `notebooks/exp09_metadata.ipynb`. Results: `results/current/development/exp09_metadata/`. Plot: `results/current/plots/exp09_metadata.png`. Cost: $0.098 (two downstream runs; the retrieval ladder was free). Development split only.
 
 **Question:** does restricting dense retrieval to policy-compatible metadata improve coverage, without touching the query? Ablation ladder, each step adding one filter: M0 none, M1 +date, M2 +region, M3 +authoritative document type, M4 +expense-category compatibility. Region = `bill.country`, per FAQ-1.10 and the addenda's own scope clauses ("the addendum of the country where the expense was incurred applies"). M3 excludes FAQ/historical documents per their own text (HIST-3.1: "never override a circular"; GEP26-3.1: FAQ/definitions "never override the clauses above") — not because of knowledge of the private labels.
 

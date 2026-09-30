@@ -244,7 +244,7 @@ Duplicate and split-transaction checks are framed as **claim-level compliance ch
 ## 8.0 The smallest first version (required, not optional)
 
 Before any retrieval, rules, or architecture comparison, I built the smallest possible end-to-end slice and
-defined in advance what would count as it working: **Exp 1** (`docs/v2/exp01_smallest_slice.md`) — one
+defined in advance what would count as it working: **Exp 1** (`docs/exp01_smallest_slice.md`) — one
 claim in, the exact correct policy clauses handed to it directly (no retrieval yet), one LLM call out, one
 structured decision. Nine development claims, two models (`gpt-4o-mini`, `llama3.2:3b`), temperature 0.
 **What counted as working**, decided before running it: every one of the 9 outputs had to be schema-valid
@@ -360,9 +360,9 @@ If long context performs equally well at the current corpus size, that is a vali
 
 ---
 
-# 11. Final dataset design (V2)
+# 11. Final dataset design
 
-The current dataset (V2, `ExpenseGuard_V2_DATASET/`) contains:
+The current dataset (`ExpenseGuard_DATASET/`) contains:
 
 - **150 expense claims**
 - **40 self-contained / RAG-solvable cases** (`A_SELF_CONTAINED`)
@@ -377,7 +377,7 @@ Frozen split:
 - 30 validation
 - 50 final test
 
-The final-test set includes independently worded/reviewed challenge cases (see `docs/v2/exp32_final_test.md`
+The final-test set includes independently worded/reviewed challenge cases (see `docs/exp32_final_test.md`
 for the exact count and result on that subset).
 
 The dataset is fully synthetic and reproducible. No real employee or company data is used. It was
@@ -385,7 +385,7 @@ hardened across three rounds so decision-critical facts (nights, attendee counts
 even the expense category) live only in free text rather than in structured fields, specifically to make
 retrieval and reasoning — not shallow field-matching — the thing under test.
 
-## 11.1 Official final result (V2)
+## 11.1 Official final result
 
 The official architecture is **Exp 30, the selective resolver**: deterministic rules decide whenever they
 can; an LLM handles only the residual cases. The official final evaluation is **Exp 32**, a one-shot,
@@ -396,7 +396,7 @@ hash-manifest-verified run against the 50-claim held-out final test:
 - Deterministic path: **22/22 (100%)**
 - LLM-residual path: **8/28 (28.6%)**
 
-Full detail: `docs/v2/exp32_final_test.md` and `docs/v2/README.md`.
+Full detail: `docs/exp32_final_test.md` and `docs/README.md`.
 
 ## 11.2 Post-final guarded-agent research (not official)
 
@@ -405,7 +405,7 @@ in code instead of asking the model to judge it, and used development and valida
 fix seven real bugs. On the splits it has been evaluated against — 44/70 dev and 21/30 validation, 0%
 observed FAR on both — it beats the official architecture's own development accuracy by one point at
 matching FAR. **This is an accuracy/FAR-scoped comparison only**: it escalates roughly 1.5-1.8x more often
-than the official architecture. A risk-adjusted cost model (`docs/v2/cost_and_business_impact.md`)
+than the official architecture. A risk-adjusted cost model (`docs/cost_and_business_impact.md`)
 **originally found** its total expected operational cost was higher than the official architecture's at
 every scale tested — **that finding rested on a bug** (the model omitted false-rejection and
 unnecessary-information-request costs, though both were already defined as assumptions). Corrected, the
@@ -414,25 +414,25 @@ lower than the official architecture's at every scale tested, because the frozen
 false-rejection rate among automated decisions (36.8% dev / 50.0% final test, vs. the candidate's 17.2%
 dev / 21.4% validation) was never priced before.
 
-**That advantage does not survive contact with unseen data.** `docs/v2/second_touch_disclosure.md`
+**That advantage does not survive contact with unseen data.** `docs/second_touch_disclosure.md`
 documents a real but unauthorized, partial (30/50) diagnostic run of this candidate against previously
 unseen final-test claims, scoring 50% accuracy and 17.6% FAR — materially worse than every authorized
 number for this design. A no-cost sensitivity analysis (existing data only, no new LLM calls;
-`docs/v2/cost_and_business_impact.md`) re-computed the cost model using this diagnostic run's rates
+`docs/cost_and_business_impact.md`) re-computed the cost model using this diagnostic run's rates
 instead: the candidate's cost advantage **does not survive**. Once false approvals are priced at
 meaningful business cost, degraded unseen-data safety erases the modeled advantage.
 
 It remains a
 **development-and-validation-selected candidate**, not an independently validated replacement: it has no
 authorized, frozen final-test result, and its design was changed in direct response to observing
-validation-split behavior. See `docs/v2/README.md` for the full methodology note on why the original
+validation-split behavior. See `docs/README.md` for the full methodology note on why the original
 50-claim final test cannot simply be reused to promote this candidate to official status. **Resolution:
 the frozen resolver remains the official architecture; the guarded candidate is retained as a promising,
 unvalidated candidate requiring a fresh, untouched holdout before promotion — not created this session.**
 See §42.1 for the full final story.
 
 Also disclosed: an independent audit found the final-test and validation splits were touched a second
-time, with real LLM calls, after this freeze — `docs/v2/second_touch_disclosure.md`. It did not alter
+time, with real LLM calls, after this freeze — `docs/second_touch_disclosure.md`. It did not alter
 Exp 32's own saved result, but it means "touched once, ever" is no longer an unqualified true statement
 about this project.
 
@@ -1074,12 +1074,12 @@ Report:
 
 The headline metric is never Correct Disposition Rate alone. The full metric family used for architecture
 selection is **accuracy + False Approval Rate + Safe Automation Rate + escalation rate + risk-adjusted
-cost per 1,000 claims** (`docs/v2/cost_and_business_impact.md`). The **majority-class baseline** — always
+cost per 1,000 claims** (`docs/cost_and_business_impact.md`). The **majority-class baseline** — always
 predicting the single most common ground-truth outcome for a split — is computed directly from
 `ground_truth.jsonl`, not assumed: **26-27% accuracy** on every split, and, critically, an
 APPROVE-majority baseline on validation would carry **100% FAR** despite similar raw accuracy to a
 REJECT-majority baseline on dev at 0% FAR — direct evidence accuracy alone cannot be the metric
-(`docs/v2/master_comparison.md`).
+(`docs/master_comparison.md`).
 
 **Target, stated explicitly here rather than left implicit:** the bar this project holds every architecture
 to, adopted at the Exp 30 freeze decision and applied consistently afterward, is **0 observed false
@@ -1243,7 +1243,7 @@ tool's stated input category against at least one independent source (exactly th
 comparing a hardened/visible field against an enterprise-system field that should agree with it) as a
 standing consistency check, not a one-time fix; (2) periodic human audit sampling of a random subset of
 auto-approved claims, specifically weighted toward categories with no dedicated guarded tool (the
-`check_workflow_compliance` allowlist in `docs/v2/exp48_allowlist_redesign.md` names exactly which
+`check_workflow_compliance` allowlist in `docs/exp48_allowlist_redesign.md` names exactly which
 categories those are); (3) track False Approval Rate by category over time, not just in aggregate, since
 this project's own evidence (Exp 45) shows FAR failures cluster entirely in specific under-guarded
 categories rather than spreading evenly; (4) a domain-guard precondition check on every tool (Exp 43's
@@ -1273,14 +1273,14 @@ Prompt injection must be tested in:
 
 Security testing is framed against, and honestly scored against, the **OWASP Top 10 for LLM Applications
 (2025)** — the current official edition (there is no published 2026 edition; verified by direct lookup, not
-assumed). **All 10 categories now have real test evidence** (`docs/v2/owasp_llm_top10_2025.md`): **LLM06:
+assumed). **All 10 categories now have real test evidence** (`docs/owasp_llm_top10_2025.md`): **LLM06:
 Excessive Agency** is directly mitigated (read-only tools, step cap, call deduplication, Exp 41's
 disposition gate, Exp 43's domain guards); **LLM01: Prompt Injection** was adversarially tested (Exp 28)
 and found only partially addressed — retrieval-text injection can still defeat the current prompt-level
 defense, disclosed as an open risk rather than claimed as solved; **LLM04: Data/Model Poisoning** is scoped
 as not applicable (no model is fine-tuned or trained in this project); and **LLM02, LLM03, LLM05, LLM07,
 LLM08, LLM09, LLM10** were each directly tested or scoped in a dedicated pass at $0 cost, with no new
-unmitigated vulnerability found — see `docs/v2/owasp_llm_top10_2025.md` for the full results, including the
+unmitigated vulnerability found — see `docs/owasp_llm_top10_2025.md` for the full results, including the
 honest disclosure that two of those tests' clean results rest on a parse-failure fallback rather than a
 demonstrated deliberate model refusal.
 
@@ -1378,7 +1378,7 @@ These are scenario models, not measured production savings.
 
 # 38. Reproduced agent failures
 
-**Done: `docs/v2/exp_agent_failure_ablation.md`.** An agent survived the gate (Exp 20, later Exp 34-52), so
+**Done: `docs/exp_agent_failure_ablation.md`.** An agent survived the gate (Exp 20, later Exp 34-52), so
 both failures below were reproduced with real, measured numbers at $0 cost (free local model). Headline
 result: removing de-duplication turned X2-037's already-step-cap-limited case into a genuine unresolved
 20-call loop (19 of 20 calls exact repeats, no final decision reached); vague tool descriptions flipped
@@ -1530,7 +1530,7 @@ The project is complete when:
 
 ## 42.1 Final conclusion, after the cost/business-impact analysis — corrected
 
-A later analysis (`docs/v2/cost_and_business_impact.md`) originally concluded **the best-performing AI
+A later analysis (`docs/cost_and_business_impact.md`) originally concluded **the best-performing AI
 architecture was not the best operating architecture**: that the post-final guarded-agent candidate's
 higher escalation rate made its total risk-adjusted operating cost higher than the official frozen
 resolver's at every scale tested, so the frozen resolver remained preferred and no new held-out set was
@@ -1542,10 +1542,10 @@ unnecessary-information-request costs from the total despite defining both as as
 operating cost is lower than the frozen resolver's at every scale tested, because the frozen resolver's
 much higher false-rejection rate was never priced.
 
-**That is not the end of the story.** `docs/v2/second_touch_disclosure.md` documents a separate finding: a
+**That is not the end of the story.** `docs/second_touch_disclosure.md` documents a separate finding: a
 real but unauthorized, partial (30/50) diagnostic run of the guarded-agent candidate against previously
 unseen final-test cases, which showed materially worse safety (50% accuracy, 17.6% FAR) than any authorized
-number for this design. A no-cost sensitivity analysis (`docs/v2/cost_and_business_impact.md`, run purely
+number for this design. A no-cost sensitivity analysis (`docs/cost_and_business_impact.md`, run purely
 on existing data — no new LLM calls) re-computed the cost model using this diagnostic run's rates instead
 of dev/validation rates: **the candidate's cost advantage does not survive.** Once false approvals are
 priced at meaningful business cost, degraded unseen-data safety erases the modeled advantage.

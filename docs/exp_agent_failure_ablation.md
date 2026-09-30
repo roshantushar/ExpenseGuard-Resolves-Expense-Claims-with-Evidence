@@ -6,7 +6,7 @@ was not done during the original experiment sequence — found missing by an ind
 here rather than left descoped, since the free local model made it possible at $0 cost despite the
 project's paid budget being nearly exhausted ($0.35 of $5.00 remaining at the time).
 
-Script: `scripts/v2/exp_agent_failure_ablation.py`. Model: `llama3.2:3b` (Ollama, free). Cases: X2-005,
+Script: `scripts/exp_agent_failure_ablation.py`. Model: `llama3.2:3b` (Ollama, free). Cases: X2-005,
 X2-037, X2-145 — three `C_AGENT_DYNAMIC` development claims already used elsewhere in this project's docs
 (demo script, Exp 28's base claim), so results are easy to cross-check. Neither ablation edits
 `src/agent.py`; each is a standalone copy of its loop, so there is nothing to "restore" in shipped code.
@@ -67,4 +67,4 @@ rate across the full case population. This is a targeted reproduction, not a new
 result changes because of it, and the normal, guarded loop (`src/agent.py`, unmodified) is what every other
 experiment in this project actually used.
 
-Raw output: `results/v2/development/exp_agent_failure_ablation/results.json`.
+Raw output: `results/current/development/exp_agent_failure_ablation/results.json`.

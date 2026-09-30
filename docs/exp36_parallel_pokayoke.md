@@ -1,8 +1,8 @@
 # Exp 36 — ReAct Agent v2: parallel-turn loop + poka-yoke v2 tool interface
 
 Named Exp 36 (not 35) to avoid overwriting Exp 35's already-recorded prompt/model/tool-interface
-isolation results (`docs/v2/exp35_isolate_fix.md`). Code: `src/agent_variants.py` (`run_parallel`,
-`check_hotel_ceiling`, `SYSTEM_36`). Results: `results/v2/development/exp36_parallel_pokayoke/`. Same
+isolation results (`docs/exp35_isolate_fix.md`). Code: `src/agent_variants.py` (`run_parallel`,
+`check_hotel_ceiling`, `SYSTEM_36`). Results: `results/current/development/exp36_parallel_pokayoke/`. Same
 13 `C_AGENT_DYNAMIC` development claims as Exp 18/19/20/34/35.
 
 **Two targeted upgrades over Exp 34's agent, both changed together (this is a combined redesign, not a

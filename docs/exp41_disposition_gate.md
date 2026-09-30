@@ -1,7 +1,7 @@
 # Exp 41 — The disposition gate: beats the fixed workflow, at $0
 
 **Cost: $0.** This is a pure re-scoring of Exp 40's already-collected trace data
-(`results/v2/development/exp40_decision_in_code/traces.json`) — no new LLM calls. The gate is applied
+(`results/current/development/exp40_decision_in_code/traces.json`) — no new LLM calls. The gate is applied
 *after* the model has already answered, so it changes nothing about how the model behaves; it only
 changes whether the model's answer is trusted when a tool already computed the correct one.
 

@@ -14,7 +14,7 @@ Exp 40-43 design on the full dev+validation `C_AGENT_DYNAMIC` set — 13 develop
 validation claims in this group, touched **once**, per the project's standing rule. The 11 `C_AGENT_DYNAMIC`
 claims in the frozen final test are untouched. `MAX_BUDGET_USD` raised from $3.50 to $5.00 for this
 confirmation run (project spend: ~$3.31 of $5.00 after this run, corrected below). Results:
-`results/v2/development/exp44_full_confirmation/`. Cost: $0.0428 for all 19 cases (`summary.json`'s
+`results/current/development/exp44_full_confirmation/`. Cost: $0.0428 for all 19 cases (`summary.json`'s
 `total_cost_usd`; this line originally said $0.021, exactly half the real figure, which also means the
 "$3.29 of $5.00" line above understated project spend at that point by the same ~$0.021).
 

@@ -6,12 +6,12 @@ tools). Same 13 C_AGENT_DYNAMIC development claims as Exp 18/19/20/34.
 one-case pilot first (see the session transcript) before committing to a full 13-case run, per the
 project's standing "print projected cost before a batch" rule.
 
-Usage: python -m scripts.v2.exp35_isolate_fix [35a|35c|both]
+Usage: python -m scripts.exp35_isolate_fix [35a|35c|both]
 """
 from __future__ import annotations
 import json, sys, time
 from pathlib import Path
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from src import config as C, llm, llm_exp, evaluate, agent, agent_variants as V
 

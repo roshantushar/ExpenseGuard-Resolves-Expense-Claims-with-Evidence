@@ -32,12 +32,12 @@ CASES_JSON = ROOT / "ui" / "frontend" / "public" / "data" / "cases.json"
 # so /docs/<path> can never be used to read anything outside this fixed list.
 DOC_ALLOWLIST = {
     "README.md", "problem.md", "CHANGELOG_FINAL.md",
-    "docs/v2/FINAL_REPORT.md", "docs/v2/README.md", "docs/v2/exp30_selective_router.md",
-    "docs/v2/exp32_final_test.md", "docs/v2/exp33_failure_analysis.md",
-    "docs/v2/cost_and_business_impact.md", "docs/v2/build_vs_buy.md",
-    "docs/v2/responsible_ai_risk_table.md", "docs/v2/owasp_llm_top10_2025.md",
-    "docs/v2/synthetic_data_provenance.md", "docs/v2/reproducibility_and_repo_map.md",
-    "docs/v2/demo_script.md", "docs/v2/gate_override_audit.md",
+    "docs/FINAL_REPORT.md", "docs/README.md", "docs/exp30_selective_router.md",
+    "docs/exp32_final_test.md", "docs/exp33_failure_analysis.md",
+    "docs/cost_and_business_impact.md", "docs/build_vs_buy.md",
+    "docs/responsible_ai_risk_table.md", "docs/owasp_llm_top10_2025.md",
+    "docs/synthetic_data_provenance.md", "docs/reproducibility_and_repo_map.md",
+    "docs/demo_script.md", "docs/gate_override_audit.md",
 }
 
 

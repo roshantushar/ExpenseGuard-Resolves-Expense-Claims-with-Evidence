@@ -1,6 +1,6 @@
-# V2 Exp 20 — Bounded single agent pilot (development, group-C claims)
+# Exp 20 — Bounded single agent pilot (development, group-C claims)
 
-Notebook: `notebooks/v2/exp20_bounded_agent.ipynb`. Results: `results/v2/development/exp20_bounded_agent/` (predictions, full traces, summary). Cost: $0.0432. Run regardless of Exp 19's audit conclusion, as agreed.
+Notebook: `notebooks/exp20_bounded_agent.ipynb`. Results: `results/current/development/exp20_bounded_agent/` (predictions, full traces, summary). Cost: $0.0432. Run regardless of Exp 19's audit conclusion, as agreed.
 
 **Question:** does a real, model-directed ReAct agent beat, tie, or lose to Exp 18's fixed workflow on the same 13 group-C claims?
 

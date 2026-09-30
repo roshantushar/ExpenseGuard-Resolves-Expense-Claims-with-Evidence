@@ -8,7 +8,7 @@ sys.path.insert(0, str(ROOT))
 from src import config as C, retrieval, embed, retrievers, retrieval_eval
 
 EM = "voyageai/voyage-4-lite"; CFG = "recursive300_50"
-SETS = {"V1": (ROOT / "ExpenseGuard_FINAL_CURRENT_DATASET", "required_policy_ids"), "V2": (ROOT / "ExpenseGuard_V2_DATASET", "required_policy_ids")}
+SETS = {"V1": (ROOT / "ExpenseGuard_FINAL_CURRENT_DATASET", "required_policy_ids"), "V2": (ROOT / "ExpenseGuard_DATASET", "required_policy_ids")}
 
 
 def jl(p): return [json.loads(l) for l in Path(p).read_text().splitlines() if l.strip()]
@@ -33,7 +33,7 @@ def run(name, D, key, k_list=(3, 5, 10)):
 
 if __name__ == "__main__":
     res = {n: run(n, *v) for n, v in SETS.items()}
-    p = ROOT / "ExpenseGuard_V2_DATASET" / "06_docs" / "retrieval_difficulty.json"
+    p = ROOT / "ExpenseGuard_DATASET" / "06_docs" / "retrieval_difficulty.json"
     p.write_text(json.dumps(res, indent=1))
     print(f"{'':6s}{'retriever':22s}{'K':>3s}  Recall  Prec   MRR   nDCG  all-required  wrong-year/case")
     for n in res:

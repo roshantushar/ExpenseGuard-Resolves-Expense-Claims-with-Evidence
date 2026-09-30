@@ -1,10 +1,10 @@
-# V2 Exp 3 — Generic LLM without company policy
+# Exp 3 — Generic LLM without company policy
 
-Notebook: `notebooks/v2/exp03_generic_llm.ipynb`. Results: `results/v2/development/exp03_no_policy/` and `exp03b_no_policy_dated/`. Plots: `results/v2/plots/exp03_no_policy_development.png`, `exp03_no_policy_detail.png`, `exp03b_no_policy_dated_development.png`.
+Notebook: `notebooks/exp03_generic_llm.ipynb`. Results: `results/current/development/exp03_no_policy/` and `exp03b_no_policy_dated/`. Plots: `results/current/plots/exp03_no_policy_development.png`, `exp03_no_policy_detail.png`, `exp03b_no_policy_dated_development.png`.
 
 **Hypothesis:** with no policy and no records, a generic LLM gives confident but unsupported answers, collapses onto default decisions, and cannot detect missing approvals.
 
-**Configuration:** 70 development claims of the semantic V2; claim only (bill, dates, project, note); temperature 0; models `openai/gpt-4o-mini`, `google/gemini-2.5-flash-lite` (OpenRouter) and `llama3.2:3b` (Ollama). 3b adds one sentence, "today is the submission date".
+**Configuration:** 70 development claims of the semantic dataset; claim only (bill, dates, project, note); temperature 0; models `openai/gpt-4o-mini`, `google/gemini-2.5-flash-lite` (OpenRouter) and `llama3.2:3b` (Ollama). 3b adds one sentence, "today is the submission date".
 
 | Model | Correct/N (Wilson 95%) | False approvals | Decision mix | Cost (70 claims) |
 |---|---|---|---|---|

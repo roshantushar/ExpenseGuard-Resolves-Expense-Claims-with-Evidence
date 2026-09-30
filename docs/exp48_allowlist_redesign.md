@@ -1,6 +1,6 @@
 # Exp 48 — `check_workflow_compliance` redesigned as an allowlist, not a denylist
 
-Part of the Exp 47-52 arc. Results: `results/v2/development/exp48_safe_coverage_dev/`.
+Part of the Exp 47-52 arc. Results: `results/current/development/exp48_safe_coverage_dev/`.
 
 | Field | Value |
 |---|---|

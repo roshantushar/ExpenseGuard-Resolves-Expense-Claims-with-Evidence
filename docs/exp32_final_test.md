@@ -1,19 +1,19 @@
 > **Dataset snapshot note:** the numbers below are exactly as produced by the one-shot run, unedited and
 > not rerun, per the manifest's own rule. Afterward, in this same session, the dataset was regenerated
-> once more (the Chennai/Kobe RAG-necessity lever, `dataset_v2/world.py`/`cases_c.py`) to make a handful
+> once more (the Chennai/Kobe RAG-necessity lever, `dataset_generator/world.py`/`cases_c.py`) to make a handful
 > of `DYNAMIC_HOTEL_DISCOVERY` cases genuinely retrieval-necessary. That regeneration touches the
-> on-disk `ExpenseGuard_V2_DATASET` package, so `experiments/exp32_freeze_manifest_v2.yaml`'s hashes no
+> on-disk `ExpenseGuard_DATASET` package, so `experiments/exp32_freeze_manifest_v2.yaml`'s hashes no
 > longer match the current dataset files. This result remains the valid, honest record of what that
 > frozen system did on the final-test snapshot that existed at the time; it is not reproducible byte-
 > for-byte against the dataset as it exists on disk today, and no claim about the *current* dataset
 > should cite this manifest as still verifying it. Any new final-test claim needs a fresh freeze cycle.
 
-# V2 Exp 32 — Frozen final test (one-shot, semantic edition)
+# Exp 32 — Frozen final test (one-shot, semantic edition)
 
 Freeze manifest: `experiments/exp32_freeze_manifest_v2.yaml` (hashes of code, policy corpus, enterprise
 data, ground truth, and the runner script itself; committed before the run). Runner:
-`scripts/v2/exp32_final_test.py`. Frozen pipeline: `src/resolver.py` (Exp 30's selective architecture).
-Results: `results/v2/final_test/exp32_final_test/` (`predictions.jsonl`, `evaluation.jsonl`,
+`scripts/exp32_final_test.py`. Frozen pipeline: `src/resolver.py` (Exp 30's selective architecture).
+Results: `results/current/final_test/exp32_final_test/` (`predictions.jsonl`, `evaluation.jsonl`,
 `summary.json`, all locked before evaluation). Cost: $0.0232. Wall clock: 54.7s. Run once, per the
 manifest's process rule: no case inspected or rerun mid-run, no post-hoc change to resolver/prompt/
 tool logic.

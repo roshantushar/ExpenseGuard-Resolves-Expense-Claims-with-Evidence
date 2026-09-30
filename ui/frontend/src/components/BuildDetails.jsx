@@ -48,7 +48,7 @@ export default function BuildDetails() {
         Rent commodity capability (models, embeddings) where a vendor's economies of scale genuinely win and
         this project's own experiments confirm it isn't the bottleneck; own everything company-specific —
         policy logic, safety controls, the evaluation harness, and business-logic tools. Full detail:{" "}
-        <code>docs/v2/build_vs_buy.md</code>.
+        <code>docs/build_vs_buy.md</code>.
       </p>
       <div className="build-table">
         <div className="build-row build-head">
@@ -113,7 +113,7 @@ export default function BuildDetails() {
           <li>2 of 51 residual dev+validation cases (3.9%) — computed by re-running the real pipeline at $0 marginal cost (cached replay)</li>
           <li>Both times: the model wanted to APPROVE, the gate overrode it, and the override matched ground truth exactly</li>
           <li>This is rare but load-bearing: without it, this design's 0% FAR would have been ~3.9% instead</li>
-          <li>Full audit: <code>docs/v2/gate_override_audit.md</code></li>
+          <li>Full audit: <code>docs/gate_override_audit.md</code></li>
         </ul>
       </div>
 
@@ -128,7 +128,7 @@ export default function BuildDetails() {
       </div>
       <p className="lede" style={{ fontSize: 13 }}>
         Token cost alone doesn't decide the architecture here — a full risk-adjusted cost model including
-        human-review and false-approval cost is in <code>docs/v2/cost_and_business_impact.md</code>, and it
+        human-review and false-approval cost is in <code>docs/cost_and_business_impact.md</code>, and it
         reverses the "cheaper per token" ranking once escalation volume is included.
       </p>
 
@@ -140,17 +140,17 @@ export default function BuildDetails() {
       </ul>
       <div className="flow" style={{ fontSize: 12.5 }}>
 {`python -m unittest discover -s tests            # $0 — 31 tests: leakage, tool, workflow
-python -m dataset_v2.validate                    # $0 — 50/50 dataset integrity checks
-python -m scripts.v2.exp32_final_test            # PAID — the frozen final test, already run once, do not rerun
-python3 scripts/v2/cost_model.py                 # $0 — regenerates the cost/business-impact report`}
+python -m dataset_generator.validate                    # $0 — 50/50 dataset integrity checks
+python -m scripts.exp32_final_test            # PAID — the frozen final test, already run once, do not rerun
+python3 scripts/cost_model.py                 # $0 — regenerates the cost/business-impact report`}
       </div>
       <p className="lede" style={{ fontSize: 13 }}>
-        Full reproducibility guide and repo map: <code>docs/v2/reproducibility_and_repo_map.md</code>.
+        Full reproducibility guide and repo map: <code>docs/reproducibility_and_repo_map.md</code>.
       </p>
 
       <h1 style={{ marginTop: 36 }}>Dataset: generation and honest limitations</h1>
       <ul className="bullets">
-        <li>150 claims generated deterministically — seed 6202, <code>dataset_v2/build.py</code> — fully reproducible from scratch</li>
+        <li>150 claims generated deterministically — seed 6202, <code>dataset_generator/build.py</code> — fully reproducible from scratch</li>
         <li>Free-text notes and policy prose drafted by <code>openai/gpt-4o-mini</code>, then independently re-extracted and re-verified against the hidden reference engine (blind to the hidden facts)</li>
         <li>Hardened across 3 rounds, each verified to actually remove a shortcut (Exp 2: regex-baseline accuracy fell 70/70 → 48/70 as shortcuts were removed)</li>
         <li>Ground truth physically isolated; never read by runtime code (<code>tests/test_no_leakage.py</code>)</li>

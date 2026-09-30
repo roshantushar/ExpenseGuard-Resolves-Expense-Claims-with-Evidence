@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import DesignPanel from "./DesignPanel.jsx";
 
-// Verified against real saved predictions (not picked from memory) — see docs/v2/demo_script.md.
+// Verified against real saved predictions (not picked from memory) — see docs/demo_script.md.
 const RECOMMENDED = [
   { id: "X2-060", label: "Deterministic, easy", note: "$0, no LLM call" },
   { id: "X2-006", label: "RAG / evidence case", note: "retrieval-grounded LLM call" },

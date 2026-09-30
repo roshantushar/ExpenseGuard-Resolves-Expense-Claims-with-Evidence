@@ -1,6 +1,6 @@
-# V2 Exp 4B — Long-context baseline
+# Exp 4B — Long-context baseline
 
-Notebook: `notebooks/v2/exp04b_long_context_baseline.ipynb`. Results: `results/v2/development/exp04b_full/` and `exp04b_lean/`. Plots: `results/v2/plots/exp04b_long_context_summary.png`, `exp04b_confusions.png`, `exp04b_full_development.png`, `exp04b_lean_development.png`. Cost $0.77.
+Notebook: `notebooks/exp04b_long_context_baseline.ipynb`. Results: `results/current/development/exp04b_full/` and `exp04b_lean/`. Plots: `results/current/plots/exp04b_long_context_summary.png`, `exp04b_confusions.png`, `exp04b_full_development.png`, `exp04b_lean_development.png`. Cost $0.77.
 
 **Hypothesis:** if the corpus fits in context, a model given the claim plus the whole policy could match or beat RAG.
 

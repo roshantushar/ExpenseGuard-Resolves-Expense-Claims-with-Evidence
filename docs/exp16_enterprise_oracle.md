@@ -1,6 +1,6 @@
-# V2 Exp 16 — Enterprise-evidence oracle: raw records vs resolved facts
+# Exp 16 — Enterprise-evidence oracle: raw records vs resolved facts
 
-Notebook: `notebooks/v2/exp16_enterprise_oracle.ipynb`. Results: `results/v2/development/exp16_enterprise_oracle/`. Cost: $0.046 (one new run). Development, evidence-dependent subset (52/70 claims needing at least one enterprise lookup).
+Notebook: `notebooks/exp16_enterprise_oracle.ipynb`. Results: `results/current/development/exp16_enterprise_oracle/`. Cost: $0.046 (one new run). Development, evidence-dependent subset (52/70 claims needing at least one enterprise lookup).
 
 **Question:** does the LLM need enterprise facts pre-resolved, or can it interpret raw records itself? Isolates raw records vs resolved facts, holding policy evidence (frozen M4 RAG) and the decision-maker (the LLM) fixed.
 

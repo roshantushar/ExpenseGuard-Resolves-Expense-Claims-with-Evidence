@@ -1,9 +1,9 @@
 """V2 Experiment 1: smallest end-to-end slice. 10 DEVELOPMENT self-contained cases; the harness hands the model the controlling + supporting clauses (oracle, feasibility only).
-Usage: python3 scripts/v2/exp01_slice.py [model ...]"""
+Usage: python3 scripts/exp01_slice.py [model ...]"""
 from __future__ import annotations
 import json, os, sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src import config as C, llm_exp, policy
 C.load_env()
 EXP = "EXP01_SLICE"

@@ -1,4 +1,4 @@
-# ExpenseGuard V2 — master index
+# ExpenseGuard — master index
 
 ## The problem
 
@@ -17,7 +17,7 @@ everything that looks like it should work often not?**
 
 ## What's in this folder
 One `.md` file per experiment (hypothesis → method → result → decision), a notebook or script backing
-almost every one, and every number traceable to a file under `results/v2/`. Nothing here is hand-typed.
+almost every one, and every number traceable to a file under `results/current/`. Nothing here is hand-typed.
 No git commit/push has been made on the user's behalf.
 
 ## Terminology used consistently below
@@ -62,7 +62,7 @@ adversarially tested to the risk categories they name, not a compliance certific
 
 **All 10 OWASP Top 10 for LLM Applications (2025) categories now have real test evidence** — not just the
 two headlined below. Full results for all ten, including the six newly tested this pass (LLM02, 03, 05,
-07, 09, 10) and the two scoped-as-reasoned ones (LLM04, LLM08): [`docs/v2/owasp_llm_top10_2025.md`](owasp_llm_top10_2025.md).
+07, 09, 10) and the two scoped-as-reasoned ones (LLM04, LLM08): [`docs/owasp_llm_top10_2025.md`](owasp_llm_top10_2025.md).
 (Note: the current official edition is "(2025)," not "(2026)" — corrected from an earlier labeling error
 in this project's docs; there is no published 2026 edition.) The two below remain the two with the most
 significant, architecture-shaping findings.
@@ -74,7 +74,7 @@ significant, architecture-shaping findings.
   claim types it actually applies to. **How often does this actually fire?** Audited directly (not
   estimated): 2 of 51 residual dev+validation cases (3.9%) — rare, but both times it fired it corrected a
   would-be false approval exactly to ground truth. See
-  [`docs/v2/gate_override_audit.md`](gate_override_audit.md) for the full, honest accounting of what this
+  [`docs/gate_override_audit.md`](gate_override_audit.md) for the full, honest accounting of what this
   does and doesn't prove about how "agentic" the design really is.
 - **OWASP Top 10 for LLM Applications — LLM01: Prompt Injection.** Identified and adversarially tested
   (Exp 28: injection, fake authority, malicious tool-embedded text), with a prompt-level defense in
@@ -100,47 +100,47 @@ significant, architecture-shaping findings.
 | **Mechanism** | Deterministic rules → conclusive? code decides : single-shot LLM decides | Deterministic rules → conclusive? code decides : bounded ReAct agent with code-computed disposition tools |
 | **Evaluation population** | 50-claim final test (touched once, official) | 70-claim dev + 30-claim validation (both touched during development of this design) |
 | **Result** | 30/50 (60%), 0/37 non-approvable cases falsely approved (0% observed FAR) | 44/70 dev (62.9%), 0/52 falsely approved; 21/30 validation (70.0%), 0/22 falsely approved |
-| **Status** | **Official, shipped.** Tested once on the real held-out final test, verified against a committed hash manifest at the time it ran, never rerun -- *but the manifest is now stale*: the dataset was regenerated once more afterward, so its hashes no longer match the files on disk (disclosed in `docs/v2/exp32_final_test.md`; do not cite the manifest as still verifying the current dataset). This is the only architecture with a properly frozen, documented evaluation contract. | **Promising, unvalidated candidate — not promoted.** Best accuracy/FAR on the splits it has seen, and cheaper under a corrected cost model *at development/validation rates*. But a real, unauthorized, partial (30/50) diagnostic run against final-test cases scored materially worse (50% accuracy, 17.6% FAR — `docs/v2/second_touch_disclosure.md`), and a no-cost sensitivity analysis (`docs/v2/cost_and_business_impact.md`) shows the cost advantage does not survive those rates. No freeze manifest; promotion requires a fresh, untouched holdout, not created this session. |
+| **Status** | **Official, shipped.** Tested once on the real held-out final test, verified against a committed hash manifest at the time it ran, never rerun -- *but the manifest is now stale*: the dataset was regenerated once more afterward, so its hashes no longer match the files on disk (disclosed in `docs/exp32_final_test.md`; do not cite the manifest as still verifying the current dataset). This is the only architecture with a properly frozen, documented evaluation contract. | **Promising, unvalidated candidate — not promoted.** Best accuracy/FAR on the splits it has seen, and cheaper under a corrected cost model *at development/validation rates*. But a real, unauthorized, partial (30/50) diagnostic run against final-test cases scored materially worse (50% accuracy, 17.6% FAR — `docs/second_touch_disclosure.md`), and a no-cost sensitivity analysis (`docs/cost_and_business_impact.md`) shows the cost advantage does not survive those rates. No freeze manifest; promotion requires a fresh, untouched holdout, not created this session. |
 
-Full automation and cost breakdown, with the "does the complexity earn its keep" question answered directly: [`docs/v2/cost_and_business_impact.md`](cost_and_business_impact.md).
+Full automation and cost breakdown, with the "does the complexity earn its keep" question answered directly: [`docs/cost_and_business_impact.md`](cost_and_business_impact.md).
 
 ## Responsible AI and build-vs-buy
-- [`docs/v2/responsible_ai_risk_table.md`](responsible_ai_risk_table.md): risk / failure mode / current
+- [`docs/responsible_ai_risk_table.md`](responsible_ai_risk_table.md): risk / failure mode / current
   mitigation / residual risk / human control for every risk category this project tested or scoped,
   including the honest disclosure that prompt injection and retrieval poisoning remain unresolved.
-- [`docs/v2/owasp_llm_top10_2025.md`](owasp_llm_top10_2025.md): the completed, non-negotiable OWASP Top 10
+- [`docs/owasp_llm_top10_2025.md`](owasp_llm_top10_2025.md): the completed, non-negotiable OWASP Top 10
   for LLM Applications (2025) test pass — all 10 categories, all evidenced, $0 cost, including the
   self-caught correction of a false "13.6% fabricated citation" finding down to zero once the check was
   fixed.
-- [`docs/v2/gate_override_audit.md`](gate_override_audit.md): does the disposition gate actually fire, and
+- [`docs/gate_override_audit.md`](gate_override_audit.md): does the disposition gate actually fire, and
   does it matter when it does? Audited directly at $0 cost (cached replay): 2/51 residual dev+validation
   cases (3.9%), both correcting a would-be false approval exactly to ground truth — a rare but load-bearing
   safety backstop, not the primary source of the design's accuracy.
-- [`docs/v2/exp_agent_failure_ablation.md`](exp_agent_failure_ablation.md): problem.md §38's required
+- [`docs/exp_agent_failure_ablation.md`](exp_agent_failure_ablation.md): problem.md §38's required
   reproduced-agent-failures — de-duplication and vague tool descriptions each temporarily removed from a
   copy of the agent loop, $0 cost. Real reproduced failures: an unresolved 19-of-20-calls loop with dedup
   off, and a correct decision flipped to incorrect with vague tool descriptions.
-- [`docs/v2/second_touch_disclosure.md`](second_touch_disclosure.md): the final-test and validation splits
+- [`docs/second_touch_disclosure.md`](second_touch_disclosure.md): the final-test and validation splits
   were touched a second time after the freeze, with real LLM calls, by a process not fully identified —
   found by independent audit, disclosed here in full. Did not change Exp 32's own saved result.
-- [`docs/v2/post_freeze_findings.md`](post_freeze_findings.md): three bugs external review found inside
+- [`docs/post_freeze_findings.md`](post_freeze_findings.md): three bugs external review found inside
   frozen (hash-pinned) modules after Exp 32 ran — documented as findings for a future experiment per the
   freeze manifest's own rule, not patched retroactively. Also see the cost-model correction noted in
-  `docs/v2/cost_and_business_impact.md`'s headline conclusion, which is a separate, non-frozen fix that
+  `docs/cost_and_business_impact.md`'s headline conclusion, which is a separate, non-frozen fix that
   reverses the project's operating-cost conclusion.
-- [`docs/v2/build_vs_buy.md`](build_vs_buy.md): what was rented (commodity models/embeddings) vs. owned
+- [`docs/build_vs_buy.md`](build_vs_buy.md): what was rented (commodity models/embeddings) vs. owned
   (policy logic, safety controls, evaluation harness, business-logic tools) across every architectural
   layer, and why.
-- [`docs/v2/synthetic_data_provenance.md`](synthetic_data_provenance.md): exactly how the dataset was
+- [`docs/synthetic_data_provenance.md`](synthetic_data_provenance.md): exactly how the dataset was
   generated (generator, model, seed, hardening rounds, freeze process), its honest limitations, and how
   leakage was prevented.
-- [`docs/v2/reproducibility_and_repo_map.md`](reproducibility_and_repo_map.md): every command needed to
+- [`docs/reproducibility_and_repo_map.md`](reproducibility_and_repo_map.md): every command needed to
   run this repo, which ones cost money, and a map of every top-level directory.
-- [`docs/v2/FINAL_REPORT.md`](FINAL_REPORT.md): the ~1,200-word decision-flow report (problem → dataset →
+- [`docs/FINAL_REPORT.md`](FINAL_REPORT.md): the ~1,200-word decision-flow report (problem → dataset →
   baselines → retrieval diagnosis → workflow/agent gate → official architecture → final test → failure
   analysis → guarded-agent research → cost trade-off → Responsible AI → conclusion), naming only the
   pivotal experiments; everything else stays in this index.
-- [`docs/v2/demo_script.md`](demo_script.md): the four verified cases (plus one honestly-shown failed
+- [`docs/demo_script.md`](demo_script.md): the four verified cases (plus one honestly-shown failed
   architecture) to walk through in the `ui/` demo, instead of scrolling the full case list.
 
 **If asked "what does the system do," the honest answer is the selective resolver, exactly as frozen.**
@@ -171,7 +171,7 @@ Claim
 ```
 **Diagram B is a candidate — not independently final-tested**, and per the cost analysis above, not
 currently the preferred operating architecture despite its accuracy/FAR profile (see
-`docs/v2/cost_and_business_impact.md`).
+`docs/cost_and_business_impact.md`).
 
 ## The flow, end to end
 
@@ -266,7 +266,7 @@ Exp 34: rebuild as a full agent → WORSE than a fixed workflow (4/13 vs 7/13)
                           0% false approvals on both
        ── beats the frozen system's own dev accuracy by 1 point, at matching FAR ──
        ── but escalates ~1.5-1.8x more often; a full cost model finds it is NOT
-          yet the cheaper design operationally (docs/v2/cost_and_business_impact.md) ──
+          yet the cheaper design operationally (docs/cost_and_business_impact.md) ──
 ```
 
 ## Full experiment index
@@ -289,7 +289,7 @@ Exp 34: rebuild as a full agent → WORSE than a fixed workflow (4/13 vs 7/13)
 | **30** | **Architecture freeze** | **Selective resolver frozen**: 0/52 falsely approved (0% observed FAR), 61% dev |
 | 31 | Cost-to-serve | $0.00043/claim measured — at this pricing and workload, model inference cost was not a material architecture-selection constraint (see the full cost model in the business-impact analysis for the fuller picture including human-review and error costs) |
 | **32** | **Frozen final test** | **30/50 (60%), 0/37 falsely approved (0% observed FAR)** — *(dataset snapshot caveat: see the doc)* |
-| 33 | Failure analysis | 20 errors: 9 reasoning, 5 over-asking, 4 fact gaps, 0 retrieval |
+| 33 | Failure analysis | 20 errors: 9 reasoning, 5 over-asking, 4 fact gaps, 2 escalation logic, 0 retrieval/conclusiveness (`results/current/plots/exp33_failure_categories.png`; an earlier version of this row omitted the 2 escalation-logic errors, summing to 18 instead of 20 — corrected) |
 
 *Numbering note: Exp 21–27 do not appear anywhere in this repository (no doc, script, notebook, or result
 file) — they were not run under those numbers. No record was kept of why those seven numbers specifically
@@ -323,9 +323,9 @@ wonder whether work is missing. The index below is otherwise continuous and comp
 | 51 | Dev confirmed clean | **44/70 (62.9%), 0/52 falsely approved (0% observed FAR)** |
 | **52** | **Validation run + 7th bug found** | **21/30 validation (70.0%), 0/22 falsely approved (0% observed FAR)** — development-and-validation-selected candidate, not independently validated |
 
-Full detail: `docs/v2/expNN_*.md`. Standardized master comparison table (every architecture, every column
+Full detail: `docs/expNN_*.md`. Standardized master comparison table (every architecture, every column
 required by the project's reporting standard, every number traced to a `summary.json` file, plus the
-majority-class baseline): [`docs/v2/master_comparison.md`](master_comparison.md).
+majority-class baseline): [`docs/master_comparison.md`](master_comparison.md).
 
 ## Key findings, distilled
 1. **RAG quality was never the dominant bottleneck** — perfect retrieval barely moves accuracy (Exp 11, 37).
@@ -342,14 +342,15 @@ majority-class baseline): [`docs/v2/master_comparison.md`](master_comparison.md)
   for the *entire* claim population — 44/70 dev, 0/52 falsely approved; 21/30 validation, 0/22 falsely
   approved (0% observed FAR on both **authorized** splits). A real but unauthorized, partial (30/50) run
   against final-test exists and scores worse — 50% accuracy, 17.6% FAR — see
-  `docs/v2/second_touch_disclosure.md`. One more correct case than the frozen design's
+  `docs/second_touch_disclosure.md`. One more correct case than the frozen design's
   own dev number (43/70) at matching observed safety — see the methodology note above on why this is
   encouraging validation evidence, not a proven generalization result.
 - **Resolved:** the frozen resolver remains the official architecture. Not because it's the cheaper
   architecture in theory — under development/validation rates, the corrected cost model favors the
   candidate — but because it's the only one with a frozen, documented evaluation contract, and because a
-  no-cost sensitivity analysis (`docs/v2/cost_and_business_impact.md`) shows the candidate's cost advantage
+  no-cost sensitivity analysis (`docs/cost_and_business_impact.md`) shows the candidate's cost advantage
   does not survive its diagnostic final-run safety numbers. The candidate remains a promising, unvalidated
   candidate. A new, untouched holdout for it — a genuine Final Evaluation 2, never a replacement for
   Exp 32 — was not created this session and remains future work, not something to do implicitly.
-- **Budget:** $4.36 of $5.00 spent (raised once this session from the original $3.50 cap).
+- **Budget:** $4.65 of $5.00 spent (raised once this session from the original $3.50 cap; verified directly
+  against `results/run_log.jsonl` — non-cached `llm_call` costs sum to $4.649).

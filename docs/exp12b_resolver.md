@@ -1,6 +1,6 @@
-# V2 Exp 12B — Deterministic-first residual resolver (architecture probe, development only)
+# Exp 12B — Deterministic-first residual resolver (architecture probe, development only)
 
-Notebook: `notebooks/v2/exp12b_resolver.ipynb`. Results: `results/v2/development/exp12b_resolver/`. Plot: `results/v2/plots/exp12b_resolver.png`. Cost: $0.030. Development split only. **Architecture probe, not the final router (that is Exp 30).**
+Notebook: `notebooks/exp12b_resolver.ipynb`. Results: `results/current/development/exp12b_resolver/`. Plot: `results/current/plots/exp12b_resolver.png`. Cost: $0.030. Development split only. **Architecture probe, not the final router (that is Exp 30).**
 
 **Question:** can deterministic-first routing (conclusive -> trust the rule engine; unresolved -> escalate or LLM) preserve reliability while using the LLM only for genuine ambiguity? Conclusiveness is defined from runtime-visible state only (the parser's own extraction gaps and the rule engine's own "no rule triggered" fallback), never a label.
 

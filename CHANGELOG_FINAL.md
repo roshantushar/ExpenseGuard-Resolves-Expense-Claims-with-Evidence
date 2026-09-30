@@ -1,28 +1,28 @@
-# CHANGELOG_FINAL — V2 documentation and methodology audit
+# CHANGELOG_FINAL — documentation and methodology audit
 
-Record of every change made in this pass (the 70-item audit: repository integrity, V1 removal, V2
+Record of every change made in this pass (the 70-item audit: repository integrity, V1 removal, current
 authoritative story, methodology corrections, cost/business analysis, Responsible AI, reproducibility,
 report restructuring, demo structure, and this consistency audit).
 
 ## Correction, added after an independent marker-style audit (later pass)
 Two entries below — "Confirmation: frozen evidence untouched" and "Confirmation: no new held-out set
 created" — are corrected here rather than silently rewritten, per this project's own convention of
-banner-correcting rather than editing history (see `docs/v2/exp44_full_confirmation.md`'s own correction
+banner-correcting rather than editing history (see `docs/exp44_full_confirmation.md`'s own correction
 note for precedent):
 
-1. **The cost conclusion these entries rested on had a real bug.** `scripts/v2/cost_model.py` defined
+1. **The cost conclusion these entries rested on had a real bug.** `scripts/cost_model.py` defined
    `false_rejection_cost_usd` and `unnecessary_info_request_cost_usd` as scenario assumptions but never
    added them to the total cost — only false-approval cost was priced. Fixed. With the correct total, the
    guarded-agent candidate is now **cheaper** than the frozen design at every scenario scale, not more
    expensive, because the frozen design's much higher false-rejection rate among automated decisions
    (36.8% dev / 50.0% final test, vs. the candidate's 17.2% dev / 21.4% validation) was never priced
-   before. Full detail: `docs/v2/cost_and_business_impact.md`'s headline-conclusion note. This reverses
+   before. Full detail: `docs/cost_and_business_impact.md`'s headline-conclusion note. This reverses
    the operating-cost half of "no new held-out set created," below.
-2. **"Never rerun" needs a qualification.** `results/v2/final_test/resolver/` and
-   `results/v2/validation/resolver/` contain a later run of the frozen resolver's LLM-residual step
+2. **"Never rerun" needs a qualification.** `results/current/final_test/resolver/` and
+   `results/current/validation/resolver/` contain a later run of the frozen resolver's LLM-residual step
    against both held-out splits, with real (non-cached) paid LLM calls, dated after the freeze and after
    Exp 32's own one-shot run. **Exp 32's own saved files were not touched** —
-   `results/v2/final_test/exp32_final_test/predictions.jsonl`, `evaluation.jsonl`, `summary.json`, the
+   `results/current/final_test/exp32_final_test/predictions.jsonl`, `evaluation.jsonl`, `summary.json`, the
    freeze manifest, and `ground_truth.jsonl` are unchanged, verified again during this correction. What
    changed is that the underlying frozen code (`src/resolver.py` → `src/llm_exp.py`) was invoked a second
    time against the held-out splits. Origin could not be established from committed scripts/logging.
@@ -31,16 +31,16 @@ note for precedent):
    prediction for 30 of the 50 final-test cases, scoring 50% accuracy and 17.6% FAR — materially worse than
    every authorized number for this design. Origin could not be established from committed scripts/logging.
    A misleading "(demo only)" stat card built on this data was removed from the live UI. Full detail:
-   `docs/v2/second_touch_disclosure.md`. **A no-cost sensitivity analysis** (`docs/v2/cost_and_business_impact.md`,
+   `docs/second_touch_disclosure.md`. **A no-cost sensitivity analysis** (`docs/cost_and_business_impact.md`,
    existing data only, no new LLM calls) re-computed the cost model using this diagnostic run's rates in
    place of dev/validation rates: the candidate's cost advantage from item 1 above **does not survive**.
 
 ## Confirmation: frozen evidence untouched — see correction above
 Verified before and after every change in this pass (`git status`, direct read of the files): Exp 32's own
 `predictions.jsonl`, `evaluation.jsonl`, `summary.json`, `experiments/exp32_freeze_manifest_v2.yaml`, and
-`ExpenseGuard_V2_DATASET/04_ground_truth_PRIVATE/ground_truth.jsonl` were never edited, and Exp 32 itself
+`ExpenseGuard_DATASET/04_ground_truth_PRIVATE/ground_truth.jsonl` were never edited, and Exp 32 itself
 was never rerun. **This is no longer the full picture** — see the correction above and
-`docs/v2/second_touch_disclosure.md` for what it does not cover. All 42 unit tests
+`docs/second_touch_disclosure.md` for what it does not cover. All 42 unit tests
 (`python -m unittest discover -s tests`) pass after every change in this pass.
 
 ## Confirmation: no new held-out set created — resolution, not just a correction
@@ -51,7 +51,7 @@ rates alone, now finds the opposite. **But the diagnostic final-run finding (ite
 analysis built on it settle the question a different way**: the frozen selective resolver remains the
 official architecture — the only one with a frozen, documented evaluation contract — and the guarded-agent
 candidate is retained as a promising, unvalidated candidate, not promoted. No new held-out set was created.
-This is a **resolved** decision, not a reopened one; see `docs/v2/cost_and_business_impact.md`'s "Headline
+This is a **resolved** decision, not a reopened one; see `docs/cost_and_business_impact.md`'s "Headline
 conclusion" section for the full reasoning.
 
 ## Files moved
@@ -61,50 +61,50 @@ conclusion" section for the full reasoning.
   in the repo).
 
 ## Files created
-- `docs/v2/exp47_workflow_reuse_regression.md`, `exp48_allowlist_redesign.md`,
+- `docs/exp47_workflow_reuse_regression.md`, `exp48_allowlist_redesign.md`,
   `exp49_ground_transport_placeholder_bug.md`, `exp50_gift_hotel_dates_merchant_metadata.md`,
   `exp51_dev_confirmed_clean.md`, `exp52_validation_tuned_candidate.md` — split out of the previously
   combined `exp47_52_full_coverage.md`, each with hypothesis / exact change / evaluation population /
   result / FAR / what worked-failed / adopted-rejected status.
-- `docs/v2/master_comparison.md` — standardized comparison table across every architecture tested (every
+- `docs/master_comparison.md` — standardized comparison table across every architecture tested (every
   number traced to a `summary.json` file), the majority-class baseline (computed from ground truth, not
   assumed), and the "what each complexity rung bought us" table.
-- `docs/v2/cost_and_business_impact.md` — measured automation metrics (automated-decision rate, escalation
+- `docs/cost_and_business_impact.md` — measured automation metrics (automated-decision rate, escalation
   rate, accuracy split by automated/escalated, FAR-among-automated, safe automation rate) per architecture
   per split (never blended across splits), a configurable risk-adjusted cost model across low/base/high
   scenarios, and the headline finding that the guarded candidate's operating cost exceeds the frozen
-  design's at every scale. Generated by `scripts/v2/cost_model.py`.
-- `docs/v2/responsible_ai_risk_table.md` — 14 risk categories, each with failure mode / current mitigation
+  design's at every scale. Generated by `scripts/cost_model.py`.
+- `docs/responsible_ai_risk_table.md` — 14 risk categories, each with failure mode / current mitigation
   / residual risk / human control, honestly scored (prompt injection and retrieval poisoning kept as
   unresolved, not claimed as mitigated).
-- `docs/v2/build_vs_buy.md` — own/rent decision and reasoning for every architectural layer.
-- `docs/v2/synthetic_data_provenance.md` — dataset generator, generation model, seed, hardening rounds,
+- `docs/build_vs_buy.md` — own/rent decision and reasoning for every architectural layer.
+- `docs/synthetic_data_provenance.md` — dataset generator, generation model, seed, hardening rounds,
   ground-truth verification method, freeze process, honest limitations, and leakage-prevention controls.
-- `docs/v2/reproducibility_and_repo_map.md` — every command to run the repo (with cost noted per command,
+- `docs/reproducibility_and_repo_map.md` — every command to run the repo (with cost noted per command,
   each one actually executed and verified during this pass, not just described), and a directory map.
-- `docs/v2/FINAL_REPORT.md` — the ~1,200-word decision-flow report (A-L structure), naming only pivotal
+- `docs/FINAL_REPORT.md` — the ~1,200-word decision-flow report (A-L structure), naming only pivotal
   experiments.
-- `docs/v2/demo_script.md` — four verified demo cases (X2-060, X2-006, X2-005, X2-059) plus one honestly
+- `docs/demo_script.md` — four verified demo cases (X2-060, X2-006, X2-005, X2-059) plus one honestly
   shown failed-architecture case (X2-026, Exp 46's stronger-model regression), each checked against real
   saved predictions rather than picked from memory.
-- `scripts/v2/cost_model.py` — the cost-model script itself (stdlib-only, no new dependency).
+- `scripts/cost_model.py` — the cost-model script itself (stdlib-only, no new dependency).
 - This file.
 
 ## Every stale V1 statement corrected
-- `README.md`: rewritten to lead with V2's 150-claim/70-30-50 numbers, the official Exp 30/32 result, and
+- `README.md`: rewritten to lead with the current 150-claim/70-30-50 numbers, the official Exp 30/32 result, and
   the candidate explicitly labeled post-final research.
-- `problem.md` §11: dataset section rewritten from V1's 120-claim/60-20-40 figures to V2's real numbers
+- `problem.md` §11: dataset section rewritten from V1's 120-claim/60-20-40 figures to the current, real numbers
   (150 claims = 40 self-contained + 80 workflow + 30 dynamic-agent-candidate, computed directly from
   `ground_truth.jsonl`, not estimated), plus new §11.1 (official result), §11.2 (post-final research,
   including the cost-analysis caveat), and §42.1 (the sharpened final conclusion).
 - `problem.md` §35: OWASP reference updated from "(2025)" / LLM01-only framing to the honestly-scored
-  2026/LLM01/LLM06 framing matching `docs/v2/README.md`.
+  2026/LLM01/LLM06 framing matching `docs/README.md`.
 - The lone remaining "current final dataset" phrase (`problem.md:312`, now corrected) was the only stale
   V1 term found outside the archived file in the initial audit.
 
 ## Every methodology claim softened or corrected
 - "Retrieval is not the problem" → "retrieval was not the dominant downstream bottleneck; oracle policy
-  evidence produced only a modest accuracy gain" (Exp 11, `docs/v2/README.md`, `FINAL_REPORT.md`).
+  evidence produced only a modest accuracy gain" (Exp 11, `docs/README.md`, `FINAL_REPORT.md`).
 - "Exp 37 decisively rules out evidence quality" → "perfect policy evidence was insufficient to resolve the
   agent's decision failures, showing retrieval quality alone did not explain the problem."
 - Exp 38-39 given the nuanced two-part conclusion: the agent's queries were objectively weak (a genuine
@@ -122,18 +122,18 @@ conclusion" section for the full reasoning.
 - "Fully validated" / "independently validated" / "beats the frozen design" (guarded-agent candidate)
   corrected everywhere to "development-and-validation-selected candidate," with the accuracy/FAR-only scope
   of any "beats" claim made explicit once the cost analysis showed the opposite operationally.
-- A methodology note was added (`docs/v2/README.md`) explaining why the original 50-claim final test can no
+- A methodology note was added (`docs/README.md`) explaining why the original 50-claim final test can no
   longer serve as a new blind test for architectures shaped by Exp 33's error analysis, even though its
   labels were never touched.
 
 ## Real numeric errors found and fixed during this pass (self-audit, item 15)
-- Exp 43 (`docs/v2/exp43_guarded_tools_final.md`): "11/13, one remaining error" was incomplete — the
+- Exp 43 (`docs/exp43_guarded_tools_final.md`): "11/13, one remaining error" was incomplete — the
   confusion matrix in `summary.json` showed two errors, not one. The second (X2-095, `DYNAMIC_DEEP_HOTEL_CHAIN`,
   ground truth REJECT, predicted REQUEST_INFORMATION) was undocumented; both are now explained.
 - Guarded-agent candidate's dev/validation false-approval denominators were initially written as `0/27` and
   `0/10` (mistakenly carried over from Exp 43's n=13-subset denominator of 10) — corrected to the true
   denominators, dev=52 and validation=22, verified directly against `ground_truth.jsonl`'s split
-  composition. Fixed across `README.md`, `problem.md`, `docs/v2/README.md`, and all six Exp 47-52 docs.
+  composition. Fixed across `README.md`, `problem.md`, `docs/README.md`, and all six Exp 47-52 docs.
 - The cost-model script's first draft blended dev+final-test and dev+validation populations into single
   combined rows, violating the project's own rule against comparing/combining differently-denominated
   populations — restructured to report one architecture × one split per row.
@@ -149,20 +149,30 @@ conclusion" section for the full reasoning.
 A later addition to this pass closed the user's standing, non-negotiable requirement to test all 10 OWASP
 LLM categories (previously only LLM01 and LLM06 had real evidence). Corrected a labeling error first
 ("(2026)" → the actual current official edition, "(2025)," verified by live lookup) across `problem.md`,
-`docs/v2/README.md`, and `docs/v2/responsible_ai_risk_table.md`. Then built and ran
-`scripts/v2/exp_owasp_llm_top10.py`, testing or scoping all remaining 8 categories at **$0 total cost**
+`docs/README.md`, and `docs/responsible_ai_risk_table.md`. Then built and ran
+`scripts/exp_owasp_llm_top10.py`, testing or scoping all remaining 8 categories at **$0 total cost**
 (free local model for live adversarial probes; saved-data and static-code checks for the rest) — real
-paid budget remaining was $0.35 both before and after. Results: `docs/v2/owasp_llm_top10_2025.md`,
-`results/v2/owasp_llm_top10_2025.json`. One real self-caught correction during this work: an initial LLM09
+paid budget remaining was $0.35 both before and after. Results: `docs/owasp_llm_top10_2025.md`,
+`results/current/owasp_llm_top10_2025.json`. One real self-caught correction during this work: an initial LLM09
 citation check flagged 122/897 (13.6%) of all policy citations ever saved as "fabricated" — investigated
 before reporting, found to be a check artifact (free text in the evidence field, or a valid ID wrapped in
 brackets/description text), and corrected to the accurate result of zero genuine fabrications once the
 check extracted the actual ID token before comparing.
 
-## Headline conclusion, before and after this pass
-- **Before:** "the guarded-agent candidate beats the frozen design's own dev accuracy at matching safety."
-- **After:** "the best-performing AI architecture was not the best operating architecture — the guarded
-  candidate's higher accuracy came with substantially higher escalation, and a risk-adjusted cost model
-  found its total operating cost higher than the frozen design's at every scale tested. The frozen
-  selective resolver remains the preferred operating architecture, and no new held-out set was created for
-  the candidate."
+## Headline conclusion, before and after this pass — SUPERSEDED, see the correction at the top of this file
+This section is preserved as originally written, for the record; it is no longer the current conclusion.
+- **Before (this pass's starting point):** "the guarded-agent candidate beats the frozen design's own dev
+  accuracy at matching safety."
+- **After (this pass's original conclusion, since superseded):** "the best-performing AI architecture was
+  not the best operating architecture — the guarded candidate's higher accuracy came with substantially
+  higher escalation, and a risk-adjusted cost model found its total operating cost higher than the frozen
+  design's at every scale tested. The frozen selective resolver remains the preferred operating
+  architecture, and no new held-out set was created for the candidate."
+- **Current (see the correction at the top of this file):** that cost model had a bug (fixed); under
+  development/validation rates alone the candidate is now cheaper, not more expensive. But a separate,
+  later-found diagnostic run showed the candidate's real performance on unseen final-test data is
+  materially worse (50% accuracy, 17.6% FAR) than any authorized number for it, and a sensitivity analysis
+  shows its cost advantage does not survive those rates. **The frozen selective resolver remains the
+  official architecture for the same underlying reason as before — it is the only one with a proven,
+  frozen result — but the reasoning that gets there has changed.** See
+  `docs/cost_and_business_impact.md`'s headline conclusion for the full, current story.

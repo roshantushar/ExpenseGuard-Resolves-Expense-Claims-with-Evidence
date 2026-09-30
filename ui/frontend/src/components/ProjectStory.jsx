@@ -44,13 +44,13 @@ function Section({ id, title, children }) {
 
 const DOCS = [
   ["Root README", "README.md"], ["Problem Statement", "problem.md"],
-  ["Final Report (1,200 words)", "docs/v2/FINAL_REPORT.md"], ["Experiment Index", "docs/v2/README.md"],
-  ["Exp 30 — Architecture Freeze", "docs/v2/exp30_selective_router.md"], ["Exp 32 — Final Test", "docs/v2/exp32_final_test.md"],
-  ["Exp 33 — Failure Analysis", "docs/v2/exp33_failure_analysis.md"], ["Cost & Business Impact", "docs/v2/cost_and_business_impact.md"],
-  ["Build vs Buy", "docs/v2/build_vs_buy.md"], ["Responsible AI Risk Table", "docs/v2/responsible_ai_risk_table.md"],
-  ["OWASP 2025 Evaluation", "docs/v2/owasp_llm_top10_2025.md"], ["Synthetic Data Provenance", "docs/v2/synthetic_data_provenance.md"],
-  ["Reproducibility Guide", "docs/v2/reproducibility_and_repo_map.md"], ["Demo Script", "docs/v2/demo_script.md"],
-  ["Gate Override Audit", "docs/v2/gate_override_audit.md"], ["CHANGELOG_FINAL", "CHANGELOG_FINAL.md"],
+  ["Final Report (1,200 words)", "docs/FINAL_REPORT.md"], ["Experiment Index", "docs/README.md"],
+  ["Exp 30 — Architecture Freeze", "docs/exp30_selective_router.md"], ["Exp 32 — Final Test", "docs/exp32_final_test.md"],
+  ["Exp 33 — Failure Analysis", "docs/exp33_failure_analysis.md"], ["Cost & Business Impact", "docs/cost_and_business_impact.md"],
+  ["Build vs Buy", "docs/build_vs_buy.md"], ["Responsible AI Risk Table", "docs/responsible_ai_risk_table.md"],
+  ["OWASP 2025 Evaluation", "docs/owasp_llm_top10_2025.md"], ["Synthetic Data Provenance", "docs/synthetic_data_provenance.md"],
+  ["Reproducibility Guide", "docs/reproducibility_and_repo_map.md"], ["Demo Script", "docs/demo_script.md"],
+  ["Gate Override Audit", "docs/gate_override_audit.md"], ["CHANGELOG_FINAL", "CHANGELOG_FINAL.md"],
 ];
 
 const EXP_PHASES_7 = [
@@ -182,7 +182,7 @@ export default function ProjectStory() {
   const arch = useMemo(() => d.architecture_comparison || {}, [d]);
 
   if (loadError) {
-    return <div className="overview"><div className="overview-inner"><p className="err">Could not load /data/project_story.json ({loadError}). Run <code>python3 scripts/v2/export_project_story.py</code> to generate it.</p></div></div>;
+    return <div className="overview"><div className="overview-inner"><p className="err">Could not load /data/project_story.json ({loadError}). Run <code>python3 scripts/export_project_story.py</code> to generate it.</p></div></div>;
   }
 
   return (
@@ -558,7 +558,7 @@ function CostTwist({ scenarios }) {
   return (
     <div>
       <div className="scenario-toggle">{Object.keys(scenarios).map((k) => <button key={k} className={k === scenario ? "active" : ""} onClick={() => setScenario(k)}>{k}</button>)}</div>
-      <div className="scenario-label">{s.label} — total expected cost / 1,000 claims (scripts/v2/cost_model.py)</div>
+      <div className="scenario-label">{s.label} — total expected cost / 1,000 claims (scripts/cost_model.py)</div>
       <div className="cost-bars">
         {rows.map((r) => (
           <div className="cost-bar-row" key={r.name}>

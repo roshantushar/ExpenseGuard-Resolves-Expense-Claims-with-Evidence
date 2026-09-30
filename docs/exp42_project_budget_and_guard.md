@@ -3,7 +3,7 @@
 Adds `check_project_budget` (closing the `DYNAMIC_PROJECT_BUDGET_CHAIN` gap Exp 33 identified: no
 resolved-fact family existed for CIRC-26-02's active-project-record check) alongside Exp 41's
 disposition gate and Exp 40's existing tools. Code: `src/agent_variants.py` (`make_check_project_budget`,
-`specs_and_tools_42`). Results: `results/v2/development/exp42_project_budget_and_guard/`. Same 13
+`specs_and_tools_42`). Results: `results/current/development/exp42_project_budget_and_guard/`. Same 13
 development claims. Cost: $0.027 (plus $0.001 for a 3-case confirmation re-run after the fix below).
 
 ## Result: same accuracy, worse safety — a new tool without a domain guard

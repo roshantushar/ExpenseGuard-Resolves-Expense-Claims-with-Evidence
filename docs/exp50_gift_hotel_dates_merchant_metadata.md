@@ -1,6 +1,6 @@
 # Exp 50 — gift tool, hotel date-arithmetic fix, and a merchant-metadata cross-check
 
-Part of the Exp 47-52 arc. Results: `results/v2/development/exp50_gift_and_hotel_dates/`.
+Part of the Exp 47-52 arc. Results: `results/current/development/exp50_gift_and_hotel_dates/`.
 
 | Field | Value |
 |---|---|

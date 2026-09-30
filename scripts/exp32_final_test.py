@@ -4,12 +4,12 @@ inspected or rerun individually mid-run; the full batch completes, predictions a
 produced, and only then does any analysis happen. This script performs no mid-run branching on results and prints
 nothing about individual cases before the batch is complete and saved.
 
-Usage: python -m scripts.v2.exp32_final_test
+Usage: python -m scripts.exp32_final_test
 """
 from __future__ import annotations
 import json, sys, time
 from pathlib import Path
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from src import config as C, llm, llm_exp, resolver, evaluate
 

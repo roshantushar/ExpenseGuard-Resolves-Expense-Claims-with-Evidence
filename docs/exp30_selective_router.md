@@ -1,6 +1,6 @@
-# V2 Exp 30 — Selective architecture router: freezing the final design
+# Exp 30 — Selective architecture router: freezing the final design
 
-Notebook: `notebooks/v2/exp30_selective_router.ipynb`. Code: `src/resolver.py` (new, the frozen pipeline), `src/tools.py` (`validate_approval` fixed for conflicting records, Exp 28). Results: `results/v2/development/exp30_selective_router/`. Cost: $0.030. Development split only.
+Notebook: `notebooks/exp30_selective_router.ipynb`. Code: `src/resolver.py` (new, the frozen pipeline), `src/tools.py` (`validate_approval` fixed for conflicting records, Exp 28). Results: `results/current/development/exp30_selective_router/`. Cost: $0.030. Development split only.
 
 **Architecture:**
 ```

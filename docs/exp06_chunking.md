@@ -1,6 +1,6 @@
-# V2 Exp 6 — Chunk size and overlap (development only)
+# Exp 6 — Chunk size and overlap (development only)
 
-Notebook: `notebooks/v2/exp06_chunking.ipynb`. Results: `results/v2/development/exp06_chunking/`. Plot: `results/v2/plots/exp06_chunking.png`. Cost: about $0.03 (a new embedding build + one generation run). Development split only; validation untouched.
+Notebook: `notebooks/exp06_chunking.ipynb`. Results: `results/current/development/exp06_chunking/`. Plot: `results/current/plots/exp06_chunking.png`. Cost: about $0.03 (a new embedding build + one generation run). Development split only; validation untouched.
 
 **Hypothesis:** poor chunk boundaries explain part of Exp 5's weak retrieval.
 

@@ -1,6 +1,6 @@
 # Exp 49 — `check_ground_transport_compliance`: a placeholder-string argument-hallucination bug
 
-Part of the Exp 47-52 arc. Results: `results/v2/development/exp49_ground_transport_added/`.
+Part of the Exp 47-52 arc. Results: `results/current/development/exp49_ground_transport_added/`.
 
 | Field | Value |
 |---|---|

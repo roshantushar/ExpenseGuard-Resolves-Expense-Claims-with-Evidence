@@ -4,7 +4,7 @@ Tests a proposed pivot to make the ReAct agent + agentic RAG the centerpiece arc
 the frozen selective resolver (Exp 30). `search_policy_corpus` (M4 retriever from Exp 5-10) becomes a
 callable tool inside a bounded ReAct loop (`src/agent.py`, `src/agent_tools.py`), rather than fetched
 once before the loop starts (Exp 20's design). Code: `src/agent.py`, `src/agent_tools.py`. Results:
-`results/v2/development/exp34_agentic_rag/`. Same 13 `C_AGENT_DYNAMIC` development claims as Exp 18/19/20.
+`results/current/development/exp34_agentic_rag/`. Same 13 `C_AGENT_DYNAMIC` development claims as Exp 18/19/20.
 Cost: $0.038.
 
 **Compared against:** `rules_v2.py` alone (non-AI baseline) and the fixed workflow (Exp 18), on the

@@ -1,6 +1,6 @@
-# V2 Exp 14 — Duplicate expense detection (component qualification, $0)
+# Exp 14 — Duplicate expense detection (component qualification, $0)
 
-Notebook: `notebooks/v2/exp14_duplicate_detection.ipynb`. Results: `results/v2/development/exp14_duplicate_detection/`. Cost: $0.0002 (3 fixture calls). Development split only.
+Notebook: `notebooks/exp14_duplicate_detection.ipynb`. Results: `results/current/development/exp14_duplicate_detection/`. Cost: $0.0002 (3 fixture calls). Development split only.
 
 **Question:** can the system separate EXACT_DUPLICATE, POSSIBLE_DUPLICATE, LEGITIMATE_REPEAT and SPLIT_TRANSACTION, without falsely blocking a legitimate repeat?
 

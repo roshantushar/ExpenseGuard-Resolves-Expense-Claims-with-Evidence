@@ -1,6 +1,6 @@
-# V2 Exp 4A — Long-context feasibility
+# Exp 4A — Long-context feasibility
 
-Notebook: `notebooks/v2/exp04a_long_context_feasibility.ipynb`. Output: `results/v2/development/exp04a_feasibility.csv`, plot `results/v2/plots/exp04a_corpus_size.png`. Cost about $0.02.
+Notebook: `notebooks/exp04a_long_context_feasibility.ipynb`. Output: `results/current/development/exp04a_feasibility.csv`, plot `results/current/plots/exp04a_corpus_size.png`. Cost about $0.02.
 
 **Question:** does the full policy corpus fit each model's context, at what cost, and is it feasible?
 

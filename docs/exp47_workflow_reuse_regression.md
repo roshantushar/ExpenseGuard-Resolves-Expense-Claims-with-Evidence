@@ -1,7 +1,7 @@
 # Exp 47 — Reusing `workflow_v2.decide()` as a catch-all tool: a regression, caught immediately
 
 Part of the Exp 47-52 arc that closes Exp 45's full-dataset FAR gap. Results:
-`results/v2/development/exp47_full_coverage_dev/`.
+`results/current/development/exp47_full_coverage_dev/`.
 
 | Field | Value |
 |---|---|

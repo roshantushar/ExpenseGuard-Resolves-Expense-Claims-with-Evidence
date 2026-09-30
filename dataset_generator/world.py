@@ -108,9 +108,9 @@ CITY_REGION = {c: loc[:2] for c, loc in CITY_LOC.items()}
 # V3: cities deliberately left OUT of HOTEL_LOCS/CITY_LOC (so TRV-2.2's rendered tier table never lists
 # them) but given a region here so a case can still be placed there. TRV-2.2 already states the fallback
 # rule for exactly this situation: "A city not listed takes the lowest tier for its country." Ground
-# truth (city_tier, used by dataset_v2.engine) implements that rule; src/rules_v2.py's runtime TIER
+# truth (city_tier, used by dataset_generator.engine) implements that rule; src/rules_v2.py's runtime TIER
 # table deliberately does not, so these claims can only be resolved by retrieving and applying TRV-2.2's
-# text, not by a table lookup (see docs/v2/exp09b_rag_necessity.md).
+# text, not by a table lookup (see docs/exp09b_rag_necessity.md).
 CITY_REGION.update({"Chennai": "IN", "Kobe": "JP"})
 LOWEST_TIER = {"SG": "SG-CENTRAL", "IN": "IN-T2", "JP": "JP-OTHER"}
 

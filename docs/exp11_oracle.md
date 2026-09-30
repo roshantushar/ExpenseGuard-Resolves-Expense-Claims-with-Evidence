@@ -1,6 +1,6 @@
-# V2 Exp 11 — Policy oracle (development only)
+# Exp 11 — Policy oracle (development only)
 
-Notebook: `notebooks/v2/exp11_oracle.ipynb`. Results: `results/v2/development/exp11_oracle/`. Plot: `results/v2/plots/exp11_oracle.png`. Cost: $0.021 (10A/10B reused at $0). Development split only. Evaluator-only (reads private ground truth); never a runtime component.
+Notebook: `notebooks/exp11_oracle.ipynb`. Results: `results/current/development/exp11_oracle/`. Plot: `results/current/plots/exp11_oracle.png`. Cost: $0.021 (10A/10B reused at $0). Development split only. Evaluator-only (reads private ground truth); never a runtime component.
 
 **Question:** how much of the remaining error disappears when the model is given exactly the required + supporting policy clauses (`src/policy.render`, no explanation/label/decision hint)?
 

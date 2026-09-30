@@ -20,7 +20,7 @@ import re
 from pathlib import Path
 from . import agent as A, agent_tools as AT, tools as T, rules_text as RT, rules_v2 as RV
 
-DOC = Path(__file__).resolve().parents[1] / "ExpenseGuard_V2_DATASET" / "01_policy_corpus" / "source_documents" / "D04_TRV.md"
+DOC = Path(__file__).resolve().parents[1] / "ExpenseGuard_DATASET" / "01_policy_corpus" / "source_documents" / "D04_TRV.md"
 
 # ---------------------------------------------------------------- 35A: prompt layer
 SYSTEM_35A = """You are ExpenseGuard, a finance assistant deciding whether an employee expense claim is ready for reimbursement.

@@ -251,7 +251,7 @@ export default function Overview({ cases }) {
 
       <h1 style={{ marginTop: 44 }}>The full story, from data to decision</h1>
       <p className="lede" style={{ fontSize: 13, marginBottom: 24 }}>
-        Every number below traces back to a saved result file and a written doc under <code>docs/v2/</code>.
+        Every number below traces back to a saved result file and a written doc under <code>docs/</code>.
         Scroll down.
       </p>
       <div className="timeline">

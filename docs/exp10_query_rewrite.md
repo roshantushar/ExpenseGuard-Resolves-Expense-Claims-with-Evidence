@@ -1,6 +1,6 @@
-# V2 Exp 10 — Query rewriting (development only)
+# Exp 10 — Query rewriting (development only)
 
-Notebook: `notebooks/v2/exp10_query_rewrite.ipynb`. Results: `results/v2/development/exp10_query_rewrite/`. Plot: `results/v2/plots/exp10_query_rewrite.png`. Cost: about $0.062. Development split only.
+Notebook: `notebooks/exp10_query_rewrite.ipynb`. Results: `results/current/development/exp10_query_rewrite/`. Plot: `results/current/plots/exp10_query_rewrite.png`. Cost: about $0.062. Development split only.
 
 **Question:** after Exp 9 showed evidence is almost always somewhere in the ranked candidates but often too low, can rewriting the query fix the ranking? Frozen: voyage-4-lite, chunking 600/100, K=8, Exp 9's M4 metadata filter.
 

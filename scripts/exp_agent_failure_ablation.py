@@ -9,7 +9,7 @@ src/agent.py's loop (src/agent.py itself is never edited -- nothing to "restore"
 Runs on 3 C_AGENT_DYNAMIC dev cases (X2-005, X2-037, X2-145 -- already used elsewhere in this project's
 docs, so results are easy to cross-check) with the free local model (LOCAL_MODEL=llama3.2:3b via Ollama),
 $0 cost, matching the project's own convention for budget-constrained live tests (see
-scripts/v2/exp_owasp_llm_top10.py). Real paid budget was $0.35 of $5.00 remaining at the time this was
+scripts/exp_owasp_llm_top10.py). Real paid budget was $0.35 of $5.00 remaining at the time this was
 written -- too little to safely run this live against the paid model without risking hitting the hard cap
 mid-experiment, so the free model is not a workaround here, it is the correct choice for this ablation.
 
@@ -19,7 +19,7 @@ permanent fixture.
 from __future__ import annotations
 import json, os, sys
 from pathlib import Path
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from src import config as C, llm, llm_exp, agent as A, agent_tools as AT, tools as T
 
@@ -140,7 +140,7 @@ def main():
                                                    "cost_usd": b.get("cost_usd"), "step_cap_hit": b.get("step_cap_hit")}
         print("  Failure B (vague tool descriptions):", results["failure_b_vague_tools"][cid])
 
-    out = ROOT / "results/v2/development/exp_agent_failure_ablation"
+    out = ROOT / "results/current/development/exp_agent_failure_ablation"
     out.mkdir(parents=True, exist_ok=True)
     (out / "results.json").write_text(json.dumps(results, indent=2))
     print(f"\nwrote {out / 'results.json'}")

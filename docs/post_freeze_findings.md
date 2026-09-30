@@ -5,7 +5,7 @@ External review found three bugs inside modules the Exp 32 freeze manifest
 `resolver.py` → `llm_exp.run` call chain. Per the manifest's own process rule ("no code... may change after
 the final-test predictions are produced and viewed... documented as a finding for a *future* experiment,
 not applied retroactively to this run's numbers" — the same rule already exercised once, in the correction
-note at the top of `docs/v2/exp44_full_confirmation.md`), none of the three are patched here. This doc is
+note at the top of `docs/exp44_full_confirmation.md`), none of the three are patched here. This doc is
 that documentation.
 
 ## 1. Silent field defaults can defeat the deterministic-vs-LLM routing check
@@ -39,7 +39,7 @@ unsupported_policy_assertion_rate=round(sum(r["cited_any_policy"] for r in recs)
 This is the fraction of responses that cited *any* policy clause at all — not the fraction that cited one
 *without support* (a hallucinated or unjustified citation). Every `summary.json` written by any experiment
 that used the shared `llm_exp.run` runner carries this field under a name that overstates what it checked.
-(Separately, `LLM09` in `docs/v2/owasp_llm_top10_2025.md` does the real "is this citation genuinely
+(Separately, `LLM09` in `docs/owasp_llm_top10_2025.md` does the real "is this citation genuinely
 fabricated" check correctly, by extracting the ID token and comparing against the valid-clause set — that
 check is sound; only this field's *name*, inside the frozen runner, is wrong.)
 
@@ -52,7 +52,7 @@ corpus's valid clause-id set), inside a new, non-frozen module version.
 
 ## 3. "Predictions written before any evaluation" is true only at the outer-script level
 
-`scripts/v2/exp32_final_test.py` writes `predictions.jsonl` (line ~33) before calling
+`scripts/exp32_final_test.py` writes `predictions.jsonl` (line ~33) before calling
 `evaluate.load_gt()`/`evaluate.evaluate()` (line ~35-36) — that ordering is real. But the one call it makes
 into the pipeline, `resolver.resolve_batch()` (`src/resolver.py:57-85`), internally calls
 `llm_exp.run` for the LLM-residual claims, and `llm_exp.run` itself calls `evaluate.load_gt()` and

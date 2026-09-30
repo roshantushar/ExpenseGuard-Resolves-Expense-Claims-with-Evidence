@@ -1,8 +1,8 @@
-# V2 Exp 28 — Guardrail suite: security and integrity
+# Exp 28 — Guardrail suite: security and integrity
 
-Notebook: `notebooks/v2/exp28_guardrails.ipynb` (results live only in this notebook's own executed cell
-outputs -- no separate `results/v2/` export exists for this experiment; a prior version of this line
-cited `results/v2/development/exp28_guardrails/`, which was never written). Cost: ~$0.016. Kept separate
+Notebook: `notebooks/exp28_guardrails.ipynb` (results live only in this notebook's own executed cell
+outputs -- no separate `results/current/` export exists for this experiment; a prior version of this line
+cited `results/current/development/exp28_guardrails/`, which was never written). Cost: ~$0.016. Kept separate
 from Exp 29 (ordinary abstention/uncertainty).
 
 **Base claim:** X2-145 (client meal, gold ESCALATE). 12 scenarios: 5 adversarial-input attacks on the bounded agent (each paired with a clean control) + 1 retrieval-poisoning attack, then 6 deterministic tool/workflow-layer tests.

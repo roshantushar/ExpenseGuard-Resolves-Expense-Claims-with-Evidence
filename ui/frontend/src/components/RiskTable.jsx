@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-// Condensed from docs/v2/responsible_ai_risk_table.md — same 14 risks, same substance, shortened to
+// Condensed from docs/responsible_ai_risk_table.md — same 14 risks, same substance, shortened to
 // scannable bullets per cell instead of full sentences. Expand a row for the full mitigation detail.
 const RISKS = [
   { risk: "False approval", failure: "A claim that should be rejected/escalated is auto-approved.", mitigation: ["Selective architecture routes the LLM only to non-conclusive cases", "0/37 observed on official final test; 0/52, 0/22 on candidate dev/validation"], residual: "Observed 0% on tested populations — not a guarantee for unseen distributions or higher volume.", human: "ESCALATE is first-class; unresolved claims route to a human, never auto-approved." },

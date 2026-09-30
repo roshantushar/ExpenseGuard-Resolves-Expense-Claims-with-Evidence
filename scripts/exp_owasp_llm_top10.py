@@ -16,7 +16,7 @@ import json, os
 from pathlib import Path
 from datetime import datetime
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 os.chdir(ROOT)
 import sys
 sys.path.insert(0, str(ROOT))
@@ -25,7 +25,7 @@ from src import llm, agent, agent_variants as AV
 LOCAL_MODEL = "llama3.2:3b"
 RESULTS = {}
 
-_REAL_CASES = [json.loads(l) for l in open(ROOT / "ExpenseGuard_V2_DATASET/02_cases/all_cases.jsonl")]
+_REAL_CASES = [json.loads(l) for l in open(ROOT / "ExpenseGuard_DATASET/02_cases/all_cases.jsonl")]
 _TEMPLATE = next(c for c in _REAL_CASES if c["case_id"] == "X2-060")
 
 
@@ -135,8 +135,8 @@ def test_llm07():
 def test_llm08():
     record("LLM08_vector_embedding_weaknesses", "scoped: closed, allowlisted, precomputed corpus", True,
            "The retrieval index is built once from a fixed, allowlisted 22-document policy corpus "
-           "(ExpenseGuard_V2_DATASET/01_policy_corpus/), embedded offline and cached under "
-           "results/v2/embeddings/. There is no user-facing ingestion path, no live index update, and no "
+           "(ExpenseGuard_DATASET/01_policy_corpus/), embedded offline and cached under "
+           "results/current/embeddings/. There is no user-facing ingestion path, no live index update, and no "
            "mechanism for an attacker to insert a new embedding into the index at runtime -- the classic "
            "open-corpus embedding-poisoning attack surface does not exist here. The residual risk this "
            "project DID find and demonstrate (Exp 28) is retrieval-TEXT injection within the existing, "
@@ -157,18 +157,18 @@ def test_llm09():
     never claimed authority from a document that doesn't exist, it just described its reasoning in the
     wrong field). Extracting the actual ID-shaped token from each entry before checking finds zero
     citations of a genuinely nonexistent clause ID."""
-    meta = json.load(open(ROOT / "ExpenseGuard_V2_DATASET/01_policy_corpus/policy_metadata.json"))
+    meta = json.load(open(ROOT / "ExpenseGuard_DATASET/01_policy_corpus/policy_metadata.json"))
     valid_ids = set()
     for d in meta:
         valid_ids.update(d["clause_ids"])
-    gt = [json.loads(l) for l in open(ROOT / "ExpenseGuard_V2_DATASET/04_ground_truth_PRIVATE/ground_truth.jsonl")]
+    gt = [json.loads(l) for l in open(ROOT / "ExpenseGuard_DATASET/04_ground_truth_PRIVATE/ground_truth.jsonl")]
     for g in gt:
         valid_ids.update(g.get("required_policy_ids") or [])
         valid_ids.update(g.get("supporting_policy_ids") or [])
     import re, glob, collections
     id_re = re.compile(r"[A-Z]{2,10}-?\d+[.\-]\d+(?:-\d+)?")
     checked, no_id_token, wrapped_valid, fabricated = 0, 0, 0, []
-    for path in glob.glob(str(ROOT / "results/v2/**/predictions.jsonl"), recursive=True):
+    for path in glob.glob(str(ROOT / "results/current/**/predictions.jsonl"), recursive=True):
         for line in open(path):
             row = json.loads(line)
             for cid in row.get("policy_evidence") or []:
@@ -224,7 +224,7 @@ def main():
     for fn in (test_llm02, test_llm03, test_llm04, test_llm05, test_llm07, test_llm08, test_llm09, test_llm10):
         fn()
     print(f"Real paid budget remaining after this run: ${cap - llm.spent():.4f}")
-    out = ROOT / "results/v2/owasp_llm_top10_2025.json"
+    out = ROOT / "results/current/owasp_llm_top10_2025.json"
     out.write_text(json.dumps({"generated": datetime.now().isoformat(), "results": RESULTS}, indent=1))
     print(f"wrote {out}")
 

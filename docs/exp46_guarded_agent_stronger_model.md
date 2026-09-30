@@ -3,7 +3,7 @@
 Re-tests Exp 35B's question (does a stronger model help?) with the guarded-agent design instead of
 the unguarded Exp 34 baseline. Same 19 `C_AGENT_DYNAMIC` dev+validation claims as Exp 44. Model:
 `openai/gpt-4o` in place of `gpt-4o-mini`, identical tools/prompt/gate otherwise. Results:
-`results/v2/development/exp46_guarded_gpt4o/`. Cost: $0.628 (vs. gpt-4o-mini's $0.021 for the same 19
+`results/current/development/exp46_guarded_gpt4o/`. Cost: $0.628 (vs. gpt-4o-mini's $0.021 for the same 19
 cases — 30x).
 
 ## Result

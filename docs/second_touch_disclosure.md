@@ -6,13 +6,13 @@ than left as unexplained files on disk. Neither changed Exp 32's own official sa
 
 ## Touch 1 — the frozen resolver's LLM-residual step, re-run against final_test and validation
 
-- `results/v2/final_test/resolver/summary_openai_gpt-4o-mini.json` — n=30, 27/30 calls served from cache
+- `results/current/final_test/resolver/summary_openai_gpt-4o-mini.json` — n=30, 27/30 calls served from cache
   (3 genuinely new calls), dated after the freeze.
-- `results/v2/validation/resolver/summary_openai_gpt-4o-mini.json` — n=15, 1/15 cached (14 new calls).
+- `results/current/validation/resolver/summary_openai_gpt-4o-mini.json` — n=15, 1/15 cached (14 new calls).
 - Proof this is a distinct run, not a duplicate view of Exp 32's own data: case `X2-021` is recorded as
   `path: "deterministic"` (no LLM call) in Exp 32's official predictions, but appears in this file as a
   fresh LLM call with different cited clauses.
-- The dataset was regenerated after Exp 32 ran (already disclosed in `docs/v2/exp32_final_test.md`), and
+- The dataset was regenerated after Exp 32 ran (already disclosed in `docs/exp32_final_test.md`), and
   this run's content is consistent with having executed against the regenerated files. **Origin could not
   be established from committed scripts/logging.**
 
@@ -30,8 +30,8 @@ candidate pipeline, tagged `RESOLVER_V2` in the shared call log) was run against
 - **Measured result on those 30 cases: 15/30 correct (50%), and 3 false approvals out of 17 non-approvable
   cases (17.6% observed FAR).** This is materially worse than the 0% observed FAR reported for the
   candidate on every other split in every other document in this project.
-- This was not disclosed anywhere. `docs/v2/exp45_resolver_v2_full_dev.md`, `docs/v2/gate_override_audit.md`,
-  and `docs/v2/exp47_52_full_coverage.md` all reference `resolve_batch_v2`/`RESOLVER_V2`, but each one scopes
+- This was not disclosed anywhere. `docs/exp45_resolver_v2_full_dev.md`, `docs/gate_override_audit.md`,
+  and `docs/exp47_52_full_coverage.md` all reference `resolve_batch_v2`/`RESOLVER_V2`, but each one scopes
   its stated analysis to development and validation only. `gate_override_audit.md` explicitly notes the
   export spans "81 exported non-deterministic cases across all three splits" while analyzing only 100 of
   them (development + validation) — the final-test portion of that same export was never discussed.
@@ -42,7 +42,7 @@ candidate pipeline, tagged `RESOLVER_V2` in the shared call log) was run against
 
 ## What this means for every "never run against final test" / "0% FAR on every split" claim
 
-Those statements, repeated in `README.md`, `docs/v2/README.md`, `docs/v2/FINAL_REPORT.md`, `problem.md`,
+Those statements, repeated in `README.md`, `docs/README.md`, `docs/FINAL_REPORT.md`, `problem.md`,
 and `CHANGELOG_FINAL.md`, are **not accurate**. A substantial, real run against 60% of the held-out set
 already exists, and its result is worse than every headlined number for this candidate. This does not
 retroactively make that run an authorized, frozen, one-shot evaluation — it has no freeze manifest, covers

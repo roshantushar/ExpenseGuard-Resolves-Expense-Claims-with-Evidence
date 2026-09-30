@@ -44,6 +44,6 @@ case's claim, ground truth, and both designs' decision + trace.
 ## Notes
 - The final-test numbers for the guarded agent are a **first-ever, demo-only** run — that design has
   never been officially evaluated against final test and has no freeze manifest. Don't read its
-  final-test accuracy as a validated result; see `docs/v2/README.md` for what's actually frozen.
+  final-test accuracy as a validated result; see `docs/README.md` for what's actually frozen.
 - The backend is for local demo use only: unauthenticated, no rate limiting, spends real money when you
   click "Run live". Don't deploy it publicly as-is.
