@@ -3,7 +3,7 @@
 Tests whether fixing Exp 38's diagnosed retrieval gap actually raises accuracy, or only fixes retrieval
 itself while the downstream reasoning failures (Exp 33/36/37) remain. Code: `src/agent_variants.py`
 (`make_search_policy_corpus_v2`, `_wrap_hint`, `specs_and_tools_39`). Results:
-`results/v2/development/exp39_two_hop_pokayoke/`. Same 13 claims. Cost: $0.038.
+`results/v2/development/exp39_two_hop_pokayoke/`. Same 13 claims. Cost: $0.044.
 
 **Two fixes, both applied together (this is a combined test, not a third isolated variable):**
 

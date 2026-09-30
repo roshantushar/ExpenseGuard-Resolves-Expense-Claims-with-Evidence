@@ -42,11 +42,15 @@ The product objective is:
 Expense processing consumes both employee and finance-team time. This is an **external, assumed industry
 figure, not a measured ExpenseGuard result** — labeled as such throughout this project, per the
 measured-vs-assumed distinction in §37: the GBTA Foundation's "Expense Reporting: Global Practices and Pain
-Points" study found manual expense-report processing costs **$58 and 20 minutes per report** on average,
-and that **19% of reports contain errors or missing information**, each costing an additional **$52 and 18
-minutes** to correct — a company processing 10,000 reports/month would spend roughly $580,000/month on
-processing alone under this figure, before counting the ~1,900 error reports' extra $98,800 in rework. This
-is the pain ExpenseGuard targets: reducing the reports that need a human's full 20 minutes, and catching
+Points" study ([GBTA press release](https://gbta.org/new-study-reveals-pain-points-in-expense-reporting/) —
+the primary report itself is not publicly hosted at a stable link; this is the citable source) found manual
+expense-report processing costs **$58 and 20 minutes per report** on average, and that **19% of reports
+contain errors or missing information**, each costing an additional **$58 and 18 minutes** to correct — a
+company processing 10,000 reports/month would spend roughly $580,000/month on processing alone under this
+figure, before counting the ~1,900 error reports' extra $110,200 in rework. (Corrected from an earlier,
+unverified "$52" figure for the error-correction cost — the GBTA press release states $58 for both, so $58
+is used consistently throughout.)
+This is the pain ExpenseGuard targets: reducing the reports that need a human's full 20 minutes, and catching
 the ~19% error rate earlier and more cheaply than a full manual re-review cycle.
 
 The system is therefore not justified merely because AI can be applied; it is justified only if it can:
@@ -401,14 +405,46 @@ in code instead of asking the model to judge it, and used development and valida
 fix seven real bugs. On the splits it has been evaluated against — 44/70 dev and 21/30 validation, 0%
 observed FAR on both — it beats the official architecture's own development accuracy by one point at
 matching FAR. **This is an accuracy/FAR-scoped comparison only**: it escalates roughly 1.5-1.8x more often
-than the official architecture, and a risk-adjusted cost model (`docs/v2/cost_and_business_impact.md`)
-finds its total expected operational cost is currently higher, not lower, than the official architecture's
-at every scale tested, because the added human-review load outweighs its accuracy and AI-cost advantages.
-It is a
-**development-and-validation-selected candidate**, not an independently validated replacement: it has
-never been run against the final test, has no freeze manifest, and its design was changed in direct
-response to observing validation-split behavior. See `docs/v2/README.md` for the full methodology note on
-why the original 50-claim final test cannot simply be reused to promote this candidate to official status.
+than the official architecture. A risk-adjusted cost model (`docs/v2/cost_and_business_impact.md`)
+**originally found** its total expected operational cost was higher than the official architecture's at
+every scale tested — **that finding rested on a bug** (the model omitted false-rejection and
+unnecessary-information-request costs, though both were already defined as assumptions). Corrected, the
+candidate's total expected operating cost, **under development/validation-selected operating rates**, is
+lower than the official architecture's at every scale tested, because the frozen design's much higher
+false-rejection rate among automated decisions (36.8% dev / 50.0% final test, vs. the candidate's 17.2%
+dev / 21.4% validation) was never priced before.
+
+**That advantage does not survive contact with unseen data.** `docs/v2/second_touch_disclosure.md`
+documents a real but unauthorized, partial (30/50) diagnostic run of this candidate against previously
+unseen final-test claims, scoring 50% accuracy and 17.6% FAR — materially worse than every authorized
+number for this design. A no-cost sensitivity analysis (existing data only, no new LLM calls;
+`docs/v2/cost_and_business_impact.md`) re-computed the cost model using this diagnostic run's rates
+instead: the candidate's cost advantage **does not survive**. Once false approvals are priced at
+meaningful business cost, degraded unseen-data safety erases the modeled advantage.
+
+It remains a
+**development-and-validation-selected candidate**, not an independently validated replacement: it has no
+authorized, frozen final-test result, and its design was changed in direct response to observing
+validation-split behavior. See `docs/v2/README.md` for the full methodology note on why the original
+50-claim final test cannot simply be reused to promote this candidate to official status. **Resolution:
+the frozen resolver remains the official architecture; the guarded candidate is retained as a promising,
+unvalidated candidate requiring a fresh, untouched holdout before promotion — not created this session.**
+See §42.1 for the full final story.
+
+Also disclosed: an independent audit found the final-test and validation splits were touched a second
+time, with real LLM calls, after this freeze — `docs/v2/second_touch_disclosure.md`. It did not alter
+Exp 32's own saved result, but it means "touched once, ever" is no longer an unqualified true statement
+about this project.
+
+### Why a second agent line is not a contradiction of the first agent-necessity gate
+Exp 19/20 tested whether an *unconstrained* bounded ReAct agent adds value over the fixed workflow, and
+found it did not (tied on accuracy, worse FAR) — that gate correctly rejected agentic autonomy *as tested
+at the time*. Exp 34-52 did not reopen that same question; it tested a structurally different design
+(decision-in-code tools + a disposition gate that prevents the model from overriding a correct tool
+answer) against the specific weakness the frozen architecture's own final test exposed (the LLM-residual
+step). The two lines answer different questions — "should the model decide autonomously" (no) vs. "can a
+tool compute the answer and be trusted over the model" (yes, when guarded) — rather than the second
+contradicting the first's finding.
 
 > A prior dataset generation (V1: 120 claims, 60/20/40 split) preceded this one and is retained only for
 > historical experiment evidence in `archive/v1/`. It is not the current dataset and its numbers should
@@ -1342,6 +1378,13 @@ These are scenario models, not measured production savings.
 
 # 38. Reproduced agent failures
 
+**Done: `docs/v2/exp_agent_failure_ablation.md`.** An agent survived the gate (Exp 20, later Exp 34-52), so
+both failures below were reproduced with real, measured numbers at $0 cost (free local model). Headline
+result: removing de-duplication turned X2-037's already-step-cap-limited case into a genuine unresolved
+20-call loop (19 of 20 calls exact repeats, no final decision reached); vague tool descriptions flipped
+X2-145's correct REJECT to an incorrect ESCALATE. Neither ablation edited `src/agent.py` — each ran a
+standalone copy of the loop, so there was nothing to "restore" in shipped code.
+
 If an agent survives the architecture gate, the project will reproduce at least two failures.
 
 ## Failure A — loop / repeated tool calls
@@ -1485,16 +1528,44 @@ The project is complete when:
 
 > **ExpenseGuard evaluates whether an expense claim is ready for reimbursement and experimentally determines the cheapest reliable architecture — rules, RAG, workflow, or bounded agentic investigation — needed to resolve it safely with minimal unnecessary finance review.**
 
-## 42.1 Final conclusion, after the cost/business-impact analysis
+## 42.1 Final conclusion, after the cost/business-impact analysis — corrected
 
-A later analysis (`docs/v2/cost_and_business_impact.md`) sharpened this story with its strongest finding:
-**the best-performing AI architecture was not the best operating architecture.** The post-final
-guarded-agent candidate improved decision accuracy while preserving the observed 0%-false-approval safety
-constraint, but its escalation rate rose enough that human-review cost outweighed those gains — its total
-risk-adjusted operating cost is higher than the official frozen resolver's at every scale tested. The
-frozen selective resolver therefore remains the preferred operating architecture, and no new held-out set
-was created for the candidate, since doing so would answer a question this cost analysis already closed as
-not currently decision-relevant.
+A later analysis (`docs/v2/cost_and_business_impact.md`) originally concluded **the best-performing AI
+architecture was not the best operating architecture**: that the post-final guarded-agent candidate's
+higher escalation rate made its total risk-adjusted operating cost higher than the official frozen
+resolver's at every scale tested, so the frozen resolver remained preferred and no new held-out set was
+created for the candidate.
 
-> **ExpenseGuard demonstrates that enterprise AI architecture should be selected on safe automation and
-> total operating cost — not benchmark accuracy alone.**
+**That cost model has since been found to contain a real bug** — it omitted false-rejection and
+unnecessary-information-request costs from the total despite defining both as assumptions. Corrected,
+**under development/validation-selected operating rates**, the guarded-agent candidate's total expected
+operating cost is lower than the frozen resolver's at every scale tested, because the frozen resolver's
+much higher false-rejection rate was never priced.
+
+**That is not the end of the story.** `docs/v2/second_touch_disclosure.md` documents a separate finding: a
+real but unauthorized, partial (30/50) diagnostic run of the guarded-agent candidate against previously
+unseen final-test cases, which showed materially worse safety (50% accuracy, 17.6% FAR) than any authorized
+number for this design. A no-cost sensitivity analysis (`docs/v2/cost_and_business_impact.md`, run purely
+on existing data — no new LLM calls) re-computed the cost model using this diagnostic run's rates instead
+of dev/validation rates: **the candidate's cost advantage does not survive.** Once false approvals are
+priced at meaningful business cost, degraded unseen-data safety erases the modeled advantage.
+
+**Final resolution:** the frozen selective resolver remains the official architecture for this project —
+not because it is necessarily the cheapest architecture in theory, but because it is the only one with a
+properly frozen, documented evaluation contract and an official result (30/50, 0/37 observed false
+approvals) to check against. The guarded-agent candidate is retained as a promising but unvalidated
+candidate: its development/validation results and the corrected cost model suggest it could be
+economically better, but the diagnostic final-run evidence is sufficient to prevent promotion, even though
+it cannot itself establish the candidate's true generalization performance (the final-test set is no
+longer a clean holdout, and this run's origin could not be established from committed scripts/logging). No
+new held-out set was created for the candidate this session — that remains the correct default: promotion
+requires a fresh, untouched holdout, not a re-run of a set that is no longer independent for either design.
+
+> **ExpenseGuard first established a frozen selective resolver that achieved 60% accuracy with zero
+> observed false approvals on its official one-shot final evaluation. Post-final work developed a guarded
+> agent that improved development/validation performance and appeared cheaper under a corrected cost
+> model. However, a later diagnostic run on final cases showed substantial degradation, including false
+> approvals. Because those final cases are no longer an independent holdout, that result cannot establish
+> the candidate's true generalization performance, but it is sufficient to prevent promotion. The frozen
+> selective resolver therefore remains the official architecture, while the guarded agent is retained as a
+> promising candidate requiring fresh independent evaluation.**

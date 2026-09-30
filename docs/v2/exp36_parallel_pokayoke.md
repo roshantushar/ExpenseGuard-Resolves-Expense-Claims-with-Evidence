@@ -26,7 +26,7 @@ third isolated variable):**
 | Fixed workflow (Exp 18) | **7 (53.8%)** | 10.0% | 30.8% | — | 1/case | — | $0 |
 | Old agent, pre-fetched RAG (Exp 20) | 7 (53.8%) | 30.0% | 23.1% | 5.69 | 1/turn | 3/13 | $0.043 |
 | Agentic RAG v1 (Exp 34: sequential, raw-table interface) | 4 (30.8%) | 10.0% | 38.5% | 7.31 | 1/turn | 5/13 | $0.038 |
-| **Agentic RAG v2 (Exp 36: parallel turns + poka-yoke v2)** | 4 (30.8%) | **0.0%** | 61.5% | 7.38 | **10.46 total (1.42/turn)** | **8/13** | $0.046 |
+| **Agentic RAG v2 (Exp 36: parallel turns + poka-yoke v2)** | 4 (30.8%) | **0.0%** | 61.5% | 7.38 | **10.46 total (1.42/turn)** | **8/13** | $0.048 |
 
 ## X2-005, before and after
 

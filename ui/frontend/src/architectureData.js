@@ -61,7 +61,7 @@ export const ARCHITECTURES = {
   "Frozen resolver — final test": {
     exp: "Exp 32",
     steps: ["Same pipeline as dev, run once", "Hash-manifest-verified before the run", "Decision"],
-    hyperparams: ["Identical config to Exp 30 — frozen before this run, never tuned afterward", "50-claim held-out set, touched exactly once"]
+    hyperparams: ["Identical config to Exp 30 — frozen before this run, never tuned afterward", "50-claim held-out set — Exp 32 itself ran exactly once, but a later, undisclosed re-run of the pipeline against this split was found by audit (docs/v2/second_touch_disclosure.md); Exp 32's own saved result was not affected"]
   },
   "Guarded agent (candidate)": {
     exp: "Exp 52",

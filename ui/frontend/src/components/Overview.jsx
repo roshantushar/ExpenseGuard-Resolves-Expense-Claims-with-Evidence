@@ -75,7 +75,6 @@ export default function Overview({ cases }) {
   const frozenFinal = useMemo(() => stats(cases, "frozen", "FINAL_TEST"), [cases]);
   const agentDev = useMemo(() => stats(cases, "agent", "DEVELOPMENT"), [cases]);
   const agentVal = useMemo(() => stats(cases, "agent", "VALIDATION"), [cases]);
-  const agentFinal = useMemo(() => stats(cases, "agent", "FINAL_TEST"), [cases]);
 
   return (
     <div className="overview">
@@ -166,15 +165,15 @@ export default function Overview({ cases }) {
           <ul className="bullets">
             <li>Deterministic rules decide whenever they can</li>
             <li>A single-shot LLM handles the rest</li>
-            <li>Tested once, frozen, hash-manifest-verified: 30/50 correct, 0 observed false approvals</li>
+            <li>Tested once, frozen: 30/50 correct, 0 observed false approvals — the only architecture with an independent held-out result</li>
           </ul>
         </div>
         <div className="about-card">
-          <h4>The twist</h4>
+          <h4>The twist — and a correction</h4>
           <ul className="bullets">
             <li>A guarded agent scored higher on accuracy at matching safety</li>
-            <li>But it escalates far more often — a full cost model</li>
-            <li>Result: more expensive to operate than the frozen design, at every scale</li>
+            <li>It escalates far more often — a first cost model found this made it more expensive to operate</li>
+            <li>Corrected: that cost model had a bug; fixed, it's actually cheaper at every scale — but it's still never been tested on held-out data, so it stays a candidate</li>
           </ul>
         </div>
       </div>
@@ -243,7 +242,6 @@ export default function Overview({ cases }) {
         <StatCard label="Frozen · final test (official)" s={frozenFinal} tone="good" />
         <StatCard label="Guarded agent · dev" s={agentDev} tone="good" />
         <StatCard label="Guarded agent · validation" s={agentVal} tone="good" />
-        <StatCard label="Guarded agent · final test (demo only)" s={agentFinal} />
       </div>
       <p className="lede" style={{ fontSize: 13 }}>
         The frozen design is the one actually shipped — tested once, officially, against the real

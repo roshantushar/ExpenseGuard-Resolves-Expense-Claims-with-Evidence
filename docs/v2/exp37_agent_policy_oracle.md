@@ -4,7 +4,7 @@ Mirrors Exp 11 (the single-shot resolver's policy oracle) but for the agent arch
 whether the agent's failures trace to retrieval quality, or survive even with perfect evidence. Code:
 `src/agent_variants.py` (`make_oracle_policy_tool`, `SYSTEM_ORACLE`). Results:
 `results/v2/development/exp37_agent_policy_oracle/`. Same 13 `C_AGENT_DYNAMIC` development claims as
-Exp 18/19/20/34/35/36. Cost: $0.029.
+Exp 18/19/20/34/35/36. Cost: $0.031.
 
 **Design:** `search_policy_corpus` is replaced by `get_correct_policy_excerpts()`, a tool that returns
 `policy.render(required_policy_ids + supporting_policy_ids)` straight from the **private ground truth**

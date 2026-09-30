@@ -1,6 +1,6 @@
 # V2 Exp 12 — Hybrid RAG + deterministic rules (development only)
 
-Notebook: `notebooks/v2/exp12_hybrid.ipynb`. Code: `src/hybrid_facts.py` (facts extraction, reusing `src/rules_v2.py` and `src/rules_text.py`). Results: `results/v2/development/exp12_hybrid/`. Plot: `results/v2/plots/exp12_hybrid_ladder.png`. Cost: about $0.23. Development split only.
+Notebook: `notebooks/v2/exp12_hybrid.ipynb`. Code: `src/hybrid_facts.py` (facts extraction, reusing `src/rules_v2.py` and `src/rules_text.py`). Results: `results/v2/development/exp12_hybrid/`. Plot: `results/v2/plots/exp12_hybrid_ladder.png`. Cost: about $0.058. Development split only.
 
 **Question:** can moving deterministic mechanics (arithmetic, temporal/precedence, evidence validation, duplicate/split) out of the LLM — while it still makes the final decision and writes the explanation — fix the 40/70 dev claims Exp 11 showed wrong under both RAG and the policy oracle?
 

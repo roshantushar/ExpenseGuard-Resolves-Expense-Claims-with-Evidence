@@ -81,21 +81,21 @@
  "cost_scenarios": {
   "low": {
    "label": "1,000 claims/mo, $20/hr reviewer",
-   "fixed_workflow": 6619.05,
-   "frozen_final_test": 2493.8,
-   "guarded_dev": 3886.99
+   "fixed_workflow": 8476.19,
+   "frozen_final_test": 8193.8,
+   "guarded_dev": 5958.42
   },
   "base": {
    "label": "10,000 claims/mo, $35/hr reviewer",
-   "fixed_workflow": 18357.14,
-   "frozen_final_test": 5170.46,
-   "guarded_dev": 8058.42
+   "fixed_workflow": 22500.0,
+   "frozen_final_test": 19170.46,
+   "guarded_dev": 12915.56
   },
   "high": {
    "label": "100,000 claims/mo, $60/hr reviewer",
-   "fixed_workflow": 58571.43,
-   "frozen_final_test": 13200.46,
-   "guarded_dev": 20572.7
+   "fixed_workflow": 70000.0,
+   "frozen_final_test": 54700.46,
+   "guarded_dev": 34501.27
   }
  }
 }

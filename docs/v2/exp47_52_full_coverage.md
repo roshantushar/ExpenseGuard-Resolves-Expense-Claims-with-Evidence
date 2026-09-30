@@ -6,9 +6,13 @@
 > `exp52_validation_tuned_candidate.md`. Note also: this doc's "fully validated" language in its Decision
 > section is imprecise — see the methodology note in `docs/v2/README.md` on why a design changed in
 > response to validation-split behavior is a **development-and-validation-selected candidate**, not an
-> independently validated one.
+> independently validated one. **Also note:** this doc's "0% FAR" and "beats the frozen system" language
+> below describes only the authorized development/validation splits. A later audit found real, unauthorized
+> execution data for this design against 60% of final-test scoring 17.6% FAR — see
+> `docs/v2/second_touch_disclosure.md` — and the frozen selective resolver remains the official architecture
+> as a result (`docs/v2/cost_and_business_impact.md`'s headline conclusion).
 
-# Exp 47–52 — closing the gap: the guarded agent reaches full-dataset coverage at 0% FAR
+# Exp 47–52 — closing the gap: the guarded agent reaches full-dataset coverage at 0% FAR (on authorized splits)
 
 Exp 45 showed the guarded-tool design (Exp 40-44) helps accuracy system-wide but breaks the 0%-FAR
 guarantee wherever a claim category has no dedicated tool. This is the arc that closed that gap — six

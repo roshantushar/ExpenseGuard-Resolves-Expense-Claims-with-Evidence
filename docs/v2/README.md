@@ -100,7 +100,7 @@ significant, architecture-shaping findings.
 | **Mechanism** | Deterministic rules → conclusive? code decides : single-shot LLM decides | Deterministic rules → conclusive? code decides : bounded ReAct agent with code-computed disposition tools |
 | **Evaluation population** | 50-claim final test (touched once, official) | 70-claim dev + 30-claim validation (both touched during development of this design) |
 | **Result** | 30/50 (60%), 0/37 non-approvable cases falsely approved (0% observed FAR) | 44/70 dev (62.9%), 0/52 falsely approved; 21/30 validation (70.0%), 0/22 falsely approved |
-| **Status** | **This is what's shipped.** Tested once on the real held-out final test, hash-manifest-verified, never rerun. | The best-performing candidate found on accuracy/FAR, on the splits it has seen — but its Exp 52 design change was made *after* observing validation-split behavior (not an independent generalization estimate; see the methodology note above), and a full risk-adjusted cost model finds it currently costs *more* to operate than the frozen design at every scale, because it escalates far more often. Never run against final test; no freeze manifest. |
+| **Status** | **Official, shipped.** Tested once on the real held-out final test, verified against a committed hash manifest at the time it ran, never rerun -- *but the manifest is now stale*: the dataset was regenerated once more afterward, so its hashes no longer match the files on disk (disclosed in `docs/v2/exp32_final_test.md`; do not cite the manifest as still verifying the current dataset). This is the only architecture with a properly frozen, documented evaluation contract. | **Promising, unvalidated candidate — not promoted.** Best accuracy/FAR on the splits it has seen, and cheaper under a corrected cost model *at development/validation rates*. But a real, unauthorized, partial (30/50) diagnostic run against final-test cases scored materially worse (50% accuracy, 17.6% FAR — `docs/v2/second_touch_disclosure.md`), and a no-cost sensitivity analysis (`docs/v2/cost_and_business_impact.md`) shows the cost advantage does not survive those rates. No freeze manifest; promotion requires a fresh, untouched holdout, not created this session. |
 
 Full automation and cost breakdown, with the "does the complexity earn its keep" question answered directly: [`docs/v2/cost_and_business_impact.md`](cost_and_business_impact.md).
 
@@ -116,6 +116,18 @@ Full automation and cost breakdown, with the "does the complexity earn its keep"
   does it matter when it does? Audited directly at $0 cost (cached replay): 2/51 residual dev+validation
   cases (3.9%), both correcting a would-be false approval exactly to ground truth — a rare but load-bearing
   safety backstop, not the primary source of the design's accuracy.
+- [`docs/v2/exp_agent_failure_ablation.md`](exp_agent_failure_ablation.md): problem.md §38's required
+  reproduced-agent-failures — de-duplication and vague tool descriptions each temporarily removed from a
+  copy of the agent loop, $0 cost. Real reproduced failures: an unresolved 19-of-20-calls loop with dedup
+  off, and a correct decision flipped to incorrect with vague tool descriptions.
+- [`docs/v2/second_touch_disclosure.md`](second_touch_disclosure.md): the final-test and validation splits
+  were touched a second time after the freeze, with real LLM calls, by a process not fully identified —
+  found by independent audit, disclosed here in full. Did not change Exp 32's own saved result.
+- [`docs/v2/post_freeze_findings.md`](post_freeze_findings.md): three bugs external review found inside
+  frozen (hash-pinned) modules after Exp 32 ran — documented as findings for a future experiment per the
+  freeze manifest's own rule, not patched retroactively. Also see the cost-model correction noted in
+  `docs/v2/cost_and_business_impact.md`'s headline conclusion, which is a separate, non-frozen fix that
+  reverses the project's operating-cost conclusion.
 - [`docs/v2/build_vs_buy.md`](build_vs_buy.md): what was rented (commodity models/embeddings) vs. owned
   (policy logic, safety controls, evaluation harness, business-logic tools) across every architectural
   layer, and why.
@@ -279,6 +291,11 @@ Exp 34: rebuild as a full agent → WORSE than a fixed workflow (4/13 vs 7/13)
 | **32** | **Frozen final test** | **30/50 (60%), 0/37 falsely approved (0% observed FAR)** — *(dataset snapshot caveat: see the doc)* |
 | 33 | Failure analysis | 20 errors: 9 reasoning, 5 over-asking, 4 fact gaps, 0 retrieval |
 
+*Numbering note: Exp 21–27 do not appear anywhere in this repository (no doc, script, notebook, or result
+file) — they were not run under those numbers. No record was kept of why those seven numbers specifically
+were skipped when the sequence resumed at Exp 28; this is stated plainly rather than left for a reader to
+wonder whether work is missing. The index below is otherwise continuous and complete (0–20, 28–52).*
+
 ### Part 2 — the agentic-RAG diagnostic line (Exp 34–39): ruling things out
 | # | Experiment | Result |
 |---|---|---|
@@ -323,10 +340,16 @@ majority-class baseline): [`docs/v2/master_comparison.md`](master_comparison.md)
   approved (0% observed FAR). This is what's shipped.
 - **Development-and-validation-selected candidate, not yet frozen:** the guarded-agent design (Exp 40-52)
   for the *entire* claim population — 44/70 dev, 0/52 falsely approved; 21/30 validation, 0/22 falsely
-  approved (0% observed FAR on both splits it has seen). One more correct case than the frozen design's
+  approved (0% observed FAR on both **authorized** splits). A real but unauthorized, partial (30/50) run
+  against final-test exists and scores worse — 50% accuracy, 17.6% FAR — see
+  `docs/v2/second_touch_disclosure.md`. One more correct case than the frozen design's
   own dev number (43/70) at matching observed safety — see the methodology note above on why this is
   encouraging validation evidence, not a proven generalization result.
-- **Not yet done:** a decision on whether this candidate's value justifies a new, untouched holdout,
-  frozen before the candidate sees it, and a one-shot run against it labeled Final Evaluation 2 (never a
-  replacement for Exp 32). That is the next deliberate decision, not something to do implicitly.
+- **Resolved:** the frozen resolver remains the official architecture. Not because it's the cheaper
+  architecture in theory — under development/validation rates, the corrected cost model favors the
+  candidate — but because it's the only one with a frozen, documented evaluation contract, and because a
+  no-cost sensitivity analysis (`docs/v2/cost_and_business_impact.md`) shows the candidate's cost advantage
+  does not survive its diagnostic final-run safety numbers. The candidate remains a promising, unvalidated
+  candidate. A new, untouched holdout for it — a genuine Final Evaluation 2, never a replacement for
+  Exp 32 — was not created this session and remains future work, not something to do implicitly.
 - **Budget:** $4.36 of $5.00 spent (raised once this session from the original $3.50 cap).

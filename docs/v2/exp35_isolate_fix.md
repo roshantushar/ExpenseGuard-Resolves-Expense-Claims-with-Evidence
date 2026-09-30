@@ -18,7 +18,7 @@ Which layer actually fixes it: a stricter prompt, a stronger model, or a safer t
 | Old agent, pre-fetched RAG (Exp 20) | 7 (53.8%) | 30.0% | 23.1% | 5.69 | 3/13 | $0.043 |
 | New agent, agentic RAG (Exp 34 baseline) | 4 (30.8%) | 10.0% | 38.5% | 7.31 | 5/13 | $0.038 |
 | **35A — prompt fix** | 4 (30.8%) | **30.0%** | 7.7% | 6.69 | 0/13 | $0.040 |
-| **35B — stronger model (gpt-4o)** | 4 (30.8%) | **50.0%** | 7.7% | 6.77 | 1/13 | $0.664 |
+| **35B — stronger model (gpt-4o)** | 4 (30.8%) | **50.0%** | 7.7% | 6.77 | 1/13 | $0.720 |
 | **35C — tool-interface fix (unconfounded)** | 3 (23.1%) | 10.0% | 30.8% | 7.23 | 4/13 | $0.028 |
 
 *(`rules_v2.py` alone, the non-AI baseline: 6/13, FAR 30% — included for reference in Exp 34's own doc.)*
@@ -32,8 +32,8 @@ false approvals tripled (10%→30%)**. Telling the model to stop earlier made it
 answer with *less* verification, not more; the underlying substitution error was never actually fixed,
 it just got expressed with more confidence and fewer safety-net step-cap escalations.
 
-**35B (model): the most striking and counter-intuitive result.** gpt-4o costs ~16x gpt-4o-mini per
-case ($0.051/case average vs. mini's ~$0.003) and ties mini's accuracy exactly (4/13) — but its false
+**35B (model): the most striking and counter-intuitive result.** gpt-4o costs ~19x gpt-4o-mini per
+case ($0.055/case average vs. mini's ~$0.003) and ties mini's accuracy exactly (4/13) — but its false
 approval rate is **50%**, five times mini's own baseline and the worst number of any system tested this
 entire session. It approved 7 of 13 claims, five of them wrongly (X2-037, X2-087, X2-104, X2-142,
 X2-145 — mostly ESCALATE-expected cases it approved outright). A stronger model was not more careful

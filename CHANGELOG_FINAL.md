@@ -4,17 +4,55 @@ Record of every change made in this pass (the 70-item audit: repository integrit
 authoritative story, methodology corrections, cost/business analysis, Responsible AI, reproducibility,
 report restructuring, demo structure, and this consistency audit).
 
-## Confirmation: frozen evidence untouched
-Verified before and after every change in this pass (`git status`, direct read of the files): Exp 32's
-`predictions.jsonl`, `evaluation.jsonl`, `summary.json`, `experiments/exp32_freeze_manifest_v2.yaml`, and
-`ExpenseGuard_V2_DATASET/04_ground_truth_PRIVATE/ground_truth.jsonl` were never edited, and the 50-claim
-final test was never rerun. All 31 unit tests (`python -m unittest discover -s tests`) pass after every
-change in this pass.
+## Correction, added after an independent marker-style audit (later pass)
+Two entries below — "Confirmation: frozen evidence untouched" and "Confirmation: no new held-out set
+created" — are corrected here rather than silently rewritten, per this project's own convention of
+banner-correcting rather than editing history (see `docs/v2/exp44_full_confirmation.md`'s own correction
+note for precedent):
 
-## Confirmation: no new held-out set created
-Per the cost/business-impact analysis (`docs/v2/cost_and_business_impact.md`), the guarded-agent candidate
-was found to cost more to operate than the frozen design at every scenario scale, so a new frozen holdout
-for it was judged not currently justified. This decision is logged as closed in that doc, not left open.
+1. **The cost conclusion these entries rested on had a real bug.** `scripts/v2/cost_model.py` defined
+   `false_rejection_cost_usd` and `unnecessary_info_request_cost_usd` as scenario assumptions but never
+   added them to the total cost — only false-approval cost was priced. Fixed. With the correct total, the
+   guarded-agent candidate is now **cheaper** than the frozen design at every scenario scale, not more
+   expensive, because the frozen design's much higher false-rejection rate among automated decisions
+   (36.8% dev / 50.0% final test, vs. the candidate's 17.2% dev / 21.4% validation) was never priced
+   before. Full detail: `docs/v2/cost_and_business_impact.md`'s headline-conclusion note. This reverses
+   the operating-cost half of "no new held-out set created," below.
+2. **"Never rerun" needs a qualification.** `results/v2/final_test/resolver/` and
+   `results/v2/validation/resolver/` contain a later run of the frozen resolver's LLM-residual step
+   against both held-out splits, with real (non-cached) paid LLM calls, dated after the freeze and after
+   Exp 32's own one-shot run. **Exp 32's own saved files were not touched** —
+   `results/v2/final_test/exp32_final_test/predictions.jsonl`, `evaluation.jsonl`, `summary.json`, the
+   freeze manifest, and `ground_truth.jsonl` are unchanged, verified again during this correction. What
+   changed is that the underlying frozen code (`src/resolver.py` → `src/llm_exp.py`) was invoked a second
+   time against the held-out splits. Origin could not be established from committed scripts/logging.
+3. **A bigger, separate finding: the guarded-agent candidate itself has real execution data against 60% of
+   final-test.** `ui/frontend/public/data/cases.json` carried a genuine (real tool-call trace) guarded-agent
+   prediction for 30 of the 50 final-test cases, scoring 50% accuracy and 17.6% FAR — materially worse than
+   every authorized number for this design. Origin could not be established from committed scripts/logging.
+   A misleading "(demo only)" stat card built on this data was removed from the live UI. Full detail:
+   `docs/v2/second_touch_disclosure.md`. **A no-cost sensitivity analysis** (`docs/v2/cost_and_business_impact.md`,
+   existing data only, no new LLM calls) re-computed the cost model using this diagnostic run's rates in
+   place of dev/validation rates: the candidate's cost advantage from item 1 above **does not survive**.
+
+## Confirmation: frozen evidence untouched — see correction above
+Verified before and after every change in this pass (`git status`, direct read of the files): Exp 32's own
+`predictions.jsonl`, `evaluation.jsonl`, `summary.json`, `experiments/exp32_freeze_manifest_v2.yaml`, and
+`ExpenseGuard_V2_DATASET/04_ground_truth_PRIVATE/ground_truth.jsonl` were never edited, and Exp 32 itself
+was never rerun. **This is no longer the full picture** — see the correction above and
+`docs/v2/second_touch_disclosure.md` for what it does not cover. All 42 unit tests
+(`python -m unittest discover -s tests`) pass after every change in this pass.
+
+## Confirmation: no new held-out set created — resolution, not just a correction
+Per the cost/business-impact analysis, the guarded-agent candidate was originally found to cost more to
+operate than the frozen design at every scenario scale, so a new frozen holdout for it was judged not
+currently justified. That cost analysis was corrected (item 1 above) and, under development/validation
+rates alone, now finds the opposite. **But the diagnostic final-run finding (item 3) and the sensitivity
+analysis built on it settle the question a different way**: the frozen selective resolver remains the
+official architecture — the only one with a frozen, documented evaluation contract — and the guarded-agent
+candidate is retained as a promising, unvalidated candidate, not promoted. No new held-out set was created.
+This is a **resolved** decision, not a reopened one; see `docs/v2/cost_and_business_impact.md`'s "Headline
+conclusion" section for the full reasoning.
 
 ## Files moved
 - `ExpenseGuard_Detailed_Experiments.md` → `archive/v1/ExpenseGuard_Detailed_Experiments_V1.md`, banner-marked

@@ -9,7 +9,7 @@
 Tests whether the guarded-agent design validated on the `C_AGENT_DYNAMIC` family (Exp 40-44, 17/19,
 0% FAR) holds up when applied to **every** dev claim, not just the 30 dynamic-chain ones. Code:
 `src/resolver.py`'s `resolve_batch_v2` (new function; `resolve_batch`, the frozen Exp 30 path, is
-untouched). Results: `results/v2/development/exp45_resolver_v2_full_dev/`. Cost: $0.067, 70 claims.
+untouched). Results: `results/v2/development/exp45_resolver_v2_full_dev/`. Cost: $0.086, 70 claims.
 
 **Design:** identical deterministic routing to the frozen resolver (`deterministic()`, unchanged); only
 the residual (non-conclusive) step changes, from the single-shot RAG+facts prompt to the bounded ReAct

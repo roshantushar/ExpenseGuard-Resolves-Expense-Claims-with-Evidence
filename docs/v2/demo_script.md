@@ -25,6 +25,18 @@ more model capability alone does not fix a reasoning-architecture problem. Showi
 four above demonstrates real engineering judgment: the project didn't just report wins, it kept a
 documented loss and explains why it happened.
 
+## Live verification
+Run on a clean checkout: `python -m ui.backend.server` (backend, port 8787) and `npm run dev` in
+`ui/frontend/` (frontend). Verified this session, live, $0 cost (free local model where a design's normal
+path would otherwise call the paid model): `GET /api/cases` returns all 150 cases; `POST /api/run` for
+X2-060 (`design: frozen`) returns the deterministic REJECT/SWE-2.1 decision matching the table above;
+X2-059 (`design: frozen`) returns the ESCALATE/APR-2.2 decision; X2-006 (`design: frozen`) correctly
+routes to the `llm_residual` path with real retrieved policy excerpts; X2-005 (`design: agent`) runs the
+full guarded ReAct loop (6 turns, real tool calls, a structured final decision) end to end. All four
+returned HTTP 200 with well-formed JSON. X2-026 (the honest gpt-4o failure case) was not re-run live here
+since reproducing it specifically requires the paid `gpt-4o` model; the code path itself was already
+confirmed working via X2-005's agent run.
+
 ## Why these five and not a notebook scroll
 Each case above is traceable to a specific experiment's saved `predictions.jsonl`, so the walkthrough is
 reproducible from files already in the repo, not curated after the fact for narrative effect. Full traces

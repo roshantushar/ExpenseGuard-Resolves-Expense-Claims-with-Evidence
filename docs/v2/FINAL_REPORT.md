@@ -48,7 +48,10 @@ for eliminating false approvals versus both the fixed workflow (13.5% FAR) and a
 (3.85% FAR). I froze `src/resolver.py` at this point.
 
 ## G. One-shot final test
-I ran this frozen system once, hash-manifest-verified, against the 50-claim held-out final test (Exp 32):
+I ran this frozen system once, verified against a committed hash manifest at the time it ran, against the
+50-claim held-out final test (Exp 32) — *note: the dataset was regenerated once more afterward, so that
+manifest's hashes no longer match the files on disk today; this result is the honest record of that one
+run, not something the current dataset can still verify byte-for-byte (`docs/v2/exp32_final_test.md`)*:
 **30/50 (60%), 0/37 false approvals observed.** The deterministic path generalized perfectly (22/22, vs.
 88.2% on dev — no overfitting signal); the LLM-residual path never once correctly predicted APPROVE (0/13
 recall) and scored only 28.6% overall, confirming it as the one weak component I'd need to address.
@@ -75,16 +78,44 @@ was never built for, reaching 17/19 (89.5%) at 0% FAR on the `C_AGENT_DYNAMIC` s
 to the full dataset, safety broke first (Exp 45: 11.5% FAR, every false approval in a category with no
 guarded tool); I then found and fixed seven real bugs — by running the system and reading its output, not
 by reasoning about the code in the abstract — to close that gap (Exp 47-52), reaching **44/70 dev and 21/30
-validation, 0% observed FAR on both, one point above the frozen design's own dev accuracy.**
+validation, 0% observed FAR on both authorized splits, one point above the frozen design's own dev
+accuracy.** *(Later disclosure: an audit found a real but unauthorized, partial run against 30 of the 50
+final-test claims, scoring materially worse — 50% accuracy, 17.6% FAR — than any of the authorized numbers
+above; see `docs/v2/second_touch_disclosure.md`.)*
 
 ## J. Cost/business trade-off
-This is the most important thing I found late in the project. When I built a risk-adjusted cost model
-(`docs/v2/cost_and_business_impact.md`), I found the guarded candidate escalates 1.5-1.8x more often than
-the frozen design (34% vs. 19-22%), and human-review cost dominates every scenario I tested — so its
-**total expected operating cost is higher than the frozen design's at low, base, and high claim-volume
-scenarios**, despite its accuracy/FAR advantage. **The best-performing AI architecture was not the best
-operating architecture.** Because of this, I did not create a new held-out set for the candidate — see that
-doc's closed decision.
+This is the most important thing I found late in the project — in two parts. First, when I built a
+risk-adjusted cost model (`docs/v2/cost_and_business_impact.md`), I found the guarded candidate escalates
+1.5-1.8x more often than the frozen design (34% vs. 19-22%), and human-review cost dominates every scenario
+I tested — so I originally concluded its **total expected operating cost is higher than the frozen
+design's at low, base, and high claim-volume scenarios**, despite its accuracy/FAR advantage, and on that
+basis did not create a new held-out set for the candidate.
+
+**Correction, found on later review:** that cost model omitted false-rejection and unnecessary-
+information-request costs from the total, even though both were already defined as assumptions in the code
+— an oversight, not a deliberate scoping choice. With both included, priced the same way as the
+false-approval cost already in the model, the guarded candidate is cheaper than the frozen design at every
+scenario scale **under development/validation rates**, because the frozen design's deterministic rules
+false-reject far more often (36.8% dev / 50.0% final test vs. the candidate's 17.2% dev / 21.4% validation)
+— an error mode the original model never priced.
+
+**Second correction, found on later independent audit:** the guarded-agent candidate itself has real
+execution data against 30 of the 50 final-test claims (`docs/v2/second_touch_disclosure.md`), scoring 50%
+accuracy and 17.6% FAR — materially worse than every authorized number for this design. A no-cost
+sensitivity analysis (`docs/v2/cost_and_business_impact.md`, existing data only) re-priced the cost model
+using this diagnostic run's rates: **the candidate's cost advantage does not survive.** Once false
+approvals are priced at meaningful business cost, degraded unseen-data safety erases the modeled
+advantage.
+
+**Resolution:** the frozen selective resolver remains the official architecture — not because it is
+necessarily the cheapest in theory, but because it is the only architecture with a properly frozen,
+documented evaluation contract and an official result to check against. The guarded-agent candidate is
+retained as a promising but unvalidated candidate: its development/validation results and the corrected
+cost model suggest it could be economically better, but the diagnostic final-run evidence is sufficient to
+prevent promotion, even though it cannot itself establish the candidate's true generalization performance
+(the final-test set is no longer independent, and this diagnostic run's origin could not be established
+from committed scripts/logging). No new held-out set was created for the candidate — that is future work,
+not a decision I am making implicitly by omission.
 
 ## K. Responsible AI and limitations
 Full risk table: `docs/v2/responsible_ai_risk_table.md`. I directly mitigated Excessive Agency (OWASP

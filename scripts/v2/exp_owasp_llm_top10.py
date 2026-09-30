@@ -197,6 +197,7 @@ def test_llm09():
 # LLM10: Unbounded Consumption
 # ---------------------------------------------------------------------------
 def test_llm10():
+    original_cap = os.environ.get("MAX_BUDGET_USD")
     os.environ["MAX_BUDGET_USD"] = "0.00"
     tripped = False
     try:
@@ -206,7 +207,10 @@ def test_llm10():
     except Exception as e:
         tripped = f"unexpected error: {type(e).__name__}"
     finally:
-        os.environ["MAX_BUDGET_USD"] = "5.00"
+        if original_cap is None:
+            os.environ.pop("MAX_BUDGET_USD", None)
+        else:
+            os.environ["MAX_BUDGET_USD"] = original_cap
     record("LLM10_unbounded_consumption", "hard budget cap actually raises BudgetExceeded",
            tripped is True, f"tripped={tripped}. Step cap (max_steps) additionally bounds worst-case "
            f"per-claim cost regardless of budget state -- demonstrated live in Exp 20 (3/13 step-cap "
@@ -215,10 +219,11 @@ def test_llm10():
 
 
 def main():
-    print(f"Real paid budget remaining before this run: ${5.00 - llm.spent():.4f}")
+    cap = float(os.environ.get("MAX_BUDGET_USD") or 0)
+    print(f"Real paid budget remaining before this run: ${cap - llm.spent():.4f}")
     for fn in (test_llm02, test_llm03, test_llm04, test_llm05, test_llm07, test_llm08, test_llm09, test_llm10):
         fn()
-    print(f"Real paid budget remaining after this run: ${5.00 - llm.spent():.4f}")
+    print(f"Real paid budget remaining after this run: ${cap - llm.spent():.4f}")
     out = ROOT / "results/v2/owasp_llm_top10_2025.json"
     out.write_text(json.dumps({"generated": datetime.now().isoformat(), "results": RESULTS}, indent=1))
     print(f"wrote {out}")

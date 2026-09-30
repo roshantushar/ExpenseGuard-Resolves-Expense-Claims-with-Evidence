@@ -30,7 +30,7 @@ const ROWS = [
   {
     capability: "Architecture chosen by risk-adjusted operating cost, not just accuracy",
     them: "Not publicly documented as a selection method",
-    us: "Explicit: a higher-accuracy candidate was rejected after a cost model showed it costs more to operate"
+    us: "Explicit, and re-verified: a cost-model bug was found and fixed, which reversed the operating-cost ranking — the shipped design is still the one with an independent held-out result, not the cheaper one, since the cheaper candidate has never been tested on unseen data"
   },
   {
     capability: "OWASP LLM Top 10 security testing, disclosed",

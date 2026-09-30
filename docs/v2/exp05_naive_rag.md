@@ -1,6 +1,6 @@
 # V2 Exp 5 — Naive RAG baseline
 
-Notebook: `notebooks/v2/exp05_naive_rag.ipynb`. Results: `results/v2/development/exp05_naive_rag/`, `results/v2/validation/exp05_naive_rag/`. Plots: `results/v2/plots/exp05_embedding_comparison.png`, `exp05_naive_rag_development.png`, `exp05_naive_rag_validation.png`. Cost about $0.18.
+Notebook: `notebooks/v2/exp05_naive_rag.ipynb`. Results: `results/v2/development/exp05_naive_rag/`, `results/v2/validation/exp05_naive_rag/`. Plots: `results/v2/plots/exp05_embedding_comparison.png`, `exp05_naive_rag_development.png`, `exp05_naive_rag_validation.png`. Cost about $0.045 (all three models tested, both splits, summed from each run's `total_cost_usd`).
 
 **Hypothesis:** retrieval will beat no-policy but not yet the rules or the whole corpus.
 

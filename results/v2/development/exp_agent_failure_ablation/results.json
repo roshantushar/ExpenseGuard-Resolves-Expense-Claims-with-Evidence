@@ -1,0 +1,74 @@
+{
+  "failure_a_no_guardrails": {
+    "X2-005": {
+      "decision": "REJECT",
+      "turns": 7,
+      "total_calls": 6,
+      "repeated_calls": 2,
+      "cost_usd": 0.0,
+      "step_ceiling_hit": false
+    },
+    "X2-037": {
+      "decision": null,
+      "turns": 20,
+      "total_calls": 20,
+      "repeated_calls": 19,
+      "cost_usd": 0.0,
+      "step_ceiling_hit": true
+    },
+    "X2-145": {
+      "decision": "REJECT",
+      "turns": 6,
+      "total_calls": 5,
+      "repeated_calls": 1,
+      "cost_usd": 0.0,
+      "step_ceiling_hit": false
+    }
+  },
+  "failure_b_vague_tools": {
+    "X2-005": {
+      "decision": "REJECT",
+      "turns": 5,
+      "wrong_tool_calls": 1,
+      "total_tool_calls": 4,
+      "cost_usd": 0.0,
+      "step_cap_hit": false
+    },
+    "X2-037": {
+      "decision": "ESCALATE",
+      "turns": 8,
+      "wrong_tool_calls": 3,
+      "total_tool_calls": 8,
+      "cost_usd": 0.0,
+      "step_cap_hit": true
+    },
+    "X2-145": {
+      "decision": "ESCALATE",
+      "turns": 8,
+      "wrong_tool_calls": 0,
+      "total_tool_calls": 8,
+      "cost_usd": 0.0,
+      "step_cap_hit": true
+    }
+  },
+  "baseline": {
+    "X2-005": {
+      "decision": "REJECT",
+      "turns": 7,
+      "cost_usd": 0.0,
+      "step_cap_hit": false
+    },
+    "X2-037": {
+      "decision": "ESCALATE",
+      "turns": 8,
+      "cost_usd": 0.0,
+      "step_cap_hit": true
+    },
+    "X2-145": {
+      "decision": "REJECT",
+      "turns": 6,
+      "cost_usd": 0.0,
+      "step_cap_hit": false
+    }
+  }
+}

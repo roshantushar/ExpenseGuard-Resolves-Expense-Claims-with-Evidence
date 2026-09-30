@@ -81,17 +81,18 @@ export const ACTS = [
     ]
   },
   {
-    title: "Act 7 — The twist: the better AI wasn't the better system",
+    title: "Act 7 — The twist, and a second twist: cost accounting had a bug",
     tags: ["Cost model", "Responsible AI", "OWASP Top 10"],
     points: [
       "The guarded agent looked like the clear winner: higher accuracy, same 0% false approvals",
       "Risk-adjusted cost model: it escalates to a human 1.5–1.8x more often than the frozen design",
-      "Human-review cost dominates every business scenario — total operating cost is higher at every scale, 1,000 to 100,000 claims/month",
-      "⟶ The frozen selective resolver remained the architecture that ships",
+      "First cost model: human-review cost dominates every scenario — total operating cost looked higher at every scale — but that model omitted false-rejection and unnecessary-info-request costs",
+      "Corrected: once those costs are priced in, the guarded candidate is cheaper at every scale — the frozen design's much higher false-rejection rate (36.8% dev / 50.0% final test) was never priced before",
+      "⟶ The frozen resolver still ships officially — the guarded candidate has never been run against the held-out final test, so independent generalization remains unproven, not because it's the cheaper design",
       "Separately: completed a full OWASP Top 10 for LLM Applications (2025) pass — all 10 categories",
       "Zero fabricated policy citations found across every decision ever made; budget/step caps confirmed to actually trip",
       "Prompt injection left exactly where Exp 28 found it — a disclosed, unsolved risk, not a silently-claimed win",
-      "⟶ Final lesson: pick the architecture on safe automation and total cost, not on accuracy alone."
+      "⟶ Final lesson: pick the architecture on safe automation, total cost, AND how well-tested the evidence is — not on accuracy or a single cost model run alone."
     ]
   }
 ];

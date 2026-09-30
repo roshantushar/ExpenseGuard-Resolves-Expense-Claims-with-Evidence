@@ -119,18 +119,28 @@ def guarded_candidate() -> dict | None:
 
 
 def cost_scenarios() -> dict:
-    """Same numbers as docs/v2/cost_and_business_impact.md's scenario tables -- copied here as the single
-    generated artifact both the doc and this exporter should ultimately derive from
-    (scripts/v2/cost_model.py). Kept in sync manually today; if cost_model.py's SCENARIOS change, both
-    must be regenerated together."""
-    return {
-        "low": {"label": "1,000 claims/mo, $20/hr reviewer",
-                "fixed_workflow": 6619.05, "frozen_final_test": 2493.8, "guarded_dev": 3886.99},
-        "base": {"label": "10,000 claims/mo, $35/hr reviewer",
-                 "fixed_workflow": 18357.14, "frozen_final_test": 5170.46, "guarded_dev": 8058.42},
-        "high": {"label": "100,000 claims/mo, $60/hr reviewer",
-                 "fixed_workflow": 58571.43, "frozen_final_test": 13200.46, "guarded_dev": 20572.7},
-    }
+    """Computed live from scripts/v2/cost_model.py -- the actual source of truth -- instead of a
+    hand-copied duplicate (a prior version of this function hardcoded a copy of cost_model.py's output,
+    which silently went stale when cost_model.py's cost total was corrected to include false-rejection
+    and unnecessary-info-request costs)."""
+    import importlib.util as ilu, sys
+    spec = ilu.spec_from_file_location("cost_model", ROOT / "scripts/v2/cost_model.py")
+    cost_model = ilu.module_from_spec(spec)
+    sys.modules["cost_model"] = cost_model  # dataclasses needs the module registered to resolve its own annotations
+    spec.loader.exec_module(cost_model)
+    measured, ai_cost_per_claim = cost_model.measured_and_costs()
+    key = {"fixed_workflow": "Fixed workflow (Exp 18) — dev",
+           "frozen_final_test": "Official frozen selective resolver (Exp 32) — final test",
+           "guarded_dev": "Guarded-agent candidate (Exp 52) — dev"}
+    labels = {"low": "1,000 claims/mo, $20/hr reviewer", "base": "10,000 claims/mo, $35/hr reviewer",
+              "high": "100,000 claims/mo, $60/hr reviewer"}
+    out = {}
+    for scen_name, a in cost_model.SCENARIOS.items():
+        row = {"label": labels[scen_name]}
+        for short_name, full_name in key.items():
+            row[short_name] = cost_model.cost_per_1000(measured[full_name], ai_cost_per_claim[full_name], a)["total_expected_cost_usd"]
+        out[scen_name] = row
+    return out
 
 
 def main():
