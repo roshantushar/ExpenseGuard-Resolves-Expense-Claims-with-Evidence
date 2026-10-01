@@ -1,0 +1,46 @@
+{
+  "run_id": "EXP54_STRONGER_MODEL-DEVELOPMENT-gpt-4o-5031c6",
+  "model": "openai/gpt-4o",
+  "n": 5,
+  "correct": 1,
+  "correct_disposition_rate": 0.2,
+  "wilson95": [
+    0.0362,
+    0.6245
+  ],
+  "false_approvals": 0,
+  "non_approvable": 0,
+  "false_approval_rate": null,
+  "human_review_rate": 0.0,
+  "over_escalation": 0,
+  "missed_escalation": 0,
+  "missing_field_exact_match": "0/0",
+  "by_family": {
+    "HOTEL_CEILING": "1/3",
+    "DYNAMIC_DELEGATION_CHAIN": "0/1",
+    "FX_THRESHOLD": "0/1"
+  },
+  "confusion": {
+    "APPROVE->REJECT": 1,
+    "APPROVE->REQUEST_INFORMATION": 3,
+    "APPROVE->APPROVE": 1
+  },
+  "errors": 0,
+  "median_latency_ms": 2303,
+  "p95_latency_ms": 3722,
+  "input_tokens": 26699,
+  "output_tokens": 348,
+  "total_tokens": 27047,
+  "total_cost_usd": 0.070227,
+  "decision_counts": {
+    "REJECT": 1,
+    "REQUEST_INFORMATION": 3,
+    "APPROVE": 1
+  },
+  "schema_valid": 5,
+  "unsupported_policy_assertion_rate": 1.0,
+  "policy_assertion_in_text_rate": 1.0,
+  "nonexistent_clause_rate": 0.2,
+  "wrong_policy_version_cases": 0,
+  "cached_calls": 0
+}

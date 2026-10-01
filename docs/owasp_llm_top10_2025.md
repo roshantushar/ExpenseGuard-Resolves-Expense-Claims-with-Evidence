@@ -1,5 +1,12 @@
 # OWASP Top 10 for LLM Applications (2025) — full test results
 
+**Superseded: a real OWASP Top 10 for LLM Applications 2026 edition was published 2026-08-04, after this
+assessment was completed.** See [`docs/owasp_llm_top10_2026.md`](owasp_llm_top10_2026.md) for the current
+category list and the real test evidence below remapped to it. This document is preserved unmodified as
+the historical record of the original assessment against the 2025 edition — the claim below that "there is
+no published 2026 edition" was true when written and is no longer true; it is left as-is rather than edited
+after the fact, per this project's standing rule not to silently alter a past result.
+
 **Confirmed against a live web search of the OWASP GenAI Security Project's own site**: the current,
 official published edition is **"OWASP Top 10 for LLM Applications (2025)."** There is no published 2026
 edition. Earlier project docs cited "(2026)," which was a labeling error carried over from pasted text

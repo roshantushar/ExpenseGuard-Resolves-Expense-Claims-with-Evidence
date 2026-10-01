@@ -31,13 +31,21 @@ const StatCard = ({ label, s, tone }) => (
   </div>
 );
 
+const STORY_STRIP = [
+  { k: "THE DATA", body: "150 claims — a bill + free-text note, nothing structured. 22 policies, 11 enterprise systems." },
+  { k: "🔍 FOUND", body: "The frozen baseline: 30/50, 0/37 false approvals — but its LLM step never once correctly approved a real approvable claim." },
+  { k: "🛠️ FIXED", body: "Rebuilt that step so tools compute the answer in code, gated so the model can't override a fact it was already given." },
+  { k: "🔬 TESTED HARDER", body: "A second holdout, pre-registered before a single case existed — built to break the fix, not confirm it." },
+  { k: "✅ WHAT SHIPS", body: "The fix wins every accuracy test it's taken. The baseline ships anyway: 0 false approvals across all 82 cases it's ever faced." }
+];
+
 const BADGES = [
-  { n: "52+", l: "experiments run" },
+  { n: "55", l: "experiments run (numbered 0-61, Exp 21-27 skipped)" },
   { n: "150", l: "claims, 22+ policies, 11 tables" },
-  { n: "7", l: "real live-found bugs, fixed" },
-  { n: "0", l: "observed false approvals (official)" },
+  { n: "7", l: "real live-found bugs, fixed in the guarded-agent build (Exp 40-52)" },
+  { n: "0", l: "observed false approvals (official frozen resolver)" },
   { n: "10/10", l: "OWASP LLM categories tested" },
-  { n: "$4.65", l: "total API spend, all of it" }
+  { n: "$7.38", l: "total API spend, all of it" }
 ];
 
 function ActCard({ act, index }) {
@@ -79,6 +87,15 @@ export default function Overview({ cases }) {
   return (
     <div className="overview">
       <div className="overview-inner">
+      <div className="presenter-jump">
+        <span className="presenter-jump-label">Presenting? Jump to:</span>
+        <a href="#metric-baseline">Metric & baseline</a>
+        <a href="#story-strip">The story</a>
+        <a href="#before-after">4 real cases</a>
+        <a href="#cost-section">Cost analysis</a>
+        <a href="#safety-story">Why "0% FAR" hides the real story</a>
+        <span className="presenter-jump-note">Deeper dive: Project Story tab</span>
+      </div>
       <h1>The problem, in one sentence</h1>
       <p className="lede">
         Given an expense claim — a bill and a free-text note, nothing else structured — decide whether it's
@@ -94,11 +111,63 @@ export default function Overview({ cases }) {
         ))}
       </div>
 
+      <h1 id="metric-baseline" style={{ marginTop: 36 }}>Primary metric, baseline, and the time saved</h1>
+      <p className="lede" style={{ fontSize: 13 }}>
+        <b>Primary metric:</b> observed false-approval rate (FAR) = 0% is a hard constraint, never traded
+        off — subject to that, accuracy is maximized. Not "maximize accuracy," but "maximize accuracy
+        subject to zero observed false approvals."
+      </p>
+      <div className="stat-grid" style={{ marginTop: 10 }}>
+        <div className="stat-card">
+          <div className="label">Time per claim — before (manual, assumed)</div>
+          <div className="value" style={{ fontSize: 20 }}>~20 min</div>
+        </div>
+        <div className="stat-card good">
+          <div className="label">Time per claim — after (measured)</div>
+          <div className="value" style={{ fontSize: 20 }}>~0s deterministic / 1.3s median LLM-residual</div>
+        </div>
+        <div className="stat-card">
+          <div className="label">Accuracy — baseline (majority-class, measured)</div>
+          <div className="value" style={{ fontSize: 20 }}>26–27%</div>
+        </div>
+        <div className="stat-card good">
+          <div className="label">Accuracy — official, shipped (Exp 32)</div>
+          <div className="value" style={{ fontSize: 20 }}>60% · 0/37 FAR</div>
+        </div>
+        <div className="stat-card warn">
+          <div className="label">Accuracy — improved candidate, 2 fresh holdouts</div>
+          <div className="value" style={{ fontSize: 20 }}>68% / 66.7%</div>
+        </div>
+      </div>
+      <p className="lede" style={{ fontSize: 12, marginTop: 6 }}>
+        The improved candidate isn't shipped yet — it beats the baseline by +24 and +30 percentage points
+        on two independent holdouts, but one of those holdouts also found its first false approval, which
+        is why the simpler, more-tested baseline is still the official architecture. Full story below.
+      </p>
+
+      <h1 id="story-strip" style={{ marginTop: 36 }}>The story, in one line each</h1>
+      <div className="story-strip">
+        {STORY_STRIP.map((s, i) => (
+          <React.Fragment key={s.k}>
+            <div className="story-step">
+              <div className="story-step-k">{s.k}</div>
+              <div className="story-step-body">{s.body}</div>
+            </div>
+            {i < STORY_STRIP.length - 1 && <div className="story-arrow">→</div>}
+          </React.Fragment>
+        ))}
+      </div>
+
       <h1 style={{ marginTop: 36 }}>Who this is for</h1>
       <div className="persona-grid">
         <div className="persona-card primary">
           <div className="persona-role">Primary user</div>
           <div className="persona-name">Maya — Corporate Finance Expense Reviewer</div>
+          <p className="lede" style={{ fontSize: 12.5, marginBottom: 10 }}>
+            4pm, last day of the month, 60 claims in her queue. She knows the policy corpus cold and which
+            categories tend to cause trouble — what she doesn't have is time to re-verify every routine
+            claim by hand, or visibility into which few of the 60 actually need her judgment.
+          </p>
           <ul className="bullets">
             <li>Today: manually inspects policy, travel records, approvals, exceptions, prior claims, merchant data — for every claim</li>
             <li>With ExpenseGuard: only sees claims that genuinely need her — missing evidence, conflicting evidence, ambiguity, or a policy-mandated review</li>
@@ -121,7 +190,7 @@ export default function Overview({ cases }) {
         <code>problem.md</code> §2.
       </p>
 
-      <h1 style={{ marginTop: 36 }}>Four real decisions, before and after</h1>
+      <h1 id="before-after" style={{ marginTop: 36 }}>Four real decisions, before and after</h1>
       <p className="lede" style={{ fontSize: 13 }}>
         One real case per outcome, step by step — how it would be handled manually vs. with ExpenseGuard.
         Every case is real, verified against the actual saved results, not staged for effect.
@@ -171,9 +240,18 @@ export default function Overview({ cases }) {
         <div className="about-card">
           <h4>The twist — and a correction</h4>
           <ul className="bullets">
-            <li>A guarded agent scored higher on accuracy at matching safety</li>
-            <li>It escalates far more often — a first cost model found this made it more expensive to operate</li>
-            <li>Corrected: that cost model had a bug; fixed, it's actually cheaper at every scale — but it's still never been tested on held-out data, so it stays a candidate</li>
+            <li>A guarded agent scored higher on accuracy at matching safety on dev/validation</li>
+            <li>It escalates more often — a first cost model found this made it more expensive; that model had a bug, fixed</li>
+            <li>But a diagnostic run on (no-longer-independent) final-test data showed real degradation, including false approvals — not promoted</li>
+          </ul>
+        </div>
+        <div className="about-card">
+          <h4>What happened next — root-cause, fix, fresh test</h4>
+          <ul className="bullets">
+            <li>Found why: the model doesn't reliably ground its answer in facts unless a tool computes the disposition <b>and</b> something enforces the tool was actually used</li>
+            <li>Fixed live: a missing policy circular, an unenforced conflict check, a skippable tool call</li>
+            <li>Tested once on a fresh, never-seen 50-case holdout: <b>0% false approvals, matching the frozen resolver</b>, at roughly double its accuracy and APPROVE recall</li>
+            <li>A stronger model (gpt-4o) traded that safety margin for accuracy — disclosed, not smoothed over</li>
           </ul>
         </div>
       </div>
@@ -181,13 +259,13 @@ export default function Overview({ cases }) {
       <h1 style={{ marginTop: 36 }}>Where the frozen system got it wrong — error analysis</h1>
       <ErrorAnalysis />
 
-      <h1 style={{ marginTop: 36 }}>What each architecture actually costs, at scale</h1>
+      <h1 id="cost-section" style={{ marginTop: 36 }}>What each architecture actually costs, at scale</h1>
       <CostAtScale />
 
       <h1 style={{ marginTop: 36 }}>Governance &amp; security alignment</h1>
       <p className="lede" style={{ fontSize: 13 }}>
         Framed against recognized frameworks — an honest mapping of what was tested, not a compliance
-        certification. All 10 OWASP Top 10 for LLM Applications (2025) categories have real test evidence.
+        certification. All 10 OWASP Top 10 for LLM Applications (2026) categories have real test evidence.
       </p>
       <div className="about-grid">
         <div className="about-card">
@@ -245,8 +323,56 @@ export default function Overview({ cases }) {
       </div>
       <p className="lede" style={{ fontSize: 13 }}>
         The frozen design is the one actually shipped — tested once, officially, against the real
-        held-out final test. Open any case in <b>Case Explorer</b> to see exactly how each one arrived at
-        its answer.
+        held-out final test. The fixed guarded-agent candidate was separately tested once against a fresh,
+        independently-labeled 50-case holdout neither design had seen: <b>0% false approvals, 68% accuracy</b>
+        — real evidence its fixes generalize, not yet an independently validated replacement (full result in{" "}
+        <code>docs/exp60_fresh_holdout.md</code>). Open any case in <b>Case Explorer</b> to see exactly how
+        each one arrived at its answer.
+      </p>
+
+      <h1 id="safety-story" style={{ marginTop: 36 }}>Why "0% false approvals, 44% accuracy" hides the real story</h1>
+      <p className="lede" style={{ fontSize: 13 }}>
+        Four-way accuracy blends a false approval (a safety failure) with a false rejection (a real
+        approvable claim wrongly blocked — a cost, not a danger) into one number. Broken apart, on the same
+        Exp 60 fresh holdout, at $0 — recomputed from saved predictions, no new calls:
+      </p>
+      <div style={{ overflowX: "auto" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+          <thead>
+            <tr style={{ textAlign: "left", borderBottom: "1px solid var(--border, #333)" }}>
+              <th style={{ padding: "8px 10px" }}></th>
+              <th style={{ padding: "8px 10px" }}>Safely automated & correct, no human</th>
+              <th style={{ padding: "8px 10px" }}>False approvals</th>
+              <th style={{ padding: "8px 10px" }}>False rejections</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style={{ borderBottom: "1px solid var(--border, #222)" }}>
+              <td style={{ padding: "8px 10px" }}>Frozen resolver (official)</td>
+              <td style={{ padding: "8px 10px" }}>21/50 = 42%</td>
+              <td style={{ padding: "8px 10px" }}>0</td>
+              <td style={{ padding: "8px 10px", fontWeight: 600 }}>20/50 = 40%</td>
+            </tr>
+            <tr style={{ borderBottom: "1px solid var(--border, #222)" }}>
+              <td style={{ padding: "8px 10px" }}>Candidate, gpt-4o-mini + gate</td>
+              <td style={{ padding: "8px 10px", fontWeight: 600 }}>33/50 = 66%</td>
+              <td style={{ padding: "8px 10px" }}>0</td>
+              <td style={{ padding: "8px 10px" }}>2/50 = 4%</td>
+            </tr>
+            <tr>
+              <td style={{ padding: "8px 10px" }}>Candidate, gpt-4o + gate</td>
+              <td style={{ padding: "8px 10px" }}>38/50 = 76%</td>
+              <td style={{ padding: "8px 10px" }}>2</td>
+              <td style={{ padding: "8px 10px" }}>3/50 = 6%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p className="lede" style={{ fontSize: 13 }}>
+        The frozen resolver's 0% FAR conceals its actual biggest weakness: on this fresh sample, <b>2 of
+        every 5 claims that should have been approved were wrongly blocked.</b> The fixed candidate cuts
+        that false-rejection rate by 10x while holding false approvals at zero — a larger, clearer
+        improvement in real automation value than "68% vs 44% accuracy" conveys alone.
       </p>
 
       <h1 style={{ marginTop: 44 }}>The full story, from data to decision</h1>

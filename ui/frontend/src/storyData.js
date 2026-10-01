@@ -87,12 +87,33 @@ export const ACTS = [
       "The guarded agent looked like the clear winner: higher accuracy, same 0% false approvals",
       "Risk-adjusted cost model: it escalates to a human 1.5–1.8x more often than the frozen design",
       "First cost model: human-review cost dominates every scenario — total operating cost looked higher at every scale — but that model omitted false-rejection and unnecessary-info-request costs",
-      "Corrected: once those costs are priced in, the guarded candidate is cheaper at every scale — the frozen design's much higher false-rejection rate (36.8% dev / 50.0% final test) was never priced before",
-      "⟶ The frozen resolver still ships officially — the guarded candidate has never been run against the held-out final test, so independent generalization remains unproven, not because it's the cheaper design",
-      "Separately: completed a full OWASP Top 10 for LLM Applications (2025) pass — all 10 categories",
+      "Corrected: once those costs are priced in, the guarded candidate is cheaper under development/validation-selected rates — the frozen design's much higher false-rejection rate (36.8% dev / 50.0% final test) was never priced before",
+      "But a no-new-calls sensitivity check found that advantage does not survive diagnostic final-run safety numbers — the candidate's cost edge is conditional, not unconditional",
+      "⟶ The frozen resolver still ships officially — not because it's cheaper (it isn't, reliably), but because it's the only design with an authorized, frozen final-test result",
+      "Separately: completed a full OWASP Top 10 for LLM Applications (2026) pass — all 10 categories",
       "Zero fabricated policy citations found across every decision ever made; budget/step caps confirmed to actually trip",
       "Prompt injection left exactly where Exp 28 found it — a disclosed, unsolved risk, not a silently-claimed win",
       "⟶ Final lesson: pick the architecture on safe automation, total cost, AND how well-tested the evidence is — not on accuracy or a single cost model run alone."
+    ]
+  },
+  {
+    title: "Act 8 — Why did the candidate still miss real approvals? Root-cause it, fix it, then actually test it",
+    tags: ["Exp 53–55", "Exp 56–59", "Exp 60"],
+    points: [
+      "The candidate had never once produced APPROVE across dev, validation, or final test — 0 of 39 real approvable cases, ever",
+      "Exp 53: prompt-only fixes recovered some cases but introduced a false approval — rejected",
+      "Exp 54: a stronger model alone barely helped and still contradicted its own correct arithmetic",
+      "Exp 55: handed the frozen resolver the exact correct facts — 0 of 5 fixes changed its decision. It ignores facts it's given unless something enforces their use",
+      "Exp 56: the same fix, wired into the guarded agent's tool with its disposition gate enforcing it — first real win, 13/18 → 16/18 on hotel cases, 0 new false approvals",
+      "Exp 57: identical fix, no gate — 0 change. Proof the gate is what matters, not the fix alone",
+      "Exp 58–59: extended the pattern to mileage, software, airfare, training, evidence-consistency, and gift-recipient checks — 55/70 → 67/70 dev, 18/18 APPROVE recall",
+      "⟶ Then the real test: a fresh, independently-labeled 50-case holdout neither architecture had ever seen — reported once, not tuned against afterward",
+      "Frozen resolver on fresh data: 22/50, still 0 real approvals ever — confirms the blind spot generalizes",
+      "Fixed candidate on the same fresh data: 34/50, 0% false approvals — matches the frozen design's safety bar at roughly double its accuracy",
+      "A stronger model (gpt-4o) on the same fresh data: 39/50 but 6.7% false approvals — more accurate, less safe, two new ways past the same gate",
+      "Accuracy alone hid the real story: broken into safe-automation rate and false-rejection rate, the frozen resolver wrongly blocks 40% of real approvable claims on this fresh data — invisible in its 0% FAR headline",
+      "The fixed candidate cuts that false-rejection rate 10x (40% → 4%) while holding false approvals at zero — a bigger, clearer win than the raw accuracy number alone conveys",
+      "⟶ The frozen resolver still ships. The fixed candidate is now the leading development candidate, with real fresh-data evidence behind that label — not an independently validated replacement, and not claimed as one."
     ]
   }
 ];

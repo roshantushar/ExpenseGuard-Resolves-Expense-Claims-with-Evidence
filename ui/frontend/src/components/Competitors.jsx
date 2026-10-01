@@ -20,7 +20,7 @@ const ROWS = [
   {
     capability: "Dynamic, multi-step evidence gathering (agentic)",
     them: "Not a publicly documented core capability",
-    us: "Tested explicitly (Exp 18–52) — and found NOT justified by default; only adopted where guarded and measured to add value"
+    us: "Tested explicitly (Exp 18–60) — not justified by default; adopted only where guarded, then root-caused, fixed, and fresh-holdout tested before being called a candidate"
   },
   {
     capability: "Published, held-out accuracy + false-approval rate",
@@ -30,7 +30,7 @@ const ROWS = [
   {
     capability: "Architecture chosen by risk-adjusted operating cost, not just accuracy",
     them: "Not publicly documented as a selection method",
-    us: "Explicit, and re-verified: a cost-model bug was found and fixed, which reversed the operating-cost ranking — the shipped design is still the one with an independent held-out result, not the cheaper one, since the cheaper candidate has never been tested on unseen data"
+    us: "Explicit, and re-verified twice: a cost-model bug was found and fixed; a fresh 50-case holdout later confirmed the fixed candidate matches the shipped design's 0% false-approval rate at double its accuracy — still the shipped design remains official, since it's the only one with a frozen, authorized final-test result"
   },
   {
     capability: "OWASP LLM Top 10 security testing, disclosed",

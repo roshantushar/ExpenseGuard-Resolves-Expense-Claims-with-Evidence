@@ -118,6 +118,58 @@ def guarded_candidate() -> dict | None:
     return {"development": fmt(dev), "validation": fmt(val)}
 
 
+def _safe_automation_score(gt: dict, preds: dict) -> dict:
+    """Shared scoring used by both fresh-holdout exports (Exp 60, Exp 61) -- accuracy/FAR/APPROVE-recall
+    plus the safe-automation breakdown, computed once so the two exports can never silently diverge."""
+    n = len(gt)
+    approve_ids = [cid for cid, dec in gt.items() if dec == "APPROVE"]
+    correct = sum(1 for cid, dec in gt.items() if preds.get(cid) == dec)
+    false_approvals = sum(1 for cid, dec in gt.items() if dec != "APPROVE" and preds.get(cid) == "APPROVE")
+    approve_recall = sum(1 for cid in approve_ids if preds.get(cid) == "APPROVE")
+    safely_automated = sum(1 for cid, dec in gt.items() if preds.get(cid) == dec and dec != "ESCALATE")
+    false_rejections = sum(1 for cid, dec in gt.items() if dec == "APPROVE" and preds.get(cid) in ("REJECT", "REQUEST_INFORMATION"))
+    unnecessary_escalations = sum(1 for cid, dec in gt.items() if preds.get(cid) == "ESCALATE" and dec != "ESCALATE")
+    return {
+        "n": n, "correct": correct, "accuracy_pct": round(correct / n * 100, 1),
+        "false_approvals": false_approvals, "far_pct": round(false_approvals / max(1, n - len(approve_ids)) * 100, 1),
+        "approve_recall": {"correct": approve_recall, "n": len(approve_ids)},
+        "safely_automated": safely_automated, "safely_automated_pct": round(safely_automated / n * 100, 1),
+        "false_rejections": false_rejections, "false_rejections_pct": round(false_rejections / n * 100, 1),
+        "unnecessary_escalations": unnecessary_escalations,
+    }
+
+
+def exp60_holdout() -> dict | None:
+    """Fresh, never-before-seen 50-case holdout (Exp 60) comparing the official frozen resolver against
+    the Exp 53-59 guarded-candidate fix, both with and without a stronger model. Computed directly from
+    the same saved predictions docs/exp60_fresh_holdout.md itself reports from -- never duplicated by hand,
+    so this can't silently drift from that doc."""
+    d = _read_json(ROOT / "experiments/exp60_holdout/comparison_result.json")
+    if not d:
+        return None
+    gt = d["gt"]
+    return {
+        "n": len(gt),
+        "frozen": _safe_automation_score(gt, d["frozen"]),
+        "candidate_mini": _safe_automation_score(gt, d["candidate_mini"]),
+        "candidate_gpt4o": _safe_automation_score(gt, d["candidate_gpt4o"]),
+    }
+
+
+def exp61_holdout() -> dict | None:
+    """A second, independent, pre-registered fresh holdout (Exp 61, "Selective Automation V3") --
+    computed directly from the same saved predictions docs/exp61_v3_holdout.md reports from."""
+    d = _read_json(ROOT / "experiments/v3_holdout/comparison_result.json")
+    if not d:
+        return None
+    gt = d["gt"]
+    return {
+        "n": len(gt),
+        "frozen": _safe_automation_score(gt, d["frozen"]),
+        "candidate": _safe_automation_score(gt, d["candidate"]),
+    }
+
+
 def cost_scenarios() -> dict:
     """Computed live from scripts/cost_model.py -- the actual source of truth -- instead of a
     hand-copied duplicate (a prior version of this function hardcoded a copy of cost_model.py's output,
@@ -157,6 +209,8 @@ def main():
         "architecture_comparison": exp18_vs_exp30_vs_llm_only(),
         "agent_hard_subset": agent_hard_subset(),
         "guarded_candidate": guarded_candidate(),
+        "exp60_holdout": exp60_holdout(),
+        "exp61_holdout": exp61_holdout(),
         "cost_scenarios": cost_scenarios(),
     }
 

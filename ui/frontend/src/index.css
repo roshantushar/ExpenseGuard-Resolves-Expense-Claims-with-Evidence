@@ -204,6 +204,51 @@ body {
 .badge-n { font-size: 22px; font-weight: 800; color: var(--accent); }
 .badge-l { font-size: 10.5px; color: var(--text-dim); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.4px; }
 
+/* ---- presenter quick-jump bar ---- */
+.presenter-jump {
+  position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 8px 14px;
+  margin-bottom: 18px; font-size: 12px;
+}
+.presenter-jump-label { color: var(--text-dim); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; font-size: 10.5px; }
+.presenter-jump a { color: var(--accent); text-decoration: none; }
+.presenter-jump a:hover { text-decoration: underline; }
+.presenter-jump-note { margin-left: auto; color: var(--text-dim); font-style: italic; }
+
+/* ---- review dashboard (Maya's queue) ---- */
+.dash-filters { display: flex; gap: 8px; margin: 18px 0 14px; flex-wrap: wrap; }
+.dash-filter-btn {
+  background: var(--panel); border: 1px solid var(--border); color: var(--text-dim); border-radius: 20px;
+  padding: 6px 14px; font-size: 12.5px; cursor: pointer;
+}
+.dash-filter-btn.active { background: var(--accent-dim); color: var(--accent); border-color: var(--accent); }
+.dash-queue { display: flex; flex-direction: column; gap: 8px; }
+.dash-row { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.dash-row.priority { border-left: 3px solid var(--bad); }
+.dash-row-head { display: flex; align-items: center; gap: 14px; padding: 12px 16px; cursor: pointer; }
+.dash-row-head:hover { background: var(--panel-2); }
+.dash-row-main { flex: 1; min-width: 0; }
+.dash-row-title { font-size: 13.5px; }
+.dash-row-flags { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+.flag-chip { font-size: 10.5px; padding: 2px 8px; border-radius: 20px; border: 1px solid var(--border); }
+.flag-chip.bad { color: var(--bad); border-color: var(--bad); }
+.flag-chip.warn { color: var(--warn); border-color: var(--warn); }
+.flag-chip.good { color: var(--good); border-color: var(--good); }
+.flag-chip.neutral { color: var(--text-dim); }
+.dash-row-toggle { color: var(--text-dim); font-size: 14px; }
+.dash-row-detail { padding: 0 16px 14px; border-top: 1px solid var(--border); padding-top: 12px; }
+
+/* ---- horizontal found/fixed story strip ---- */
+.story-strip { display: flex; align-items: stretch; gap: 10px; margin-top: 16px; overflow-x: auto; padding-bottom: 6px; }
+.story-step {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px;
+  min-width: 170px; flex: 1;
+}
+.story-step-k { font-size: 11px; font-weight: 800; color: var(--accent); letter-spacing: 0.4px; margin-bottom: 6px; }
+.story-step-body { font-size: 12.5px; color: #d6dae3; line-height: 1.5; }
+.story-arrow { display: flex; align-items: center; color: var(--text-dim); font-size: 18px; flex: 0 0 auto; }
+@media (max-width: 900px) { .story-strip { flex-direction: column; } .story-arrow { transform: rotate(90deg); align-self: center; } }
+
 /* ---- competitor table ---- */
 .comp-row { grid-template-columns: 1.3fr 1fr 1.4fr; }
 .comp-head { background: var(--panel-2); }
@@ -308,23 +353,14 @@ body {
 .ba-after .ba-col-head { color: var(--good); }
 .ba-arrow-mid { color: var(--accent); font-size: 22px; align-self: center; }
 
-/* ---- Project Story tab ---- */
+/* ---- Project Story tab (standalone) ---- */
 .project-story .overview-inner { max-width: 1100px; }
 .ps-nav { position: sticky; top: 0; z-index: 5; background: var(--panel); border-bottom: 1px solid var(--border); }
 .ps-nav-inner { display: flex; flex-wrap: wrap; gap: 2px; padding: 8px 24px; max-width: 1100px; margin: 0 auto; align-items: center; }
 .ps-nav-link { font-size: 11px; color: var(--text-dim); text-decoration: none; padding: 4px 8px; border-radius: 6px; white-space: nowrap; }
 .ps-nav-link:hover { background: var(--panel-2); color: var(--text); }
-.ps-present-btn { margin-left: auto; background: var(--accent); color: white; border: none; border-radius: 8px; padding: 6px 14px; font-size: 12px; font-weight: 700; cursor: pointer; }
 .ps-section { padding-top: 46px; margin-top: -46px; margin-bottom: 48px; scroll-margin-top: 46px; }
 .ps-section h1 { border-bottom: 2px solid var(--accent-dim); padding-bottom: 10px; }
-
-/* Presentation mode: hide the app's own tab chrome, enlarge type, keep only Project Story content and nav */
-.presentation-mode { font-size: 17px; }
-.presentation-mode .ps-section h1 { font-size: 40px; }
-.presentation-mode .lede { font-size: 18px !important; }
-.presentation-mode .bullets li { font-size: 16px !important; }
-.presentation-mode .badge-n { font-size: 30px; }
-body:has(.presentation-mode) .topbar { display: none; }
 
 /* ---- responsible-ai risk table (accordion) ---- */
 .risk-table { display: flex; flex-direction: column; gap: 6px; }

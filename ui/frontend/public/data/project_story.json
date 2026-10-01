@@ -78,6 +78,92 @@
    "human_review_rate_pct": 33.3
   }
  },
+ "exp60_holdout": {
+  "n": 50,
+  "frozen": {
+   "n": 50,
+   "correct": 22,
+   "accuracy_pct": 44.0,
+   "false_approvals": 0,
+   "far_pct": 0.0,
+   "approve_recall": {
+    "correct": 0,
+    "n": 20
+   },
+   "safely_automated": 21,
+   "safely_automated_pct": 42.0,
+   "false_rejections": 20,
+   "false_rejections_pct": 40.0,
+   "unnecessary_escalations": 0
+  },
+  "candidate_mini": {
+   "n": 50,
+   "correct": 34,
+   "accuracy_pct": 68.0,
+   "false_approvals": 0,
+   "far_pct": 0.0,
+   "approve_recall": {
+    "correct": 12,
+    "n": 20
+   },
+   "safely_automated": 33,
+   "safely_automated_pct": 66.0,
+   "false_rejections": 2,
+   "false_rejections_pct": 4.0,
+   "unnecessary_escalations": 12
+  },
+  "candidate_gpt4o": {
+   "n": 50,
+   "correct": 39,
+   "accuracy_pct": 78.0,
+   "false_approvals": 2,
+   "far_pct": 6.7,
+   "approve_recall": {
+    "correct": 13,
+    "n": 20
+   },
+   "safely_automated": 38,
+   "safely_automated_pct": 76.0,
+   "false_rejections": 3,
+   "false_rejections_pct": 6.0,
+   "unnecessary_escalations": 4
+  }
+ },
+ "exp61_holdout": {
+  "n": 30,
+  "frozen": {
+   "n": 30,
+   "correct": 11,
+   "accuracy_pct": 36.7,
+   "false_approvals": 0,
+   "far_pct": 0.0,
+   "approve_recall": {
+    "correct": 0,
+    "n": 15
+   },
+   "safely_automated": 10,
+   "safely_automated_pct": 33.3,
+   "false_rejections": 15,
+   "false_rejections_pct": 50.0,
+   "unnecessary_escalations": 0
+  },
+  "candidate": {
+   "n": 30,
+   "correct": 20,
+   "accuracy_pct": 66.7,
+   "false_approvals": 1,
+   "far_pct": 6.7,
+   "approve_recall": {
+    "correct": 9,
+    "n": 15
+   },
+   "safely_automated": 19,
+   "safely_automated_pct": 63.3,
+   "false_rejections": 2,
+   "false_rejections_pct": 6.7,
+   "unnecessary_escalations": 5
+  }
+ },
  "cost_scenarios": {
   "low": {
    "label": "1,000 claims/mo, $20/hr reviewer",

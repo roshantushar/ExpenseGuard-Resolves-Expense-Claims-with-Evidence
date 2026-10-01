@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import LadderChart from "./LadderChart.jsx";
 import RiskTable from "./RiskTable.jsx";
 import { ALL_EXPERIMENTS } from "../experimentLog.js";
@@ -48,9 +48,14 @@ const DOCS = [
   ["Exp 30 — Architecture Freeze", "docs/exp30_selective_router.md"], ["Exp 32 — Final Test", "docs/exp32_final_test.md"],
   ["Exp 33 — Failure Analysis", "docs/exp33_failure_analysis.md"], ["Cost & Business Impact", "docs/cost_and_business_impact.md"],
   ["Build vs Buy", "docs/build_vs_buy.md"], ["Responsible AI Risk Table", "docs/responsible_ai_risk_table.md"],
-  ["OWASP 2025 Evaluation", "docs/owasp_llm_top10_2025.md"], ["Synthetic Data Provenance", "docs/synthetic_data_provenance.md"],
+  ["OWASP 2026 Evaluation", "docs/owasp_llm_top10_2026.md"], ["Synthetic Data Provenance", "docs/synthetic_data_provenance.md"],
   ["Reproducibility Guide", "docs/reproducibility_and_repo_map.md"], ["Demo Script", "docs/demo_script.md"],
   ["Gate Override Audit", "docs/gate_override_audit.md"], ["CHANGELOG_FINAL", "CHANGELOG_FINAL.md"],
+  ["Exp 53 — Approve Calibration", "docs/exp53_approve_calibration.md"], ["Exp 54 — Stronger Model", "docs/exp54_stronger_model_approve.md"],
+  ["Exp 55 — Fact Fixes", "docs/exp55_fact_fixes.md"], ["Exp 56 — Hotel Ceiling Fix", "docs/exp56_hotel_ceiling_fix.md"],
+  ["Exp 57 — Hybrid Facts, No Gate", "docs/exp57_hybrid_facts_hotel.md"], ["Exp 58 — Full Agent Fix", "docs/exp58_full_agent_fix.md"],
+  ["Exp 59 — Final Fix", "docs/exp59_final_fix.md"], ["Exp 60 — Fresh Holdout", "docs/exp60_fresh_holdout.md"],
+  ["Exp 61 — Pre-Registered V3 Holdout", "docs/exp61_v3_holdout.md"],
 ];
 
 const EXP_PHASES_7 = [
@@ -69,6 +74,10 @@ const EXP_PHASES_7 = [
     findings: [], highlight: "More prompting, a larger model and better retrieval did not solve the decision problem." },
   { name: "Phase 7 — Guarded Agent", range: "Exp 40–52", ns: ["40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52"],
     findings: [], highlight: "Reliable deterministic authority helped only when tool inputs and applicability boundaries were also reliable." },
+  { name: "Phase 8 — Root-cause the APPROVE blind spot, fix it, fresh-holdout test it", range: "Exp 53–60", ns: ["53", "54", "55", "56", "57", "58", "59", "60"],
+    findings: [], highlight: "A fact handed to the model changes nothing unless something in the architecture enforces its use — the disposition gate, not the fact itself, is what made every later fix work." },
+  { name: "Phase 9 — Pre-register the candidate, test it a second, independent time", range: "Exp 61", ns: ["61"],
+    findings: [], highlight: "A 0% observed false-approval rate on one holdout is not the same claim as 0% true risk — the second, pre-registered holdout found the candidate's first real false approval." },
 ];
 
 function ExperimentPhase({ phase }) {
@@ -153,8 +162,6 @@ const DEMO_CASES = [
 export default function ProjectStory() {
   const [data, setData] = useState(null);
   const [loadError, setLoadError] = useState(null);
-  const [presentation, setPresentation] = useState(false);
-  const containerRef = useRef(null);
 
   useEffect(() => {
     fetch("/data/project_story.json")
@@ -162,21 +169,6 @@ export default function ProjectStory() {
       .then(setData)
       .catch((e) => setLoadError(String(e)));
   }, []);
-
-  useEffect(() => {
-    if (!presentation) return;
-    const onKey = (e) => {
-      const ids = NAV.map((n) => n.id);
-      const els = ids.map((id) => document.getElementById(id));
-      const idx = els.findIndex((el) => el && el.getBoundingClientRect().top > 80);
-      const cur = idx === -1 ? els.length - 1 : Math.max(0, idx - 1);
-      if (e.key === "ArrowRight" && cur < els.length - 1) els[cur + 1]?.scrollIntoView({ behavior: "smooth" });
-      if (e.key === "ArrowLeft" && cur > 0) els[cur - 1]?.scrollIntoView({ behavior: "smooth" });
-      if (e.key === "Escape") setPresentation(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [presentation]);
 
   const d = data || {};
   const arch = useMemo(() => d.architecture_comparison || {}, [d]);
@@ -186,20 +178,16 @@ export default function ProjectStory() {
   }
 
   return (
-    <div className={`overview project-story ${presentation ? "presentation-mode" : ""}`} ref={containerRef}>
+    <div className="overview project-story">
       <div className="ps-nav">
         <div className="ps-nav-inner">
           {NAV.map((n) => (
             <a key={n.id} href={`#${n.id}`} className="ps-nav-link">{n.label}</a>
           ))}
-          <button className="ps-present-btn" onClick={() => setPresentation((v) => !v)}>
-            {presentation ? "Exit presentation" : "Presentation mode"}
-          </button>
         </div>
       </div>
-
       <div className="overview-inner ps-body">
-        <Section id="s1" title="ExpenseGuard">
+        <Section id="s1" title="The Full Story, In Depth">
           <p className="lede" style={{ fontSize: 16 }}>Evidence-Grounded Enterprise Expense Compliance</p>
           <p className="lede" style={{ fontStyle: "italic" }}>
             "How far should an enterprise expense-compliance system climb from deterministic rules to RAG,
@@ -384,11 +372,48 @@ export default function ProjectStory() {
         <Section id="s13" title="Guarded Agent">
           <GuardedArchDiagram />
           <div className="callout-card" style={{ marginTop: 10 }}>
-            <b>Post-final development/validation-selected candidate — not independently final-tested.</b>
+            <b>Leading development candidate — validated on a fresh holdout (Exp 60), not yet an independently
+            pre-registered final test.</b> Its early design (through Exp 52) was development/validation-selected;
+            Exp 53–59 then root-caused and fixed why it had never once produced a correct APPROVE, and Exp 60
+            tested the fix on 50 cases neither architecture had ever seen.
           </div>
           <div className="stat-grid" style={{ marginTop: 12 }}>
-            <div className="stat-card good"><div className="value"><Metric value={d.guarded_candidate?.development?.correct} suffix={`/${d.guarded_candidate?.development?.n ?? ""}`} /></div><div className="label">Dev — <Metric value={d.guarded_candidate?.development?.accuracy_pct} suffix="%" />, <Metric value={d.guarded_candidate?.development?.human_review_rate_pct} suffix="% HRR" /></div></div>
-            <div className="stat-card good"><div className="value"><Metric value={d.guarded_candidate?.validation?.correct} suffix={`/${d.guarded_candidate?.validation?.n ?? ""}`} /></div><div className="label">Validation — <Metric value={d.guarded_candidate?.validation?.accuracy_pct} suffix="%" />, <Metric value={d.guarded_candidate?.validation?.human_review_rate_pct} suffix="% HRR" /></div></div>
+            <div className="stat-card good"><div className="value"><Metric value={d.guarded_candidate?.development?.correct} suffix={`/${d.guarded_candidate?.development?.n ?? ""}`} /></div><div className="label">Dev (Exp 52) — <Metric value={d.guarded_candidate?.development?.accuracy_pct} suffix="%" />, <Metric value={d.guarded_candidate?.development?.human_review_rate_pct} suffix="% HRR" /></div></div>
+            <div className="stat-card good"><div className="value"><Metric value={d.guarded_candidate?.validation?.correct} suffix={`/${d.guarded_candidate?.validation?.n ?? ""}`} /></div><div className="label">Validation (Exp 52) — <Metric value={d.guarded_candidate?.validation?.accuracy_pct} suffix="%" />, <Metric value={d.guarded_candidate?.validation?.human_review_rate_pct} suffix="% HRR" /></div></div>
+          </div>
+          <h3 className="sub-h" style={{ marginTop: 24 }}>Exp 60 — fresh, never-before-seen 50-case holdout</h3>
+          <FreshHoldoutTable
+            holdout={d.exp60_holdout}
+            rows={[
+              { key: "frozen", name: "Frozen resolver (official)" },
+              { key: "candidate_mini", name: "Fixed candidate, gpt-4o-mini" },
+              { key: "candidate_gpt4o", name: "Fixed candidate, gpt-4o" },
+            ]}
+            summaryTop="The fixed candidate (gpt-4o-mini) matched the frozen design's 0% observed false-approval rate at roughly double its accuracy on this sample. Swapping to gpt-4o is not a clean upgrade — higher accuracy, but 2 new false approvals the gate did not catch."
+            summaryBottom="The frozen resolver's 0% FAR and 44% accuracy conceal its biggest real weakness on this fresh data: 2 of every 5 claims that should have been approved were wrongly blocked. The fixed candidate cuts that false-rejection rate 10x (40% → 4%)."
+          />
+
+          <h3 className="sub-h" style={{ marginTop: 28 }}>Exp 61 — a second, pre-registered holdout: the "0% FAR" claim did not hold</h3>
+          <p className="lede" style={{ fontSize: 13 }}>
+            Exp 60 was honest but not formally pre-registered. Exp 61 named and froze the exact candidate
+            architecture ("Selective Automation V3") in a manifest committed before a single one of 30 new
+            holdout cases was generated — closer to Exp 32's own rigor than Exp 60's.
+          </p>
+          <FreshHoldoutTable
+            holdout={d.exp61_holdout}
+            rows={[
+              { key: "frozen", name: "Frozen resolver (official)" },
+              { key: "candidate", name: "V3 candidate (gpt-4o-mini)" },
+            ]}
+            summaryTop="This time the candidate did NOT hold 0% false approvals: X4-020, a gift paid as a 'prepaid e-voucher redeemable at various outlets,' was wrongly approved. Traced live — the require-tool gate worked correctly (the tool was consulted), but check_gift_compliance's free-text parsing did not recognize that phrasing as a cash-equivalent gift form. No fix was applied, per the manifest's own process rule: documented as a finding for a future experiment, not patched and silently re-run."
+            summaryBottom="Combined across Exp 60 and Exp 61, the candidate has 1 false approval in 45 non-approvable cases (~2.2% observed, not 0%) — a materially more honest statement of its risk. The frozen resolver's own 0% FAR claim is unaffected: 0 false approvals across Exp 32, Exp 60, and Exp 61 combined (82 non-approvable cases)."
+          />
+          <div className="callout-card" style={{ marginTop: 10 }}>
+            <b>Why Exp 61 is pre-registered but the candidate still isn't "formally validated":</b> Exp 61 is a
+            pre-registered <i>stress-test</i> holdout, built to try to break the fix, not to serve as the
+            project's replacement final-test protocol. Promotion to official status would require a separately
+            frozen evaluation specifically designed for that decision, at Exp 32's scale — not a re-use of a
+            stress test, however rigorous.
           </div>
         </Section>
 
@@ -403,7 +428,7 @@ export default function ProjectStory() {
 
         <Section id="s16" title="Responsible AI / Security">
           <RiskTable />
-          <h3 className="sub-h" style={{ marginTop: 24 }}>OWASP Top 10 for LLM Applications (2025)</h3>
+          <h3 className="sub-h" style={{ marginTop: 24 }}>OWASP Top 10 for LLM Applications (2026)</h3>
           <OwaspTable />
         </Section>
 
@@ -431,15 +456,18 @@ export default function ProjectStory() {
         <Section id="s19" title="Limitations">
           <ul className="bullets">
             <li>Synthetic benchmark — not production financial data</li>
-            <li>Official blind evidence is Exp 32 only</li>
-            <li>Validation influenced later guarded-agent development</li>
-            <li>Guarded candidate therefore lacks independent final evaluation</li>
+            <li>Same-model blind spot: every claim note, in every split including both fresh holdouts, was drafted by the same model (gpt-4o-mini) the system also uses to decide them — this benchmark cannot rule out that some measured accuracy reflects the model parsing its own writing style rather than reasoning that would transfer to real, human-written claims</li>
+            <li>Official blind evidence is Exp 32 only — that result cannot be re-earned and still governs the shipped architecture</li>
+            <li>Validation influenced both the Exp 52 candidate design and, later, the Exp 53–59 fixes built to close its APPROVE blind spot</li>
+            <li>Exp 60 is a real, independently-labeled fresh holdout, but not a formally pre-registered freeze-and-final-test in the same sense as Exp 32</li>
+            <li>A narrower, related gap was found in a smaller follow-up check after Exp 60 (a tool consulted but given content that only superficially satisfies its check, not never consulted at all) — disclosed, not yet fixed</li>
             <li>Prompt/retrieval injection remains a residual risk</li>
             <li>Residual LLM path remains weak</li>
+            <li>The live demo's "agent" endpoint now runs the actual Exp 59–61 candidate; it's still an unauthenticated local-only dev server with no rate limiting, meant to be run locally and stopped after a demo, not deployed as-is</li>
             <li>Real deployment requires shadow evaluation, access controls, privacy controls and monitoring</li>
           </ul>
-          <p className="lede" style={{ marginTop: 10 }}>"A new held-out set would be required if the guarded candidate were ever promoted to a new official architecture."</p>
-          <p className="lede">"That evaluation was deliberately not performed because cost analysis showed that the candidate did not currently justify promotion."</p>
+          <p className="lede" style={{ marginTop: 10 }}>"A formal, pre-registered freeze-and-larger-holdout would be required before the guarded candidate could be called a validated replacement for the official architecture."</p>
+          <p className="lede">"The frozen resolver still ships officially — not because it is cheaper (a sensitivity check found that advantage does not survive diagnostic final-run safety numbers), but because it is the only design with an authorized, frozen final-test result."</p>
         </Section>
 
         <Section id="s20" title="Final Takeaways">
@@ -447,7 +475,7 @@ export default function ProjectStory() {
             <div className="about-card"><h4>1. Grounding ≠ Reasoning</h4><p>Better retrieval did not automatically improve decisions.</p></div>
             <div className="about-card"><h4>2. Autonomy ≠ Value</h4><p>The initial agent added failure modes without sufficient benefit.</p></div>
             <div className="about-card"><h4>3. Deterministic ≠ Automatically Safe</h4><p>Code is only reliable with trustworthy inputs and validated applicability boundaries.</p></div>
-            <div className="about-card"><h4>4. Accuracy ≠ Business Value</h4><p>The more accurate guarded candidate had higher human-review cost.</p></div>
+            <div className="about-card"><h4>4. Accuracy ≠ Business Value</h4><p>The more accurate guarded candidate had higher human-review cost and a lower total operating cost at dev/validation rates — but that cost edge isn't robust, so the cheaper-looking design still didn't ship.</p></div>
           </div>
           <div className="callout-card" style={{ marginTop: 16, fontWeight: 700, textAlign: "center" }}>"Reliability came from assigning authority to the component best suited to each decision."</div>
           <p className="lede" style={{ textAlign: "center", marginTop: 8 }}>"Enterprise AI should be only as sophisticated as necessary to maximise safe automation at the lowest total operating cost."</p>
@@ -545,6 +573,44 @@ function FailureChart({ categories, total }) {
   );
 }
 
+function FreshHoldoutTable({ holdout, rows, summaryTop, summaryBottom }) {
+  if (!holdout) return <p className="lede">{MV}</p>;
+  return (
+    <div>
+      <div className="stat-grid">
+        {rows.map((r) => (
+          <div className={`stat-card ${holdout[r.key].false_approvals === 0 ? "good" : "bad"}`} key={r.key}>
+            <div className="value"><Metric value={holdout[r.key].correct} suffix={`/${holdout[r.key].n}`} /></div>
+            <div className="label">{r.name} — <Metric value={holdout[r.key].accuracy_pct} suffix="%" />, <Metric value={holdout[r.key].false_approvals} /> false approvals (<Metric value={holdout[r.key].far_pct} suffix="%" /> FAR), APPROVE recall <Metric value={holdout[r.key].approve_recall.correct} suffix={`/${holdout[r.key].approve_recall.n}`} /></div>
+          </div>
+        ))}
+      </div>
+      {summaryTop && <p className="lede" style={{ fontWeight: 700, marginTop: 10 }}>{summaryTop}</p>}
+      <h4 style={{ marginTop: 18 }}>Accuracy alone understates what changed — the safe-automation breakdown</h4>
+      <div className="build-table" style={{ marginTop: 8 }}>
+        <div className="build-row" style={{ gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr" }}>
+          {["", "Safely automated, correct", "False approvals", "False rejections (real approvable, wrongly blocked)", "Unnecessary escalations"].map((h) => (
+            <div key={h} style={{ fontWeight: 700, fontSize: 11, color: "var(--text-dim)" }}>{h}</div>
+          ))}
+        </div>
+        {rows.map((r) => {
+          const h = holdout[r.key];
+          return (
+            <div className="build-row" style={{ gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr" }} key={r.key}>
+              <div>{r.name}</div>
+              <div style={{ fontWeight: 700 }}>{h.safely_automated}/{h.n} = {h.safely_automated_pct}%</div>
+              <div style={{ color: h.false_approvals > 0 ? "var(--bad)" : "inherit", fontWeight: h.false_approvals > 0 ? 700 : 400 }}>{h.false_approvals}</div>
+              <div style={{ color: h.false_rejections_pct >= 20 ? "var(--bad)" : "inherit", fontWeight: h.false_rejections_pct >= 20 ? 700 : 400 }}>{h.false_rejections}/{h.n} = {h.false_rejections_pct}%</div>
+              <div>{h.unnecessary_escalations}</div>
+            </div>
+          );
+        })}
+      </div>
+      {summaryBottom && <p className="lede" style={{ marginTop: 10 }}>{summaryBottom}</p>}
+    </div>
+  );
+}
+
 function CostTwist({ scenarios }) {
   const [scenario, setScenario] = useState("base");
   if (!scenarios) return <p className="lede">{MV}</p>;
@@ -572,7 +638,13 @@ function CostTwist({ scenarios }) {
         <div className="stat-card warn"><div className="value">~34%</div><div className="label">Guarded candidate escalation rate</div></div>
       </div>
       <p className="lede" style={{ marginTop: 10 }}>"The guarded candidate improved predictive quality, but escalated approximately 1.5–1.8× more claims."</p>
-      <div className="callout-card" style={{ fontWeight: 700, marginTop: 8 }}>Frozen resolver cheaper in every tested scenario.</div>
+      <div className="callout-card" style={{ fontWeight: 700, marginTop: 8 }}>
+        Guarded candidate cheaper in every scenario shown — at its dev/validation rates (bars above, computed
+        live from <code>scripts/cost_model.py</code>). That advantage does <u>not</u> survive its diagnostic
+        final-run safety numbers — see <code>docs/cost_and_business_impact.md</code>'s sensitivity analysis.
+        This is why the frozen resolver still ships: not because it's cheaper, but because it's the only
+        design with an authorized, frozen final-test result to check the cost model against.
+      </div>
       <div className="callout-card bad" style={{ marginTop: 8, fontWeight: 700, textAlign: "center" }}>"Human-review cost dominated inference cost."</div>
       <div className="callout-card" style={{ marginTop: 8, fontWeight: 700, textAlign: "center" }}>"The best-performing AI architecture was not the best operating architecture."</div>
     </div>
@@ -612,14 +684,14 @@ function BuildVsBuyTable() {
 const OWASP_ROWS = [
   ["LLM01", "Prompt Injection", "Tested", "Residual risk — retrieval-text injection succeeded once, disclosed unsolved"],
   ["LLM02", "Sensitive Information Disclosure", "Tested", "No cross-employee data disclosed"],
-  ["LLM03", "Supply Chain", "Tested", "Dependency inventory clean; npm audit: 1 moderate finding, documented"],
-  ["LLM04", "Data / Model Poisoning", "Not applicable (training) / Partially applicable (retrieval corpus)", "No fine-tuning occurs; retrieval-corpus integrity scored under LLM01/08 instead"],
-  ["LLM05", "Improper Output Handling", "Tested", "No unsafe HTML sink; React escapes by default"],
-  ["LLM06", "Excessive Agency", "Tested — mitigated", "Disposition gate, domain guards, step caps, call dedup"],
-  ["LLM07", "System Prompt Leakage", "Tested (caveated)", "Not echoed, but via a parse-failure fallback, not a proven deliberate refusal"],
-  ["LLM08", "Vector / Embedding Weaknesses", "Tested / scoped", "Closed, allowlisted, precomputed corpus — no live ingestion path"],
-  ["LLM09", "Misinformation", "Tested", "0 fabricated citations found across 897 checked"],
-  ["LLM10", "Unbounded Consumption", "Tested", "Budget cap verified to actually trip; step cap bounds worst case"],
+  ["LLM03", "Excessive Agency", "Tested — mitigated", "Disposition gate, domain guards, step caps, call dedup"],
+  ["LLM04", "Supply Chain", "Tested", "Dependency inventory clean; npm audit: 1 moderate finding, documented"],
+  ["LLM05", "Data / Model Poisoning", "Not applicable (training) / Partially applicable (retrieval corpus)", "No fine-tuning occurs; retrieval-corpus integrity scored under LLM01/09 instead"],
+  ["LLM06", "Unbounded Consumption", "Tested", "Budget cap verified to actually trip; step cap bounds worst case"],
+  ["LLM07", "Misinformation", "Tested", "0 fabricated citations found across 897 checked"],
+  ["LLM08", "Hidden Context Exposure", "Partially tested", "Renamed/broadened from \"System Prompt Leakage\" — that sub-case tested (not echoed, via a parse-failure fallback, not a proven deliberate refusal); the newly added RAG-schema/hidden-policy-logic scope not separately probed"],
+  ["LLM09", "Vector / Embedding Weaknesses", "Tested / scoped", "Closed, allowlisted, precomputed corpus — no live ingestion path"],
+  ["LLM10", "Improper Output Handling", "Tested", "No unsafe HTML sink; React escapes by default"],
 ];
 function OwaspTable() {
   return (
@@ -632,7 +704,7 @@ function OwaspTable() {
       </div>
       {OWASP_ROWS.map(([id, name, status, note]) => (
         <div className="build-row" style={{ gridTemplateColumns: "70px 220px 200px 1fr" }} key={id}>
-          <div className="mono-cell">{id}</div><div>{name}</div><div style={{ color: id === "LLM01" ? "var(--bad)" : "var(--good)" }}>{status}</div><div>{note}</div>
+          <div className="mono-cell">{id}</div><div>{name}</div><div style={{ color: (id === "LLM01" || id === "LLM08") ? "var(--bad)" : "var(--good)" }}>{status}</div><div>{note}</div>
         </div>
       ))}
     </div>
@@ -646,7 +718,7 @@ function DecisionMatrix({ arch, d }) {
     { name: "Fixed Workflow", acc: arch.fixed_workflow ? `${arch.fixed_workflow.accuracy_pct}%` : MV, far: arch.fixed_workflow ? `${arch.fixed_workflow.far_pct}%` : MV, esc: "14.3%", cost: "$0", complexity: "Medium", status: "Rejected" },
     { name: "Bounded Agent", acc: "53.8%", far: "30.0%", esc: "23.1%", cost: "Med", complexity: "High", status: "Rejected" },
     { name: "Frozen Selective Resolver", acc: arch.selective_resolver ? `${arch.selective_resolver.accuracy_pct}%` : MV, far: "0.0%", esc: "18.6–22%", cost: "Lowest", complexity: "Medium", status: "Official — Preferred Operating Architecture" },
-    { name: "Guarded Agent", acc: d.guarded_candidate ? `${d.guarded_candidate.development.accuracy_pct}%` : MV, far: "0.0%", esc: "~34%", cost: "Higher", complexity: "Highest", status: "Candidate — Operationally Rejected" },
+    { name: "Guarded Agent (fixed, Exp 53–61)", acc: d.exp60_holdout ? `${d.exp60_holdout.candidate_mini.accuracy_pct}%` : MV, far: (d.exp60_holdout && d.exp61_holdout) ? `~${Math.round(1000 * (d.exp60_holdout.candidate_mini.false_approvals + d.exp61_holdout.candidate.false_approvals) / (d.exp60_holdout.n - d.exp60_holdout.candidate_mini.approve_recall.n + d.exp61_holdout.n - d.exp61_holdout.candidate.approve_recall.n)) / 10}% combined` : MV, esc: "~34%", cost: "Higher", complexity: "Highest", status: "Leading development candidate — not promoted to official" },
   ];
   return (
     <div className="build-table">

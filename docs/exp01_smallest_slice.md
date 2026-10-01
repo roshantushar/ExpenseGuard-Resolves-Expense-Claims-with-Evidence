@@ -1,4 +1,11 @@
-> **Stale:** this run used the earlier (easy) dataset round with structured form fields. It has not been re-run on the semantic edition.
+> **Stale:** this run used the earlier (easy) dataset round with structured form fields, not the current
+> semantic edition. A re-run was attempted on 2026-10-01 to close this gap (it's cheap — 9 cases, ~$0.002)
+> but failed: the OpenRouter account's own usage cap ($10.00) was fully consumed (confirmed directly against
+> `GET /api/v1/auth/key`, `limit_remaining: 0`) — a real-account limit, separate from and in addition to
+> this project's own tracked `MAX_BUDGET_USD`. The local `llama3.2:3b` half of the pairing ran successfully
+> against the semantic dataset but was reverted along with the failed half rather than publish an
+> inconsistent, half-updated comparison. This result stands as recorded below until the OpenRouter account
+> is topped up and the pair can be re-run together.
 
 **This is the project's required smallest first version**: one claim in, the correct policy clauses
 handed to it directly (no retrieval, no rules, no agent), one LLM call, one structured decision out.

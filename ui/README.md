@@ -10,9 +10,11 @@ By default everything is read from `frontend/public/data/cases.json` — a stati
 full results and traces for all 150 claims, generated once (see below). This is free and instant.
 
 Toggling **Live model** on a design panel calls a small local backend that runs the *actual* Python
-code (`src/resolver.py`, `src/agent.py`, `src/agent_variants.py`) on that one claim, live, with whichever
-model you pick. This costs real money against your `MAX_BUDGET_USD`/OpenRouter key and is off by default
-— nothing runs live unless you explicitly click "Run live".
+code on that one claim, live, with whichever model you pick: `src/resolver.py` for the frozen design, and
+the real Exp 59–61 guarded candidate (`scripts/exp60_require_tool_gate.run_candidate`, built on
+`src/agent.py`) for the agent design — not an earlier, superseded tool set. This costs real money against
+your `MAX_BUDGET_USD`/OpenRouter key and is off by default — nothing runs live unless you explicitly click
+"Run live".
 
 ## Setup
 
@@ -42,8 +44,16 @@ all three splits, joining with `src/evaluate.py`'s ground truth, and writing one
 case's claim, ground truth, and both designs' decision + trace.
 
 ## Notes
-- The final-test numbers for the guarded agent are a **first-ever, demo-only** run — that design has
-  never been officially evaluated against final test and has no freeze manifest. Don't read its
-  final-test accuracy as a validated result; see `docs/README.md` for what's actually frozen.
-- The backend is for local demo use only: unauthenticated, no rate limiting, spends real money when you
-  click "Run live". Don't deploy it publicly as-is.
+- This static export's own final-test column for the guarded agent is a **first-ever, demo-only** run
+  against the *original* 50-case final-test split — that specific run has no freeze manifest and its
+  provenance couldn't be re-established from committed scripts/logging (`docs/second_touch_disclosure.md`).
+  Don't read it as a validated result. The guarded candidate's real, pre-registered evaluations are two
+  separate fresh holdouts the frozen design has also been run against: `docs/exp60_fresh_holdout.md` and
+  `docs/exp61_v3_holdout.md`. See `docs/README.md` for what's officially frozen.
+- The backend is for local demo use only: unauthenticated (CORS restricted to `localhost`/`127.0.0.1`,
+  but still no auth or rate limiting), and spends real money when you click "Run live". Run it locally and
+  stop it after the demo — don't deploy it publicly as-is.
+- `npm audit` in `ui/frontend/` reports 2 findings (1 moderate, 1 high) in `esbuild`/`vite`'s **dev-server
+  only** path, not in the production build — `npm audit --omit=dev` (and the built `dist/`) report 0.
+  Disclosed, not silently patched: the fix requires a breaking major-version Vite upgrade, out of scope for
+  this project without being asked.

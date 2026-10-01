@@ -1090,6 +1090,13 @@ accuracy, 0% FAR): the target was never "maximize accuracy," it was "maximize ac
 false approvals," and every later architecture decision in this project (including rejecting the
 higher-accuracy guarded-agent candidate on cost grounds, §42.1) follows the same rule.
 
+**Stated numerically, for any future candidate to be considered a replacement:** FAR at or below 0% is a
+hard constraint, not a point to trade off against accuracy; subject to that constraint, no future candidate
+is treated as viable unless it also holds accuracy at or above 60% — the bar the frozen resolver's one
+authorized result (Exp 32) actually cleared. This number was fixed *after* Exp 32's result, not declared
+before it; it is stated here as the explicit operational bar this project now holds every later candidate
+to (Exp 45-61), not claimed as a target pre-registered ahead of the freeze decision itself.
+
 ---
 
 # 30. Safety/business guardrails
@@ -1272,17 +1279,18 @@ Prompt injection must be tested in:
 - tool output.
 
 Security testing is framed against, and honestly scored against, the **OWASP Top 10 for LLM Applications
-(2025)** — the current official edition (there is no published 2026 edition; verified by direct lookup, not
-assumed). **All 10 categories now have real test evidence** (`docs/owasp_llm_top10_2025.md`): **LLM06:
-Excessive Agency** is directly mitigated (read-only tools, step cap, call deduplication, Exp 41's
+(2026)** — the current official edition, published 2026-08-04 (verified by direct lookup against two
+independent sources, not assumed). **All 10 categories have real test evidence** (`docs/owasp_llm_top10_2026.md`):
+**LLM03: Excessive Agency** is directly mitigated (read-only tools, step cap, call deduplication, Exp 41's
 disposition gate, Exp 43's domain guards); **LLM01: Prompt Injection** was adversarially tested (Exp 28)
 and found only partially addressed — retrieval-text injection can still defeat the current prompt-level
-defense, disclosed as an open risk rather than claimed as solved; **LLM04: Data/Model Poisoning** is scoped
-as not applicable (no model is fine-tuned or trained in this project); and **LLM02, LLM03, LLM05, LLM07,
-LLM08, LLM09, LLM10** were each directly tested or scoped in a dedicated pass at $0 cost, with no new
-unmitigated vulnerability found — see `docs/owasp_llm_top10_2025.md` for the full results, including the
-honest disclosure that two of those tests' clean results rest on a parse-failure fallback rather than a
-demonstrated deliberate model refusal.
+defense, disclosed as an open risk rather than claimed as solved; **LLM05: Data/Model Poisoning** is scoped
+as not applicable (no model is fine-tuned or trained in this project); **LLM08: Hidden Context Exposure**
+(renamed/broadened from "System Prompt Leakage") is disclosed as only partially tested under its new,
+wider scope; and **LLM02, LLM04, LLM06, LLM07, LLM09, LLM10** were each directly tested or scoped in a
+dedicated pass at $0 cost, with no new unmitigated vulnerability found — see
+`docs/owasp_llm_top10_2026.md` for the full results, including the honest disclosure that LLM02's clean
+result rests on a parse-failure fallback rather than a demonstrated deliberate model refusal.
 
 Responsible-use design should also align with principles from:
 

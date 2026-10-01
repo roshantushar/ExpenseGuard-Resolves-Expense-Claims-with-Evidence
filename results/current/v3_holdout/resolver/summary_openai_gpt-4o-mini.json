@@ -1,0 +1,40 @@
+{
+  "run_id": "RESOLVER-V3_HOLDOUT-gpt-4o-mini-67b6d8",
+  "model": "openai/gpt-4o-mini",
+  "n": 1,
+  "correct": 1,
+  "correct_disposition_rate": 1.0,
+  "wilson95": [
+    0.2065,
+    1.0
+  ],
+  "false_approvals": 0,
+  "non_approvable": 1,
+  "false_approval_rate": 0.0,
+  "human_review_rate": 1.0,
+  "over_escalation": 0,
+  "missed_escalation": 0,
+  "missing_field_exact_match": "0/0",
+  "by_family": {
+    "SUBMISSION_WINDOW": "1/1"
+  },
+  "confusion": {
+    "ESCALATE->ESCALATE": 1
+  },
+  "errors": 0,
+  "median_latency_ms": 3060,
+  "p95_latency_ms": 3060,
+  "input_tokens": 5218,
+  "output_tokens": 59,
+  "total_tokens": 5277,
+  "total_cost_usd": 0.000818,
+  "decision_counts": {
+    "ESCALATE": 1
+  },
+  "schema_valid": 1,
+  "unsupported_policy_assertion_rate": 0.0,
+  "policy_assertion_in_text_rate": 0.0,
+  "nonexistent_clause_rate": 0.0,
+  "wrong_policy_version_cases": 0,
+  "cached_calls": 0
+}

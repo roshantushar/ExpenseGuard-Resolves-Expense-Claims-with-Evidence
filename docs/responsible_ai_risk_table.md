@@ -24,12 +24,14 @@ by an experiment.
 
 ## Governance framework alignment
 See `docs/README.md`'s "Governance & security alignment" section for the mapping of these findings to
-OWASP Top 10 for LLM Applications (2025), Singapore's IMDA Model AI Governance Framework, and the EU AI
-Act's human-oversight principles. All 10 OWASP LLM categories now have real test evidence
-(`docs/owasp_llm_top10_2025.md`): LLM06 (Excessive Agency) is directly mitigated; LLM01 (Prompt
+OWASP Top 10 for LLM Applications (2026), Singapore's IMDA Model AI Governance Framework, and the EU AI
+Act's human-oversight principles. All 10 OWASP LLM categories have real test evidence, remapped from the
+original 2025-edition assessment to the current 2026 numbering
+(`docs/owasp_llm_top10_2026.md`): LLM03 (Excessive Agency) is directly mitigated; LLM01 (Prompt
 Injection) is explicitly disclosed as tested-but-not-solved per the Prompt injection and Retrieval
-poisoning rows above; LLM04 (Data/Model Poisoning) is scoped as not applicable with a reasoned
-architectural argument; and LLM02, LLM03, LLM05, LLM07, LLM08, LLM09, LLM10 were each directly tested or
-scoped this pass, at $0 cost, with no new unmitigated vulnerability found — though LLM02/LLM07's clean
-result rests on a parse-failure-to-ESCALATE fallback rather than a demonstrated deliberate model refusal,
-disclosed as such rather than overclaimed.
+poisoning rows above; LLM05 (Data/Model Poisoning) is scoped as not applicable with a reasoned
+architectural argument; LLM08 (Hidden Context Exposure, renamed/broadened from "System Prompt Leakage") is
+disclosed as only partially tested under its new, wider 2026 scope; and LLM02, LLM04, LLM06, LLM07, LLM09,
+LLM10 were each directly tested or scoped this pass, at $0 cost, with no new unmitigated vulnerability
+found — though LLM02's clean result rests on a parse-failure-to-ESCALATE fallback rather than a
+demonstrated deliberate model refusal, disclosed as such rather than overclaimed.

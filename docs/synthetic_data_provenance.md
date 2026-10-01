@@ -26,6 +26,12 @@
   prose were drafted by `openai/gpt-4o-mini`; any systematic phrasing habits, omissions, or stylistic
   tells of that model could make cases easier or harder for models to parse in a way that would not hold
   for genuinely human-written expense notes.
+- **Same-model blind spot.** The claim notes across every split, including both fresh holdouts (Exp 60,
+  Exp 61), were drafted by the same model (`gpt-4o-mini`) that the system's LLM-residual step also uses to
+  decide them — nothing in this benchmark was validated against notes authored by a different model or a
+  real human, so this synthetic set cannot rule out that some of its measured accuracy reflects the model
+  finding its own writing easy to parse, rather than genuine reasoning skill that would transfer to
+  differently-authored real-world claims.
 - **Real employee behavior and policy ambiguity may be more complex.** The dataset's hardening rounds
   deliberately inject difficulty (distractor sentences, coarsened categories, non-English notes), but the
   space of real-world phrasing, error, and intentional ambiguity is far larger than what three hardening

@@ -22,7 +22,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
-from src import config as C, llm_exp, resolver, agent as A, agent_variants as V  # noqa: E402
+from src import config as C, llm_exp, resolver  # noqa: E402
+from scripts.exp60_require_tool_gate import run_candidate as run_guarded_candidate  # noqa: E402
 
 C.load_env()
 _ALL_CASES = {c["case_id"]: c for split in ("DEVELOPMENT", "VALIDATION", "FINAL_TEST") for c in llm_exp.cases_for(split)}
@@ -35,9 +36,13 @@ DOC_ALLOWLIST = {
     "docs/FINAL_REPORT.md", "docs/README.md", "docs/exp30_selective_router.md",
     "docs/exp32_final_test.md", "docs/exp33_failure_analysis.md",
     "docs/cost_and_business_impact.md", "docs/build_vs_buy.md",
-    "docs/responsible_ai_risk_table.md", "docs/owasp_llm_top10_2025.md",
-    "docs/synthetic_data_provenance.md", "docs/reproducibility_and_repo_map.md",
+    "docs/responsible_ai_risk_table.md", "docs/owasp_llm_top10_2025.md", "docs/owasp_llm_top10_2026.md",
+    "docs/synthetic_data_provenance.md", "docs/reproducibility_and_repo_map.md", "docs/EVALS.md",
+    "docs/dataset_card.md", "docs/experiment_table.md",
     "docs/demo_script.md", "docs/gate_override_audit.md",
+    "docs/exp53_approve_calibration.md", "docs/exp54_stronger_model_approve.md", "docs/exp55_fact_fixes.md",
+    "docs/exp56_hotel_ceiling_fix.md", "docs/exp57_hybrid_facts_hotel.md", "docs/exp58_full_agent_fix.md",
+    "docs/exp59_final_fix.md", "docs/exp60_fresh_holdout.md", "docs/exp61_v3_holdout.md",
 }
 
 
@@ -63,9 +68,10 @@ def run_live(case_id: str, design: str, model: str | None) -> dict:
         return {"decision": r["decision"], "path": "llm_residual", "policy_evidence": r.get("policy_evidence", []),
                 "missing_fields": r.get("missing_fields", []), "explanation": r.get("explanation"), "trace": []}
     if design == "agent":
-        specs, case_tools = V.specs_and_tools_47(case)
-        r = A.run(case, model=model, system_template=V.SYSTEM_47, specs=specs, case_tools=case_tools, max_steps=8)
-        r = V.gate_disposition(V.gate_approve(r))
+        # Runs the actual Exp 59-61 guarded candidate (scripts/exp60_require_tool_gate.run_candidate),
+        # not the earlier Exp 47 tool set -- this used to be a real gap (live button quietly ran stale
+        # code while every doc/UI label described the later, fixed candidate).
+        r = run_guarded_candidate(case, model=model, tag="UI_LIVE_AGENT")
         return {"decision": r["decision"], "policy_evidence": r.get("policy_evidence", []), "missing_fields": r.get("missing_fields", []),
                 "explanation": r.get("explanation"), "turns": r.get("turns"), "cost_usd": r.get("cost_usd"), "trace": _clean_trace(r.get("trace"))}
     return {"error": f"unknown design: {design!r}, expected 'frozen' or 'agent'"}
@@ -73,7 +79,9 @@ def run_live(case_id: str, design: str, model: str | None) -> dict:
 
 class Handler(BaseHTTPRequestHandler):
     def _cors(self):
-        self.send_header("Access-Control-Allow-Origin", "*")
+        origin = self.headers.get("Origin", "")
+        if origin.split("://")[-1].split(":")[0] in ("localhost", "127.0.0.1"):
+            self.send_header("Access-Control-Allow-Origin", origin)
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
 

@@ -5,10 +5,10 @@
 | Step | Command | Cost |
 |---|---|---|
 | Required Python version | 3.9+ (developed and tested on 3.9.6) | — |
-| Install dependencies | `pip install numpy matplotlib pandas` (plots only; the deterministic path and dataset validator need no dependency beyond the standard library) | $0 |
+| Install dependencies | `pip install -r requirements.txt` (numpy, matplotlib, pandas, jupyter; the deterministic path and dataset validator need no dependency beyond the standard library) | $0 |
 | Environment variables | Copy `.env.example` to `.env`; set `OPENROUTER_API_KEY`, `PAID_MODEL` (`openai/gpt-4o-mini`), `LOCAL_MODEL` (`llama3.2:3b` via Ollama, optional), `MAX_BUDGET_USD` | — |
 | Dataset generation (only if rebuilding from scratch) | `python -m dataset_generator.build` — deterministic, seed 6202; reproduces the exact case set. Corpus prose is cached in `dataset_generator/commentary_cache.json` and `semantic_cache.json`, so a rebuild does not redraft already-approved text. | $0 (cached) unless the cache is cleared |
-| Zero-cost smoke test | `python -m unittest discover -s tests` (31 tests: leakage, tool, workflow) | $0 |
+| Zero-cost smoke test | `python -m unittest discover -s tests` (44 tests: leakage, tool, workflow, project-story export) | $0 |
 | Zero-cost dataset audit | `python -m dataset_generator.validate` (50 integrity/leakage checks) | $0 |
 | Inspect saved results without rerunning APIs | Read any `results/current/**/summary.json` or `predictions.jsonl` directly, or `docs/master_comparison.md` / `docs/cost_and_business_impact.md` for the pre-aggregated tables | $0 |
 | Run one sample claim (deterministic path, no API call) | `python3 -c "import json; from src import resolver; cases=[json.loads(l) for l in open('ExpenseGuard_DATASET/02_cases/all_cases.jsonl')]; c=next(c for c in cases if c['case_id']=='X2-005'); print(resolver.deterministic(c))"` — returns the decision dict and whether the deterministic layer resolved it conclusively | $0 |
@@ -41,7 +41,7 @@ a real project regression, since both are pinned, offline, deterministic checks.
 | `scripts/` | One script per experiment that needs a standalone entry point (not every experiment does — many ran as notebooks); includes `cost_model.py` |
 | `notebooks/` | The same experiments as notebooks, executed top to bottom, each with its own saved results |
 | `tests/` | Unit tests, including `test_no_leakage.py`, which statically enforces that ground truth is only ever joined in the evaluator, never read by runtime code |
-| `experiments/` | The freeze manifest (`exp32_freeze_manifest_v2.yaml`) for the one-shot official final test |
+| `experiments/` | Pre-registered freeze manifests: `exp32_freeze_manifest_v2.yaml` (the one-shot official final test) and `v3_freeze_manifest.yaml` (Exp 61's pre-registered fresh holdout, committed before case generation) |
 | `results/current/` | Predictions, summaries, plots, and cached embeddings per experiment/split; `results/run_log.jsonl` and `results/cache/` are the single shared LLM call log and cache used across every experiment |
 | `docs/` | One write-up per experiment plus this project's cross-cutting analysis docs (master comparison, cost/business impact, Responsible AI risk table, build-vs-buy, synthetic-data provenance, this reproducibility doc), indexed in `docs/README.md` |
 | `archive/v1/` | The prior (V1) dataset generation's experiment plan, retained for historical evidence only — not the current dataset, banner-marked as legacy |
