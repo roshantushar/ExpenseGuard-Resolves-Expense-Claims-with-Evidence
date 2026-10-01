@@ -35,7 +35,7 @@ DOC_ALLOWLIST = {
     "docs/FINAL_REPORT.md", "docs/README.md", "docs/exp30_selective_router.md",
     "docs/exp32_final_test.md", "docs/exp33_failure_analysis.md",
     "docs/cost_and_business_impact.md", "docs/build_vs_buy.md",
-    "docs/responsible_ai_risk_table.md", "docs/owasp_llm_top10_2025.md",
+    "docs/responsible_ai_risk_table.md", "docs/owasp_llm_top10_2025.md", "docs/owasp_llm_top10_2026.md",
     "docs/synthetic_data_provenance.md", "docs/reproducibility_and_repo_map.md",
     "docs/demo_script.md", "docs/gate_override_audit.md",
     "docs/exp53_approve_calibration.md", "docs/exp54_stronger_model_approve.md", "docs/exp55_fact_fixes.md",

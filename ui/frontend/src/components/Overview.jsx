@@ -31,6 +31,14 @@ const StatCard = ({ label, s, tone }) => (
   </div>
 );
 
+const STORY_STRIP = [
+  { k: "THE DATA", body: "150 claims — a bill + free-text note, nothing structured. 22 policies, 11 enterprise systems." },
+  { k: "🔍 FOUND", body: "The frozen baseline: 30/50, 0/37 false approvals — but its LLM step never once correctly approved a real approvable claim." },
+  { k: "🛠️ FIXED", body: "Rebuilt that step so tools compute the answer in code, gated so the model can't override a fact it was already given." },
+  { k: "🔬 TESTED HARDER", body: "A second holdout, pre-registered before a single case existed — built to break the fix, not confirm it." },
+  { k: "✅ WHAT SHIPS", body: "The fix wins every accuracy test it's taken. The baseline ships anyway: 0 false approvals across all 82 cases it's ever faced." }
+];
+
 const BADGES = [
   { n: "55", l: "experiments run (numbered 0-61, Exp 21-27 skipped)" },
   { n: "150", l: "claims, 22+ policies, 11 tables" },
@@ -91,6 +99,19 @@ export default function Overview({ cases }) {
             <div className="badge-n">{b.n}</div>
             <div className="badge-l">{b.l}</div>
           </div>
+        ))}
+      </div>
+
+      <h1 style={{ marginTop: 36 }}>The story, in one line each</h1>
+      <div className="story-strip">
+        {STORY_STRIP.map((s, i) => (
+          <React.Fragment key={s.k}>
+            <div className="story-step">
+              <div className="story-step-k">{s.k}</div>
+              <div className="story-step-body">{s.body}</div>
+            </div>
+            {i < STORY_STRIP.length - 1 && <div className="story-arrow">→</div>}
+          </React.Fragment>
         ))}
       </div>
 
@@ -196,7 +217,7 @@ export default function Overview({ cases }) {
       <h1 style={{ marginTop: 36 }}>Governance &amp; security alignment</h1>
       <p className="lede" style={{ fontSize: 13 }}>
         Framed against recognized frameworks — an honest mapping of what was tested, not a compliance
-        certification. All 10 OWASP Top 10 for LLM Applications (2025) categories have real test evidence.
+        certification. All 10 OWASP Top 10 for LLM Applications (2026) categories have real test evidence.
       </p>
       <div className="about-grid">
         <div className="about-card">

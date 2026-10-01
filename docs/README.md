@@ -60,14 +60,16 @@ design to official status requires a genuinely new, untouched holdout, frozen be
 Framed against recognized frameworks — this is an honest mapping of what was actually built and
 adversarially tested to the risk categories they name, not a compliance certification.
 
-**All 10 OWASP Top 10 for LLM Applications (2025) categories now have real test evidence** — not just the
-two headlined below. Full results for all ten, including the six newly tested this pass (LLM02, 03, 05,
-07, 09, 10) and the two scoped-as-reasoned ones (LLM04, LLM08): [`docs/owasp_llm_top10_2025.md`](owasp_llm_top10_2025.md).
-(Note: the current official edition is "(2025)," not "(2026)" — corrected from an earlier labeling error
-in this project's docs; there is no published 2026 edition.) The two below remain the two with the most
-significant, architecture-shaping findings.
+**All 10 OWASP Top 10 for LLM Applications (2026) categories now have real test evidence** — not just the
+two headlined below. Full results for all ten, including the six newly tested this pass (LLM02, 04, 06,
+07, 08, 10 in current 2026 numbering) and the two scoped-as-reasoned ones (LLM05, LLM09):
+[`docs/owasp_llm_top10_2026.md`](owasp_llm_top10_2026.md). (Note: OWASP published a real 2026 edition on
+2026-08-04, reordering several categories and renaming "System Prompt Leakage" to "Hidden Context
+Exposure"; the original assessment was run against the 2025 edition and is remapped in the 2026 doc, with
+one category — LLM08, Hidden Context Exposure — disclosed as only partially covering its newly broadened
+scope.) The two below remain the two with the most significant, architecture-shaping findings.
 
-- **OWASP Top 10 for LLM Applications — LLM06: Excessive Agency.** Directly and concretely mitigated:
+- **OWASP Top 10 for LLM Applications — LLM03: Excessive Agency.** Directly and concretely mitigated:
   every tool is read-only, bounded by a step cap and call deduplication (Exp 20, 28), and — the core
   mechanism — Exp 41's disposition gate structurally prevents the model from overriding a tool that
   already computed the correct answer, with Exp 43's domain guards restricting each tool to only the
@@ -108,8 +110,8 @@ Full automation and cost breakdown, with the "does the complexity earn its keep"
 - [`docs/responsible_ai_risk_table.md`](responsible_ai_risk_table.md): risk / failure mode / current
   mitigation / residual risk / human control for every risk category this project tested or scoped,
   including the honest disclosure that prompt injection and retrieval poisoning remain unresolved.
-- [`docs/owasp_llm_top10_2025.md`](owasp_llm_top10_2025.md): the completed, non-negotiable OWASP Top 10
-  for LLM Applications (2025) test pass — all 10 categories, all evidenced, $0 cost, including the
+- [`docs/owasp_llm_top10_2026.md`](owasp_llm_top10_2026.md): the completed, non-negotiable OWASP Top 10
+  for LLM Applications (2026) assessment — all 10 categories, all evidenced, $0 cost, including the
   self-caught correction of a false "13.6% fabricated citation" finding down to zero once the check was
   fixed.
 - [`docs/gate_override_audit.md`](gate_override_audit.md): does the disposition gate actually fire, and

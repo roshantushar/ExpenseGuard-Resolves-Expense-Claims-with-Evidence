@@ -90,7 +90,7 @@ export const ACTS = [
       "Corrected: once those costs are priced in, the guarded candidate is cheaper under development/validation-selected rates — the frozen design's much higher false-rejection rate (36.8% dev / 50.0% final test) was never priced before",
       "But a no-new-calls sensitivity check found that advantage does not survive diagnostic final-run safety numbers — the candidate's cost edge is conditional, not unconditional",
       "⟶ The frozen resolver still ships officially — not because it's cheaper (it isn't, reliably), but because it's the only design with an authorized, frozen final-test result",
-      "Separately: completed a full OWASP Top 10 for LLM Applications (2025) pass — all 10 categories",
+      "Separately: completed a full OWASP Top 10 for LLM Applications (2026) pass — all 10 categories",
       "Zero fabricated policy citations found across every decision ever made; budget/step caps confirmed to actually trip",
       "Prompt injection left exactly where Exp 28 found it — a disclosed, unsolved risk, not a silently-claimed win",
       "⟶ Final lesson: pick the architecture on safe automation, total cost, AND how well-tested the evidence is — not on accuracy or a single cost model run alone."

@@ -48,7 +48,7 @@ const DOCS = [
   ["Exp 30 — Architecture Freeze", "docs/exp30_selective_router.md"], ["Exp 32 — Final Test", "docs/exp32_final_test.md"],
   ["Exp 33 — Failure Analysis", "docs/exp33_failure_analysis.md"], ["Cost & Business Impact", "docs/cost_and_business_impact.md"],
   ["Build vs Buy", "docs/build_vs_buy.md"], ["Responsible AI Risk Table", "docs/responsible_ai_risk_table.md"],
-  ["OWASP 2025 Evaluation", "docs/owasp_llm_top10_2025.md"], ["Synthetic Data Provenance", "docs/synthetic_data_provenance.md"],
+  ["OWASP 2026 Evaluation", "docs/owasp_llm_top10_2026.md"], ["Synthetic Data Provenance", "docs/synthetic_data_provenance.md"],
   ["Reproducibility Guide", "docs/reproducibility_and_repo_map.md"], ["Demo Script", "docs/demo_script.md"],
   ["Gate Override Audit", "docs/gate_override_audit.md"], ["CHANGELOG_FINAL", "CHANGELOG_FINAL.md"],
   ["Exp 53 — Approve Calibration", "docs/exp53_approve_calibration.md"], ["Exp 54 — Stronger Model", "docs/exp54_stronger_model_approve.md"],
@@ -442,7 +442,7 @@ export default function ProjectStory() {
 
         <Section id="s16" title="Responsible AI / Security">
           <RiskTable />
-          <h3 className="sub-h" style={{ marginTop: 24 }}>OWASP Top 10 for LLM Applications (2025)</h3>
+          <h3 className="sub-h" style={{ marginTop: 24 }}>OWASP Top 10 for LLM Applications (2026)</h3>
           <OwaspTable />
         </Section>
 
@@ -691,14 +691,14 @@ function BuildVsBuyTable() {
 const OWASP_ROWS = [
   ["LLM01", "Prompt Injection", "Tested", "Residual risk — retrieval-text injection succeeded once, disclosed unsolved"],
   ["LLM02", "Sensitive Information Disclosure", "Tested", "No cross-employee data disclosed"],
-  ["LLM03", "Supply Chain", "Tested", "Dependency inventory clean; npm audit: 1 moderate finding, documented"],
-  ["LLM04", "Data / Model Poisoning", "Not applicable (training) / Partially applicable (retrieval corpus)", "No fine-tuning occurs; retrieval-corpus integrity scored under LLM01/08 instead"],
-  ["LLM05", "Improper Output Handling", "Tested", "No unsafe HTML sink; React escapes by default"],
-  ["LLM06", "Excessive Agency", "Tested — mitigated", "Disposition gate, domain guards, step caps, call dedup"],
-  ["LLM07", "System Prompt Leakage", "Tested (caveated)", "Not echoed, but via a parse-failure fallback, not a proven deliberate refusal"],
-  ["LLM08", "Vector / Embedding Weaknesses", "Tested / scoped", "Closed, allowlisted, precomputed corpus — no live ingestion path"],
-  ["LLM09", "Misinformation", "Tested", "0 fabricated citations found across 897 checked"],
-  ["LLM10", "Unbounded Consumption", "Tested", "Budget cap verified to actually trip; step cap bounds worst case"],
+  ["LLM03", "Excessive Agency", "Tested — mitigated", "Disposition gate, domain guards, step caps, call dedup"],
+  ["LLM04", "Supply Chain", "Tested", "Dependency inventory clean; npm audit: 1 moderate finding, documented"],
+  ["LLM05", "Data / Model Poisoning", "Not applicable (training) / Partially applicable (retrieval corpus)", "No fine-tuning occurs; retrieval-corpus integrity scored under LLM01/09 instead"],
+  ["LLM06", "Unbounded Consumption", "Tested", "Budget cap verified to actually trip; step cap bounds worst case"],
+  ["LLM07", "Misinformation", "Tested", "0 fabricated citations found across 897 checked"],
+  ["LLM08", "Hidden Context Exposure", "Partially tested", "Renamed/broadened from \"System Prompt Leakage\" — that sub-case tested (not echoed, via a parse-failure fallback, not a proven deliberate refusal); the newly added RAG-schema/hidden-policy-logic scope not separately probed"],
+  ["LLM09", "Vector / Embedding Weaknesses", "Tested / scoped", "Closed, allowlisted, precomputed corpus — no live ingestion path"],
+  ["LLM10", "Improper Output Handling", "Tested", "No unsafe HTML sink; React escapes by default"],
 ];
 function OwaspTable() {
   return (
@@ -711,7 +711,7 @@ function OwaspTable() {
       </div>
       {OWASP_ROWS.map(([id, name, status, note]) => (
         <div className="build-row" style={{ gridTemplateColumns: "70px 220px 200px 1fr" }} key={id}>
-          <div className="mono-cell">{id}</div><div>{name}</div><div style={{ color: id === "LLM01" ? "var(--bad)" : "var(--good)" }}>{status}</div><div>{note}</div>
+          <div className="mono-cell">{id}</div><div>{name}</div><div style={{ color: (id === "LLM01" || id === "LLM08") ? "var(--bad)" : "var(--good)" }}>{status}</div><div>{note}</div>
         </div>
       ))}
     </div>

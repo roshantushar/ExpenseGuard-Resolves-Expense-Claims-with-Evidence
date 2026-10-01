@@ -1,15 +1,7 @@
 # ExpenseGuard — Resolves Expense Claims with Evidence
 
 A bounded AI system for expense-claim compliance that combines deterministic automation, evidence-grounded
-LLM adjudication, and explicit human escalation — not a system that hands everything unresolved to a human,
-but one that never answers without evidence and never guesses under uncertainty.
-
-**Official Exp 32 result:** 30/50 (60%) accuracy, 0/37 observed false approvals. The frozen Exp 32
-evaluation itself was executed exactly once; the underlying final-test data was later touched by a
-separate, disclosed post-freeze diagnostic (see [Limitations](#limitations)) — the *evaluation run* was
-never repeated, but "touched once" is no longer an unqualified claim about the data.
-
-*PE6201 (Emerging AI Technologies) end-of-course project. Built solo — see [Architecture rationale](#architecture-rationale).*
+LLM adjudication, and explicit human escalation.
 
 [![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev/)
@@ -21,17 +13,58 @@ never repeated, but "touched once" is no longer an unqualified claim about the d
 [![Ollama](https://img.shields.io/badge/Ollama-llama3.2%3A3b-white?logo=ollama&logoColor=black)](https://ollama.ai/)
 [![Mermaid](https://img.shields.io/badge/Diagrams-Mermaid-FF3670?logo=mermaid&logoColor=white)](https://mermaid.js.org/)
 [![Tests](https://img.shields.io/badge/tests-44%20passing-brightgreen)](tests/)
+[![OWASP LLM Top 10](https://img.shields.io/badge/OWASP%20LLM%20Top%2010%20%282026%29-10%2F10%20tested-success)](docs/owasp_llm_top10_2026.md)
 [![Budget](https://img.shields.io/badge/API%20spend-%247.38%20of%20%248.00-blue)](docs/cost_and_business_impact.md)
+
+*PE6201 (Emerging AI Technologies) end-of-course project. Built solo.*
+
+## The story, in four moves
+
+This is the data: 150 claims, a bill and a free-text note each, nothing pre-extracted, checked against a
+22-document policy corpus and 11 enterprise systems. This is what had to be done: decide APPROVE / REJECT /
+REQUEST_INFORMATION / ESCALATE, and never confidently approve a claim that shouldn't be. Here's what we
+found, and what we did about it — twice:
+
+| | 🔍 Found | 🛠️ Fixed | ⟶ Proof |
+|---|---|---|---|
+| **Round 1** | The frozen baseline scored 30/50 (60%), 0/37 false approvals — but its LLM step had **never once correctly approved a real approvable claim**, across dev, validation, or final test. | Root-caused it: the model was *shown* the right facts but not forced to use them. Rebuilt that step so tools compute the answer in code, enforced by a gate the model can't override. | Tested fresh, twice, on data neither version had seen: **+24pp and +30pp** over the baseline on each holdout — accuracy of **68%** and **66.7%**. |
+| **Round 2** | Not satisfied with a test built to confirm the fix — built a second holdout **pre-registered before a single case existed**, designed to break it, not flatter it. | Nothing to fix yet — ran it once, as pre-registered, and reported the result unchanged. | It found what Round 1 missed: **one real false approval** the easier test never surfaced. Disclosed, not hidden. |
+
+**The opposite of a clean win:** the fix is more accurate everywhere it's been tested — and still isn't
+the one that ships. The original baseline is the official, frozen architecture, because it's the only one
+with **zero false approvals across all 82 cases ever tested against it.** The improved design stays the
+leading development candidate: better numbers, one formal validation pass short of the trust the frozen
+baseline has already earned.
+
+Full detail, every number sourced: [Results](#results).
+
+## Security testing (OWASP LLM Top 10, 2026 edition)
+
+**All 10 categories assessed** against the current OWASP Top 10 for LLM Applications (2026, published
+2026-08-04) — 9 of 10 carry forward unchanged real evidence from the original assessment; one (Hidden
+Context Exposure, formerly System Prompt Leakage) is disclosed as only partially covering its newly
+broadened scope, not silently claimed as fully tested.
+
+- **Zero fabricated policy citations** — checked all 897 citations ever saved across every experiment
+  against the real policy corpus.
+- **Budget and step caps verified live** — `MAX_BUDGET_USD` confirmed to actually raise `BudgetExceeded`
+  when hit, not just configured and assumed to work.
+- **One risk disclosed, not hidden:** prompt injection (LLM01) is not solved — a retrieval-text injection
+  attack defeated the current defense once, live, in testing.
+
+Full assessment, all 10 categories: [`docs/owasp_llm_top10_2026.md`](docs/owasp_llm_top10_2026.md).
 
 ---
 
 ## Table of contents
+[The story](#the-story-in-four-moves) · [Security](#security-testing-owasp-llm-top-10-2026-edition) ·
 [Problem](#problem) · [What it is](#what-it-is) · [What it does](#what-it-does) · [Who it's for](#who-its-for) ·
 [Closest alternatives](#closest-alternatives-and-the-gap) · [Build vs. buy](#build-vs-buy) ·
 [The data](#the-data) · [How it works](#how-it-works) · [Architecture rationale](#architecture-rationale) ·
 [Results](#results) · [Business impact](#business-impact) · [Experiments](#experiments) ·
 [Quick start](#quick-start) · [Reproducibility](#reproducibility) · [Screenshots](#screenshots) ·
-[Repo map](#repo-map) · [Limitations](#limitations) · [Deliverables](#deliverables) · [Learn more](#learn-more)
+[Repo map](#repo-map) · [Limitations](#limitations) · [Deliverables](#deliverables) · [Learn more](#learn-more) ·
+[OWASP Top 10 (full results)](#owasp-top-10-for-llm-applications-2026-full-results)
 
 ---
 
@@ -421,7 +454,7 @@ A design-rationale gallery of every retrieval/chunking/model experiment's own pl
 - **Dataset** — 150 synthetic claims, 22-document policy corpus, 11 enterprise tables, isolated ground
   truth, deterministic generator (`dataset_generator/`).
 - **Four architectures, implemented and compared** — deterministic rules, RAG, fixed workflow, bounded
-  agent — plus the selective hybrid that ships.
+  agent — plus the selective hybrid that's the official, frozen architecture.
 - **Evaluation harness** — leakage-safe evaluator, freeze-manifest discipline, cost model, OWASP Top 10
   for LLM Applications security assessment.
 - **55 experiment write-ups** (`docs/`), numbered 0–61 with a deliberate gap at 21–27, each hypothesis → method → result → decision, traced to saved
@@ -435,9 +468,35 @@ A design-rationale gallery of every retrieval/chunking/model experiment's own pl
 - **Full diagnostic story, every experiment, extended flowcharts:** [`docs/README.md`](docs/README.md)
 - **Business problem and scope:** [`problem.md`](problem.md)
 - **Cost and operating-cost model:** [`docs/cost_and_business_impact.md`](docs/cost_and_business_impact.md)
-- **Responsible AI / OWASP Top 10 for LLM Applications:** [`docs/responsible_ai_risk_table.md`](docs/responsible_ai_risk_table.md), [`docs/owasp_llm_top10_2025.md`](docs/owasp_llm_top10_2025.md)
+- **Responsible AI / OWASP Top 10 for LLM Applications (2026):** [`docs/responsible_ai_risk_table.md`](docs/responsible_ai_risk_table.md), [`docs/owasp_llm_top10_2026.md`](docs/owasp_llm_top10_2026.md)
 - **Bugs found after the freeze, documented not silently patched:** [`docs/post_freeze_findings.md`](docs/post_freeze_findings.md)
 - **Disclosure: a second, undocumented run touched the held-out data after the freeze:** [`docs/second_touch_disclosure.md`](docs/second_touch_disclosure.md)
 - **Root-causing why the candidate still missed APPROVE cases (Exp 53-59):** [`docs/exp53_approve_calibration.md`](docs/exp53_approve_calibration.md) → [`docs/exp59_final_fix.md`](docs/exp59_final_fix.md)
 - **Fresh-holdout validation and the stronger-model safety tradeoff (Exp 60):** [`docs/exp60_fresh_holdout.md`](docs/exp60_fresh_holdout.md)
 - **Pre-registered second holdout that found the candidate's first false approval (Exp 61):** [`docs/exp61_v3_holdout.md`](docs/exp61_v3_holdout.md)
+
+## OWASP Top 10 for LLM Applications (2026): full results
+
+The current, officially published edition is the **2026** edition (published 2026-08-04, verified live
+against two independent sources). All 10 categories assessed, **$0 cost** (free local model for live
+probes; the rest static checks or reasoned scoping, no new API calls). 9 of 10 categories carry forward
+unchanged real test evidence; full detail: [`docs/owasp_llm_top10_2026.md`](docs/owasp_llm_top10_2026.md).
+
+| Category | Status | Evidence |
+|---|---|---|
+| LLM01: Prompt Injection | **Not solved** — disclosed open risk | Retrieval-text injection defeated the defense in one live attack |
+| LLM02: Sensitive Information Disclosure | Tested | Crafted request for another employee's data; not disclosed (safe fallback to ESCALATE) |
+| LLM03: Excessive Agency | Mitigated | Disposition gate, domain guards, step cap, call deduplication |
+| LLM04: Supply Chain | Tested | `npm audit`: 1 moderate finding, documented, not fixed. Python deps all current; runtime code imports no third-party package |
+| LLM05: Data and Model Poisoning | Scoped — not applicable | No model is fine-tuned or trained; every model is an unmodified foundation model |
+| LLM06: Unbounded Consumption | Tested | `MAX_BUDGET_USD` confirmed live to actually raise `BudgetExceeded`; step cap bounds worst-case cost |
+| LLM07: Misinformation | Tested | All 897 policy-evidence citations ever saved, checked against the real corpus — **zero fabricated citations** |
+| LLM08: Hidden Context Exposure | **Partially tested** | Renamed and broadened from "System Prompt Leakage." The system-prompt sub-case was tested — a "print your system prompt" attack did not echo system-prompt text (safe fallback). The broader RAG-schema/hidden-policy-logic scope was **not** separately probed — disclosed as open, not claimed as covered |
+| LLM09: Vector and Embedding Weaknesses | Scoped and tested | Fixed, allowlisted 22-document corpus, no live ingestion path, no runtime embedding-insertion mechanism |
+| LLM10: Improper Output Handling | Tested | No `dangerouslySetInnerHTML` anywhere in the frontend; a live `<script>` payload did not survive as executable content |
+
+**Honest summary:** 9 of 10 categories have real, executed test evidence directly carried over from the
+original assessment — not all are clean passes (LLM01 is a disclosed, unsolved risk; LLM02's pass rests on
+a safety fallback, not a demonstrated deliberate refusal). LLM08 is the one category genuinely incomplete
+under the new, broader 2026 definition — stated here rather than silently marked "tested." Full detail:
+[`docs/owasp_llm_top10_2026.md`](docs/owasp_llm_top10_2026.md).
