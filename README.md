@@ -52,6 +52,38 @@ judgment.
 - **Output:** one of **APPROVE / REJECT / REQUEST_INFORMATION / ESCALATE**, with the policy clauses and
   resolved facts behind the decision attached — no answer without evidence.
 
+**What actually goes into one decision** — the claim is two fields; everything else is a check run against
+it:
+
+```mermaid
+flowchart LR
+    CLAIM(["Claim\nbill + free-text note"])
+
+    CLAIM --> F1["Policy version & region\nwhich rule applies, and whose"]
+    CLAIM --> F2["Enterprise evidence\napprovals · delegations · travel requests · budget"]
+    CLAIM --> F3["Duplicate / split check\nexact repeat? near-duplicate? legitimate repeat?"]
+    CLAIM --> F4["Missing-field check\nis every required fact actually present?"]
+    CLAIM --> F5["Evidence-conflict check\ndoes the note agree with the bill?"]
+    CLAIM --> F6["Merchant & category metadata\nwhat kind of expense is this, really?"]
+
+    F1 --> D{{Decision}}
+    F2 --> D
+    F3 --> D
+    F4 --> D
+    F5 --> D
+    F6 --> D
+
+    D --> O1["APPROVE"]
+    D --> O2["REJECT"]
+    D --> O3["REQUEST_INFORMATION"]
+    D --> O4["ESCALATE"]
+```
+
+Each factor is a real, callable check (`src/tools.py`, `src/rules_v2.py`) — not a prompt instruction asking
+the model to "consider" it. A decision is only as trustworthy as the checks actually run, which is why
+`REQUEST_INFORMATION` exists: if a required factor can't be resolved, the system says so by name instead
+of guessing.
+
 **Intended use:** decision support and selective automation for a human finance reviewer. **Explicit
 non-use:** no payment execution, no autonomous reimbursement, no fraud accusation or employee-risk
 scoring, no irreversible action — every enterprise tool is read-only, and `ESCALATE`/
@@ -320,6 +352,8 @@ a real deployment, not this synthetic benchmark.
 **55 experiments, numbered 0–61, 7 phases** — numbers 21–27 were deliberately skipped (the agent-value
 gate closed before those were needed; see [Limitations](#limitations-and-evaluation-critique)). Every
 number traces to a file under `results/current/`; full write-ups: [`docs/README.md`](docs/README.md#full-experiment-index).
+Every experiment with its description, why it was run, what was inferred, and why it led to the next one:
+[`docs/experiment_table.md`](docs/experiment_table.md).
 
 | Phase | Experiments | Outcome |
 |---|---|---|
@@ -447,11 +481,13 @@ Six files worth reading first, runtime behavior in order of what decides a claim
 python -m ui.backend.server && cd ui/frontend && npm install && npm run dev   # see Quick start above
 ```
 
-Three tabs: **Overview & Story** (scroll-revealed timeline + the full project-story deep dive, merged into
-one scrollable page with a presenter quick-jump bar), **Case Explorer** (every claim, both architectures'
-decisions side by side, full tool trace, ground truth), **Build & Architecture** (pipeline diagrams, cost
-model, OWASP results, build-vs-buy table). A design-rationale gallery of every retrieval/chunking/model
-experiment's own plot lives in `results/current/plots/`.
+Five tabs: **Overview** (problem, persona, before/after cases, cost and safety breakdowns, presenter
+quick-jump bar), **Review Dashboard** (Maya's daily queue — every claim triaged by the shipped
+architecture's decision, flagged by what actually needs her), **Case Explorer** (every claim, both
+architectures' decisions side by side, full tool trace, ground truth), **Build & Architecture** (pipeline
+diagrams, cost model, OWASP results, build-vs-buy table), **Project Story** (the full 21-section deep dive,
+its own in-page nav). A design-rationale gallery of every retrieval/chunking/model experiment's own plot
+lives in `results/current/plots/`.
 
 *A Case Explorer screenshot (claim → decision → policy evidence → tool trace) belongs here too — not
 captured yet; this environment has no headless-browser tooling installed to generate one automatically.

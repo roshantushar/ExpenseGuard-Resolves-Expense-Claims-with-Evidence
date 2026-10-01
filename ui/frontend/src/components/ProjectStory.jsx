@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import LadderChart from "./LadderChart.jsx";
 import RiskTable from "./RiskTable.jsx";
 import { ALL_EXPERIMENTS } from "../experimentLog.js";
@@ -162,8 +162,6 @@ const DEMO_CASES = [
 export default function ProjectStory() {
   const [data, setData] = useState(null);
   const [loadError, setLoadError] = useState(null);
-  const [presentation, setPresentation] = useState(false);
-  const containerRef = useRef(null);
 
   useEffect(() => {
     fetch("/data/project_story.json")
@@ -171,21 +169,6 @@ export default function ProjectStory() {
       .then(setData)
       .catch((e) => setLoadError(String(e)));
   }, []);
-
-  useEffect(() => {
-    if (!presentation) return;
-    const onKey = (e) => {
-      const ids = NAV.map((n) => n.id);
-      const els = ids.map((id) => document.getElementById(id));
-      const idx = els.findIndex((el) => el && el.getBoundingClientRect().top > 80);
-      const cur = idx === -1 ? els.length - 1 : Math.max(0, idx - 1);
-      if (e.key === "ArrowRight" && cur < els.length - 1) els[cur + 1]?.scrollIntoView({ behavior: "smooth" });
-      if (e.key === "ArrowLeft" && cur > 0) els[cur - 1]?.scrollIntoView({ behavior: "smooth" });
-      if (e.key === "Escape") setPresentation(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [presentation]);
 
   const d = data || {};
   const arch = useMemo(() => d.architecture_comparison || {}, [d]);
@@ -195,20 +178,16 @@ export default function ProjectStory() {
   }
 
   return (
-    <div className={`overview project-story ${presentation ? "presentation-mode" : ""}`} ref={containerRef}>
+    <div className="overview project-story">
       <div className="ps-nav">
         <div className="ps-nav-inner">
           {NAV.map((n) => (
             <a key={n.id} href={`#${n.id}`} className="ps-nav-link">{n.label}</a>
           ))}
-          <button className="ps-present-btn" onClick={() => setPresentation((v) => !v)}>
-            {presentation ? "Exit presentation" : "Presentation mode"}
-          </button>
         </div>
       </div>
-
       <div className="overview-inner ps-body">
-        <Section id="s1" title="ExpenseGuard">
+        <Section id="s1" title="The Full Story, In Depth">
           <p className="lede" style={{ fontSize: 16 }}>Evidence-Grounded Enterprise Expense Compliance</p>
           <p className="lede" style={{ fontStyle: "italic" }}>
             "How far should an enterprise expense-compliance system climb from deterministic rules to RAG,

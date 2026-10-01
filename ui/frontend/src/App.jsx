@@ -3,11 +3,14 @@ import Overview from "./components/Overview.jsx";
 import Explorer from "./components/Explorer.jsx";
 import BuildDetails from "./components/BuildDetails.jsx";
 import ProjectStory from "./components/ProjectStory.jsx";
+import ReviewDashboard from "./components/ReviewDashboard.jsx";
 
 const TABS = [
-  { id: "overview", label: "Overview & Story" },
+  { id: "overview", label: "Overview" },
+  { id: "dashboard", label: "Review Dashboard" },
   { id: "explorer", label: "Case Explorer" },
-  { id: "build", label: "Build & Architecture" }
+  { id: "build", label: "Build & Architecture" },
+  { id: "story", label: "Project Story" }
 ];
 
 export default function App() {
@@ -49,14 +52,11 @@ export default function App() {
           </div>
         )}
         {!loadError && !cases && <div className="detail">Loading {cases ? "" : "cases…"}</div>}
-        {!loadError && cases && tab === "overview" && (
-          <>
-            <Overview cases={cases} />
-            <ProjectStory />
-          </>
-        )}
+        {!loadError && cases && tab === "overview" && <Overview cases={cases} />}
+        {!loadError && cases && tab === "dashboard" && <ReviewDashboard cases={cases} />}
         {!loadError && cases && tab === "explorer" && <Explorer cases={cases} />}
         {!loadError && cases && tab === "build" && <BuildDetails />}
+        {!loadError && cases && tab === "story" && <ProjectStory />}
       </div>
     </div>
   );

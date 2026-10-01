@@ -38,7 +38,7 @@ DOC_ALLOWLIST = {
     "docs/cost_and_business_impact.md", "docs/build_vs_buy.md",
     "docs/responsible_ai_risk_table.md", "docs/owasp_llm_top10_2025.md", "docs/owasp_llm_top10_2026.md",
     "docs/synthetic_data_provenance.md", "docs/reproducibility_and_repo_map.md", "docs/EVALS.md",
-    "docs/dataset_card.md",
+    "docs/dataset_card.md", "docs/experiment_table.md",
     "docs/demo_script.md", "docs/gate_override_audit.md",
     "docs/exp53_approve_calibration.md", "docs/exp54_stronger_model_approve.md", "docs/exp55_fact_fixes.md",
     "docs/exp56_hotel_ceiling_fix.md", "docs/exp57_hybrid_facts_hotel.md", "docs/exp58_full_agent_fix.md",

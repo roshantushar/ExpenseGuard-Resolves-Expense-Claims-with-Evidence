@@ -89,12 +89,12 @@ export default function Overview({ cases }) {
       <div className="overview-inner">
       <div className="presenter-jump">
         <span className="presenter-jump-label">Presenting? Jump to:</span>
+        <a href="#metric-baseline">Metric & baseline</a>
         <a href="#story-strip">The story</a>
         <a href="#before-after">4 real cases</a>
-        <a href="#s13">Named comparison</a>
-        <a href="#s14">Cost analysis</a>
-        <a href="#s18">Failed-case demo</a>
-        <a href="#s20">Takeaways</a>
+        <a href="#cost-section">Cost analysis</a>
+        <a href="#safety-story">Why "0% FAR" hides the real story</a>
+        <span className="presenter-jump-note">Deeper dive: Project Story tab</span>
       </div>
       <h1>The problem, in one sentence</h1>
       <p className="lede">
@@ -110,6 +110,40 @@ export default function Overview({ cases }) {
           </div>
         ))}
       </div>
+
+      <h1 id="metric-baseline" style={{ marginTop: 36 }}>Primary metric, baseline, and the time saved</h1>
+      <p className="lede" style={{ fontSize: 13 }}>
+        <b>Primary metric:</b> observed false-approval rate (FAR) = 0% is a hard constraint, never traded
+        off — subject to that, accuracy is maximized. Not "maximize accuracy," but "maximize accuracy
+        subject to zero observed false approvals."
+      </p>
+      <div className="stat-grid" style={{ marginTop: 10 }}>
+        <div className="stat-card">
+          <div className="label">Time per claim — before (manual, assumed)</div>
+          <div className="value" style={{ fontSize: 20 }}>~20 min</div>
+        </div>
+        <div className="stat-card good">
+          <div className="label">Time per claim — after (measured)</div>
+          <div className="value" style={{ fontSize: 20 }}>~0s deterministic / 1.3s median LLM-residual</div>
+        </div>
+        <div className="stat-card">
+          <div className="label">Accuracy — baseline (majority-class, measured)</div>
+          <div className="value" style={{ fontSize: 20 }}>26–27%</div>
+        </div>
+        <div className="stat-card good">
+          <div className="label">Accuracy — official, shipped (Exp 32)</div>
+          <div className="value" style={{ fontSize: 20 }}>60% · 0/37 FAR</div>
+        </div>
+        <div className="stat-card warn">
+          <div className="label">Accuracy — improved candidate, 2 fresh holdouts</div>
+          <div className="value" style={{ fontSize: 20 }}>68% / 66.7%</div>
+        </div>
+      </div>
+      <p className="lede" style={{ fontSize: 12, marginTop: 6 }}>
+        The improved candidate isn't shipped yet — it beats the baseline by +24 and +30 percentage points
+        on two independent holdouts, but one of those holdouts also found its first false approval, which
+        is why the simpler, more-tested baseline is still the official architecture. Full story below.
+      </p>
 
       <h1 id="story-strip" style={{ marginTop: 36 }}>The story, in one line each</h1>
       <div className="story-strip">
@@ -225,7 +259,7 @@ export default function Overview({ cases }) {
       <h1 style={{ marginTop: 36 }}>Where the frozen system got it wrong — error analysis</h1>
       <ErrorAnalysis />
 
-      <h1 style={{ marginTop: 36 }}>What each architecture actually costs, at scale</h1>
+      <h1 id="cost-section" style={{ marginTop: 36 }}>What each architecture actually costs, at scale</h1>
       <CostAtScale />
 
       <h1 style={{ marginTop: 36 }}>Governance &amp; security alignment</h1>
@@ -296,7 +330,7 @@ export default function Overview({ cases }) {
         each one arrived at its answer.
       </p>
 
-      <h1 style={{ marginTop: 36 }}>Why "0% false approvals, 44% accuracy" hides the real story</h1>
+      <h1 id="safety-story" style={{ marginTop: 36 }}>Why "0% false approvals, 44% accuracy" hides the real story</h1>
       <p className="lede" style={{ fontSize: 13 }}>
         Four-way accuracy blends a false approval (a safety failure) with a false rejection (a real
         approvable claim wrongly blocked — a cost, not a danger) into one number. Broken apart, on the same
