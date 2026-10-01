@@ -87,6 +87,15 @@ export default function Overview({ cases }) {
   return (
     <div className="overview">
       <div className="overview-inner">
+      <div className="presenter-jump">
+        <span className="presenter-jump-label">Presenting? Jump to:</span>
+        <a href="#story-strip">The story</a>
+        <a href="#before-after">4 real cases</a>
+        <a href="#s13">Named comparison</a>
+        <a href="#s14">Cost analysis</a>
+        <a href="#s18">Failed-case demo</a>
+        <a href="#s20">Takeaways</a>
+      </div>
       <h1>The problem, in one sentence</h1>
       <p className="lede">
         Given an expense claim — a bill and a free-text note, nothing else structured — decide whether it's
@@ -102,7 +111,7 @@ export default function Overview({ cases }) {
         ))}
       </div>
 
-      <h1 style={{ marginTop: 36 }}>The story, in one line each</h1>
+      <h1 id="story-strip" style={{ marginTop: 36 }}>The story, in one line each</h1>
       <div className="story-strip">
         {STORY_STRIP.map((s, i) => (
           <React.Fragment key={s.k}>
@@ -120,6 +129,11 @@ export default function Overview({ cases }) {
         <div className="persona-card primary">
           <div className="persona-role">Primary user</div>
           <div className="persona-name">Maya — Corporate Finance Expense Reviewer</div>
+          <p className="lede" style={{ fontSize: 12.5, marginBottom: 10 }}>
+            4pm, last day of the month, 60 claims in her queue. She knows the policy corpus cold and which
+            categories tend to cause trouble — what she doesn't have is time to re-verify every routine
+            claim by hand, or visibility into which few of the 60 actually need her judgment.
+          </p>
           <ul className="bullets">
             <li>Today: manually inspects policy, travel records, approvals, exceptions, prior claims, merchant data — for every claim</li>
             <li>With ExpenseGuard: only sees claims that genuinely need her — missing evidence, conflicting evidence, ambiguity, or a policy-mandated review</li>
@@ -142,7 +156,7 @@ export default function Overview({ cases }) {
         <code>problem.md</code> §2.
       </p>
 
-      <h1 style={{ marginTop: 36 }}>Four real decisions, before and after</h1>
+      <h1 id="before-after" style={{ marginTop: 36 }}>Four real decisions, before and after</h1>
       <p className="lede" style={{ fontSize: 13 }}>
         One real case per outcome, step by step — how it would be handled manually vs. with ExpenseGuard.
         Every case is real, verified against the actual saved results, not staged for effect.

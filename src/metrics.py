@@ -1,3 +1,5 @@
+"""Statistical helpers shared across evaluators: Wilson confidence intervals for small-sample rates
+(FAR, accuracy) and percentile helpers for latency/cost distributions. No I/O, no ground-truth access."""
 from __future__ import annotations
 import math
 

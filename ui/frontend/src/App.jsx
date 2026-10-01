@@ -7,8 +7,7 @@ import ProjectStory from "./components/ProjectStory.jsx";
 const TABS = [
   { id: "overview", label: "Overview & Story" },
   { id: "explorer", label: "Case Explorer" },
-  { id: "build", label: "Build & Architecture" },
-  { id: "story", label: "Project Story" }
+  { id: "build", label: "Build & Architecture" }
 ];
 
 export default function App() {
@@ -50,10 +49,14 @@ export default function App() {
           </div>
         )}
         {!loadError && !cases && <div className="detail">Loading {cases ? "" : "cases…"}</div>}
-        {!loadError && cases && tab === "overview" && <Overview cases={cases} />}
+        {!loadError && cases && tab === "overview" && (
+          <>
+            <Overview cases={cases} />
+            <ProjectStory />
+          </>
+        )}
         {!loadError && cases && tab === "explorer" && <Explorer cases={cases} />}
         {!loadError && cases && tab === "build" && <BuildDetails />}
-        {!loadError && cases && tab === "story" && <ProjectStory />}
       </div>
     </div>
   );

@@ -88,6 +88,11 @@ to every decision.
 
 ## What it does
 
+- **This project is agentic**: three generations of a hand-written, tool-using ReAct agent were built and
+  evaluated from scratch (`src/agent.py`, no agent framework; own tools in `src/tools.py` — Exp 19-20,
+  34-59), not assumed necessary or skipped. It's not the final shipped architecture, because it didn't
+  clear the project's own safety bar as reliably as the simpler design — an evidence-based finding, not an
+  untested assumption either way.
 - Resolves claims it can **prove** correct using deterministic code — $0, no model call, no ambiguity.
 - Falls back to retrieval-grounded LLM reasoning only for claims code alone can't resolve.
 - Treats `ESCALATE` and `REQUEST_INFORMATION` as **safe, first-class outcomes** — never forces a guess.
@@ -97,7 +102,11 @@ to every decision.
 
 ## Who it's for
 
-**Maya — finance operations analyst**, reviewing expense claims against company policy.
+**Maya — finance operations analyst**, reviewing expense claims against company policy. It's 4pm on the
+last day of the month, and her queue has 60 claims in it. She already knows the policy corpus cold and
+roughly which categories tend to cause trouble (hotel ceilings, mileage math); what she doesn't have is
+time to re-verify every routine claim against every record by hand, or visibility into which few of the 60
+actually need her judgment versus a human-readable rubber stamp.
 
 | Before ExpenseGuard | After ExpenseGuard |
 |---|---|
@@ -236,6 +245,10 @@ from a template.
 
 ## Results
 
+**Target for any later candidate to be considered a replacement:** FAR ≤ 0% (hard constraint, never traded
+off) at accuracy ≥ 60% — the bar Exp 32 below actually cleared and every later candidate has been held to
+since (`problem.md` §"Metric family, target, and baseline").
+
 ### Baseline — the official, frozen result
 
 **Exp 32, one-shot, 50-claim held-out final test** — this number is the baseline everything below is
@@ -364,9 +377,16 @@ Full experiment index and diagnostic flowcharts: [`docs/README.md`](docs/README.
 
 ## Quick start
 
+**Before you clone:** everything free (tests, dataset validation, the static UI export, `llama3.2:3b`
+experiments) runs with no account and $0. Anything marked "paid" needs your own OpenRouter API key and
+spends real money against it. Separately — the dataset was regenerated once after Exp 32's official run, so
+Exp 32's result (`results/current/final_test/exp32_final_test/`) can no longer be byte-verified against the
+files on disk today; it stands as the honest record of that one run, not something this checkout can
+re-derive from scratch (full detail: [`docs/synthetic_data_provenance.md`](docs/synthetic_data_provenance.md)).
+
 ```bash
 git clone <this-repo-url> && cd ExpenseGuard-Resolves-Expense-Claims-with-Evidence
-pip install numpy matplotlib pandas        # only non-stdlib deps; runtime code itself is stdlib-only
+pip install -r requirements.txt            # numpy, matplotlib, pandas, jupyter — runtime code itself is stdlib-only
 cp .env.example .env                       # see table below before running anything paid
 ```
 
@@ -375,7 +395,7 @@ cp .env.example .env                       # see table below before running anyt
 | `OPENROUTER_API_KEY` | Paid-model calls | openrouter.ai — costs real money once set |
 | `PAID_MODEL` | Paid experiments | Defaults to `openai/gpt-4o-mini` |
 | `LOCAL_MODEL` | **Free** experiments | `llama3.2:3b` via [Ollama](https://ollama.ai) — everything here was reproducible at $0 |
-| `MAX_BUDGET_USD` | Any paid call | Hard cap — `src/llm.py` raises `BudgetExceeded` once hit |
+| `MAX_BUDGET_USD` | Any paid call | This project's own tracked cap — `src/llm.py` raises `BudgetExceeded` once hit. Separate from, and smaller than, your OpenRouter account's own usage cap, which this project cannot see or control. |
 
 **Run the live demo:**
 ```bash
@@ -441,6 +461,10 @@ A design-rationale gallery of every retrieval/chunking/model experiment's own pl
   found by deliberately testing the claim a second time rather than trusting one result.
 - **Synthetic benchmark, not production evidence** — every claim, policy document, and enterprise record
   is generated.
+- **Same-model blind spot** — every claim note, in every split including both fresh holdouts, was drafted
+  by the same model (`gpt-4o-mini`) that the system also uses to decide them; nothing here was checked
+  against human- or differently-modeled text, so this benchmark cannot rule out that some measured accuracy
+  reflects the model parsing its own writing style rather than reasoning that would transfer to real claims.
 - **Prompt injection is not solved** — a retrieval-text injection attack defeats the current defense
   outright (Exp 28), disclosed, not fixed.
 - **The held-out data was touched a second time after the Exp 32 freeze**, by a process not fully

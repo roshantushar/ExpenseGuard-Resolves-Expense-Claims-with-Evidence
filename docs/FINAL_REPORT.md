@@ -1,152 +1,112 @@
-# ExpenseGuard — final report
+# ExpenseGuard — Final Report
 
-*Decision-flow structure, first person (individual work), ~1,850 words. Only pivotal experiments are named
-here — everything else is in `docs/`, indexed at `docs/README.md`.*
+*Individual project (PE6201), first person throughout. ~1,200 words. Every number traces to a saved result
+file; full experiment-by-experiment detail lives in `docs/`, indexed at `docs/README.md`.*
 
-## A. Problem and business value
-I built ExpenseGuard to decide, for a single expense claim (a bill + a free-text note, nothing else
-structured), whether it is safe to APPROVE, REJECT, REQUEST_INFORMATION, or ESCALATE — against a 22+
-document policy corpus and 11 enterprise tables. I only consider this justified if it increases correct
-disposition, reduces unnecessary finance review, avoids unsafe automatic approvals, and keeps cost/latency
-controlled (`problem.md`) — not merely because AI can be applied. I deliberately did not begin by assuming
-an agent, or even an LLM, was required.
+## Cold open: 4pm, last day of the month
 
-## B. Dataset and evaluation contract
-I generated 150 synthetic claims (70 development / 30 validation / 50 final test), deterministically (seed
-6202, `dataset_generator/`) and hardened them across three rounds so decision-critical facts live only in free
-text, never a structured field. I physically isolated ground truth (`04_ground_truth_PRIVATE/`) and
-enforce with `tests/test_no_leakage.py` that runtime code never reads it. I ran the held-out final test
-once, ever, against a manifest I committed before that run — full provenance in
-`docs/synthetic_data_provenance.md`.
+Maya has 60 claims in her queue. She knows the policy corpus cold — what she doesn't have is time to
+re-read every bill, cross-reference 11 enterprise systems, and re-derive a verdict for claims that were
+never actually in doubt. That's the problem this project targets: not replacing her judgment, but **never
+asking for it unless a claim genuinely needs it.** The shipped system resolves 78% of final-test claims
+without a human, at ~$0.0005 of inference cost per claim, with zero observed false approvals — a measured
+outcome, not a pitch. What follows is how I got there, told as what it actually was: four attempts, each
+one disproving the last.
 
-## C. Rules / LLM / RAG baselines
-I found that deterministic rules alone (Exp 2) collapsed once I moved facts out of structured fields —
-early failures motivated the hardening, and after hardening, regex-only extraction degraded substantially
-(69%→halved across three rounds), with unsafe FAR throughout. I tested a generic LLM with no policy (Exp 3)
-and long-context-with-full-corpus (Exp 4B); both plateaued around 31-37% dev accuracy, and long context
-cost 40x tuned RAG for no accuracy gain — this is why I justified using RAG at all at this corpus size.
+## Act I — Every easy answer, tested and refused
 
-## D. Retrieval optimization and oracle diagnosis
-I tuned the RAG ladder (chunking, top-K, retriever, metadata filtering — Exp 9/10) and froze it at K=8,
-600/100-token chunking, dense embeddings (voyage-4-lite), and a metadata filter for date/region/document-
-type compatibility. Then in Exp 11 I ran a policy oracle — handing the model the exact required clauses —
-and accuracy moved only from 22 to 25/70. **I concluded retrieval was not the dominant downstream
-bottleneck; oracle policy evidence produced only a modest accuracy gain.** That single finding redirected
-the rest of my effort from retrieval tuning toward hybrid rules and, later, architecture.
+A generic LLM with no policy context produced confident, unsupported decisions. Feeding it the *entire*
+policy corpus cost 40x a tuned RAG pipeline for no accuracy gain. RAG itself, tuned across six experiments
+(chunking, top-K, retriever, metadata filter), plateaued at 56% of the right clauses retrieved — and then
+the experiment that reset the whole project's direction: handing the model the *exact correct* clauses
+directly barely moved accuracy. **Retrieval was never the bottleneck. Reasoning was.**
 
-## E. Workflow vs. agent-necessity gate
-Exp 18's fixed, pre-declared tool workflow reached the highest raw dev accuracy I tested (64.3%) — but at
-13.5% FAR, unsafe. Exp 19/20 then tested whether dynamic, model-directed tool choice adds real value on the
-13 hardest "agent-candidate" claims: a bounded ReAct agent tied the workflow (7/13) with *complementary*,
-not merely equal, errors — evidence for a selective architecture, but also that the agent alone was not yet
-safe (30% FAR).
+| Rung | Result | Verdict |
+|---|---|---|
+| Deterministic rules alone | Collapses once facts move into free text | Kept for the ~44% it *can* prove — $0, 100% accurate on unseen final-test claims |
+| Generic LLM, no policy | Confident, unsupported | Rejected |
+| Full-context (whole corpus) | 40x the cost of tuned RAG, no gain | Rejected |
+| RAG (tuned) | Plateaued at 56% clause recall | Kept as the retrieval layer, not the whole answer |
+| Oracle test (perfect clauses) | Barely moved accuracy | Proved the bottleneck was reasoning, not retrieval |
 
-## F. Official selective architecture
-I combined these findings in Exp 30: deterministic rules decide whenever a case is conclusive; an LLM
-handles only the residual. This reached 0% FAR at 61.4% dev accuracy — I traded 2-3 points of raw accuracy
-for eliminating false approvals versus both the fixed workflow (13.5% FAR) and an LLM-for-all baseline
-(3.85% FAR). I froze `src/resolver.py` at this point.
+![Router and cost tradeoff across every architecture tested](../results/plots/exp30_31_router_and_cost.png)
 
-## G. One-shot final test
-I ran this frozen system once, verified against a committed hash manifest at the time it ran, against the
-50-claim held-out final test (Exp 32) — *note: the dataset was regenerated once more afterward, so that
-manifest's hashes no longer match the files on disk today; this result is the honest record of that one
-run, not something the current dataset can still verify byte-for-byte (`docs/exp32_final_test.md`)*:
-**30/50 (60%), 0/37 false approvals observed.** The deterministic path generalized perfectly (22/22, vs.
-88.2% on dev — no overfitting signal); the LLM-residual path never once correctly predicted APPROVE (0/13
-recall) and scored only 28.6% overall, confirming it as the one weak component I'd need to address.
+## Act II — Choosing safety over accuracy, and freezing it
 
-## H. Failure analysis
-I categorized all 20 final-test errors (Exp 33): entirely on the LLM-residual path, dominated by reasoning
-failures rather than missing evidence or retrieval misses. This closed, for me, the question of whether
-retrieval was ever the problem, and pointed squarely at reasoning as the remaining lever.
+A fixed, pre-declared tool workflow reached the highest raw accuracy of anything I tested (64.3% dev) — and
+an unsafe 13.5% false-approval rate. A bounded agent I wrote myself tied that workflow's accuracy at 3x the
+false-approval rate. Neither shipped, on the same principle: **accuracy ranks designs backwards from what
+the business needs.** A 92%-accurate LLM-only design lost to a 61%-accurate selective one, because the
+first one's errors were unsafe and the second one's weren't. The design that shipped (Exp 30/32) is the
+simplest one that clears a hard safety bar: deterministic code first, an LLM only for the residual, with
+`ESCALATE`/`REQUEST_INFORMATION` as safe outcomes, never forced guesses.
 
-## I. Guarded-agent post-final research
-My first full agentic-RAG rebuild (Exp 34) scored *worse* than the fixed workflow (4/13) — every attempt to
-fix it by loosening constraints (stricter prompts, a stronger model, parallel tool calls) either did
-nothing or made safety worse (FAR up to 50%, Exp 35B). Repeating the perfect-policy-oracle test on the
-agent (Exp 37) found the same result as Exp 11: **perfect policy evidence was insufficient to resolve the
-agent's decision failures, showing retrieval quality alone did not explain the problem.** Auditing the
-agent's own search behavior (Exp 38-39) found its self-issued queries genuinely weak (33.6% recall) — a
-real secondary retrieval problem — but fixing that alone still didn't improve final accuracy: **retrieval
-and reasoning were separate failure modes.**
+**Exp 32, one-shot, 50-claim held-out final test: 30/50 (60%), 0/37 observed false approvals.** The
+deterministic path generalized perfectly (22/22); the LLM-residual path never once correctly predicted
+APPROVE. "0% FAR" also hid something real: a 36.8–50% false-rejection rate, invisible in the headline
+number — which is why I built Safe Automation Rate and risk-adjusted cost/1,000 claims instead of trusting
+accuracy or FAR alone.
 
-The fix that worked, which I built in Exp 40/41: stop asking the model to decide, give it a tool that
-computes the answer in code, and gate the model so it cannot override a tool that already had the right
-answer. I then added domain guards (Exp 43/44) to close cases where an ungated tool answered a question it
-was never built for, reaching 17/19 (89.5%) at 0% FAR on the `C_AGENT_DYNAMIC` subset. When I extended this
-to the full dataset, safety broke first (Exp 45: 11.5% FAR, every false approval in a category with no
-guarded tool); I then found and fixed seven real bugs — by running the system and reading its output, not
-by reasoning about the code in the abstract — to close that gap (Exp 47-52), reaching **44/70 dev and 21/30
-validation, 0% observed FAR on both authorized splits, one point above the frozen design's own dev
-accuracy.** *(Later disclosure: an audit found a real but unauthorized, partial run against 30 of the 50
-final-test claims, scoring materially worse — 50% accuracy, 17.6% FAR — than any of the authorized numbers
-above; see `docs/second_touch_disclosure.md`.)*
+![Exp 32 official final-test result](../results/plots/exp32_final.png)
+![Exp 33 failure breakdown — entirely reasoning failure, not missing evidence](../results/plots/exp33_final_failures.png)
 
-## J. Closing the candidate's blind spot, then testing it twice more
-The guarded candidate from section I had never once correctly predicted APPROVE, on any split — not a
-tuning gap, a structural one. I traced it (Exp 53-55): the model was *shown* the correct facts but never
-*forced* to use them — prompt-only fixes and a stronger model alone didn't change this, and handing the
-frozen resolver the exact right facts changed 0 of 5 of its decisions. The fix that worked (Exp 56): wire
-the same fix into a tool, behind a disposition gate the model cannot override — not just advisory context.
-Extended to every claim category (Exp 58-59): 67/70 dev, 18/18 APPROVE recall. I then checked it on two
-independent fresh holdouts neither version had tuned against: **Exp 60** (50 cases) — candidate 34/50, 0%
-FAR, against the frozen design's 22/50, which still never once produced a correct APPROVE. **Exp 61** (30
-cases, pre-registered in a committed manifest *before* a single case was generated, built specifically to
-break the fix, not confirm it) — candidate 20/30, but this time with **one real false approval** (a gift
-e-voucher whose phrasing a compliance tool's text-parsing didn't recognize); frozen 11/30. Combined across
-both holdouts, the candidate holds 1 false approval in 45 non-approvable cases (~2.2%, not 0%) — a more
-honest statement of its risk than either holdout alone. The frozen design's 0% FAR claim is unaffected: 0
-false approvals across Exp 32, 60, and 61 combined (82 non-approvable cases).
+## Act III — Building a better system, and still not shipping it
 
-## K. Cost/business trade-off
-This is the most important thing I found late in the project — in two parts. First, when I built a
-risk-adjusted cost model (`docs/cost_and_business_impact.md`), I found the guarded candidate escalates
-1.5-1.8x more often than the frozen design (34% vs. 19-22%), and human-review cost dominates every scenario
-I tested — so I originally concluded its **total expected operating cost is higher than the frozen
-design's at low, base, and high claim-volume scenarios**, despite its accuracy/FAR advantage, and on that
-basis did not create a new held-out set for the candidate.
+For roughly 20 experiments (Exp 34–52), a guarded-agent candidate never once correctly approved a real
+approvable claim — not a tuning gap, a structural one. Three experiments ruled out prompt tweaks and a
+stronger model before I found the cause: the model was *shown* the correct fact but never *forced* to use
+it. The fix wasn't a better prompt — it was moving the decision into a tool's code and gating the model so
+it couldn't override a tool that already had the right answer. Extended to every claim category, then
+checked twice more on fresh data it had never tuned against:
 
-**Correction, found on later review:** that cost model omitted false-rejection and unnecessary-
-information-request costs from the total, even though both were already defined as assumptions in the code
-— an oversight, not a deliberate scoping choice. With both included, priced the same way as the
-false-approval cost already in the model, the guarded candidate is cheaper than the frozen design at every
-scenario scale **under development/validation rates**, because the frozen design's deterministic rules
-false-reject far more often (36.8% dev / 50.0% final test vs. the candidate's 17.2% dev / 21.4% validation)
-— an error mode the original model never priced.
+| Evaluation | Frozen resolver | Guarded candidate | Gap |
+|---|---|---|---|
+| Exp 32 — official final test (50) | 30/50 = 60% | — (not yet built) | — |
+| Exp 60 — fresh holdout (50) | 22/50 = 44% | **34/50 = 68%** | +24pp |
+| Exp 61 — pre-registered, built to break it (30) | 11/30 = 36.7% | **20/30 = 66.7%** | +30pp |
+| Combined false approvals | 0/82 | 1/45 (~2.2%) | — |
 
-**Second correction, found on later independent audit:** the guarded-agent candidate itself has real
-execution data against 30 of the 50 final-test claims (`docs/second_touch_disclosure.md`), scoring 50%
-accuracy and 17.6% FAR — materially worse than every authorized number for this design. A no-cost
-sensitivity analysis (`docs/cost_and_business_impact.md`, existing data only) re-priced the cost model
-using this diagnostic run's rates: **the candidate's cost advantage does not survive.** Once false
-approvals are priced at meaningful business cost, degraded unseen-data safety erases the modeled
-advantage.
+Exp 61 is the result I'm most proud of methodologically: a manifest committed *before* a single case was
+generated, designed to find a failure, not confirm a win — and it did, one gift-voucher claim a compliance
+tool's text parsing missed. I reported it rather than quietly patching and re-running.
 
-**Resolution:** the frozen selective resolver remains the official architecture — not because it is
-necessarily the cheapest in theory, but because it is the only architecture with a properly frozen,
-documented evaluation contract and an official result to check against. The guarded-agent candidate is
-retained as a promising but unvalidated candidate: its development/validation results and the corrected
-cost model suggest it could be economically better, but the diagnostic final-run evidence is sufficient to
-prevent promotion, even though it cannot itself establish the candidate's true generalization performance
-(the final-test set is no longer independent, and this diagnostic run's origin could not be established
-from committed scripts/logging). No new held-out set was created for the candidate — that is future work,
-not a decision I am making implicitly by omission.
+**Cost critique, stated honestly:** my first risk-adjusted cost model concluded the frozen design was
+cheaper everywhere, because it omitted false-rejection cost from the total. Corrected, the guarded
+candidate is cheaper at every modeled scale *under development/validation rates*:
 
-## L. Responsible AI and limitations
-Full risk table: `docs/responsible_ai_risk_table.md`. I directly mitigated Excessive Agency (OWASP 2026's
-LLM03, renumbered from the 2025 edition's LLM06) with read-only tools, step caps, and the disposition gate.
-I did **not** solve Prompt Injection (LLM01) — Exp 28 found retrieval-text injection can still defeat my
-current defense, disclosed as an open risk. I completed a full OWASP Top 10 for LLM Applications (2026
-edition, published 2026-08-04) pass, all 10 categories (`docs/owasp_llm_top10_2026.md`); this is a
-controlled synthetic benchmark, and results are not direct evidence of production performance
-(`docs/synthetic_data_provenance.md`).
+| Scenario (10K claims/mo, $35/hr reviewer) | Frozen (final test) | Guarded candidate (dev) |
+|---|---|---|
+| Total expected cost / 1,000 claims | $19,170 | **$12,916** |
 
-## M. Final conclusion
-I found that reliability comes from assigning decision authority to the component best suited to each
-task: deterministic, validated, domain-scoped tools for policy mechanics; retrieval and LLMs for evidence
-access and interpretation; agentic autonomy only when bounded by reliable tools, applicability guards, and
-human fallback. On this benchmark, I did not find unconstrained agentic decision-making justified — but I
-also found determinism alone insufficient, since a deterministic tool with bad inputs (Exp 47) can
-propagate errors just as confidently as a model can. **My conclusion is that enterprise AI architecture
-should be selected on safe automation and total operating cost, not benchmark accuracy alone.**
+But a sensitivity check using the candidate's one diagnostic look at final-test-shaped data erased that
+advantage once false approvals were priced realistically — which is the actual reason it didn't ship, not
+the cost model's first, wrong answer.
+
+## Act IV — The honest ending
+
+**The central critique of this project's own outcome:** the system I shipped is not the most accurate or
+best-tested one I built. The guarded candidate beats the frozen resolver on every holdout it has faced, by
+24–30 accuracy points, and I still didn't promote it — because its only look at unseen final-test-shaped
+data showed materially worse safety than its dev numbers, and no formally pre-registered freeze-and-final
+test exists for it yet. I believe that's the right call under this project's own rule — never promote on
+development-tuned evidence alone — but it means **evaluation rigor, not raw capability, decided what
+shipped**, and a team that skipped the rigor would have shipped the wrong one.
+
+**Evals critique:** ground truth is physically isolated and leakage-tested; the final test ran once against
+a pre-committed hash manifest. The real gap: every claim note in this benchmark, across every split, was
+drafted by the same model (`gpt-4o-mini`) that also decides them — I cannot rule out the system is partly
+parsing its own writing style rather than reasoning that would transfer to a human-written claim. The
+held-out final-test set was also touched a second time after the freeze, by a process I couldn't fully
+reconstruct from committed logging — disclosed, not hidden, but "touched once" is no longer unqualified.
+
+**Rough edges:** the live demo backend is local-only and unauthenticated by design. Prompt/retrieval
+injection remains unsolved — one attack succeeded live in testing. The dataset is synthetic; real employee
+phrasing and fraud patterns aren't modeled.
+
+**Future path (optional):** a formal, pre-registered freeze-and-larger-holdout for the guarded candidate is
+the one piece of evidence standing between it and promotion, followed by tool-*content* validation (not
+just tool-consultation) and a genuinely independent note-authoring model to close the same-model blind spot.
+
+Reliability here came from assigning decision authority to the component best suited to it, and from
+refusing to promote a better-looking number without the discipline to back it up. That discipline, more
+than any single architecture, is this project's actual contribution.

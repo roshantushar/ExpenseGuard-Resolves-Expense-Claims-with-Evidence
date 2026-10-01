@@ -138,10 +138,10 @@ Full automation and cost breakdown, with the "does the complexity earn its keep"
   leakage was prevented.
 - [`docs/reproducibility_and_repo_map.md`](reproducibility_and_repo_map.md): every command needed to
   run this repo, which ones cost money, and a map of every top-level directory.
-- [`docs/FINAL_REPORT.md`](FINAL_REPORT.md): the ~1,200-word decision-flow report (problem → dataset →
-  baselines → retrieval diagnosis → workflow/agent gate → official architecture → final test → failure
-  analysis → guarded-agent research → cost trade-off → Responsible AI → conclusion), naming only the
-  pivotal experiments; everything else stays in this index.
+- [`docs/FINAL_REPORT.md`](FINAL_REPORT.md): the ~1,200-word report, told in four acts (every easy answer
+  refused → choosing safety over accuracy and freezing it → building a better system and still not shipping
+  it → the honest ending: critique, evals gaps, rough edges, future path), naming only the pivotal
+  experiments; everything else stays in this index.
 - [`docs/demo_script.md`](demo_script.md): the four verified cases (plus one honestly-shown failed
   architecture) to walk through in the `ui/` demo, instead of scrolling the full case list.
 

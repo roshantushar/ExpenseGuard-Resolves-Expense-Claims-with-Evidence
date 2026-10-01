@@ -1090,6 +1090,13 @@ accuracy, 0% FAR): the target was never "maximize accuracy," it was "maximize ac
 false approvals," and every later architecture decision in this project (including rejecting the
 higher-accuracy guarded-agent candidate on cost grounds, §42.1) follows the same rule.
 
+**Stated numerically, for any future candidate to be considered a replacement:** FAR at or below 0% is a
+hard constraint, not a point to trade off against accuracy; subject to that constraint, no future candidate
+is treated as viable unless it also holds accuracy at or above 60% — the bar the frozen resolver's one
+authorized result (Exp 32) actually cleared. This number was fixed *after* Exp 32's result, not declared
+before it; it is stated here as the explicit operational bar this project now holds every later candidate
+to (Exp 45-61), not claimed as a target pre-registered ahead of the freeze decision itself.
+
 ---
 
 # 30. Safety/business guardrails

@@ -4,7 +4,7 @@ import PipelineDiagram from "./PipelineDiagram.jsx";
 
 const MODELS = ["openai/gpt-4o-mini", "openai/gpt-4o"];
 
-export default function DesignPanel({ title, subtitle, caseObj, designKey, backendDesign }) {
+export default function DesignPanel({ title, subtitle, caseObj, designKey, backendDesign, precomputedNote }) {
   const [live, setLive] = useState(false);
   const [model, setModel] = useState(MODELS[0]);
   const [status, setStatus] = useState("idle"); // idle | running | done | error
@@ -50,6 +50,9 @@ export default function DesignPanel({ title, subtitle, caseObj, designKey, backe
         <div>
           <h3>{title}</h3>
           <div style={{ fontSize: 11.5, color: "var(--text-dim)" }}>{subtitle}</div>
+          {!live && precomputedNote && (
+            <div style={{ fontSize: 11, color: "var(--warn, #d8a93b)", marginTop: 3, fontStyle: "italic" }}>{precomputedNote}</div>
+          )}
         </div>
         {decision && <span className={`decision-pill ${decision}`}>{decision}</span>}
       </div>

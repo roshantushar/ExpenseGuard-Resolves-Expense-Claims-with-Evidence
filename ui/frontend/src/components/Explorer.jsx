@@ -61,6 +61,9 @@ export default function Explorer({ cases }) {
             ))}
           </select>
         </div>
+        <div style={{ fontSize: 10.5, color: "var(--text-dim)", padding: "0 2px 6px" }}>
+          "agent" badges below reflect the precomputed Exp 52-era candidate, not the current Exp 59–61 fix — see a case's detail panel for the live, current version.
+        </div>
         <div className="case-list">
           {filtered.map((c) => (
             <div key={c.case_id} className={`case-row ${c.case_id === selectedId ? "selected" : ""}`} onClick={() => setSelectedId(c.case_id)}>
@@ -114,7 +117,14 @@ export default function Explorer({ cases }) {
 
             <div className="panels">
               <DesignPanel title="Frozen design" subtitle="deterministic → single-shot LLM (official, shipped)" caseObj={selected} designKey="frozen" backendDesign="frozen" />
-              <DesignPanel title="Guarded agent" subtitle="deterministic → bounded agent with code-computed dispositions (best validated)" caseObj={selected} designKey="agent" backendDesign="agent" />
+              <DesignPanel
+                title="Guarded agent"
+                subtitle="deterministic → bounded agent with code-computed dispositions"
+                precomputedNote="Precomputed trace shown is the earlier (Exp 52-era) candidate. Tick “Live model” and click “Run live” to see the actual current Exp 59–61 candidate decide this claim now — or see the Overview tab's “Named comparison” section for its real Exp 60/61 numbers."
+                caseObj={selected}
+                designKey="agent"
+                backendDesign="agent"
+              />
             </div>
 
             <div className="gt-card">
