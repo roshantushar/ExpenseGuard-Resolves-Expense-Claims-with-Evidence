@@ -32,7 +32,7 @@ const StatCard = ({ label, s, tone }) => (
 );
 
 const BADGES = [
-  { n: "61", l: "experiments run" },
+  { n: "55", l: "experiments run (numbered 0-61, Exp 21-27 skipped)" },
   { n: "150", l: "claims, 22+ policies, 11 tables" },
   { n: "7", l: "real live-found bugs, fixed in the guarded-agent build (Exp 40-52)" },
   { n: "0", l: "observed false approvals (official frozen resolver)" },
