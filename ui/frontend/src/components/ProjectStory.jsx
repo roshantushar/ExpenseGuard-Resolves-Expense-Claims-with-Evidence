@@ -476,7 +476,7 @@ export default function ProjectStory() {
             <li>A narrower, related gap was found in a smaller follow-up check after Exp 60 (a tool consulted but given content that only superficially satisfies its check, not never consulted at all) — disclosed, not yet fixed</li>
             <li>Prompt/retrieval injection remains a residual risk</li>
             <li>Residual LLM path remains weak</li>
-            <li>The live demo's "agent" endpoint still runs the pre-Exp53 tool set, not the fixed candidate</li>
+            <li>The live demo's "agent" endpoint now runs the actual Exp 59–61 candidate; it's still an unauthenticated local-only dev server with no rate limiting, meant to be run locally and stopped after a demo, not deployed as-is</li>
             <li>Real deployment requires shadow evaluation, access controls, privacy controls and monitoring</li>
           </ul>
           <p className="lede" style={{ marginTop: 10 }}>"A formal, pre-registered freeze-and-larger-holdout would be required before the guarded candidate could be called a validated replacement for the official architecture."</p>
@@ -488,7 +488,7 @@ export default function ProjectStory() {
             <div className="about-card"><h4>1. Grounding ≠ Reasoning</h4><p>Better retrieval did not automatically improve decisions.</p></div>
             <div className="about-card"><h4>2. Autonomy ≠ Value</h4><p>The initial agent added failure modes without sufficient benefit.</p></div>
             <div className="about-card"><h4>3. Deterministic ≠ Automatically Safe</h4><p>Code is only reliable with trustworthy inputs and validated applicability boundaries.</p></div>
-            <div className="about-card"><h4>4. Accuracy ≠ Business Value</h4><p>The more accurate guarded candidate had higher human-review cost.</p></div>
+            <div className="about-card"><h4>4. Accuracy ≠ Business Value</h4><p>The more accurate guarded candidate had higher human-review cost and a lower total operating cost at dev/validation rates — but that cost edge isn't robust, so the cheaper-looking design still didn't ship.</p></div>
           </div>
           <div className="callout-card" style={{ marginTop: 16, fontWeight: 700, textAlign: "center" }}>"Reliability came from assigning authority to the component best suited to each decision."</div>
           <p className="lede" style={{ textAlign: "center", marginTop: 8 }}>"Enterprise AI should be only as sophisticated as necessary to maximise safe automation at the lowest total operating cost."</p>
@@ -651,7 +651,13 @@ function CostTwist({ scenarios }) {
         <div className="stat-card warn"><div className="value">~34%</div><div className="label">Guarded candidate escalation rate</div></div>
       </div>
       <p className="lede" style={{ marginTop: 10 }}>"The guarded candidate improved predictive quality, but escalated approximately 1.5–1.8× more claims."</p>
-      <div className="callout-card" style={{ fontWeight: 700, marginTop: 8 }}>Frozen resolver cheaper in every tested scenario.</div>
+      <div className="callout-card" style={{ fontWeight: 700, marginTop: 8 }}>
+        Guarded candidate cheaper in every scenario shown — at its dev/validation rates (bars above, computed
+        live from <code>scripts/cost_model.py</code>). That advantage does <u>not</u> survive its diagnostic
+        final-run safety numbers — see <code>docs/cost_and_business_impact.md</code>'s sensitivity analysis.
+        This is why the frozen resolver still ships: not because it's cheaper, but because it's the only
+        design with an authorized, frozen final-test result to check the cost model against.
+      </div>
       <div className="callout-card bad" style={{ marginTop: 8, fontWeight: 700, textAlign: "center" }}>"Human-review cost dominated inference cost."</div>
       <div className="callout-card" style={{ marginTop: 8, fontWeight: 700, textAlign: "center" }}>"The best-performing AI architecture was not the best operating architecture."</div>
     </div>

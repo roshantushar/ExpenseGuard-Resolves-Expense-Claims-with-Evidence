@@ -1,6 +1,6 @@
 # ExpenseGuard — final report
 
-*Decision-flow structure, first person (individual work), ~1,200 words. Only pivotal experiments are named
+*Decision-flow structure, first person (individual work), ~1,850 words. Only pivotal experiments are named
 here — everything else is in `docs/`, indexed at `docs/README.md`.*
 
 ## A. Problem and business value
@@ -83,7 +83,23 @@ accuracy.** *(Later disclosure: an audit found a real but unauthorized, partial 
 final-test claims, scoring materially worse — 50% accuracy, 17.6% FAR — than any of the authorized numbers
 above; see `docs/second_touch_disclosure.md`.)*
 
-## J. Cost/business trade-off
+## J. Closing the candidate's blind spot, then testing it twice more
+The guarded candidate from section I had never once correctly predicted APPROVE, on any split — not a
+tuning gap, a structural one. I traced it (Exp 53-55): the model was *shown* the correct facts but never
+*forced* to use them — prompt-only fixes and a stronger model alone didn't change this, and handing the
+frozen resolver the exact right facts changed 0 of 5 of its decisions. The fix that worked (Exp 56): wire
+the same fix into a tool, behind a disposition gate the model cannot override — not just advisory context.
+Extended to every claim category (Exp 58-59): 67/70 dev, 18/18 APPROVE recall. I then checked it on two
+independent fresh holdouts neither version had tuned against: **Exp 60** (50 cases) — candidate 34/50, 0%
+FAR, against the frozen design's 22/50, which still never once produced a correct APPROVE. **Exp 61** (30
+cases, pre-registered in a committed manifest *before* a single case was generated, built specifically to
+break the fix, not confirm it) — candidate 20/30, but this time with **one real false approval** (a gift
+e-voucher whose phrasing a compliance tool's text-parsing didn't recognize); frozen 11/30. Combined across
+both holdouts, the candidate holds 1 false approval in 45 non-approvable cases (~2.2%, not 0%) — a more
+honest statement of its risk than either holdout alone. The frozen design's 0% FAR claim is unaffected: 0
+false approvals across Exp 32, 60, and 61 combined (82 non-approvable cases).
+
+## K. Cost/business trade-off
 This is the most important thing I found late in the project — in two parts. First, when I built a
 risk-adjusted cost model (`docs/cost_and_business_impact.md`), I found the guarded candidate escalates
 1.5-1.8x more often than the frozen design (34% vs. 19-22%), and human-review cost dominates every scenario
@@ -117,15 +133,16 @@ prevent promotion, even though it cannot itself establish the candidate's true g
 from committed scripts/logging). No new held-out set was created for the candidate — that is future work,
 not a decision I am making implicitly by omission.
 
-## K. Responsible AI and limitations
-Full risk table: `docs/responsible_ai_risk_table.md`. I directly mitigated Excessive Agency (OWASP
-LLM06) with read-only tools, step caps, and the disposition gate. I did **not** solve Prompt Injection
-(LLM01) — Exp 28 found retrieval-text injection can still defeat my current defense, disclosed as an open
-risk. I completed a full OWASP Top 10 (2025) pass (`docs/owasp_llm_top10_2025.md`); this is a controlled
-synthetic benchmark, and results are not direct evidence of production performance
+## L. Responsible AI and limitations
+Full risk table: `docs/responsible_ai_risk_table.md`. I directly mitigated Excessive Agency (OWASP 2026's
+LLM03, renumbered from the 2025 edition's LLM06) with read-only tools, step caps, and the disposition gate.
+I did **not** solve Prompt Injection (LLM01) — Exp 28 found retrieval-text injection can still defeat my
+current defense, disclosed as an open risk. I completed a full OWASP Top 10 for LLM Applications (2026
+edition, published 2026-08-04) pass, all 10 categories (`docs/owasp_llm_top10_2026.md`); this is a
+controlled synthetic benchmark, and results are not direct evidence of production performance
 (`docs/synthetic_data_provenance.md`).
 
-## L. Final conclusion
+## M. Final conclusion
 I found that reliability comes from assigning decision authority to the component best suited to each
 task: deterministic, validated, domain-scoped tools for policy mechanics; retrieval and LLMs for evidence
 access and interpretation; agentic autonomy only when bounded by reliable tools, applicability guards, and

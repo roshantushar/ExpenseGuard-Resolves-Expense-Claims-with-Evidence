@@ -97,7 +97,7 @@ does so at a nonzero false-approval cost here, not zero. Both facts are true and
 This is direct evidence that a 0% observed FAR on one 30- or 50-case sample does not mean the true
 false-approval rate is zero — exactly the statistical caveat this project has stated but not previously
 demonstrated empirically. It does not mean the V3 candidate is worse than previously reported; combined,
-the candidate's two fresh-holdout runs are 0 false approvals in 50 non-approvable Exp 60 cases plus 1 in
+the candidate's two fresh-holdout runs are 0 false approvals in 30 non-approvable Exp 60 cases plus 1 in
 15 non-approvable Exp 61 cases (1/45 ≈ 2.2% observed combined, with a wide confidence interval at this
 sample size). It does mean: **the V3 candidate is not validated as 0% FAR**, and should not be described
 that way going forward — it should be described as "0% FAR observed on Exp 60's 50 cases; 6.7% FAR
