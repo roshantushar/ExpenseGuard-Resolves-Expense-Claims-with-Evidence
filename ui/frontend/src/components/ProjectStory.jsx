@@ -429,6 +429,13 @@ export default function ProjectStory() {
             summaryTop="This time the candidate did NOT hold 0% false approvals: X4-020, a gift paid as a 'prepaid e-voucher redeemable at various outlets,' was wrongly approved. Traced live — the require-tool gate worked correctly (the tool was consulted), but check_gift_compliance's free-text parsing did not recognize that phrasing as a cash-equivalent gift form. No fix was applied, per the manifest's own process rule: documented as a finding for a future experiment, not patched and silently re-run."
             summaryBottom="Combined across Exp 60 and Exp 61, the candidate has 1 false approval in 45 non-approvable cases (~2.2% observed, not 0%) — a materially more honest statement of its risk. The frozen resolver's own 0% FAR claim is unaffected: 0 false approvals across Exp 32, Exp 60, and Exp 61 combined (82 non-approvable cases)."
           />
+          <div className="callout-card" style={{ marginTop: 10 }}>
+            <b>Why Exp 61 is pre-registered but the candidate still isn't "formally validated":</b> Exp 61 is a
+            pre-registered <i>stress-test</i> holdout, built to try to break the fix, not to serve as the
+            project's replacement final-test protocol. Promotion to official status would require a separately
+            frozen evaluation specifically designed for that decision, at Exp 32's scale — not a re-use of a
+            stress test, however rigorous.
+          </div>
         </Section>
 
         <Section id="s14" title="Higher Accuracy ≠ Better Operating Architecture">
@@ -470,6 +477,7 @@ export default function ProjectStory() {
         <Section id="s19" title="Limitations">
           <ul className="bullets">
             <li>Synthetic benchmark — not production financial data</li>
+            <li>Same-model blind spot: every claim note, in every split including both fresh holdouts, was drafted by the same model (gpt-4o-mini) the system also uses to decide them — this benchmark cannot rule out that some measured accuracy reflects the model parsing its own writing style rather than reasoning that would transfer to real, human-written claims</li>
             <li>Official blind evidence is Exp 32 only — that result cannot be re-earned and still governs the shipped architecture</li>
             <li>Validation influenced both the Exp 52 candidate design and, later, the Exp 53–59 fixes built to close its APPROVE blind spot</li>
             <li>Exp 60 is a real, independently-labeled fresh holdout, but not a formally pre-registered freeze-and-final-test in the same sense as Exp 32</li>

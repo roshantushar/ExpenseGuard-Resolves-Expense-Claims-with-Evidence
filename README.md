@@ -1,76 +1,21 @@
-# ExpenseGuard — Resolves Expense Claims with Evidence
+# ExpenseGuard
 
-A bounded AI system for expense-claim compliance that combines deterministic automation, evidence-grounded
-LLM adjudication, and explicit human escalation.
+*A bounded expense-compliance decision system that combines deterministic rules, evidence-grounded LLM
+reasoning, and explicit human escalation.*
 
 [![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
-[![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white)](https://numpy.org/)
-[![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white)](https://pandas.pydata.org/)
-[![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C)](https://matplotlib.org/)
-[![OpenRouter](https://img.shields.io/badge/OpenRouter-gpt--4o--mini-black)](https://openrouter.ai/)
-[![Ollama](https://img.shields.io/badge/Ollama-llama3.2%3A3b-white?logo=ollama&logoColor=black)](https://ollama.ai/)
-[![Mermaid](https://img.shields.io/badge/Diagrams-Mermaid-FF3670?logo=mermaid&logoColor=white)](https://mermaid.js.org/)
 [![Tests](https://img.shields.io/badge/tests-44%20passing-brightgreen)](tests/)
-[![OWASP LLM Top 10](https://img.shields.io/badge/OWASP%20LLM%20Top%2010%20%282026%29-10%2F10%20tested-success)](docs/owasp_llm_top10_2026.md)
-[![Budget](https://img.shields.io/badge/API%20spend-%247.38%20of%20%248.00-blue)](docs/cost_and_business_impact.md)
+[![OWASP LLM Top 10](https://img.shields.io/badge/OWASP%20LLM%20Top%2010%20%282026%29-assessment%20documented-lightgrey)](docs/owasp_llm_top10_2026.md)
 
-*PE6201 (Emerging AI Technologies) end-of-course project. Built solo.*
-
-## The story, in four moves
-
-This is the data: 150 claims, a bill and a free-text note each, nothing pre-extracted, checked against a
-22-document policy corpus and 11 enterprise systems. This is what had to be done: decide APPROVE / REJECT /
-REQUEST_INFORMATION / ESCALATE, and never confidently approve a claim that shouldn't be. Here's what we
-found, and what we did about it — twice:
-
-| | 🔍 Found | 🛠️ Fixed | ⟶ Proof |
-|---|---|---|---|
-| **Round 1** | The frozen baseline scored 30/50 (60%), 0/37 false approvals — but its LLM step had **never once correctly approved a real approvable claim**, across dev, validation, or final test. | Root-caused it: the model was *shown* the right facts but not forced to use them. Rebuilt that step so tools compute the answer in code, enforced by a gate the model can't override. | Tested fresh, twice, on data neither version had seen: **+24pp and +30pp** over the baseline on each holdout — accuracy of **68%** and **66.7%**. |
-| **Round 2** | Not satisfied with a test built to confirm the fix — built a second holdout **pre-registered before a single case existed**, designed to break it, not flatter it. | Nothing to fix yet — ran it once, as pre-registered, and reported the result unchanged. | It found what Round 1 missed: **one real false approval** the easier test never surfaced. Disclosed, not hidden. |
-
-**The opposite of a clean win:** the fix is more accurate everywhere it's been tested — and still isn't
-the one that ships. The original baseline is the official, frozen architecture, because it's the only one
-with **zero false approvals across all 82 cases ever tested against it.** The improved design stays the
-leading development candidate: better numbers, one formal validation pass short of the trust the frozen
-baseline has already earned.
-
-Full detail, every number sourced: [Results](#results).
-
-## Security testing (OWASP LLM Top 10, 2026 edition)
-
-**All 10 categories assessed** against the current OWASP Top 10 for LLM Applications (2026, published
-2026-08-04) — 9 of 10 carry forward unchanged real evidence from the original assessment; one (Hidden
-Context Exposure, formerly System Prompt Leakage) is disclosed as only partially covering its newly
-broadened scope, not silently claimed as fully tested.
-
-- **Zero fabricated policy citations** — checked all 897 citations ever saved across every experiment
-  against the real policy corpus.
-- **Budget and step caps verified live** — `MAX_BUDGET_USD` confirmed to actually raise `BudgetExceeded`
-  when hit, not just configured and assumed to work.
-- **One risk disclosed, not hidden:** prompt injection (LLM01) is not solved — a retrieval-text injection
-  attack defeated the current defense once, live, in testing.
-
-Full assessment, all 10 categories: [`docs/owasp_llm_top10_2026.md`](docs/owasp_llm_top10_2026.md).
-
----
-
-## Table of contents
-[The story](#the-story-in-four-moves) · [Security](#security-testing-owasp-llm-top-10-2026-edition) ·
-[Problem](#problem) · [What it is](#what-it-is) · [What it does](#what-it-does) · [Who it's for](#who-its-for) ·
-[Closest alternatives](#closest-alternatives-and-the-gap) · [Build vs. buy](#build-vs-buy) ·
-[The data](#the-data) · [How it works](#how-it-works) · [Architecture rationale](#architecture-rationale) ·
-[Results](#results) · [Business impact](#business-impact) · [Experiments](#experiments) ·
-[Quick start](#quick-start) · [Reproducibility](#reproducibility) · [Screenshots](#screenshots) ·
-[Repo map](#repo-map) · [Limitations](#limitations) · [Deliverables](#deliverables) · [Learn more](#learn-more) ·
-[OWASP Top 10 (full results)](#owasp-top-10-for-llm-applications-2026-full-results)
-
----
+*PE6201 (Emerging AI Technologies) end-of-course project.*
 
 ## Problem
 
-Corporate finance reviewers manually check every expense claim against policy, by hand:
+Finance reviewers must decide whether an employee expense is ready for reimbursement using a bill, a
+free-text note, company policy, and enterprise records. Routine claims and genuinely ambiguous claims
+currently compete for the same reviewer attention, even though only a subset actually requires human
+judgment.
 
 - A claim is just a **bill + a free-text note** — nothing pre-extracted, nothing structured.
 - Decision-critical facts (nights stayed, attendee counts, exception references, even the expense
@@ -80,33 +25,45 @@ Corporate finance reviewers manually check every expense claim against policy, b
 - A wrong **approval** costs real money; a wrong **rejection** or unnecessary escalation costs reviewer
   time and employee trust. Both are real failure modes, not just one.
 
-## What it is
+## At a glance
 
-An AI system that reads a claim, checks it against policy and enterprise records, and returns one of four
-outcomes — **APPROVE / REJECT / REQUEST_INFORMATION / ESCALATE** — with the evidence it relied on attached
-to every decision.
+| Dataset | Experiments | Official result | Candidate result | Development spend |
+|---|---|---|---|---|
+| 150 claims · 22 policies · 11 systems | 55 | 60%, 0/37 FAR | 68% / 66.7% on fresh holdouts | $7.38 / $8.00 |
 
-## What it does
+## Table of contents
+[Problem](#problem) · [At a glance](#at-a-glance) · [Product overview](#product-overview) · [Primary user](#primary-user-and-what-changes) ·
+[Why AI, and why not everywhere](#why-ai-and-why-not-ai-everywhere) · [Closest alternatives](#closest-alternatives-and-the-gap) ·
+[Build vs. buy](#build-vs-buy) · [Dataset & evaluation](#dataset-and-evaluation-design) · [Architecture](#architecture) ·
+[Metrics](#metrics-target-and-baseline) · [Results](#results) · [Business impact](#business-impact-and-cost) ·
+[Experiments](#experiments) · [Responsible AI & security](#responsible-ai-security-and-guardrails) ·
+[Limitations](#limitations-and-evaluation-critique) · [Quick start](#quick-start) · [Reproducibility](#reproducibility) ·
+[Repo map](#repository-map) · [Demo](#demo--ui) · [Documentation index](#deliverables-and-documentation-index)
 
-- **This project is agentic**: three generations of a hand-written, tool-using ReAct agent were built and
-  evaluated from scratch (`src/agent.py`, no agent framework; own tools in `src/tools.py` — Exp 19-20,
-  34-59), not assumed necessary or skipped. It's not the final shipped architecture, because it didn't
-  clear the project's own safety bar as reliably as the simpler design — an evidence-based finding, not an
-  untested assumption either way.
-- Resolves claims it can **prove** correct using deterministic code — $0, no model call, no ambiguity.
-- Falls back to retrieval-grounded LLM reasoning only for claims code alone can't resolve.
-- Treats `ESCALATE` and `REQUEST_INFORMATION` as **safe, first-class outcomes** — never forces a guess.
-- Attaches the policy clauses and resolved facts behind every decision — no answer without evidence.
-- Enforces three hard boundaries in code, not just prompting: **read-only** (no write tools), **no
-  guessing under uncertainty**, **no answer without evidence**.
+---
 
-## Who it's for
+## Product overview
+
+**Input → Processing → Output:**
+
+- **Input:** a bill (merchant, amount, currency, category) + a free-text employee note. Nothing else.
+- **Processing:** deterministic rules where provable, retrieval-grounded LLM reasoning for the residual,
+  never a guess under uncertainty.
+- **Output:** one of **APPROVE / REJECT / REQUEST_INFORMATION / ESCALATE**, with the policy clauses and
+  resolved facts behind the decision attached — no answer without evidence.
+
+**Intended use:** decision support and selective automation for a human finance reviewer. **Explicit
+non-use:** no payment execution, no autonomous reimbursement, no fraud accusation or employee-risk
+scoring, no irreversible action — every enterprise tool is read-only, and `ESCALATE`/
+`REQUEST_INFORMATION` are safe, first-class outcomes, never forced guesses.
+
+## Primary user and what changes
 
 **Maya — finance operations analyst**, reviewing expense claims against company policy. It's 4pm on the
 last day of the month, and her queue has 60 claims in it. She already knows the policy corpus cold and
 roughly which categories tend to cause trouble (hotel ceilings, mileage math); what she doesn't have is
 time to re-verify every routine claim against every record by hand, or visibility into which few of the 60
-actually need her judgment versus a human-readable rubber stamp.
+actually need her judgment.
 
 | Before ExpenseGuard | After ExpenseGuard |
 |---|---|
@@ -116,6 +73,23 @@ actually need her judgment versus a human-readable rubber stamp.
 
 Employees benefit too: faster resolution, specific requests for missing information instead of silence,
 and evidence-backed reasons for a rejection — not just "denied."
+
+## Why AI, and why not AI everywhere
+
+Each component owns only the part of the decision it's actually suited to:
+
+| Component | Owns | Example |
+|---|---|---|
+| **Code** | Arithmetic, thresholds, dates, exact-duplicate matching | Hotel ceiling math, FX conversion, submission-window checks |
+| **Retrieval (RAG)** | Grounding a decision in the actual policy text | Finding the clause that governs a specific claim |
+| **LLM** | Semantic interpretation of free text | Reading an ambiguous note, reconciling it against retrieved policy |
+| **Fixed workflow** | Predictable external-evidence paths | Hotel claim → policy → employee grade → travel approval → threshold |
+| **Bounded agent** | Only when an earlier tool result determines what to check next | A genuinely dynamic evidence path, not a fixed checklist |
+
+This split is a measured conclusion, not a design preference: Exp 9/11 showed retrieval quality barely
+moved accuracy once the model had it, and Exp 19/20 showed an unconstrained agent added no measurable
+value over a fixed workflow on first test — autonomy had to re-earn its place later, with a structural fix
+(Exp 56), not a bigger prompt.
 
 ## Closest alternatives, and the gap
 
@@ -130,11 +104,14 @@ actually justify, versus a deterministic-first design? [`problem.md` §3](proble
 **Rent:** the foundation model (`openai/gpt-4o-mini` / `llama3.2:3b`) and the embedding model
 (`voyageai/voyage-4-lite`) — commodity capability this project's own experiments (Exp 8, 35, 46) confirmed
 was not the actual bottleneck. **Own:** policy mechanics, retrieval tuning, the enterprise-tool layer,
-orchestration and guardrails, and the evaluation harness — the parts that encode this specific problem and
-this project's own research contribution. Full layer-by-layer breakdown:
-[`docs/build_vs_buy.md`](docs/build_vs_buy.md).
+orchestration and guardrails, and the evaluation harness.
 
-## The data
+**Why code over a low-code/no-code rule builder:** for this research project, code was chosen over low-code
+because reproducible experiments, typed interfaces, unit tests, versioned freeze manifests, and controlled
+ablations were first-class requirements — not a claim that low-code tooling is fundamentally incapable of
+this problem. Full layer-by-layer breakdown: [`docs/build_vs_buy.md`](docs/build_vs_buy.md).
+
+## Dataset and evaluation design
 
 | | |
 |---|---|
@@ -149,8 +126,7 @@ A claim looks like this — nothing pre-extracted, the note is the only place mo
 {
   "case_id": "X2-001",
   "bill": { "merchant": "PureYoga Club", "country": "Singapore", "total": 24.9, "merchant_category": "OTHER" },
-  "employee_description": "so um this is for a charge for the renewal at PureYoga Club you know
-                            it's in Singapore and um it really keeps me sane during the busy quarter...",
+  "employee_description": "so um this is for a charge for the renewal at PureYoga Club you know it's in Singapore and um it really keeps me sane during the busy quarter...",
   "project_id": "PRJ-003"
 }
 ```
@@ -158,37 +134,13 @@ A claim looks like this — nothing pre-extracted, the note is the only place mo
 ![Dataset distributions: outcomes by split, architecture groups, controlling clauses and tool counts per case](results/current/plots/exp00_dataset_distributions.png)
 *150 claims, 3 architecture groups, outcome distribution by split — real counts from the generated dataset.*
 
-**Case families** — every claim falls into one of these:
+Ground truth is physically isolated and leakage-tested (`tests/test_no_leakage.py`); the dataset is
+synthetic by design (no real employee or company data) and was hardened across three rounds so
+decision-critical facts live only in free text, never a structured field — case-family detail and
+generation methodology: [`docs/dataset_card.md`](docs/dataset_card.md),
+[`docs/synthetic_data_provenance.md`](docs/synthetic_data_provenance.md).
 
-| Family | What makes it hard |
-|---|---|
-| Clean / policy-violation | Apply the right clause, nothing else in play |
-| Missing information | `REQUEST_INFORMATION` with the exact missing field |
-| Duplicate / near-duplicate / split | Exact repeat vs. legitimate repeat vs. charges that jointly cross a threshold |
-| Temporal / regional policy | Same expense type, governed differently by year or region |
-| Evidence conflict | Note and bill disagree — request clarification or escalate, never accuse |
-| Dynamic investigation | An earlier tool result determines what to check next |
-
-Full package: [`ExpenseGuard_DATASET/`](ExpenseGuard_DATASET/). Generation, hardening, and leakage
-prevention: [`docs/synthetic_data_provenance.md`](docs/synthetic_data_provenance.md),
-[`docs/dataset_card.md`](docs/dataset_card.md).
-
-## How it works
-
-### Baseline — how a reviewer does this today, without ExpenseGuard
-
-| | Value | Measured or assumed |
-|---|---|---|
-| Time per claim | **~20 minutes** | **Assumed** — [GBTA Foundation](https://gbta.org/new-study-reveals-pain-points-in-expense-reporting/) |
-| Cost per claim (reviewer time only) | **~$11.67** (20 min × $35/hr reviewer) | **Assumed** — same reviewer rate used throughout this project's cost model |
-| Reports with errors or missing info | **~19%** | **Assumed** — GBTA, same source |
-| Cost of one wrong approval | **$150** | **Assumed** — this project's own labeled cost-model assumption (base scenario) |
-| Cost of one wrong rejection (rework, delay, morale) | **$50** | **Assumed** — same cost model |
-
-A reviewer reads the bill and note, then manually cross-references policy and up to 11 enterprise systems
-by hand, for every single claim, with no evidence trail attached to the decision.
-
-### ExpenseGuard's approach — the same decision, broken into inspectable steps
+## Architecture
 
 ```mermaid
 flowchart TD
@@ -206,24 +158,7 @@ flowchart TD
 
 This is the **official, frozen architecture** (Exp 30/32). A second, later design — a bounded agent whose
 tools *compute* the disposition in code, gated so the model can't override a correct tool answer — scores
-higher on development/validation but has no authorized frozen final-test result. Full reasoning in
-[Architecture rationale](#architecture-rationale) below.
-
-### Baseline vs. ExpenseGuard
-
-| | Baseline (manual, no AI) | ExpenseGuard |
-|---|---|---|
-| Time per claim | ~20 min, assumed end-to-end manual process (assumed) | Median 1.3s residual / ~0s deterministic — **model inference latency only, not directly comparable to the end-to-end baseline figure** (**measured**) |
-| Cost per claim | ~$11.67 reviewer time (assumed) | ~$0.0005/claim AI cost (**measured**) + reviewer time only for the 22% escalated |
-| Report-quality issue rate (not the same metric as FAR — GBTA's figure is reports with errors/missing info, not a reviewer decision-error rate) | ~19% (assumed) | 0/37 = 0% observed false approvals, final test (**measured**) — shown together for business context only, not as a like-for-like comparison |
-| Cost of a wrong approval | $150/case (assumed) | Same $150 assumption applied to 0 observed instances — see [Business impact](#business-impact) |
-| Cost of a wrong rejection | $50/case (assumed) | 100% of truly approvable claims (20/20) wrongly blocked on a fresh sample (**measured**, Exp 60) — a real, priced-in cost this project does not hide |
-
-## Architecture rationale
-
-**Built solo, end to end** — dataset design and generation, every architecture (rules → RAG → workflow →
-agent), the evaluation harness, cost model, and security testing all owned by one person, not assembled
-from a template.
+higher on development/validation but has no authorized frozen final-test result (see [Results](#results)).
 
 **The complexity ladder — one rung at a time, only when the previous one proved insufficient:**
 
@@ -235,25 +170,37 @@ from a template.
 | Bounded agent | Tested whether dynamic tool choice earns its cost over a fixed workflow | **Rejected at first gate** (Exp 20, 3x the FAR) — reopened later only once tools computed answers in code |
 
 **Key tradeoffs made, explicitly:**
-- **Accuracy was traded for safety, repeatedly** — the official, frozen architecture is *not* the most accurate one
-  tested; it's the one with 0% observed false approvals. A 64%-accurate fixed workflow was rejected for a
-  13.5% false-approval rate.
+- **Accuracy was traded for safety, repeatedly** — the official, frozen architecture is *not* the most
+  accurate one tested; it's the one with 0% observed false approvals. A 64%-accurate fixed workflow was
+  rejected for a 13.5% false-approval rate.
 - **A frozen final-test result was treated as non-negotiable evidence**, not a formality — the
   higher-scoring guarded-agent candidate is still not promoted to that status because it has never earned one.
 - **"0% FAR" was not trusted on a single sample** — a second, independent, pre-registered holdout (Exp 61)
   was run specifically to stress-test that claim, and it found a real gap the first holdout missed.
 
-## Results
+## Metrics: target and baseline
 
-**Target for any later candidate to be considered a replacement:** FAR ≤ 0% (hard constraint, never traded
-off) at accuracy ≥ 60% — the bar Exp 32 below actually cleared and every later candidate has been held to
-since (`problem.md` §"Metric family, target, and baseline").
+The metric family used for every architecture decision: **accuracy, observed False Approval Rate, Safe
+Automation Rate, Human Review Rate, cost per 1,000 claims, and latency** — never accuracy alone
+(`docs/cost_and_business_impact.md`). The majority-class baseline (always predicting the most common
+ground-truth outcome) scores 26–27% — a floor, not a competitor.
+
+**Target:** observed FAR = 0% is a hard constraint, never traded off; subject to that constraint, accuracy
+is maximized. This is why Exp 18's fixed workflow (64.3% dev accuracy, the highest raw accuracy of any
+architecture tested) was rejected in favor of Exp 30's selective resolver (61.4% dev accuracy, observed FAR
+= 0%).
+
+**The accuracy floor stated numerically** — accuracy ≥ 60%, the bar Exp 32 actually cleared — is a
+**post-Exp-32 operational acceptance criterion**, fixed *after* seeing that result and applied to every
+later candidate since (Exp 45–61). It is not claimed as a target pre-registered ahead of the original
+freeze decision.
+
+## Results
 
 ### Baseline — the official, frozen result
 
-**Exp 32, one-shot, 50-claim held-out final test** — this number is the baseline everything below is
-measured against, compared here to majority-class REJECT (26.0% accuracy / 0% FAR, computed from real
-ground truth):
+**Exp 32, one-shot, 50-claim held-out final test** — compared here to majority-class REJECT (26.0%
+accuracy, 0% FAR, computed from real ground truth):
 
 | Metric | Value | Takeaway |
 |---|---|---|
@@ -264,39 +211,44 @@ ground truth):
 
 ![Exp 33 failure analysis: where the LLM-residual step's 20 final-test errors actually came from](results/current/plots/exp33_failure_categories.png)
 *n=20 residual-path errors, final test. Takeaway: errors were policy-reasoning failures, not retrieval
-failures — 0 of 20 were caused by missing evidence, which is exactly what the improvement work below targeted.*
+failures — 0 of 20 were caused by missing evidence.*
 
-### The improvement journey — what came after, and why it matters
+### The improvement journey
 
 The 28.6% LLM-residual accuracy above was the dominant measured weakness in the frozen architecture.
-Rather than stop at the frozen result, 28 more experiments (Exp 34–61) built and stress-tested a second
-design — a guarded agent whose tools compute the answer in code instead of leaving it to free-form LLM
-judgment. The frozen baseline and the guarded candidate were then evaluated head-to-head on the same cases
-*within* each of two separate, independent fresh holdouts (Exp 60 and Exp 61 are different case sets from
-each other, not the same cases reused):
+28 more experiments (Exp 34–61) built and stress-tested a second design — a guarded agent whose tools
+compute the answer in code instead of leaving it to free-form LLM judgment — then evaluated it head-to-head
+against the frozen baseline on two separate, independent fresh holdouts:
 
 | Fresh holdout (never seen by either design) | Baseline (frozen resolver) | Candidate (fixed, guarded agent) | Change |
 |---|---|---|---|
 | Exp 60 — 50 cases | 22/50 = 44% | **34/50 = 68%** | **+24 percentage points** |
 | Exp 61 — 30 cases, pre-registered | 11/30 = 36.7% | **20/30 = 66.7%** | **+30 percentage points** |
 
-**+24 and +30 percentage points, on two independent samples the candidate was never tuned against** — real
-evidence that routing decisions through code-computed, gated tools instead of raw LLM judgment is a
-genuine improvement, not an artifact of one lucky test set. (Exp 61's holdout is also the methodologically
-stronger of the two: its architecture and evaluation protocol were named and frozen in a committed manifest
-*before* any holdout case was generated, closer to Exp 32's own pre-registration rigor than Exp 60's.) The
-candidate also held up on the splits it was built against: 44/70 dev (62.9%), 21/30 validation (70.0%).
+![Frozen resolver vs. guarded candidate accuracy on Exp 60 and Exp 61](results/current/plots/exp60_61_comparison.png)
 
-**Why this matters, not just that it's higher:** the baseline's weakness wasn't noise — it had never
-once produced a correct APPROVE, on any split, ever (0/13 final test, 0/20 Exp 60, 0/15 Exp 61). The
-candidate recovers real APPROVE recall (12/20, 9/15) without guessing — each one is backed by a tool
-result, not a model's free-form judgment.
+The improvement reproduced across two independently generated synthetic holdouts, making a single-sample
+explanation less plausible — Exp 61's holdout is the methodologically stronger of the two: its evaluation
+protocol was named and frozen in a committed manifest *before* any holdout case was generated. Both
+holdouts' claim notes were drafted by the same model family used for inference (see
+[Limitations](#limitations-and-evaluation-critique)), so transfer to human-authored production claims
+remains untested. The candidate also held up on the splits it was built against: 44/70 dev (62.9%), 21/30
+validation (70.0%).
 
-### Why it isn't the official architecture yet — the discovery that makes these numbers trustworthy
+**Why Exp 61 is pre-registered but the candidate still isn't "formally validated":** Exp 61 is a
+pre-registered *stress-test* holdout, built to try to break the fix, not to serve as the project's
+replacement final-test protocol. Promotion to official status would require a separately frozen evaluation
+specifically designed for that decision, at Exp 32's scale — not a re-use of a stress test, however rigorous.
 
-A higher number alone isn't the bar this project uses — **0% false approvals is**. The candidate matched
-that bar on its first fresh test (Exp 60) and *almost* held it on a second, deliberately harder,
-pre-registered one (Exp 61):
+The baseline's weakness wasn't noise — it had never once produced a correct APPROVE, on any split, ever
+(0/13 final test, 0/20 Exp 60, 0/15 Exp 61). The candidate recovers real APPROVE recall (12/20, 9/15),
+each one backed by a tool result, not a model's free-form judgment.
+
+### Why it isn't the official architecture yet
+
+A higher number alone isn't the bar this project uses — observed FAR = 0% is. **Independent stress testing
+of the candidate** found it held that bar on its first fresh test (Exp 60) but not on a second,
+deliberately harder, pre-registered one (Exp 61):
 
 | | Official frozen architecture | Guarded-agent candidate |
 |---|---|---|
@@ -305,11 +257,9 @@ pre-registered one (Exp 61):
 | Status | **Official, frozen architecture** | **Leading development candidate** — not promoted |
 
 That one false approval (Exp 61, a gift-form parsing gap, [diagnosed and disclosed](docs/exp61_v3_holdout.md))
-is the actual reason the candidate isn't official yet — not a lack of accuracy. Finding it is also the
-reason these numbers can be trusted at all: a result that's never been stress-tested isn't evidence, it's
-a guess that happened not to fail yet. (A stronger model, gpt-4o, pushed accuracy to 78% on Exp 60 but
-introduced 2 false approvals there too — further confirmation that accuracy and safety move independently,
-not together.) Full detail: [`docs/exp60_fresh_holdout.md`](docs/exp60_fresh_holdout.md),
+is the actual reason the candidate isn't official yet — not a lack of accuracy. A stronger model (gpt-4o)
+pushed accuracy to 78% on Exp 60 but introduced 2 false approvals there — accuracy and safety move
+independently, not together. Full detail: [`docs/exp60_fresh_holdout.md`](docs/exp60_fresh_holdout.md),
 [`docs/exp61_v3_holdout.md`](docs/exp61_v3_holdout.md).
 
 **In one sentence:** the guarded architecture appears to solve substantially more of the original business
@@ -326,78 +276,126 @@ blocked — a cost, not a danger). Broken apart, Exp 60 (n=50, of which 20 cases
 | Frozen resolver (baseline) | 21/50 = 42% | 0/30 | 20/50 = 40% | **20/20 = 100%** |
 | Candidate, gpt-4o-mini | **33/50 = 66%** | 0/30 | 2/50 = 4% | **2/20 = 10%** |
 
-*Takeaway: the baseline's 0% FAR headline hides that, among claims that were genuinely approvable, it
-wrongly blocked every single one (20/20). That's a materially different and more alarming statement than
-"40% of all cases," and it's the number that actually describes the baseline's blind spot. The candidate
-cuts the same rate to 1 in 10 while holding false approvals at zero, on this particular test.*
+![Safe-automation rate and false-rejection rate: frozen resolver vs. guarded candidate](results/current/plots/safety_business_tradeoff.png)
 
-## Business impact
+*Takeaway: the baseline's 0% FAR headline hides that, among claims that were genuinely approvable, it
+wrongly blocked every single one (20/20) — a materially more informative statement than "40% of all
+cases." The candidate cuts the same rate to 1 in 10 while holding false approvals at zero, on this test.*
+
+## Business impact and cost
 
 Per `problem.md` §36: **measured** system quantities and **assumed/modeled** business inputs are never
 blended into one number.
 
+**Baseline, how a reviewer does this today (industry figures, assumed, [GBTA Foundation](https://gbta.org/new-study-reveals-pain-points-in-expense-reporting/)):**
+~20 minutes and ~$11.67 reviewer time per claim; ~19% of reports contain errors or missing information.
+
+**Three cost layers, priced separately rather than blended:** direct AI inference cost → human-fallback
+cost (escalation rate × assumed review cost) → error cost (false approval / false rejection, priced per
+incident). Token cost alone is not the business decision — false approvals, false rejections, and
+unnecessary escalation dominate the economics once priced, which is why a corrected cost model changed
+which architecture looked cheaper (full model: [`docs/cost_and_business_impact.md`](docs/cost_and_business_impact.md)).
+
 | Metric | Value | Measured or assumed |
 |---|---|---|
-| Turnaround (LLM-residual decisions) | **Median 1.3s, P95 2.6s** (50-claim final test) — model inference latency, not an end-to-end processing time | **Measured** |
-| Turnaround (deterministic decisions) | **~0s, $0** | **Measured** |
 | Cost per claim (frozen design) | **~$0.0005/claim** | **Measured** |
-| Human Review Rate | **22.0%** — 78% resolved without a person | **Measured** |
-| False-approval rate | **0/37 = 0% observed** (final test) | **Measured** (not a guarantee — see Limitations) |
-| False-rejection rate among truly approvable claims | **20/20 = 100% observed** (Exp 60, frozen baseline) — candidate cuts this to 10% (2/20) | **Measured** |
-| Manual review turnaround (industry baseline) | ~20 min/report, assumed end-to-end process | **Assumed** — [GBTA Foundation](https://gbta.org/new-study-reveals-pain-points-in-expense-reporting/) |
-| Reports with errors/missing info (industry baseline) — a data-quality metric, not a decision-error rate | ~19% | **Assumed** — GBTA, same source |
-| Modeled cost/1,000 claims at scale | $2,100–$54,700, scenario-dependent | **Modeled** — [full model](docs/cost_and_business_impact.md) |
+| Human Review Rate, official final test | **22.0%** — 78% of the 50 final-test claims required no human review | **Measured** |
+| LLM-residual latency, official final test | **Median 1.3s, P95 2.6s** (model inference only) | **Measured** |
+| Observed false-approval rate | **0/37 = 0%**, final test | **Measured** (not a guarantee — see Limitations) |
+| False-rejection rate among truly approvable claims | **100% observed** (Exp 60, frozen baseline) — candidate cuts this to 10% | **Measured** |
+| This project's own development spend | **$7.38 of an $8.00 tracked budget** | **Measured** |
 
-**The argument this supports:** *if* a real deployment's end-to-end manual-review time resembles the
-~20-minute industry baseline above, resolving 78% of claims without a human — at sub-2-second model
-latency on the residual path — reduces avoidable review effort. The 19% baseline error-rate figure is
-business context (how messy real expense reports tend to be), not a claim that ExpenseGuard's 0% FAR is
-being compared against a measured human error rate — no such figure exists in the GBTA source or
-elsewhere in this project. **No claim of measured production savings is made** — that requires a real
-deployment, not this synthetic benchmark.
+Operating economics at scale are dominated by human fallback and decision-error costs, not token spend —
+once those are priced, they decide which architecture is actually cheaper, not raw inference cost. Full
+scenario modeling (low/base/high volume, full cost-per-1,000-claims range):
+[`docs/cost_and_business_impact.md`](docs/cost_and_business_impact.md).
+
+**The argument this supports:** *if* a real deployment's manual-review time resembles the ~20-minute
+industry baseline, resolving 78% of final-test claims without a human, at sub-3-second residual-path
+latency, reduces avoidable review effort. No claim of measured production savings is made — that requires
+a real deployment, not this synthetic benchmark.
 
 ## Experiments
 
 **55 experiments, numbered 0–61, 7 phases** — numbers 21–27 were deliberately skipped (the agent-value
-gate closed before those were needed, see [Limitations](#limitations)); the count (`ALL_EXPERIMENTS.length`
-in the demo UI's own experiment log) is mechanically verified, not hand-counted. Every number traces to a
-file under `results/current/`, nothing hand-typed.
+gate closed before those were needed; see [Limitations](#limitations-and-evaluation-critique)). Every
+number traces to a file under `results/current/`; full write-ups: [`docs/README.md`](docs/README.md#full-experiment-index).
 
 | Phase | Experiments | Outcome |
 |---|---|---|
-| 1. Baselines & retrieval | 0–17 | Retrieval was not the dominant bottleneck in the frozen resolver — a perfect policy oracle produced only a modest accuracy gain. (Later agent experiments found a *different* retrieval problem: the agent's own dynamically-generated search queries, mean recall 33.6% — a real, separate, secondary failure mode, not evidence against this finding.) |
+| 1. Baselines & retrieval | 0–17 | Retrieval was not the dominant bottleneck — a perfect policy oracle produced only a modest accuracy gain |
 | 2. Workflow vs. agent gate | 18–20 | Workflow more accurate (64%) but unsafe (13.5% FAR) → motivated the selective design |
-| 3. Freeze & final test | 28–33 | **Official result: 30/50 (60%), 0% observed FAR** |
-| 4. Agentic-RAG diagnosis | 34–39 | Stricter prompts, bigger models, parallel calls all failed; Exp 38 found the agent's own retrieval queries recalled only 33.6% of required clauses — reasoning and retrieval are two separate real problems |
+| 3. Freeze & final test | 28–33 | **Official result: 30/50 (60%), observed FAR 0%** |
+| 4. Agentic-RAG diagnosis | 34–39 | Stricter prompts, bigger models, parallel calls all failed; the agent's own retrieval queries recalled only 33.6% of required clauses |
 | 5. Guarded-agent build | 40–52 | 44/70 dev, 21/30 validation, 0% FAR — promising, not yet held-out tested |
-| 6. Root-cause, fix, fresh-holdout | 53–60 | Diagnosed 3 root causes live, fixed each: 0% FAR, 68% accuracy on a fresh, never-seen holdout (not formally pre-registered) |
-| 7. Pre-registered second holdout | 61 | A second, independently pre-registered holdout (manifest frozen before case generation) found "0% FAR" did not survive — a real 6.7% FAR, disclosed, not fixed |
+| 6. Root-cause, fix, fresh holdout | 53–60 | Diagnosed 3 root causes live, fixed each: 0% FAR, 68% accuracy on a fresh, never-seen holdout |
+| 7. Pre-registered second holdout | 61 | Found "0% FAR" did not survive — a real false approval, disclosed, not fixed |
 
-Full experiment index and diagnostic flowcharts: [`docs/README.md`](docs/README.md#full-experiment-index).
+## Responsible AI, security, and guardrails
+
+Full risk table: [`docs/responsible_ai_risk_table.md`](docs/responsible_ai_risk_table.md). Security tested
+against the OWASP Top 10 for LLM Applications (2026 edition, published 2026-08-04):
+
+- **Zero fabricated policy citations** — all 897 citations ever saved, checked against the real corpus.
+- **Budget and step caps verified live** — `MAX_BUDGET_USD` confirmed to actually raise `BudgetExceeded`.
+- **Prompt injection (LLM01) is not solved** — a retrieval-text injection attack defeated the current
+  defense once, live, in testing. Disclosed, not patched and silently claimed fixed.
+- **Hidden Context Exposure (LLM08) is only partially tested** under its newly broadened 2026 scope.
+- The remaining categories are documented in the full assessment, with executed evidence or explicit scoping.
+
+Full 10-category assessment: [`docs/owasp_llm_top10_2026.md`](docs/owasp_llm_top10_2026.md).
+
+## Limitations and evaluation critique
+
+- **The guarded-agent candidate has no authorized, frozen final-test result.** Two independent fresh
+  holdouts exist (Exp 60, Exp 61) — real evidence the fixes generalize, not a substitute for a formal,
+  Exp-32-scale final test.
+- **Observed FAR = 0% is not an established property of the candidate** — combined observed FAR is ~2.2%
+  (1/45), found by deliberately testing the claim a second time rather than trusting one result. Small
+  sample sizes (30–50 cases per holdout) mean these rates carry real statistical uncertainty.
+- **Synthetic benchmark, not production evidence** — every claim, policy document, and enterprise record
+  is generated.
+- **Same-model blind spot** — every claim note, in every split including both fresh holdouts, was drafted
+  by the same model (`gpt-4o-mini`) that the system also uses to decide them; this benchmark cannot rule
+  out that some measured accuracy reflects the model parsing its own writing style rather than reasoning
+  that would transfer to real claims.
+- **Prompt injection is not solved** — a retrieval-text injection attack defeats the current defense
+  outright (Exp 28).
+- **The held-out final-test data was touched more than once after the Exp 32 freeze**, by processes not
+  fully reconstructable from committed logging — did not change the official result, but "touched once" is
+  no longer an unqualified statement about this project. Full disclosure:
+  [`docs/second_touch_disclosure.md`](docs/second_touch_disclosure.md).
+- **Experiments 21–27 were deliberately skipped**, not forgotten or lost — Exp 20 failed the pre-defined
+  agent-value/safety gate, so the agent-optimization experiments planned as 21–27 were never run.
+- **No real-world validation or deployment plan exists** — this is decision support for a research
+  benchmark, not a production system.
 
 ## Quick start
 
-**Before you clone:** everything free (tests, dataset validation, the static UI export, `llama3.2:3b`
-experiments) runs with no account and $0. Anything marked "paid" needs your own OpenRouter API key and
-spends real money against it. Separately — the dataset was regenerated once after Exp 32's official run, so
-Exp 32's result (`results/current/final_test/exp32_final_test/`) can no longer be byte-verified against the
-files on disk today; it stands as the honest record of that one run, not something this checkout can
-re-derive from scratch (full detail: [`docs/synthetic_data_provenance.md`](docs/synthetic_data_provenance.md)).
+Everything free (tests, dataset validation, the static UI export, `llama3.2:3b` experiments) runs with no
+account and $0. Anything marked "paid" needs your own OpenRouter API key and spends real money.
 
 ```bash
 git clone <this-repo-url> && cd ExpenseGuard-Resolves-Expense-Claims-with-Evidence
 pip install -r requirements.txt            # numpy, matplotlib, pandas, jupyter — runtime code itself is stdlib-only
-cp .env.example .env                       # see table below before running anything paid
+python -m unittest discover -s tests       # $0, 44 tests — confirms the checkout is sound
 ```
+
+**Then, optionally, the paid route** — copy `.env.example` to `.env` first:
 
 | `.env` variable | For | Notes |
 |---|---|---|
 | `OPENROUTER_API_KEY` | Paid-model calls | openrouter.ai — costs real money once set |
 | `PAID_MODEL` | Paid experiments | Defaults to `openai/gpt-4o-mini` |
-| `LOCAL_MODEL` | **Free** experiments | `llama3.2:3b` via [Ollama](https://ollama.ai) — everything here was reproducible at $0 |
-| `MAX_BUDGET_USD` | Any paid call | This project's own tracked cap — `src/llm.py` raises `BudgetExceeded` once hit. Separate from, and smaller than, your OpenRouter account's own usage cap, which this project cannot see or control. |
+| `LOCAL_MODEL` | **Free** experiments | `llama3.2:3b` via [Ollama](https://ollama.ai) |
+| `MAX_BUDGET_USD` | Any paid call | This project's own tracked cap — separate from, and smaller than, your OpenRouter account's own usage cap |
 
-**Run the live demo:**
+The dataset was regenerated once after Exp 32's official run, so that result
+(`results/current/final_test/exp32_final_test/`) can no longer be byte-verified against the files on disk
+today; it stands as the honest record of that one run (detail:
+[`docs/synthetic_data_provenance.md`](docs/synthetic_data_provenance.md)).
+
+**Then, the live demo:**
 ```bash
 python -m ui.backend.server                              # backend, http://localhost:8787
 cd ui/frontend && npm install && npm run dev              # frontend, http://localhost:5173
@@ -413,28 +411,16 @@ python -m dataset_generator.validate      # dataset integrity audit — 50/50 ch
 
 - Every result traces to a file under `results/current/` — nothing in these docs is hand-typed.
 - `tests/test_no_leakage.py` enforces that runtime code never reads `04_ground_truth_PRIVATE/`.
-- ⚠️ **`python -m scripts.exp32_final_test` is the frozen final test — already run once. Do not rerun it**
-  — see [`docs/second_touch_disclosure.md`](docs/second_touch_disclosure.md) for what happens when this
-  rule is violated.
+- **`python -m scripts.exp32_final_test` is the frozen final test — already run once. Do not rerun it** —
+  see [`docs/second_touch_disclosure.md`](docs/second_touch_disclosure.md) for what happens when this rule
+  is violated.
 - Regenerate the dataset from scratch (deterministic, seed 6202, not required to run anything above):
   `python -m dataset_generator.build`.
+- **Data explainer:** [`docs/dataset_card.md`](docs/dataset_card.md), [`docs/synthetic_data_provenance.md`](docs/synthetic_data_provenance.md).
+- **Evals explainer:** [`docs/EVALS.md`](docs/EVALS.md) — every metric, split, freeze manifest, the evaluator, and which results must never be rerun, in one page.
+  Also: [`docs/reproducibility_and_repo_map.md`](docs/reproducibility_and_repo_map.md).
 
-## Screenshots
-
-No screenshot images are committed (keeps the repo lightweight) — run the quick start above to see it
-live. Four tabs:
-
-| Tab | What it shows |
-|---|---|
-| **Overview & Story** | Scroll-revealed experiment timeline, live stats computed from the full 150-case export |
-| **Case Explorer** | Every claim, both architectures' decisions side by side, full tool trace, ground truth |
-| **Build & Architecture** | Pipeline diagrams, cost model, OWASP Top 10 results, build-vs-buy table |
-| **Project Story** | Single-page presentation mode covering the whole project, end to end |
-
-A design-rationale gallery of every retrieval/chunking/model experiment's own plot:
-`results/current/plots/` (24 images, referenced individually throughout `docs/`).
-
-## Repo map
+## Repository map
 
 | Path | Contents |
 |---|---|
@@ -443,84 +429,55 @@ A design-rationale gallery of every retrieval/chunking/model experiment's own pl
 | `dataset_generator/` | Dataset generator — case archetypes, policy text, semantic-hardening layer |
 | `scripts/` · `notebooks/` | One script and one notebook per experiment |
 | `tests/` | Unit tests, including the leakage guard |
-| `experiments/` | Pre-registered freeze manifests (Exp 32, Exp 61) + the Exp 60/61 holdout datasets. Exp 60 has no manifest by design — that gap is what Exp 61 exists to close |
+| `experiments/` | Pre-registered freeze manifests (Exp 32, Exp 61) + the Exp 60/61 holdout datasets |
 | `results/current/` | Predictions, metrics, plots, cached embeddings — single source of truth |
 | `docs/` | One write-up per experiment (hypothesis → method → result → decision) |
 | `ui/` | Local demo app — browse the dataset or run either design live |
 
-## Limitations
+Six files worth reading first, runtime behavior in order of what decides a claim:
+`src/resolver.py` (the official pipeline) → `src/workflow_v2.py` (the fixed-workflow design) →
+`src/agent.py` (the bounded agent loop) → `src/tools.py` (typed enterprise tools) →
+`src/evaluate.py` / `src/metrics.py` (scoring — never imported by runtime code).
 
-- **Experiments 21-27 were deliberately skipped, not forgotten or lost.** Exp 20 failed the pre-defined
-  agent-value/safety gate (a bounded agent only tied the fixed workflow, at 3x the false-approval rate),
-  so the agent-optimization experiments planned as Exp 21-27 were never run — the numbering gap is
-  intentional and documented, not a data-loss issue.
-- **The guarded-agent candidate has no authorized, frozen final-test result.** Two independent fresh
-  holdouts exist (Exp 60, Exp 61) — real evidence the fixes generalize, not a substitute for a formal,
-  Exp-32-scale final test.
-- **"0% FAR" is not an established property of the candidate** — combined observed FAR is ~2.2% (1/45),
-  found by deliberately testing the claim a second time rather than trusting one result.
-- **Synthetic benchmark, not production evidence** — every claim, policy document, and enterprise record
-  is generated.
-- **Same-model blind spot** — every claim note, in every split including both fresh holdouts, was drafted
-  by the same model (`gpt-4o-mini`) that the system also uses to decide them; nothing here was checked
-  against human- or differently-modeled text, so this benchmark cannot rule out that some measured accuracy
-  reflects the model parsing its own writing style rather than reasoning that would transfer to real claims.
-- **Prompt injection is not solved** — a retrieval-text injection attack defeats the current defense
-  outright (Exp 28), disclosed, not fixed.
-- **The held-out data was touched a second time after the Exp 32 freeze**, by a process not fully
-  identified — did not change the official result, but "touched once" is no longer unqualified. Full
-  disclosure: [`docs/second_touch_disclosure.md`](docs/second_touch_disclosure.md).
-- **No real-world validation or deployment plan exists** — this is decision support for a research
-  benchmark, not a production system.
+## Demo / UI
 
-## Deliverables
+**Recorded demo:** [Watch the 5-minute project walkthrough](#) *(link pending — add once recorded)*.
+
+```bash
+python -m ui.backend.server && cd ui/frontend && npm install && npm run dev   # see Quick start above
+```
+
+Three tabs: **Overview & Story** (scroll-revealed timeline + the full project-story deep dive, merged into
+one scrollable page with a presenter quick-jump bar), **Case Explorer** (every claim, both architectures'
+decisions side by side, full tool trace, ground truth), **Build & Architecture** (pipeline diagrams, cost
+model, OWASP results, build-vs-buy table). A design-rationale gallery of every retrieval/chunking/model
+experiment's own plot lives in `results/current/plots/`.
+
+*A Case Explorer screenshot (claim → decision → policy evidence → tool trace) belongs here too — not
+captured yet; this environment has no headless-browser tooling installed to generate one automatically.
+Easiest path: run the demo above and screenshot the Case Explorer tab with a case selected.*
+
+## Deliverables and documentation index
 
 - **Dataset** — 150 synthetic claims, 22-document policy corpus, 11 enterprise tables, isolated ground
   truth, deterministic generator (`dataset_generator/`).
 - **Four architectures, implemented and compared** — deterministic rules, RAG, fixed workflow, bounded
   agent — plus the selective hybrid that's the official, frozen architecture.
 - **Evaluation harness** — leakage-safe evaluator, freeze-manifest discipline, cost model, OWASP Top 10
-  for LLM Applications security assessment.
-- **55 experiment write-ups** (`docs/`), numbered 0–61 with a deliberate gap at 21–27, each hypothesis → method → result → decision, traced to saved
+  security assessment.
+- **55 experiment write-ups** (`docs/`), each hypothesis → method → result → decision, traced to saved
   result files.
 - **Local demo application** — React frontend + Python backend, browse all 150 cases or run either design
   live against a free or paid model.
-- **Final report** — [`docs/FINAL_REPORT.md`](docs/FINAL_REPORT.md), 1,200 words.
+- **Final report** — [`docs/FINAL_REPORT.md`](docs/FINAL_REPORT.md), ~1,200 words.
 
-## Learn more
-
-- **Full diagnostic story, every experiment, extended flowcharts:** [`docs/README.md`](docs/README.md)
-- **Business problem and scope:** [`problem.md`](problem.md)
-- **Cost and operating-cost model:** [`docs/cost_and_business_impact.md`](docs/cost_and_business_impact.md)
-- **Responsible AI / OWASP Top 10 for LLM Applications (2026):** [`docs/responsible_ai_risk_table.md`](docs/responsible_ai_risk_table.md), [`docs/owasp_llm_top10_2026.md`](docs/owasp_llm_top10_2026.md)
-- **Bugs found after the freeze, documented not silently patched:** [`docs/post_freeze_findings.md`](docs/post_freeze_findings.md)
-- **Disclosure: a second, undocumented run touched the held-out data after the freeze:** [`docs/second_touch_disclosure.md`](docs/second_touch_disclosure.md)
-- **Root-causing why the candidate still missed APPROVE cases (Exp 53-59):** [`docs/exp53_approve_calibration.md`](docs/exp53_approve_calibration.md) → [`docs/exp59_final_fix.md`](docs/exp59_final_fix.md)
-- **Fresh-holdout validation and the stronger-model safety tradeoff (Exp 60):** [`docs/exp60_fresh_holdout.md`](docs/exp60_fresh_holdout.md)
-- **Pre-registered second holdout that found the candidate's first false approval (Exp 61):** [`docs/exp61_v3_holdout.md`](docs/exp61_v3_holdout.md)
-
-## OWASP Top 10 for LLM Applications (2026): full results
-
-The current, officially published edition is the **2026** edition (published 2026-08-04, verified live
-against two independent sources). All 10 categories assessed, **$0 cost** (free local model for live
-probes; the rest static checks or reasoned scoping, no new API calls). 9 of 10 categories carry forward
-unchanged real test evidence; full detail: [`docs/owasp_llm_top10_2026.md`](docs/owasp_llm_top10_2026.md).
-
-| Category | Status | Evidence |
-|---|---|---|
-| LLM01: Prompt Injection | **Not solved** — disclosed open risk | Retrieval-text injection defeated the defense in one live attack |
-| LLM02: Sensitive Information Disclosure | Tested | Crafted request for another employee's data; not disclosed (safe fallback to ESCALATE) |
-| LLM03: Excessive Agency | Mitigated | Disposition gate, domain guards, step cap, call deduplication |
-| LLM04: Supply Chain | Tested | `npm audit`: 1 moderate finding, documented, not fixed. Python deps all current; runtime code imports no third-party package |
-| LLM05: Data and Model Poisoning | Scoped — not applicable | No model is fine-tuned or trained; every model is an unmodified foundation model |
-| LLM06: Unbounded Consumption | Tested | `MAX_BUDGET_USD` confirmed live to actually raise `BudgetExceeded`; step cap bounds worst-case cost |
-| LLM07: Misinformation | Tested | All 897 policy-evidence citations ever saved, checked against the real corpus — **zero fabricated citations** |
-| LLM08: Hidden Context Exposure | **Partially tested** | Renamed and broadened from "System Prompt Leakage." The system-prompt sub-case was tested — a "print your system prompt" attack did not echo system-prompt text (safe fallback). The broader RAG-schema/hidden-policy-logic scope was **not** separately probed — disclosed as open, not claimed as covered |
-| LLM09: Vector and Embedding Weaknesses | Scoped and tested | Fixed, allowlisted 22-document corpus, no live ingestion path, no runtime embedding-insertion mechanism |
-| LLM10: Improper Output Handling | Tested | No `dangerouslySetInnerHTML` anywhere in the frontend; a live `<script>` payload did not survive as executable content |
-
-**Honest summary:** 9 of 10 categories have real, executed test evidence directly carried over from the
-original assessment — not all are clean passes (LLM01 is a disclosed, unsolved risk; LLM02's pass rests on
-a safety fallback, not a demonstrated deliberate refusal). LLM08 is the one category genuinely incomplete
-under the new, broader 2026 definition — stated here rather than silently marked "tested." Full detail:
-[`docs/owasp_llm_top10_2026.md`](docs/owasp_llm_top10_2026.md).
+**Documentation index:**
+- Full diagnostic story, every experiment, extended flowcharts: [`docs/README.md`](docs/README.md)
+- Business problem and scope: [`problem.md`](problem.md)
+- Cost and operating-cost model: [`docs/cost_and_business_impact.md`](docs/cost_and_business_impact.md)
+- Responsible AI / full OWASP Top 10 for LLM Applications (2026) results: [`docs/responsible_ai_risk_table.md`](docs/responsible_ai_risk_table.md), [`docs/owasp_llm_top10_2026.md`](docs/owasp_llm_top10_2026.md)
+- Bugs found after the freeze, documented not silently patched: [`docs/post_freeze_findings.md`](docs/post_freeze_findings.md)
+- Disclosure: the held-out data touched after the freeze: [`docs/second_touch_disclosure.md`](docs/second_touch_disclosure.md)
+- Root-causing the candidate's missed APPROVE cases (Exp 53–59): [`docs/exp53_approve_calibration.md`](docs/exp53_approve_calibration.md) → [`docs/exp59_final_fix.md`](docs/exp59_final_fix.md)
+- Fresh-holdout validation and the stronger-model safety tradeoff (Exp 60): [`docs/exp60_fresh_holdout.md`](docs/exp60_fresh_holdout.md)
+- Pre-registered second holdout that found the candidate's first false approval (Exp 61): [`docs/exp61_v3_holdout.md`](docs/exp61_v3_holdout.md)
