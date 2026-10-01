@@ -1,7 +1,8 @@
 # ExpenseGuard — Resolves Expense Claims with Evidence
 
-A bounded AI system that decides whether an employee expense claim is safe to reimburse — and shows its
-evidence for every decision.
+A bounded AI system that **selectively automates** expense-claim compliance: it automatically resolves the
+claims it can decide safely, and for everything else it gathers and hands a finance reviewer an
+evidence-backed package instead of guessing — it does not force every claim through an autonomous decision.
 
 ## Who ExpenseGuard is
 
@@ -87,10 +88,15 @@ flowchart TD
 This is the **official, frozen architecture** (Exp 30/32). A second, later design — a bounded agent whose
 tools *compute* the disposition in code, gated so the model can't override a correct tool answer — scores
 higher on the development/validation splits it was tuned on. It has no official, frozen final-test result —
-but an independent audit found real, undisclosed execution data against 60% of the final-test split with a
-materially worse result (50% accuracy, 17.6% FAR) than any headlined number for this design; see
-[`docs/second_touch_disclosure.md`](docs/second_touch_disclosure.md) and
-[Results](#results-at-a-glance). Both diagrams, in full: [`docs/README.md`](docs/README.md#two-architecture-diagrams-clean-item-53).
+an independent audit found real, undisclosed execution data against 60% of the final-test split with a
+materially worse result (50% accuracy, 17.6% FAR) than any headlined number for this design (Exp 53,
+[`docs/second_touch_disclosure.md`](docs/second_touch_disclosure.md)). A follow-up investigation
+(Exp 53-60) root-caused *why* — the model doesn't reliably ground its answer in facts it's given unless a
+tool computes the disposition **and** something enforces that the tool was actually used — fixed what could
+be fixed in code, and tested the result on a genuinely fresh, independently-labeled holdout no version of
+the system had seen. See [Results](#results-at-a-glance) and
+[`docs/exp60_fresh_holdout.md`](docs/exp60_fresh_holdout.md). Both diagrams, in full:
+[`docs/README.md`](docs/README.md#two-architecture-diagrams-clean-item-53).
 
 ## Four real decisions, before → after
 
@@ -129,12 +135,60 @@ Live-run this session against the actual pipeline (`ui/backend/server.py`, free 
 **Headline finding:** ExpenseGuard first established a frozen selective resolver that achieved 60% accuracy
 with zero observed false approvals on its official one-shot final evaluation. Post-final work developed a
 guarded agent that improved development/validation performance and appeared cheaper under a corrected cost
-model. However, a later diagnostic run on final cases showed substantial degradation, including false
-approvals. Because those final cases are no longer an independent holdout, that result cannot establish
-the candidate's true generalization performance, but it is sufficient to prevent promotion. **The frozen
-selective resolver therefore remains the official architecture, while the guarded agent is retained as a
-promising candidate requiring fresh independent evaluation.** Full reasoning and the sensitivity analysis
-behind it: [`docs/cost_and_business_impact.md`](docs/cost_and_business_impact.md).
+model. However, a diagnostic run on the (no longer independent) final-test cases showed substantial
+degradation, including false approvals — sufficient to prevent promotion on its own. **The frozen
+selective resolver therefore remains the official architecture.**
+
+**What happened next (Exp 53-60):** rather than stop at that diagnosis, the investigation root-caused it —
+the guarded agent's LLM step does not reliably ground its answer in facts it is given unless a tool
+computes the disposition in code **and** something enforces that the tool was actually consulted. Real,
+specific gaps were found and fixed this way (a missing hotel-ceiling circular, an unenforced
+evidence-consistency check, a missing gift-recipient check, a tool that could be silently skipped), each
+verified live, then tested — honestly, once, without tuning against the result — on a **fresh,
+independently-labeled 50-case holdout no version of either architecture had ever seen**:
+
+| | Frozen resolver (official) | Guarded-agent candidate, fixed (gpt-4o-mini) | Same candidate (gpt-4o) |
+|---|---|---|---|
+| Accuracy | 22/50 (44%) | 34/50 (68%) | 39/50 (78%) |
+| APPROVE recall | 0/20 | 12/20 | 13/20 |
+| False approvals | 0/30 (0%) | **0/30 (0%)** | 2/30 (6.7%) |
+
+The fixed candidate matches the frozen resolver's 0% FAR on genuinely new data while roughly doubling
+accuracy and APPROVE recall — real evidence the fixes generalize, not just fit the cases that motivated
+them. The stronger model is *not* a clean upgrade: it's more accurate but less safe, finding two new ways
+past the same gate that gpt-4o-mini didn't.
+
+**Accuracy alone understates the real difference.** It blends a false approval (a safety failure) with a
+false rejection (a real approvable claim wrongly blocked — a cost, not a danger) into one number. Broken
+apart, at $0 (recomputed from the same saved predictions, no new calls):
+
+| | Safely automated & correct, no human | False approvals | False rejections (real approvable claim, blocked) |
+|---|---|---|---|
+| Frozen resolver | 21/50 = 42% | 0 | **20/50 = 40%** |
+| Candidate, gpt-4o-mini | **33/50 = 66%** | 0 | 2/50 = 4% |
+
+The frozen resolver's headline "0% FAR" hides its actual biggest weakness: **2 of every 5 claims that
+should have been approved, on this fresh sample, were wrongly blocked.** The fixed candidate cuts that
+false-rejection rate by 10x while holding false approvals at zero. Full result, including both of gpt-4o's
+new failures diagnosed in detail: [`docs/exp60_fresh_holdout.md`](docs/exp60_fresh_holdout.md).
+
+**A second, pre-registered holdout (Exp 61) corrected the candidate's "0% FAR" claim.** Exp 60 was honest
+but not formally pre-registered; Exp 61 named and froze the exact architecture ("Selective Automation V3")
+in a manifest committed *before* generating a second, independent 30-case holdout — and found the
+candidate's first real false approval on fresh data (1/15, a gift-form free-text parsing gap, diagnosed
+live and disclosed, not fixed under that manifest). Combined across both fresh holdouts, the candidate has
+1 false approval in 45 non-approvable cases — not zero. **The frozen resolver's own 0% FAR claim is
+unaffected** (0 false approvals across Exp 32, Exp 60, and Exp 61 combined — 82 non-approvable cases).
+Full result: [`docs/exp61_v3_holdout.md`](docs/exp61_v3_holdout.md).
+
+**The frozen resolver remains the official, shipped architecture.** The guarded agent, now fixed and
+tested on two independent fresh holdouts, is promoted from "unvalidated candidate" to **leading
+development candidate** — a real, evidence-backed upgrade path, not yet an independently validated
+replacement, and now described with a sharper, more honest statement of its remaining risk (not 0% FAR,
+but ~2.2% observed with a wide confidence interval at this sample size). That distinction is deliberate:
+two small fresh-data tests are enough to support this project's conclusions, not enough to claim
+production safety. Full reasoning and the sensitivity analysis behind the original cost comparison:
+[`docs/cost_and_business_impact.md`](docs/cost_and_business_impact.md).
 
 ## Business value, quantified
 
@@ -150,6 +204,7 @@ blended into one number without saying which is which.
 | Human Review Rate (claims still needing a person) | **22.0%** (final test) — 78% resolved without a human | **Measured** |
 | Reports with errors/missing info (industry baseline) | ~19% | **Assumed** — GBTA, same source |
 | False-approval rate | **0/37 = 0% observed** (final test) | **Measured** (observed on this population, not a guarantee — see caveats) |
+| False-rejection rate — real approvable claims wrongly blocked | **20/50 = 40% observed** (frozen design, Exp 60 fresh holdout) — the fixed candidate cuts this to **4%** at the same 0% FAR | **Measured** — the cost FAR alone never surfaces; see [Exp 60](docs/exp60_fresh_holdout.md) |
 | Modeled cost/1,000 claims at scale | $2,100–$54,700 depending on scenario and architecture | **Modeled**, scenario-labeled assumptions — [full model](docs/cost_and_business_impact.md) |
 
 The business argument this supports, stated the way `problem.md` §36 requires: *if* a real deployment's
@@ -160,10 +215,17 @@ synthetic benchmark (see "What remains unproven" below).
 
 ## What remains unproven
 
-- **The guarded-agent candidate has no authorized, frozen final-test result.** Its official numbers come
-  from splits it was tuned against; a fresh, untouched holdout would be needed before treating it as
-  generalizing. A real but unauthorized, partial run against final-test does exist and scored worse —
-  see [`docs/second_touch_disclosure.md`](docs/second_touch_disclosure.md).
+- **The guarded-agent candidate still has no authorized, frozen *final-test* result** — final-test itself
+  cannot be reused (see the second-touch disclosure below), so this gap can only be closed by a genuinely
+  new frozen holdout, not by reusing existing splits. What *has* been done: two independent fresh holdouts.
+  Exp 60 (50 cases, never seen by either architecture) found the fixed candidate matching the frozen
+  resolver's 0% FAR while roughly doubling accuracy. Exp 61 (30 cases, pre-registered via a freeze manifest
+  committed before case generation — closer to Exp 32's own rigor) found the candidate's **first real false
+  approval on fresh data** (6.7% FAR, one case, a gift-form parsing gap, disclosed and not fixed). Combined,
+  the candidate's observed FAR is ~2.2% (1/45), not 0% — a materially more honest statement of its risk than
+  either test alone gave. Neither test establishes production safety, and neither substitutes for an
+  authorized final-test run. See [`docs/exp60_fresh_holdout.md`](docs/exp60_fresh_holdout.md) and
+  [`docs/exp61_v3_holdout.md`](docs/exp61_v3_holdout.md).
 - **This is a synthetic benchmark, not production evidence.** Every claim, policy document, and enterprise
   record is generated, not real — real-world performance has not been measured.
 - **Prompt injection is not solved.** A retrieval-text injection attack defeats the current defense outright
@@ -178,7 +240,7 @@ synthetic benchmark (see "What remains unproven" below).
 `python -m unittest discover -s tests` (leakage/guardrail checks, $0) and `python -m dataset_generator.validate`
 (dataset integrity, $0) require no API key. Every number in this README traces to a file under `results/current/`.
 
-## The experiment journey — 53 experiments, 5 phases
+## The experiment journey — 61 experiments, 7 phases
 
 | Phase | Experiments | What it answered | Outcome |
 |---|---|---|---|
@@ -186,11 +248,13 @@ synthetic benchmark (see "What remains unproven" below).
 | 2. Workflow vs. agent gate | 18–20 | Fixed workflow or a real agent? | Workflow was more accurate (64%) but unsafe (13.5% FAR) → motivated the selective design |
 | 3. Freeze & final test | 28–33 | Security/guardrail audit, then the one-shot blind test | **Official result: 30/50 (60%), 0% observed FAR** |
 | 4. Agentic-RAG diagnosis | 34–39 | Why does a full agent do *worse* than the frozen design? | Stricter prompts, bigger models, parallel calls all failed — reasoning, not retrieval, was the real gap |
-| 5. Guarded-agent build | 40–52 | Give the model tools that compute the answer, gate it from overriding them | 44/70 dev, 21/30 validation, 0% FAR — strong candidate, not yet held-out tested |
+| 5. Guarded-agent build | 40–52 | Give the model tools that compute the answer, gate it from overriding them | 44/70 dev, 21/30 validation, 0% FAR — promising, but not yet held-out tested |
+| 6. Root-cause, fix, fresh-holdout validate | 53–60 | Why does the candidate still miss real APPROVE cases, and does a code-level fix survive genuinely new data? | Diagnosed 3 distinct root causes live (ungrounded facts, an unenforced tool, a skippable tool call), fixed each, then validated once on a fresh holdout: **0% FAR, 68% accuracy** (gpt-4o-mini) — and a stronger model (gpt-4o) trades that safety margin for accuracy, a real, disclosed limitation |
+| 7. Pre-registered second holdout | 61 | Does a 0% observed FAR survive a second, independently pre-registered test? | No — a real 6.7% FAR (1 case, a gift-form parsing gap) surfaced on a second 30-case holdout, disclosed and not fixed; combined observed FAR across both holdouts is ~2.2% (1/45), not 0% |
 
 ![Exp 33 failure analysis: where the LLM-residual step's 20 final-test errors actually came from](results/current/plots/exp33_failure_categories.png)
 
-Full 53-row index with every result, and the diagnostic flowcharts for phases 4–5:
+Full experiment index with every result, and the diagnostic flowcharts for phases 4–6:
 [`docs/README.md`](docs/README.md#full-experiment-index). Every number traces to a file under
 `results/current/` — nothing in these docs is hand-typed.
 
@@ -274,4 +338,7 @@ verify the generator itself — the packaged dataset is already there.
 - **Bugs found after the freeze, documented not silently patched:** [`docs/post_freeze_findings.md`](docs/post_freeze_findings.md)
 - **Disclosure: a second, undocumented run touched the held-out data after the freeze:** [`docs/second_touch_disclosure.md`](docs/second_touch_disclosure.md)
 - **Reproduced agent failures (dedup/loop and vague-tool-description ablations):** [`docs/exp_agent_failure_ablation.md`](docs/exp_agent_failure_ablation.md)
+- **Root-causing why the candidate still missed APPROVE cases, and fixing it (Exp 53-59):** [`docs/exp53_approve_calibration.md`](docs/exp53_approve_calibration.md) → [`docs/exp59_final_fix.md`](docs/exp59_final_fix.md)
+- **The fresh-holdout validation and the stronger-model safety tradeoff (Exp 60):** [`docs/exp60_fresh_holdout.md`](docs/exp60_fresh_holdout.md)
+- **The pre-registered second holdout that found the candidate's first false approval (Exp 61):** [`docs/exp61_v3_holdout.md`](docs/exp61_v3_holdout.md)
 - **1,200-word decision-flow report:** [`docs/FINAL_REPORT.md`](docs/FINAL_REPORT.md)

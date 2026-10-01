@@ -16,6 +16,15 @@ export default function DesignPanel({ title, subtitle, caseObj, designKey, backe
   const decision = shown?.decision;
   const correct = live && liveResult ? decision === caseObj.ground_truth.expected_decision : precomputed?.correct;
 
+  // Derived from what the architecture actually did on this case -- never a fabricated score. "High" only
+  // when either no LLM was involved (deterministic path) or a code-level gate (Exp 40/41) enforced the
+  // disposition over the model's own answer; everything else is ungated LLM judgment, labeled "Lower".
+  const gated = (shown?.explanation || "").includes("gate:");
+  const confidence = !shown ? null
+    : shown.path === "deterministic" ? { label: "High", detail: "Resolved by deterministic code — no LLM involved." }
+    : gated ? { label: "High", detail: "A code-level gate enforced this disposition over the model's own answer." }
+    : { label: "Lower", detail: "LLM judgment on this case — not enforced by a code-level gate." };
+
   async function runLive() {
     setStatus("running");
     setError(null);
@@ -88,6 +97,36 @@ export default function DesignPanel({ title, subtitle, caseObj, designKey, backe
             )}
           </div>
           {shown.explanation && <div className="explanation">{shown.explanation}</div>}
+
+          {confidence && (
+            <div className="review-card" style={{ marginTop: 14, padding: 12, border: "1px solid var(--border, #333)", borderRadius: 8 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <b>{decision === "ESCALATE" || decision === "REQUEST_INFORMATION" ? "Human review required" : "Automated disposition"}</b>
+                <span className={`decision-pill ${confidence.label === "High" ? "APPROVE" : "REQUEST_INFORMATION"}`} title={confidence.detail}>
+                  Confidence: {confidence.label}
+                </span>
+              </div>
+              {(shown.policy_evidence || []).length > 0 && (
+                <div style={{ marginTop: 8 }}>
+                  <div style={{ fontSize: 11, color: "var(--text-dim)", fontWeight: 700 }}>Why — policy evidence</div>
+                  <ul className="bullets">{shown.policy_evidence.map((e, i) => <li key={i}>{e}</li>)}</ul>
+                </div>
+              )}
+              {(shown.missing_fields || []).length > 0 && (
+                <div style={{ marginTop: 8 }}>
+                  <div style={{ fontSize: 11, color: "var(--text-dim)", fontWeight: 700 }}>Missing / requested information</div>
+                  <ul className="bullets">{shown.missing_fields.map((f, i) => <li key={i}>{f}</li>)}</ul>
+                </div>
+              )}
+              {(decision === "ESCALATE" || decision === "REQUEST_INFORMATION") && (
+                <div style={{ marginTop: 10, display: "flex", gap: 8 }}>
+                  {["Approve", "Reject", "Request Info"].map((a) => (
+                    <button key={a} className="chunk-toggle" disabled title="Illustrative only — this demo is read-only, no reviewer action is recorded">{a}</button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </>
       ) : (
         <div style={{ color: "var(--text-dim)", fontSize: 12.5 }}>No result for this design on this case.</div>

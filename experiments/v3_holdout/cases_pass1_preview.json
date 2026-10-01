@@ -1,0 +1,280 @@
+[
+ {
+  "case_id": "X4-001",
+  "archetype": "HOTEL_CEILING",
+  "touches": "hotel_circular",
+  "difficulty": "hard",
+  "expected_decision": "APPROVE",
+  "reason": "All applicable checks pass.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-002",
+  "archetype": "HOTEL_CEILING",
+  "touches": "hotel_circular (negative control)",
+  "difficulty": "hard",
+  "expected_decision": "REJECT",
+  "reason": "Above the ceiling with no partner uplift or exception.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-003",
+  "archetype": "HOTEL_CEILING",
+  "touches": "hotel_circular (India)",
+  "difficulty": "hard",
+  "expected_decision": "APPROVE",
+  "reason": "All applicable checks pass.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-004",
+  "archetype": "HOTEL_CONFERENCE",
+  "touches": "hotel_partner_uplift",
+  "difficulty": "hard",
+  "expected_decision": "APPROVE",
+  "reason": "All applicable checks pass.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-005",
+  "archetype": "HOTEL_CEILING",
+  "touches": "hotel_circular (well above, control)",
+  "difficulty": "medium",
+  "expected_decision": "REJECT",
+  "reason": "Above the ceiling with no partner uplift or exception.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-006",
+  "archetype": "EMPLOYEE_MEAL_TEMPORAL",
+  "touches": "meal_attendee_roles",
+  "difficulty": "hard",
+  "expected_decision": "APPROVE",
+  "reason": "All applicable checks pass.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-007",
+  "archetype": "CLIENT_MEAL",
+  "touches": "meal_attendee_roles (client)",
+  "difficulty": "medium",
+  "expected_decision": "APPROVE",
+  "reason": "All applicable checks pass.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-008",
+  "archetype": "ALCOHOL_REGIONAL",
+  "touches": "control",
+  "difficulty": "easy",
+  "expected_decision": "REJECT",
+  "reason": "Alcohol is not reimbursable in India.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-009",
+  "archetype": "CLIENT_MEAL",
+  "touches": "control",
+  "difficulty": "easy",
+  "expected_decision": "REQUEST_INFORMATION",
+  "reason": "Mandatory fields are missing.",
+  "missing_fields": [
+   "external_attendee_names"
+  ]
+ },
+ {
+  "case_id": "X4-010",
+  "archetype": "MILEAGE",
+  "touches": "mileage_odometer",
+  "difficulty": "medium",
+  "expected_decision": "APPROVE",
+  "reason": "All applicable checks pass.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-011",
+  "archetype": "MILEAGE",
+  "touches": "mileage_odometer (negative control)",
+  "difficulty": "medium",
+  "expected_decision": "REJECT",
+  "reason": "Claim exceeds distance times the mileage rate.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-012",
+  "archetype": "MILEAGE",
+  "touches": "control (plain km)",
+  "difficulty": "easy",
+  "expected_decision": "APPROVE",
+  "reason": "All applicable checks pass.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-013",
+  "archetype": "MILEAGE",
+  "touches": "mileage_odometer (decoy)",
+  "difficulty": "hard",
+  "expected_decision": "APPROVE",
+  "reason": "All applicable checks pass.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-014",
+  "archetype": "SOFTWARE_APPROVAL",
+  "touches": "software_owner_phrasing",
+  "difficulty": "easy",
+  "expected_decision": "APPROVE",
+  "reason": "All applicable checks pass.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-015",
+  "archetype": "SOFTWARE_APPROVAL",
+  "touches": "software_owner_phrasing (new wording)",
+  "difficulty": "hard",
+  "expected_decision": "APPROVE",
+  "reason": "All applicable checks pass.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-016",
+  "archetype": "SOFTWARE_APPROVAL",
+  "touches": "control (no owner)",
+  "difficulty": "easy",
+  "expected_decision": "REQUEST_INFORMATION",
+  "reason": "Mandatory fields are missing.",
+  "missing_fields": [
+   "business_owner"
+  ]
+ },
+ {
+  "case_id": "X4-017",
+  "archetype": "SOFTWARE_APPROVAL",
+  "touches": "control (over high tier)",
+  "difficulty": "medium",
+  "expected_decision": "APPROVE",
+  "reason": "All applicable checks pass.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-018",
+  "archetype": "GIFT_RULES",
+  "touches": "gift_recipient_government",
+  "difficulty": "easy",
+  "expected_decision": "REJECT",
+  "reason": "Gift to a public official or government-affiliated body.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-019",
+  "archetype": "GIFT_RULES",
+  "touches": "gift_recipient_government (negative control)",
+  "difficulty": "easy",
+  "expected_decision": "APPROVE",
+  "reason": "All applicable checks pass.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-020",
+  "archetype": "GIFT_RULES",
+  "touches": "control (cash equivalent)",
+  "difficulty": "easy",
+  "expected_decision": "REJECT",
+  "reason": "Cash equivalents are prohibited as gifts.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-021",
+  "archetype": "GIFT_ANNUAL_CAP",
+  "touches": "control (annual cap)",
+  "difficulty": "medium",
+  "expected_decision": "REJECT",
+  "reason": "Annual ceiling for the recipient organisation would be exceeded.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-022",
+  "archetype": "EVIDENCE_CONFLICT",
+  "touches": "control (no conflict)",
+  "difficulty": "easy",
+  "expected_decision": "APPROVE",
+  "reason": "All applicable checks pass.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-023",
+  "archetype": "EVIDENCE_CONFLICT",
+  "touches": "evidence_consistency",
+  "difficulty": "medium",
+  "expected_decision": "REQUEST_INFORMATION",
+  "reason": "The bill and the description describe different expenses.",
+  "missing_fields": [
+   "clarified_business_purpose"
+  ]
+ },
+ {
+  "case_id": "X4-024",
+  "archetype": "EVIDENCE_CONFLICT",
+  "touches": "evidence_consistency (meal bill/taxi note)",
+  "difficulty": "medium",
+  "expected_decision": "REQUEST_INFORMATION",
+  "reason": "The bill and the description describe different expenses.",
+  "missing_fields": [
+   "clarified_business_purpose"
+  ]
+ },
+ {
+  "case_id": "X4-025",
+  "archetype": "AIRFARE_CABIN",
+  "touches": "airfare_biz_wording",
+  "difficulty": "medium",
+  "expected_decision": "APPROVE",
+  "reason": "All applicable checks pass.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-026",
+  "archetype": "AIRFARE_CABIN",
+  "touches": "control (wrong cabin)",
+  "difficulty": "easy",
+  "expected_decision": "REJECT",
+  "reason": "Cabin not permitted for this grade and flight time.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-027",
+  "archetype": "TRAINING_CAP",
+  "touches": "control (within cap)",
+  "difficulty": "easy",
+  "expected_decision": "APPROVE",
+  "reason": "All applicable checks pass.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-028",
+  "archetype": "DUPLICATE_CHECK",
+  "touches": "control (exact duplicate)",
+  "difficulty": "easy",
+  "expected_decision": "REJECT",
+  "reason": "Exact duplicate of PREV-9528.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-029",
+  "archetype": "SUBMISSION_WINDOW",
+  "touches": "control (late)",
+  "difficulty": "easy",
+  "expected_decision": "ESCALATE",
+  "reason": "Submitted after the approval tier; Finance escalation.",
+  "missing_fields": []
+ },
+ {
+  "case_id": "X4-030",
+  "archetype": "RESTRICTED_MERCHANT",
+  "touches": "control",
+  "difficulty": "easy",
+  "expected_decision": "REJECT",
+  "reason": "Merchant risk class is prohibited.",
+  "missing_fields": []
+ }
+]

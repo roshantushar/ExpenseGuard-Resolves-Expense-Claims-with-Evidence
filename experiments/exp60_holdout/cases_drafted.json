@@ -1,0 +1,2407 @@
+[
+ {
+  "case_id": "X3-001",
+  "archetype": "HOTEL_CEILING",
+  "touches": "hotel_circular",
+  "difficulty": "hard",
+  "employee_id": "E0048",
+  "bill": {
+   "merchant": "Garden Tokyo Hotel",
+   "country": "Japan",
+   "city": "Tokyo",
+   "currency": "JPY",
+   "total": 69800.0,
+   "bill_number": "B3-000001",
+   "merchant_category": "HOTEL",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 69800.0
+    }
+   ]
+  },
+  "transaction_date": "2025-09-11",
+  "submission_date": "2025-09-14",
+  "project_id": "PRJ-031",
+  "form": {
+   "expense_type": "HOTEL",
+   "city": "Tokyo",
+   "nights": 2
+  },
+  "new_rows": [
+   [
+    "travel_requests",
+    {
+     "travel_id": "TR-9001",
+     "employee_id": "E0048",
+     "start_date": "2025-09-10",
+     "end_date": "2025-09-12",
+     "destination": "Tokyo",
+     "purpose": "Client visit",
+     "status": "APPROVED",
+     "event_id": "",
+     "exception_id": ""
+    }
+   ],
+   [
+    "manager_approvals",
+    {
+     "approval_id": "APR-9001",
+     "expense_id": "X3-001",
+     "employee_id": "E0048",
+     "manager_id": "",
+     "approval_type": "TRAVEL",
+     "status": "APPROVED",
+     "approver_level": "DIRECTOR",
+     "start_date": "2024-01-01",
+     "end_date": "2026-12-31",
+     "delegation_id": ""
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "\u3053\u306e\u30d3\u30b8\u30cd\u30b9\u7d4c\u8cbb\u306b\u3064\u3044\u3066\u306e\u8a73\u7d30\u306f\u3001\u6dfb\u4ed8\u306e\u9818\u53ce\u66f8\u3092\u3054\u89a7\u304f\u3060\u3055\u3044\u3002\u5bbf\u6cca\u5148\u306f\u30ac\u30fc\u30c7\u30f3\u6771\u4eac\u30db\u30c6\u30eb\u3067\u3001\u30c1\u30a7\u30c3\u30af\u30a4\u30f3\u65e5\u306f\u4e8c\u3007\u4e8c\u4e94\u5e74\u4e5d\u6708\u4e5d\u65e5\u3001\u30c1\u30a7\u30c3\u30af\u30a2\u30a6\u30c8\u65e5\u306f\u4e8c\u3007\u4e8c\u4e94\u5e74\u4e5d\u6708\u5341\u4e00\u65e5\u3067\u3059\u3002\u5148\u9031\u306e\u51fa\u5f35\u3067\u306f\u3001\u5225\u306e\u5bbf\u6cca\u5148\u306b\u4e09\u6cca\u3057\u307e\u3057\u305f\u3002\u5b9f\u306f\u3001\u6700\u521d\u306b\u8a18\u8f09\u3057\u305f\u91d1\u984d\u306f\u9593\u9055\u3063\u3066\u3044\u3066\u3001\u6b63\u3057\u3044\u91d1\u984d\u306f\u3007\u5186\u3067\u3059\u3002\u30a2\u30ea\u30b9\u304c\u3001\u30db\u30c6\u30eb\u306e\u540d\u524d\u3092\u6559\u3048\u3066\u304f\u308c\u307e\u3057\u305f\u3002",
+  "style": "local",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00044835
+ },
+ {
+  "case_id": "X3-002",
+  "archetype": "HOTEL_CEILING",
+  "touches": "hotel_circular (negative control)",
+  "difficulty": "hard",
+  "employee_id": "E0048",
+  "bill": {
+   "merchant": "Garden Tokyo Hotel",
+   "country": "Japan",
+   "city": "Tokyo",
+   "currency": "JPY",
+   "total": 69800.0,
+   "bill_number": "B3-000002",
+   "merchant_category": "HOTEL",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 69800.0
+    }
+   ]
+  },
+  "transaction_date": "2025-05-11",
+  "submission_date": "2025-05-14",
+  "project_id": "PRJ-031",
+  "form": {
+   "expense_type": "HOTEL",
+   "city": "Tokyo",
+   "nights": 2
+  },
+  "new_rows": [
+   [
+    "travel_requests",
+    {
+     "travel_id": "TR-9002",
+     "employee_id": "E0048",
+     "start_date": "2025-05-10",
+     "end_date": "2025-05-12",
+     "destination": "Tokyo",
+     "purpose": "Client visit",
+     "status": "APPROVED",
+     "event_id": "",
+     "exception_id": ""
+    }
+   ],
+   [
+    "manager_approvals",
+    {
+     "approval_id": "APR-9002",
+     "expense_id": "X3-002",
+     "employee_id": "E0048",
+     "manager_id": "",
+     "approval_type": "TRAVEL",
+     "status": "APPROVED",
+     "approver_level": "DIRECTOR",
+     "start_date": "2024-01-01",
+     "end_date": "2026-12-31",
+     "delegation_id": ""
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "\u3053\u306e\u30d3\u30b8\u30cd\u30b9\u7d4c\u8cbb\u306b\u95a2\u3059\u308b\u8a73\u7d30\u306f\u3001\u6dfb\u4ed8\u306e\u9818\u53ce\u66f8\u3092\u3054\u89a7\u304f\u3060\u3055\u3044\u3002\u5bbf\u6cca\u306f\u3001\u4e8c\u3007\u4e8c\u4e94\u5e74\u4e94\u6708\u4e5d\u65e5\u306b\u30c1\u30a7\u30c3\u30af\u30a4\u30f3\u3057\u3001\u4e8c\u3007\u4e8c\u4e94\u5e74\u4e94\u6708\u5341\u4e00\u65e5\u306b\u30c1\u30a7\u30c3\u30af\u30a2\u30a6\u30c8\u3057\u307e\u3057\u305f\u3002\u8acb\u6c42\u66f8\u306b\u306f\u3001Garden Tokyo Hotel\u306e\u540d\u524d\u304c\u8a18\u8f09\u3055\u308c\u3066\u3044\u307e\u3059\u3002\u901a\u8ca8\u306f\u65e5\u672c\u5186\u3067\u3059\u3002",
+  "style": "local",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00039915
+ },
+ {
+  "case_id": "X3-003",
+  "archetype": "HOTEL_CEILING",
+  "touches": "hotel_circular (India)",
+  "difficulty": "hard",
+  "employee_id": "E0023",
+  "bill": {
+   "merchant": "Royal Mumbai Hotel",
+   "country": "India",
+   "city": "Mumbai",
+   "currency": "INR",
+   "total": 45900.0,
+   "bill_number": "B3-000003",
+   "merchant_category": "HOTEL",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 45900.0
+    }
+   ]
+  },
+  "transaction_date": "2026-05-05",
+  "submission_date": "2026-05-08",
+  "project_id": "PRJ-034",
+  "form": {
+   "expense_type": "HOTEL",
+   "city": "Mumbai",
+   "nights": 3
+  },
+  "new_rows": [
+   [
+    "travel_requests",
+    {
+     "travel_id": "TR-9003",
+     "employee_id": "E0023",
+     "start_date": "2026-05-04",
+     "end_date": "2026-05-08",
+     "destination": "Mumbai",
+     "purpose": "Client visit",
+     "status": "APPROVED",
+     "event_id": "",
+     "exception_id": ""
+    }
+   ],
+   [
+    "manager_approvals",
+    {
+     "approval_id": "APR-9003",
+     "expense_id": "X3-003",
+     "employee_id": "E0023",
+     "manager_id": "",
+     "approval_type": "TRAVEL",
+     "status": "APPROVED",
+     "approver_level": "DIRECTOR",
+     "start_date": "2024-01-01",
+     "end_date": "2026-12-31",
+     "delegation_id": ""
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "Mujhe is business expense ke liye Royal Mumbai Hotel ka bill mila hai. Ravi ne mujhe bataya ki hum wahaan teen raaton tak rahe. Kripya attached receipt dekhna.",
+  "style": "local",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.0003741
+ },
+ {
+  "case_id": "X3-004",
+  "archetype": "HOTEL_CEILING",
+  "touches": "hotel_circular (India, negative control)",
+  "difficulty": "hard",
+  "employee_id": "E0023",
+  "bill": {
+   "merchant": "Royal Mumbai Hotel",
+   "country": "India",
+   "city": "Mumbai",
+   "currency": "INR",
+   "total": 45900.0,
+   "bill_number": "B3-000004",
+   "merchant_category": "HOTEL",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 45900.0
+    }
+   ]
+  },
+  "transaction_date": "2026-02-05",
+  "submission_date": "2026-02-08",
+  "project_id": "PRJ-034",
+  "form": {
+   "expense_type": "HOTEL",
+   "city": "Mumbai",
+   "nights": 3
+  },
+  "new_rows": [
+   [
+    "travel_requests",
+    {
+     "travel_id": "TR-9004",
+     "employee_id": "E0023",
+     "start_date": "2026-02-04",
+     "end_date": "2026-02-08",
+     "destination": "Mumbai",
+     "purpose": "Client visit",
+     "status": "APPROVED",
+     "event_id": "",
+     "exception_id": ""
+    }
+   ],
+   [
+    "manager_approvals",
+    {
+     "approval_id": "APR-9004",
+     "expense_id": "X3-004",
+     "employee_id": "E0023",
+     "manager_id": "",
+     "approval_type": "TRAVEL",
+     "status": "APPROVED",
+     "approver_level": "DIRECTOR",
+     "start_date": "2024-01-01",
+     "end_date": "2026-12-31",
+     "delegation_id": ""
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "Yeh hotel accommodation ka kharcha hai. Main Royal Mumbai Hotel mein ruk raha tha. Check-in date hai do hazaar chhabbis ke February do, aur check-out date hai do hazaar chhabbis ke February paanch. Pichle saal ki trip ke liye, main bhi Royal Mumbai Hotel mein teen raat rukha tha. Receipt ke liye attached dekhiye.",
+  "style": "local",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.0004179
+ },
+ {
+  "case_id": "X3-005",
+  "archetype": "HOTEL_CEILING",
+  "touches": "hotel_circular (well above, control)",
+  "difficulty": "medium",
+  "employee_id": "E0048",
+  "bill": {
+   "merchant": "Garden Tokyo Hotel",
+   "country": "Japan",
+   "city": "Tokyo",
+   "currency": "JPY",
+   "total": 110000.0,
+   "bill_number": "B3-000005",
+   "merchant_category": "HOTEL",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 110000.0
+    }
+   ]
+  },
+  "transaction_date": "2025-09-15",
+  "submission_date": "2025-09-18",
+  "project_id": "PRJ-031",
+  "form": {
+   "expense_type": "HOTEL",
+   "city": "Tokyo",
+   "nights": 2
+  },
+  "new_rows": [
+   [
+    "travel_requests",
+    {
+     "travel_id": "TR-9005",
+     "employee_id": "E0048",
+     "start_date": "2025-09-14",
+     "end_date": "2025-09-16",
+     "destination": "Tokyo",
+     "purpose": "Client visit",
+     "status": "APPROVED",
+     "event_id": "",
+     "exception_id": ""
+    }
+   ],
+   [
+    "manager_approvals",
+    {
+     "approval_id": "APR-9005",
+     "expense_id": "X3-005",
+     "employee_id": "E0048",
+     "manager_id": "",
+     "approval_type": "TRAVEL",
+     "status": "APPROVED",
+     "approver_level": "DIRECTOR",
+     "start_date": "2024-01-01",
+     "end_date": "2026-12-31",
+     "delegation_id": ""
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "\u3053\u306e\u5ea6\u3001Garden Tokyo Hotel\u306b\u3066\u5bbf\u6cca\u3092\u3044\u305f\u3057\u307e\u3057\u305f\u3002\u30c1\u30a7\u30c3\u30af\u30a4\u30f3\u65e5\u306f\u4e8c\u5343\u4e8c\u5341\u4e94\u5e74\u4e5d\u6708\u5341\u4e09\u65e5\u3001\u30c1\u30a7\u30c3\u30af\u30a2\u30a6\u30c8\u65e5\u306f\u4e8c\u5343\u4e8c\u5341\u4e94\u5e74\u4e5d\u6708\u5341\u4e94\u65e5\u3067\u3059\u3002\u8a73\u7d30\u306b\u3064\u3044\u3066\u306f\u6dfb\u4ed8\u3055\u308c\u305f\u9818\u53ce\u66f8\u3092\u3054\u53c2\u7167\u304f\u3060\u3055\u3044\u3002",
+  "style": "local",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00039105
+ },
+ {
+  "case_id": "X3-006",
+  "archetype": "HOTEL_CONFERENCE",
+  "touches": "hotel_partner_uplift",
+  "difficulty": "hard",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Garden Singapore Hotel",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 1260.0,
+   "bill_number": "B3-000006",
+   "merchant_category": "HOTEL",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 1260.0
+    }
+   ]
+  },
+  "transaction_date": "2025-08-20",
+  "submission_date": "2025-08-23",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "HOTEL",
+   "city": "Singapore",
+   "nights": 3
+  },
+  "new_rows": [
+   [
+    "travel_requests",
+    {
+     "travel_id": "TR-9006",
+     "employee_id": "E0013",
+     "start_date": "2025-08-19",
+     "end_date": "2025-08-22",
+     "destination": "Singapore",
+     "purpose": "Conference",
+     "status": "APPROVED",
+     "event_id": "CONF-9001",
+     "exception_id": ""
+    }
+   ],
+   [
+    "manager_approvals",
+    {
+     "approval_id": "APR-9006",
+     "expense_id": "X3-006",
+     "employee_id": "E0013",
+     "manager_id": "",
+     "approval_type": "TRAVEL",
+     "status": "APPROVED",
+     "approver_level": "DIRECTOR",
+     "start_date": "2024-01-01",
+     "end_date": "2026-12-31",
+     "delegation_id": ""
+    }
+   ],
+   [
+    "conference_registry",
+    {
+     "event_id": "CONF-9001",
+     "employee_id": "E0013",
+     "registration_status": "REGISTERED",
+     "official_partner_hotel": "Garden Singapore Hotel"
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "Please find the receipt for the hotel accommodation at Garden Singapore Hotel in Singapore. The stay was from August seventeenth to August twentieth in the year two thousand twenty-five. For reference, last year's trip involved a stay of three nights at the same venue.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00038895
+ },
+ {
+  "case_id": "X3-007",
+  "archetype": "EMPLOYEE_MEAL_TEMPORAL",
+  "touches": "meal_attendee_roles",
+  "difficulty": "hard",
+  "employee_id": "E0048",
+  "bill": {
+   "merchant": "Fuji Grill",
+   "country": "Japan",
+   "city": "Tokyo",
+   "currency": "JPY",
+   "total": 15300.0,
+   "bill_number": "B3-000007",
+   "merchant_category": "RESTAURANT",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 15300.0
+    }
+   ]
+  },
+  "transaction_date": "2025-11-10",
+  "submission_date": "2025-11-13",
+  "project_id": "PRJ-031",
+  "form": {
+   "expense_type": "MEAL_EMPLOYEE",
+   "attendees_total": 3,
+   "external_attendees": 0,
+   "alcohol_amount": 0,
+   "tip_amount": 0
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "\u3053\u306e\u30d3\u30b8\u30cd\u30b9\u8cbb\u7528\u306b\u3064\u3044\u3066\u306e\u8a73\u7d30\u306f\u3001\u6dfb\u4ed8\u306e\u9818\u53ce\u66f8\u3092\u3054\u89a7\u304f\u3060\u3055\u3044\u3002\u4f1a\u98df\u306f\u793e\u54e1\u306e\u307f\u3067\u884c\u308f\u308c\u3001\u53c2\u52a0\u8005\u306f\u5168\u90e8\u3067\u4e09\u4eba\u3067\u3057\u305f\u3002\u53c2\u52a0\u8005\u306f\u5168\u54e1\u3001\u793e\u54e1\u3067\u3042\u308a\u3001\u5b50\u4f1a\u793e\u3084\u4ed6\u306e\u30aa\u30d5\u30a3\u30b9\u304b\u3089\u6765\u305f\u8005\u3084\u30a4\u30f3\u30bf\u30fc\u30f3\u3082\u542b\u307e\u308c\u3066\u3044\u307e\u3059\u3002\u5916\u90e8\u30b2\u30b9\u30c8\u306f\u3044\u307e\u305b\u3093\u3067\u3057\u305f\u3002\u307e\u305f\u3001\u8acb\u6c42\u66f8\u306b\u306f\u30a2\u30eb\u30b3\u30fc\u30eb\u3084\u4efb\u610f\u306e\u8cbb\u7528\u306f\u8a18\u8f09\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002\u4ee5\u524d\u306e\u4f1a\u98df\u3067\u306f\u3001\u53c2\u52a0\u8005\u304c\u4e94\u4eba\u3067\u3057\u305f\u3002\u5b9f\u969b\u306e\u53c2\u52a0\u8005\u306f\u4e09\u4eba\u3067\u3059\u306e\u3067\u3001\u3053\u3061\u3089\u304c\u6b63\u3057\u3044\u6570\u3067\u3059\u3002",
+  "style": "local",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00046095
+ },
+ {
+  "case_id": "X3-008",
+  "archetype": "EMPLOYEE_MEAL_TEMPORAL",
+  "touches": "meal_attendee_roles (negative control)",
+  "difficulty": "hard",
+  "employee_id": "E0048",
+  "bill": {
+   "merchant": "Fuji Grill",
+   "country": "Japan",
+   "city": "Tokyo",
+   "currency": "JPY",
+   "total": 19500.0,
+   "bill_number": "B3-000008",
+   "merchant_category": "RESTAURANT",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 19500.0
+    }
+   ]
+  },
+  "transaction_date": "2025-11-12",
+  "submission_date": "2025-11-15",
+  "project_id": "PRJ-031",
+  "form": {
+   "expense_type": "MEAL_EMPLOYEE",
+   "attendees_total": 3,
+   "external_attendees": 0,
+   "alcohol_amount": 0,
+   "tip_amount": 0
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "so, um, I went to Fuji Grill in Tokyo, Japan for a meal with some of my colleagues, and it was all employees, you know, there were no external guests, um, it was just me, and then there were two others who are, like, from a subsidiary or another office or even interns on payroll, um, I don't have the headcount but it was just us three, and there was no alcohol or any voluntary stuff on the bill, just a meal for employees only, yeah.",
+  "style": "dictated",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00043170000000000003
+ },
+ {
+  "case_id": "X3-009",
+  "archetype": "CLIENT_MEAL",
+  "touches": "meal_attendee_roles (client)",
+  "difficulty": "medium",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Kallang Dining Room",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 1400.0,
+   "bill_number": "B3-000009",
+   "merchant_category": "RESTAURANT",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 1400.0
+    }
+   ]
+  },
+  "transaction_date": "2025-08-05",
+  "submission_date": "2025-08-08",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "MEAL_CLIENT",
+   "attendees_total": 11,
+   "external_attendees": 5,
+   "external_names": "delegates from Ember Foods",
+   "alcohol_amount": 0,
+   "tip_amount": 0
+  },
+  "new_rows": [
+   [
+    "manager_approvals",
+    {
+     "approval_id": "APR-9009",
+     "expense_id": "X3-009",
+     "employee_id": "E0013",
+     "manager_id": "M014",
+     "approval_type": "ENTERTAINMENT",
+     "status": "APPROVED",
+     "approver_level": "MANAGER",
+     "start_date": "2024-01-01",
+     "end_date": "2026-12-31",
+     "delegation_id": ""
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "I hosted a meal for external guests at Kallang Dining Room in Singapore. Present were myself, five colleagues, and five delegates from Ember Foods, including a freelance consultant who works closely with our team. I initially thought there were four external guests, but I realized there were actually five. Ravi mentioned that there was no alcohol or voluntary charges on the bill. Just to clarify, during last year's dinner, we had a total of eight attendees.",
+  "style": "indirect",
+  "attempts": 3,
+  "problems": [],
+  "cost": 0.00109275
+ },
+ {
+  "case_id": "X3-010",
+  "archetype": "EMPLOYEE_MEAL_TEMPORAL",
+  "touches": "meal_circular (India, negative control)",
+  "difficulty": "medium",
+  "employee_id": "E0023",
+  "bill": {
+   "merchant": "Bengal Tiffin",
+   "country": "India",
+   "city": "Mumbai",
+   "currency": "INR",
+   "total": 8800.0,
+   "bill_number": "B3-000010",
+   "merchant_category": "RESTAURANT",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 8800.0
+    }
+   ]
+  },
+  "transaction_date": "2025-09-20",
+  "submission_date": "2025-09-23",
+  "project_id": "PRJ-034",
+  "form": {
+   "expense_type": "MEAL_EMPLOYEE",
+   "attendees_total": 4,
+   "external_attendees": 0,
+   "alcohol_amount": 0,
+   "tip_amount": 0
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "Yeh kharch ek meal ka hai jo sirf employees ke liye tha. Bengal Tiffin, Mumbai se kharida gaya tha. Is meal mein humare saath the: main, aur mere teen colleagues. Kuch employees humare company ke subsidiary se hain ya phir interns hain, lekin sabhi employees hain. Is bill par koi alcohol ya voluntary charges nahi hain. Maine pehle socha tha ki humare saath do log hain, lekin sahi sankhya teen hai. Pichle saal, humne ek aur dinner bhi kiya tha jisme chaar log the. Kripya attached receipt dekhein for details of this business expense.",
+  "style": "local",
+  "attempts": 2,
+  "problems": [],
+  "cost": 0.0006881999999999999
+ },
+ {
+  "case_id": "X3-011",
+  "archetype": "ALCOHOL_REGIONAL",
+  "touches": "control",
+  "difficulty": "easy",
+  "employee_id": "E0023",
+  "bill": {
+   "merchant": "Bengal Tiffin",
+   "country": "India",
+   "city": "Mumbai",
+   "currency": "INR",
+   "total": 5000.0,
+   "bill_number": "B3-000011",
+   "merchant_category": "RESTAURANT",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 5000.0
+    }
+   ]
+  },
+  "transaction_date": "2025-09-21",
+  "submission_date": "2025-09-24",
+  "project_id": "PRJ-034",
+  "form": {
+   "expense_type": "MEAL_EMPLOYEE",
+   "attendees_total": 3,
+   "external_attendees": 0,
+   "alcohol_amount": 800,
+   "tip_amount": 0
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "Is kharch ka maqsad sirf employees ke liye ek meal tha. Bengal Tiffin se yeh kharcha hua hai. Is dauraan, main aur mere do colleague the jo company ke subsidiary ya alag office se hain ya interns hain. Kharch mein koi external guest nahi tha. Bill par alcohol ka amount aath sau rupaye tha. Receipt ke liye dekhiye.",
+  "style": "local",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00041820000000000003
+ },
+ {
+  "case_id": "X3-012",
+  "archetype": "CLIENT_MEAL",
+  "touches": "control",
+  "difficulty": "easy",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Kallang Dining Room",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 300.0,
+   "bill_number": "B3-000012",
+   "merchant_category": "RESTAURANT",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 300.0
+    }
+   ]
+  },
+  "transaction_date": "2025-08-06",
+  "submission_date": "2025-08-09",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "MEAL_CLIENT",
+   "attendees_total": 3,
+   "external_attendees": 1,
+   "external_names": null,
+   "alcohol_amount": 0,
+   "tip_amount": 0
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "See attached receipt for details of this business expense. I hosted a meal at Kallang Dining Room in Singapore, and it included myself, one colleague, and one external guest. Ravi mentioned that there was no alcohol on the bill. I have not got the names or organisation of the external guests. For reference, during last year's dinner, there were three of us present.",
+  "style": "indirect",
+  "attempts": 3,
+  "problems": [],
+  "cost": 0.0013017
+ },
+ {
+  "case_id": "X3-013",
+  "archetype": "MILEAGE",
+  "touches": "mileage_odometer",
+  "difficulty": "medium",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Private vehicle mileage SG 2025",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 36.0,
+   "bill_number": "B3-000013",
+   "merchant_category": "MILEAGE",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 36.0
+    }
+   ]
+  },
+  "transaction_date": "2025-07-02",
+  "submission_date": "2025-07-05",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "MILEAGE",
+   "distance_km": 60
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "See attached receipt for details of this business expense. I used my own car for this trip, which I noted from the odometer readings starting at forty thousand six hundred ninety-five and ending at forty thousand seven hundred fifty-five. Ravi mentioned that the currency for the bill is Singapore dollars. I initially thought I had made this trip last year for six days, but it was actually five.",
+  "style": "indirect",
+  "attempts": 4,
+  "problems": [
+   "distance_km should be 60 but was read as 6"
+  ],
+  "cost": 0.0014964000000000002
+ },
+ {
+  "case_id": "X3-014",
+  "archetype": "MILEAGE",
+  "touches": "mileage_odometer (negative control)",
+  "difficulty": "medium",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Private vehicle mileage SG 2025",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 55.0,
+   "bill_number": "B3-000014",
+   "merchant_category": "MILEAGE",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 55.0
+    }
+   ]
+  },
+  "transaction_date": "2025-07-03",
+  "submission_date": "2025-07-06",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "MILEAGE",
+   "distance_km": 60
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "See attached receipt for details of this business expense. I initially thought the mileage was sixty kilometers, but it should actually be the correct amount based on the odometer readings of twenty-three thousand six hundred eighty-two at the start and twenty-three thousand seven hundred forty-two at the end. This trip involved the use of my own car for business purposes with Private vehicle mileage SG 2025 in Singapore, Singapore. Just for reference, last year's trip was for three nights.",
+  "style": "indirect",
+  "attempts": 4,
+  "problems": [],
+  "cost": 0.00147645
+ },
+ {
+  "case_id": "X3-015",
+  "archetype": "MILEAGE",
+  "touches": "control (plain km)",
+  "difficulty": "easy",
+  "employee_id": "E0023",
+  "bill": {
+   "merchant": "Private vehicle mileage IN 2026",
+   "country": "India",
+   "city": "Mumbai",
+   "currency": "INR",
+   "total": 480.0,
+   "bill_number": "B3-000015",
+   "merchant_category": "MILEAGE",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 480.0
+    }
+   ]
+  },
+  "transaction_date": "2026-03-01",
+  "submission_date": "2026-03-04",
+  "project_id": "PRJ-034",
+  "form": {
+   "expense_type": "MILEAGE",
+   "distance_km": 40
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "See attached receipt for details of this business expense. I used my own vehicle for the trip, and the odometer readings were four hundred forty-four sixty-nine at the start and four hundred forty-five zero nine at the end. The vendor for this expense is Private vehicle mileage IN 2026, and the currency is INR.",
+  "style": "indirect",
+  "attempts": 4,
+  "problems": [
+   "distance_km should be 40 but was read as 0.2"
+  ],
+  "cost": 0.001587
+ },
+ {
+  "case_id": "X3-016",
+  "archetype": "MILEAGE",
+  "touches": "mileage_odometer (decoy)",
+  "difficulty": "hard",
+  "employee_id": "E0048",
+  "bill": {
+   "merchant": "Private vehicle mileage SG 2025",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 21.0,
+   "bill_number": "B3-000016",
+   "merchant_category": "MILEAGE",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 21.0
+    }
+   ]
+  },
+  "transaction_date": "2025-07-10",
+  "submission_date": "2025-07-13",
+  "project_id": "PRJ-031",
+  "form": {
+   "expense_type": "MILEAGE",
+   "distance_km": 35
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "Please find the receipt for the use of the employee's own car for business. The odometer readings were recorded at fifty-eight thousand three hundred fifty-six at the start and fifty-eight thousand three hundred ninety-one at the end. I initially mentioned the distance as thirty-five kilometers, but it should be noted that it is indeed thirty-five point zero kilometers. For reference, during last year's trip, the employee stayed for two nights.",
+  "style": "secondhand",
+  "attempts": 2,
+  "problems": [],
+  "cost": 0.0008526
+ },
+ {
+  "case_id": "X3-017",
+  "archetype": "SOFTWARE_APPROVAL",
+  "touches": "software_owner_phrasing",
+  "difficulty": "easy",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Vector Notes",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 210.0,
+   "bill_number": "B3-000017",
+   "merchant_category": "SOFTWARE",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 210.0
+    }
+   ]
+  },
+  "transaction_date": "2025-06-15",
+  "submission_date": "2025-06-18",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "SOFTWARE",
+   "business_owner": "Devi Lim",
+   "billing": "MONTHLY",
+   "charge_to": "COST_CENTRE"
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "During our recent strategy meeting, we discussed various tools to enhance productivity, which led to the decision to subscribe to a new software. The subscription from Vector Notes, based in Singapore, has been set up under the name of Devi Lim. This expense will be billed month by month as we evaluate its effectiveness. I also have a stack of five unrelated documents from the meeting that I need to sort through later.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00040589999999999995
+ },
+ {
+  "case_id": "X3-018",
+  "archetype": "SOFTWARE_APPROVAL",
+  "touches": "software_owner_phrasing (new wording)",
+  "difficulty": "hard",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "SprintMill",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 240.0,
+   "bill_number": "B3-000018",
+   "merchant_category": "SOFTWARE",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 240.0
+    }
+   ]
+  },
+  "transaction_date": "2025-06-20",
+  "submission_date": "2025-06-23",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "SOFTWARE",
+   "business_owner": "Marcus Tan",
+   "billing": "MONTHLY",
+   "charge_to": "COST_CENTRE"
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "During our recent meeting, we discussed the new software tools that could enhance our team's productivity. Marcus Tan, who is the named business owner of the subscription, mentioned that we would be using SprintMill for this purpose. The subscription is billed month by month, which should help us manage costs effectively. I also reviewed some unrelated documents while waiting for the meeting to start, including a presentation on project timelines that had twelve slides. The day went smoothly, and I look forward to implementing the new software.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00041640000000000004
+ },
+ {
+  "case_id": "X3-019",
+  "archetype": "SOFTWARE_APPROVAL",
+  "touches": "control (no owner)",
+  "difficulty": "easy",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Vector Notes",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 210.0,
+   "bill_number": "B3-000019",
+   "merchant_category": "SOFTWARE",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 210.0
+    }
+   ]
+  },
+  "transaction_date": "2025-06-25",
+  "submission_date": "2025-06-28",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "SOFTWARE",
+   "business_owner": null,
+   "billing": "MONTHLY",
+   "charge_to": "COST_CENTRE"
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "This expense pertains to a software subscription with Vector Notes, located in Singapore. The billing occurs on a month-to-month basis. Please see the receipt for further details.",
+  "style": "indirect",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00036135
+ },
+ {
+  "case_id": "X3-020",
+  "archetype": "SOFTWARE_APPROVAL",
+  "touches": "control (over high tier)",
+  "difficulty": "medium",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "SprintMill",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 1500.0,
+   "bill_number": "B3-000020",
+   "merchant_category": "SOFTWARE",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 1500.0
+    }
+   ]
+  },
+  "transaction_date": "2026-03-01",
+  "submission_date": "2026-03-04",
+  "project_id": "PRJ-034",
+  "form": {
+   "expense_type": "SOFTWARE",
+   "business_owner": "Devi Lim",
+   "billing": "MONTHLY",
+   "charge_to": "PROJECT"
+  },
+  "new_rows": [
+   [
+    "manager_approvals",
+    {
+     "approval_id": "APR-9020",
+     "expense_id": "X3-020",
+     "employee_id": "E0013",
+     "manager_id": "M014",
+     "approval_type": "SOFTWARE",
+     "status": "APPROVED",
+     "approver_level": "MANAGER",
+     "start_date": "2024-01-01",
+     "end_date": "2026-12-31",
+     "delegation_id": ""
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "so um this is for a software subscription from SprintMill you know in Singapore and the business owner for this is Devi Lim and it's billed month by month you know and the cost is charged to the budget of project p r j dash zero three.",
+  "style": "dictated",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.000381
+ },
+ {
+  "case_id": "X3-021",
+  "archetype": "AIRFARE_CABIN",
+  "touches": "airfare_biz_wording",
+  "difficulty": "medium",
+  "employee_id": "E0018",
+  "bill": {
+   "merchant": "Merlion Air",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 3200.0,
+   "bill_number": "B3-000021",
+   "merchant_category": "AIRLINE",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 3200.0
+    }
+   ]
+  },
+  "transaction_date": "2026-01-15",
+  "submission_date": "2026-01-18",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "AIRFARE",
+   "cabin": "BUSINESS",
+   "flight_hours": 10.0,
+   "booked_date": "2025-12-20",
+   "departure_date": "2026-01-15"
+  },
+  "new_rows": [
+   [
+    "travel_requests",
+    {
+     "travel_id": "TR-9021",
+     "employee_id": "E0018",
+     "start_date": "2026-01-14",
+     "end_date": "2026-01-17",
+     "destination": "Tokyo",
+     "purpose": "Client visit",
+     "status": "APPROVED",
+     "event_id": "",
+     "exception_id": ""
+    }
+   ],
+   [
+    "manager_approvals",
+    {
+     "approval_id": "APR-9021",
+     "expense_id": "X3-021",
+     "employee_id": "E0018",
+     "manager_id": "",
+     "approval_type": "TRAVEL",
+     "status": "APPROVED",
+     "approver_level": "DIRECTOR",
+     "start_date": "2024-01-01",
+     "end_date": "2026-12-31",
+     "delegation_id": ""
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "Please find the receipt for an airfare purchase from Merlion Air. The ticket was booked on December twentieth, twenty twenty-five, and the flight departs twenty-six days later at nine fifteen and lands at nineteen fifteen, all in the same timezone. The travel was in business class.",
+  "style": "secondhand",
+  "attempts": 2,
+  "problems": [],
+  "cost": 0.00080565
+ },
+ {
+  "case_id": "X3-022",
+  "archetype": "AIRFARE_CABIN",
+  "touches": "airfare_relative_date",
+  "difficulty": "hard",
+  "employee_id": "E0018",
+  "bill": {
+   "merchant": "Merlion Air",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 800.0,
+   "bill_number": "B3-000022",
+   "merchant_category": "AIRLINE",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 800.0
+    }
+   ]
+  },
+  "transaction_date": "2026-02-15",
+  "submission_date": "2026-02-18",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "AIRFARE",
+   "cabin": "ECONOMY",
+   "flight_hours": 3.0,
+   "booked_date": "2026-01-18",
+   "departure_date": "2026-02-15"
+  },
+  "new_rows": [
+   [
+    "travel_requests",
+    {
+     "travel_id": "TR-9022",
+     "employee_id": "E0018",
+     "start_date": "2026-02-14",
+     "end_date": "2026-02-17",
+     "destination": "Osaka",
+     "purpose": "Client visit",
+     "status": "APPROVED",
+     "event_id": "",
+     "exception_id": ""
+    }
+   ],
+   [
+    "manager_approvals",
+    {
+     "approval_id": "APR-9022",
+     "expense_id": "X3-022",
+     "employee_id": "E0018",
+     "manager_id": "",
+     "approval_type": "TRAVEL",
+     "status": "APPROVED",
+     "approver_level": "MANAGER",
+     "start_date": "2024-01-01",
+     "end_date": "2026-12-31",
+     "delegation_id": ""
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "Airfare purchase w/ Merlion Air (SGD). Booked 2026-01-18, flight departs 28 days later at 08:30, lands at 11:30. Economy class.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00039614999999999995
+ },
+ {
+  "case_id": "X3-023",
+  "archetype": "AIRFARE_CABIN",
+  "touches": "airfare_relative_date (negative control)",
+  "difficulty": "hard",
+  "employee_id": "E0018",
+  "bill": {
+   "merchant": "Merlion Air",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 800.0,
+   "bill_number": "B3-000023",
+   "merchant_category": "AIRLINE",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 800.0
+    }
+   ]
+  },
+  "transaction_date": "2026-03-15",
+  "submission_date": "2026-03-18",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "AIRFARE",
+   "cabin": "ECONOMY",
+   "flight_hours": 3.0,
+   "booked_date": "2026-02-13",
+   "departure_date": "2026-03-15"
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "I booked a flight with Merlion Air for a meeting scheduled in Singapore. The ticket was purchased on February thirteenth, two thousand twenty-six, which is thirty days before the departure. The flight departs at twelve fifteen and arrives at fifteen fifteen, and it's in economy class. I remember last year\u2019s trip where we stayed for three nights, which was quite productive. Please note that this expense is strictly for airfare.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.0004395
+ },
+ {
+  "case_id": "X3-024",
+  "archetype": "AIRFARE_CABIN",
+  "touches": "control (wrong cabin)",
+  "difficulty": "easy",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Meridian Airways",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 2800.0,
+   "bill_number": "B3-000024",
+   "merchant_category": "AIRLINE",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 2800.0
+    }
+   ]
+  },
+  "transaction_date": "2025-10-05",
+  "submission_date": "2025-10-08",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "AIRFARE",
+   "cabin": "BUSINESS",
+   "flight_hours": 4.0,
+   "booked_date": "2025-09-01",
+   "departure_date": "2025-10-05"
+  },
+  "new_rows": [
+   [
+    "travel_requests",
+    {
+     "travel_id": "TR-9024",
+     "employee_id": "E0013",
+     "start_date": "2025-10-04",
+     "end_date": "2025-10-07",
+     "destination": "Mumbai",
+     "purpose": "Client visit",
+     "status": "APPROVED",
+     "event_id": "",
+     "exception_id": ""
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "Airfare purchase w/ Meridian Airways. Booked 2025-09-01, departs in 33 days, biz class. (Oops, that\u2019s 34 days). Flight time: departs 08:00, lands 12:00.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00040755
+ },
+ {
+  "case_id": "X3-025",
+  "archetype": "AIRFARE_CABIN",
+  "touches": "airfare_exception_scope",
+  "difficulty": "hard",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Meridian Airways",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 2800.0,
+   "bill_number": "B3-000025",
+   "merchant_category": "AIRLINE",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 2800.0
+    }
+   ]
+  },
+  "transaction_date": "2025-10-10",
+  "submission_date": "2025-10-13",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "AIRFARE",
+   "cabin": "BUSINESS",
+   "flight_hours": 4.0,
+   "booked_date": "2025-09-05",
+   "departure_date": "2025-10-10",
+   "exception_ref": "EXC-9025"
+  },
+  "new_rows": [
+   [
+    "travel_requests",
+    {
+     "travel_id": "TR-9025",
+     "employee_id": "E0013",
+     "start_date": "2025-10-09",
+     "end_date": "2025-10-12",
+     "destination": "Mumbai",
+     "purpose": "Client visit",
+     "status": "APPROVED",
+     "event_id": "",
+     "exception_id": ""
+    }
+   ],
+   [
+    "policy_exceptions",
+    {
+     "exception_id": "EXC-9025",
+     "employee_id": "E0013",
+     "policy_id": "TRV-6.1",
+     "exception_type": "HOTEL_LIMIT",
+     "status": "APPROVED",
+     "valid_from": "2025-01-01",
+     "valid_to": "2025-12-31"
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "so um this is for the airfare purchase with meridian airways you know based in singapore and um the ticket was booked on september fifth two thousand twenty five and then the flight is departing thirty five days later at ten forty five and lands at two forty five um and it's in business class so I guess that's good right and um just a heads up the reference for the exception is e x c nine zero two five.",
+  "style": "dictated",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00043185
+ },
+ {
+  "case_id": "X3-026",
+  "archetype": "TRAINING_CAP",
+  "touches": "control (within cap)",
+  "difficulty": "easy",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Praxis Academy",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 900.0,
+   "bill_number": "B3-000026",
+   "merchant_category": "TRAINING_PROVIDER",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 900.0
+    }
+   ]
+  },
+  "transaction_date": "2025-04-10",
+  "submission_date": "2025-04-13",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "TRAINING",
+   "learning_plan_id": "LP-9001"
+  },
+  "new_rows": [
+   [
+    "manager_approvals",
+    {
+     "approval_id": "APR-9026",
+     "expense_id": "X3-026",
+     "employee_id": "E0013",
+     "manager_id": "M014",
+     "approval_type": "TRAINING",
+     "status": "APPROVED",
+     "approver_level": "MANAGER",
+     "start_date": "2024-01-01",
+     "end_date": "2026-12-31",
+     "delegation_id": ""
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "I attended an external training course organized by Praxis Academy in Singapore. The course focused on enhancing skills relevant to our current projects and was part of the learning plan identified as LP-9001. The day was quite productive, and I found the sessions engaging. The meeting was scheduled for ten o'clock in room three hundred. Please refer to the attached receipt for the expense details.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00039855
+ },
+ {
+  "case_id": "X3-027",
+  "archetype": "TRAINING_CAP",
+  "touches": "control (no plan id)",
+  "difficulty": "easy",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Cedar Professional Institute",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 700.0,
+   "bill_number": "B3-000027",
+   "merchant_category": "TRAINING_PROVIDER",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 700.0
+    }
+   ]
+  },
+  "transaction_date": "2025-04-15",
+  "submission_date": "2025-04-18",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "TRAINING",
+   "learning_plan_id": null
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "Please find the receipt for an external training course at Cedar Professional Institute in Singapore. The transaction was processed in Singapore dollars. Should you require any further information regarding this expense, please let me know.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.0003591
+ },
+ {
+  "case_id": "X3-028",
+  "archetype": "TRAINING_CAP",
+  "touches": "training_over_cap",
+  "difficulty": "medium",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Praxis Academy",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 3800.0,
+   "bill_number": "B3-000028",
+   "merchant_category": "TRAINING_PROVIDER",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 3800.0
+    }
+   ]
+  },
+  "transaction_date": "2025-05-10",
+  "submission_date": "2025-05-13",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "TRAINING",
+   "learning_plan_id": "LP-9002"
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "so um i went to this external training course you know and it was with Praxis Academy in Singapore and the learning plan identifier is l p nine zero zero two and the currency on the bill is s g d. just wanted to make sure that you have all the details from the receipt attached.",
+  "style": "dictated",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00038625
+ },
+ {
+  "case_id": "X3-029",
+  "archetype": "GIFT_RULES",
+  "touches": "gift_recipient_government",
+  "difficulty": "easy",
+  "employee_id": "E0048",
+  "bill": {
+   "merchant": "Blossom & Co",
+   "country": "Japan",
+   "city": "Tokyo",
+   "currency": "JPY",
+   "total": 5500.0,
+   "bill_number": "B3-000029",
+   "merchant_category": "GIFT_RETAIL",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 5500.0
+    }
+   ]
+  },
+  "transaction_date": "2026-01-20",
+  "submission_date": "2026-01-23",
+  "project_id": "PRJ-031",
+  "form": {
+   "expense_type": "GIFT",
+   "recipient_type": "GOVERNMENT",
+   "gift_form": "ITEM",
+   "recipient_name": "Mr. Tanaka",
+   "recipient_org": "Ministry of Digital Affairs"
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "\u3053\u306e\u30d3\u30b8\u30cd\u30b9\u7d4c\u8cbb\u306f\u3001Blossom & Co\uff08\u6771\u4eac\u3001\u65e5\u672c\uff09\u3067\u8cfc\u5165\u3057\u305f\u8d08\u308a\u7269\u306b\u95a2\u9023\u3057\u3066\u3044\u307e\u3059\u3002\u3053\u306e\u8d08\u308a\u7269\u306f\u3001\u4fdd\u6301\u3059\u308b\u305f\u3081\u306e\u7269\u7406\u7684\u306a\u30a2\u30a4\u30c6\u30e0\u3067\u3059\u3002\u8d08\u308a\u7269\u3092\u53d7\u3051\u53d6\u3063\u305f\u306e\u306f\u3001Mr. Tanaka\u3067\u3042\u308a\u3001\u5f7c\u306e\u6240\u5c5e\u306fMinistry of Digital Affairs\u3067\u3059\u3002\u8a73\u7d30\u306b\u3064\u3044\u3066\u306f\u3001\u6dfb\u4ed8\u306e\u9818\u53ce\u66f8\u3092\u3054\u89a7\u304f\u3060\u3055\u3044\u3002",
+  "style": "local",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.0004242
+ },
+ {
+  "case_id": "X3-030",
+  "archetype": "GIFT_RULES",
+  "touches": "gift_recipient_government (negative control)",
+  "difficulty": "easy",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Golden Basket",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 90.0,
+   "bill_number": "B3-000030",
+   "merchant_category": "GIFT_RETAIL",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 90.0
+    }
+   ]
+  },
+  "transaction_date": "2025-12-05",
+  "submission_date": "2025-12-08",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "GIFT",
+   "recipient_type": "COMMERCIAL",
+   "gift_form": "ITEM",
+   "recipient_name": "Ms. Chua",
+   "recipient_org": "Kestrel Logistics"
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "Please find the receipt for a gift purchased from Golden Basket in Singapore. This expense was incurred for a physical item that was handed over to Ms. Chua of Kestrel Logistics, a private company.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.0003765
+ },
+ {
+  "case_id": "X3-031",
+  "archetype": "GIFT_RULES",
+  "touches": "control (cash equivalent)",
+  "difficulty": "easy",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Golden Basket",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 80.0,
+   "bill_number": "B3-000031",
+   "merchant_category": "GIFT_RETAIL",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 80.0
+    }
+   ]
+  },
+  "transaction_date": "2025-12-10",
+  "submission_date": "2025-12-13",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "GIFT",
+   "recipient_type": "COMMERCIAL",
+   "gift_form": "CASH_EQUIVALENT",
+   "recipient_name": "Mr. Lee",
+   "recipient_org": "Meridian Partners"
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "Please find the receipt for a gift purchased from Golden Basket in Singapore. The item is a stored-value gift card intended for Mr. Lee, who is associated with Meridian Partners.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.0003759
+ },
+ {
+  "case_id": "X3-032",
+  "archetype": "GIFT_ANNUAL_CAP",
+  "touches": "control (annual cap)",
+  "difficulty": "medium",
+  "employee_id": "E0048",
+  "bill": {
+   "merchant": "Blossom & Co",
+   "country": "Japan",
+   "city": "Tokyo",
+   "currency": "JPY",
+   "total": 5000.0,
+   "bill_number": "B3-000032",
+   "merchant_category": "GIFT_RETAIL",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 5000.0
+    }
+   ]
+  },
+  "transaction_date": "2025-10-01",
+  "submission_date": "2025-10-04",
+  "project_id": "PRJ-031",
+  "form": {
+   "expense_type": "GIFT",
+   "recipient_type": "COMMERCIAL",
+   "gift_form": "ITEM",
+   "recipient_name": "Ms. Ito",
+   "recipient_org": "Kanto Partners Ltd"
+  },
+  "new_rows": [
+   [
+    "previous_expenses",
+    {
+     "expense_id": "PREV-9032",
+     "employee_id": "E0048",
+     "merchant": "Blossom & Co",
+     "transaction_date": "2025-03-01",
+     "amount": "22000",
+     "currency": "JPY",
+     "bill_number": "B3-PRIOR-9032",
+     "business_purpose": "Gift",
+     "project_id": "",
+     "category": "GIFT",
+     "counterparty": "Kanto Partners Ltd"
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "\u3053\u306e\u30d3\u30b8\u30cd\u30b9\u7d4c\u8cbb\u306f\u3001Blossom & Co\uff08\u6771\u4eac\u3001\u65e5\u672c\uff09\u3067\u8cfc\u5165\u3055\u308c\u305f\u8d08\u308a\u7269\u306b\u95a2\u3059\u308b\u3082\u306e\u3067\u3059\u3002\u3053\u306e\u8d08\u308a\u7269\u306f\u3001\u53d7\u53d6\u4eba\u3067\u3042\u308bMs. Ito\u306b\u624b\u6e21\u3055\u308c\u305f\u7269\u7406\u7684\u306a\u30a2\u30a4\u30c6\u30e0\u3067\u3059\u3002\u8d08\u308a\u7269\u306f\u3001Kanto Partners Ltd\u306b\u8d08\u3089\u308c\u307e\u3057\u305f\u3002\u8a73\u7d30\u306f\u6dfb\u4ed8\u306e\u9818\u53ce\u66f8\u3092\u3054\u89a7\u304f\u3060\u3055\u3044\u3002",
+  "style": "local",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00041385
+ },
+ {
+  "case_id": "X3-033",
+  "archetype": "EVIDENCE_CONFLICT",
+  "touches": "control (no conflict)",
+  "difficulty": "easy",
+  "employee_id": "E0023",
+  "bill": {
+   "merchant": "QuickCab",
+   "country": "India",
+   "city": "Mumbai",
+   "currency": "INR",
+   "total": 480.0,
+   "bill_number": "B3-000033",
+   "merchant_category": "RIDE_HAIL",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 480.0
+    }
+   ]
+  },
+  "transaction_date": "2026-02-20",
+  "submission_date": "2026-02-23",
+  "project_id": "PRJ-034",
+  "form": {
+   "expense_type": "GROUND_TRANSPORT",
+   "origin": "client office",
+   "destination": "hotel",
+   "origin_type": "CLIENT_SITE",
+   "destination_type": "OTHER"
+  },
+  "new_rows": [],
+  "note_override": "Took a QuickCab ride from the client's office back to my hotel after the meeting ran late.",
+  "note": "Took a QuickCab ride from the client's office back to my hotel after the meeting ran late.",
+  "style": "hand-written (evidence-conflict)",
+  "attempts": 0,
+  "problems": [],
+  "cost": 0.0
+ },
+ {
+  "case_id": "X3-034",
+  "archetype": "EVIDENCE_CONFLICT",
+  "touches": "evidence_consistency",
+  "difficulty": "medium",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Garden Singapore Hotel",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 350.0,
+   "bill_number": "B3-000034",
+   "merchant_category": "HOTEL",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 350.0
+    }
+   ]
+  },
+  "transaction_date": "2025-09-05",
+  "submission_date": "2025-09-08",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "HOTEL",
+   "city": "Singapore",
+   "nights": 1
+  },
+  "new_rows": [],
+  "note_override": "Dinner with the regional team to close out the quarter, bill attached for the group meal.",
+  "note": "Dinner with the regional team to close out the quarter, bill attached for the group meal.",
+  "style": "hand-written (evidence-conflict)",
+  "attempts": 0,
+  "problems": [],
+  "cost": 0.0
+ },
+ {
+  "case_id": "X3-035",
+  "archetype": "EVIDENCE_CONFLICT",
+  "touches": "evidence_consistency (meal bill/taxi note)",
+  "difficulty": "medium",
+  "employee_id": "E0018",
+  "bill": {
+   "merchant": "Kallang Dining Room",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 60.0,
+   "bill_number": "B3-000035",
+   "merchant_category": "RESTAURANT",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 60.0
+    }
+   ]
+  },
+  "transaction_date": "2025-11-02",
+  "submission_date": "2025-11-05",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "MEAL_EMPLOYEE",
+   "attendees_total": 2,
+   "external_attendees": 0,
+   "alcohol_amount": 0,
+   "tip_amount": 0
+  },
+  "new_rows": [],
+  "note_override": "Took a cab across town for a same-day client meeting, receipt from the driver attached.",
+  "note": "Took a cab across town for a same-day client meeting, receipt from the driver attached.",
+  "style": "hand-written (evidence-conflict)",
+  "attempts": 0,
+  "problems": [],
+  "cost": 0.0
+ },
+ {
+  "case_id": "X3-036",
+  "archetype": "EVIDENCE_CONFLICT",
+  "touches": "evidence_consistency (non-English)",
+  "difficulty": "hard",
+  "employee_id": "E0023",
+  "bill": {
+   "merchant": "Bengal Tiffin",
+   "country": "India",
+   "city": "Mumbai",
+   "currency": "INR",
+   "total": 1200.0,
+   "bill_number": "B3-000036",
+   "merchant_category": "RESTAURANT",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 1200.0
+    }
+   ]
+  },
+  "transaction_date": "2025-12-01",
+  "submission_date": "2025-12-04",
+  "project_id": "PRJ-034",
+  "form": {
+   "expense_type": "MEAL_EMPLOYEE",
+   "attendees_total": 3,
+   "external_attendees": 0,
+   "alcohol_amount": 0,
+   "tip_amount": 0
+  },
+  "new_rows": [],
+  "note_override": "Yeh bill hotel mein teen raat rukne ka hai, conference ke paas.",
+  "note": "Yeh bill hotel mein teen raat rukne ka hai, conference ke paas.",
+  "style": "hand-written (evidence-conflict)",
+  "attempts": 0,
+  "problems": [],
+  "cost": 0.0
+ },
+ {
+  "case_id": "X3-037",
+  "archetype": "DUPLICATE_CHECK",
+  "touches": "control (exact duplicate)",
+  "difficulty": "easy",
+  "employee_id": "E0055",
+  "bill": {
+   "merchant": "SprintMill",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 199.0,
+   "bill_number": "B3-000037",
+   "merchant_category": "SOFTWARE",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 199.0
+    }
+   ]
+  },
+  "transaction_date": "2025-06-15",
+  "submission_date": "2025-06-18",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "SOFTWARE",
+   "business_owner": "Priya Nair",
+   "billing": "MONTHLY",
+   "charge_to": "COST_CENTRE"
+  },
+  "new_rows": [
+   [
+    "previous_expenses",
+    {
+     "expense_id": "PREV-9037",
+     "employee_id": "E0055",
+     "merchant": "SprintMill",
+     "transaction_date": "2025-06-15",
+     "amount": "199.0",
+     "currency": "SGD",
+     "bill_number": "B3-000037",
+     "business_purpose": "Recurring monthly subscription",
+     "project_id": "",
+     "category": "SOFTWARE",
+     "counterparty": ""
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "I arranged a meeting to discuss our ongoing software needs and the latest updates from SprintMill. Priya Nair, the business owner of our subscription, was present to provide insights into our usage. The software is billed month by month, ensuring we stay aligned with our evolving requirements. We had a productive session and reviewed several documents, including a financial report and a project timeline, before wrapping up around two o'clock.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.0004107
+ },
+ {
+  "case_id": "X3-038",
+  "archetype": "DUPLICATE_CHECK",
+  "touches": "control (near-duplicate)",
+  "difficulty": "medium",
+  "employee_id": "E0055",
+  "bill": {
+   "merchant": "SprintMill",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 240.0,
+   "bill_number": "B3-000038",
+   "merchant_category": "SOFTWARE",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 240.0
+    }
+   ]
+  },
+  "transaction_date": "2025-07-15",
+  "submission_date": "2025-07-18",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "SOFTWARE",
+   "business_owner": "Priya Nair",
+   "billing": "MONTHLY",
+   "charge_to": "COST_CENTRE"
+  },
+  "new_rows": [
+   [
+    "previous_expenses",
+    {
+     "expense_id": "PREV-9038",
+     "employee_id": "E0055",
+     "merchant": "SprintMill",
+     "transaction_date": "2025-07-17",
+     "amount": "238.0",
+     "currency": "SGD",
+     "bill_number": "B3-PRIOR-9038",
+     "business_purpose": "One-off consulting add-on",
+     "project_id": "",
+     "category": "SOFTWARE",
+     "counterparty": ""
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "so um this is for a software subscription with SprintMill in Singapore right and the business owner is Priya Nair um it's billed month by month and the currency is in SGD you know the details are in the receipt attached.",
+  "style": "dictated",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.0003735
+ },
+ {
+  "case_id": "X3-039",
+  "archetype": "SPLIT_TRANSACTION",
+  "touches": "control",
+  "difficulty": "medium",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "OfficeMart",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 320.0,
+   "bill_number": "B3-000039",
+   "merchant_category": "EQUIPMENT",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 320.0
+    }
+   ]
+  },
+  "transaction_date": "2025-07-20",
+  "submission_date": "2025-07-23",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "EQUIPMENT",
+   "item": "monitor"
+  },
+  "new_rows": [
+   [
+    "previous_expenses",
+    {
+     "expense_id": "PREV-9039",
+     "employee_id": "E0013",
+     "merchant": "OfficeMart",
+     "transaction_date": "2025-07-19",
+     "amount": "310",
+     "currency": "SGD",
+     "bill_number": "B3-PRIOR-9039",
+     "business_purpose": "Equipment",
+     "project_id": "PRJ-010",
+     "category": "EQUIPMENT",
+     "counterparty": ""
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "During our recent strategy meeting, we discussed the upcoming projects and the necessary tools to enhance our productivity. I booked the meeting room on the third floor, and we had some insightful discussions throughout the day. After the meeting, I purchased a monitor from OfficeMart in Singapore to support our team's needs. Please refer to the attached receipt for more information about this equipment purchase.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00039285000000000004
+ },
+ {
+  "case_id": "X3-040",
+  "archetype": "SUBMISSION_WINDOW",
+  "touches": "control (late)",
+  "difficulty": "easy",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Kallang Dining Room",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 90.0,
+   "bill_number": "B3-000040",
+   "merchant_category": "RESTAURANT",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 90.0
+    }
+   ]
+  },
+  "transaction_date": "2025-01-05",
+  "submission_date": "2025-06-01",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "MEAL_EMPLOYEE",
+   "attendees_total": 2,
+   "external_attendees": 0,
+   "alcohol_amount": 0,
+   "tip_amount": 0
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "so um this expense is for a meal you know for employees only and it was at Kallang Dining Room in Singapore right and I have not got the headcount but um I think there were two of us but it was actually one colleague of mine so it was just me and my one colleague you know and there was no alcohol on the bill or anything like that and um yeah no external guests either.",
+  "style": "dictated",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00041655
+ },
+ {
+  "case_id": "X3-041",
+  "archetype": "SUBMISSION_WINDOW",
+  "touches": "control (outage relief)",
+  "difficulty": "medium",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Kallang Dining Room",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 90.0,
+   "bill_number": "B3-000041",
+   "merchant_category": "RESTAURANT",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 90.0
+    }
+   ]
+  },
+  "transaction_date": "2025-03-12",
+  "submission_date": "2025-06-20",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "MEAL_EMPLOYEE",
+   "attendees_total": 2,
+   "external_attendees": 0,
+   "alcohol_amount": 0,
+   "tip_amount": 0
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "Please find the receipt for a meal that took place at Kallang Dining Room in Singapore. The attendees were myself and one colleague; Ravi mentioned that there were no external guests present. I initially noted one external guest, but upon review, I confirm that all attendees were employees. For your reference, during a similar occasion last year, there were three employees present.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00041715000000000003
+ },
+ {
+  "case_id": "X3-042",
+  "archetype": "RESTRICTED_MERCHANT",
+  "touches": "control",
+  "difficulty": "easy",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Golden Dice Casino 2025",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 200.0,
+   "bill_number": "B3-000042",
+   "merchant_category": "ENTERTAINMENT_VENUE",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 200.0
+    }
+   ]
+  },
+  "transaction_date": "2025-07-01",
+  "submission_date": "2025-07-04",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "OTHER"
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "Please find the receipt for a charge related to the recent business event. The vendor listed on the bill is Golden Dice Casino 2025, located in Singapore.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00035385
+ },
+ {
+  "case_id": "X3-043",
+  "archetype": "PERSONAL_SPEND",
+  "touches": "control",
+  "difficulty": "easy",
+  "employee_id": "E0048",
+  "bill": {
+   "merchant": "MovieBox+",
+   "country": "Japan",
+   "city": "Tokyo",
+   "currency": "JPY",
+   "total": 1500.0,
+   "bill_number": "B3-000043",
+   "merchant_category": "CONSUMER_SERVICE",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 1500.0
+    }
+   ]
+  },
+  "transaction_date": "2025-07-05",
+  "submission_date": "2025-07-08",
+  "project_id": "PRJ-031",
+  "form": {
+   "expense_type": "OTHER"
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "\u3053\u306e\u30d3\u30b8\u30cd\u30b9\u7d4c\u8cbb\u306e\u8a73\u7d30\u306b\u3064\u3044\u3066\u306f\u3001\u6dfb\u4ed8\u306e\u9818\u53ce\u66f8\u3092\u3054\u89a7\u304f\u3060\u3055\u3044\u3002\u652f\u6255\u3044\u5148\u306fMovieBox+\uff08\u6771\u4eac\u3001\u65e5\u672c\uff09\u3067\u3001\u901a\u8ca8\u306f\u65e5\u672c\u5186\u3067\u3059\u3002",
+  "style": "local",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00035955
+ },
+ {
+  "case_id": "X3-044",
+  "archetype": "FINANCE_THRESHOLD",
+  "touches": "control",
+  "difficulty": "easy",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "OfficeMart",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 5800.0,
+   "bill_number": "B3-000044",
+   "merchant_category": "EQUIPMENT",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 5800.0
+    }
+   ]
+  },
+  "transaction_date": "2025-08-10",
+  "submission_date": "2025-08-13",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "EQUIPMENT",
+   "item": "workstation"
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "Bought a workstation from OfficeMart (Singapore) for work. See attached receipt for details.",
+  "style": "terse",
+  "attempts": 2,
+  "problems": [],
+  "cost": 0.00069645
+ },
+ {
+  "case_id": "X3-045",
+  "archetype": "APPROVAL_TIERS",
+  "touches": "control (valid delegation)",
+  "difficulty": "medium",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Praxis Academy",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 600.0,
+   "bill_number": "B3-000045",
+   "merchant_category": "TRAINING_PROVIDER",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 600.0
+    }
+   ]
+  },
+  "transaction_date": "2025-04-20",
+  "submission_date": "2025-04-23",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "TRAINING",
+   "learning_plan_id": "LP-9003"
+  },
+  "new_rows": [
+   [
+    "approval_delegations",
+    {
+     "delegation_id": "DEL-9045",
+     "manager_id": "M014",
+     "delegate_id": "E0064",
+     "delegate_level": "MANAGER",
+     "start_date": "2025-04-01",
+     "end_date": "2025-06-01",
+     "max_amount_sgd": "1000.0",
+     "status": "ACTIVE"
+    }
+   ],
+   [
+    "manager_approvals",
+    {
+     "approval_id": "APR-9045",
+     "expense_id": "X3-045",
+     "employee_id": "E0013",
+     "manager_id": "M014",
+     "approval_type": "TRAINING",
+     "status": "DELEGATED",
+     "approver_level": "MANAGER",
+     "start_date": "2025-04-01",
+     "end_date": "2025-06-01",
+     "delegation_id": "DEL-9045"
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "I attended an external training course organized by Praxis Academy in Singapore. The session was part of my ongoing development plan, specifically identified as LP-9003. The day was productive, and I gained valuable insights relevant to our team's goals. We also received some materials, which included a document labeled 'Project Overview', numbered forty-two. The expense was processed in Singapore dollars.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.0003978
+ },
+ {
+  "case_id": "X3-046",
+  "archetype": "APPROVAL_TIERS",
+  "touches": "control (expired delegation)",
+  "difficulty": "medium",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Praxis Academy",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 600.0,
+   "bill_number": "B3-000046",
+   "merchant_category": "TRAINING_PROVIDER",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 600.0
+    }
+   ]
+  },
+  "transaction_date": "2025-04-25",
+  "submission_date": "2025-04-28",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "TRAINING",
+   "learning_plan_id": "LP-9004"
+  },
+  "new_rows": [
+   [
+    "approval_delegations",
+    {
+     "delegation_id": "DEL-9046",
+     "manager_id": "M014",
+     "delegate_id": "E0064",
+     "delegate_level": "MANAGER",
+     "start_date": "2025-01-01",
+     "end_date": "2025-03-01",
+     "max_amount_sgd": "1000.0",
+     "status": "EXPIRED"
+    }
+   ],
+   [
+    "manager_approvals",
+    {
+     "approval_id": "APR-9046",
+     "expense_id": "X3-046",
+     "employee_id": "E0013",
+     "manager_id": "M014",
+     "approval_type": "TRAINING",
+     "status": "DELEGATED",
+     "approver_level": "MANAGER",
+     "start_date": "2025-01-01",
+     "end_date": "2025-03-01",
+     "delegation_id": "DEL-9046"
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "so um this is for an external training course um with Praxis Academy in Singapore you know and the learning plan identifier is l p nine zero zero four and it's in SGD you know just check the receipt for details.",
+  "style": "dictated",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.0003735
+ },
+ {
+  "case_id": "X3-047",
+  "archetype": "TELECOM_MONTHLY",
+  "touches": "control",
+  "difficulty": "easy",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "IslandTel",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 150.0,
+   "bill_number": "B3-000047",
+   "merchant_category": "TELECOM",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 150.0
+    }
+   ]
+  },
+  "transaction_date": "2025-09-01",
+  "submission_date": "2025-09-04",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "TELECOM",
+   "billing_month": "2025-09"
+  },
+  "new_rows": [],
+  "note_override": null,
+  "note": "Mobile phone/data plan charge for IslandTel (SG) for Sept twenty twenty-five. See receipt for amount.",
+  "style": "terse",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.000351
+ },
+ {
+  "case_id": "X3-048",
+  "archetype": "EQUIPMENT_TIERS",
+  "touches": "control",
+  "difficulty": "easy",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "GadgetHub",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 320.0,
+   "bill_number": "B3-000048",
+   "merchant_category": "EQUIPMENT",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 320.0
+    }
+   ]
+  },
+  "transaction_date": "2025-09-10",
+  "submission_date": "2025-09-13",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "EQUIPMENT",
+   "item": "keyboard and mouse"
+  },
+  "new_rows": [
+   [
+    "manager_approvals",
+    {
+     "approval_id": "APR-9048",
+     "expense_id": "X3-048",
+     "employee_id": "E0013",
+     "manager_id": "M014",
+     "approval_type": "GENERAL",
+     "status": "APPROVED",
+     "approver_level": "MANAGER",
+     "start_date": "2024-01-01",
+     "end_date": "2026-12-31",
+     "delegation_id": ""
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "Please find the receipt for an equipment purchase from GadgetHub in Singapore. The items acquired include a keyboard and a mouse, and the transaction was conducted in Singapore dollars.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00035415
+ },
+ {
+  "case_id": "X3-049",
+  "archetype": "CONFERENCE_FEE",
+  "touches": "control (approval type mismatch -> escalate)",
+  "difficulty": "easy",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "Data Leaders Conference",
+   "country": "Singapore",
+   "city": "Singapore",
+   "currency": "SGD",
+   "total": 800.0,
+   "bill_number": "B3-000049",
+   "merchant_category": "CONFERENCE_ORGANISER",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 800.0
+    }
+   ]
+  },
+  "transaction_date": "2025-10-15",
+  "submission_date": "2025-10-18",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "CONFERENCE_FEE",
+   "conference_ref": "CONF-9002"
+  },
+  "new_rows": [
+   [
+    "conference_registry",
+    {
+     "event_id": "CONF-9002",
+     "employee_id": "E0013",
+     "registration_status": "REGISTERED",
+     "official_partner_hotel": ""
+    }
+   ],
+   [
+    "manager_approvals",
+    {
+     "approval_id": "APR-9049",
+     "expense_id": "X3-049",
+     "employee_id": "E0013",
+     "manager_id": "M014",
+     "approval_type": "TRAINING",
+     "status": "APPROVED",
+     "approver_level": "MANAGER",
+     "start_date": "2024-01-01",
+     "end_date": "2026-12-31",
+     "delegation_id": ""
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "I attended a very insightful session at the Data Leaders Conference in Singapore. The event, focusing on data innovation, was a great opportunity to network and learn from industry experts. My registration for this conference is referenced as CONF-9002, and I booked it myself. The conference fee was billed in Singapore dollars. I was also working on a presentation for our team, which included three unrelated documents.",
+  "style": "verbose",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.00039795
+ },
+ {
+  "case_id": "X3-050",
+  "archetype": "CAR_RENTAL",
+  "touches": "control",
+  "difficulty": "easy",
+  "employee_id": "E0013",
+  "bill": {
+   "merchant": "DriveEasy Rentals 2025",
+   "country": "Singapore",
+   "city": "",
+   "currency": "SGD",
+   "total": 220.0,
+   "bill_number": "B3-000050",
+   "merchant_category": "CAR_RENTAL",
+   "line_items": [
+    {
+     "description": "Charges",
+     "amount": 220.0
+    }
+   ]
+  },
+  "transaction_date": "2025-07-15",
+  "submission_date": "2025-07-18",
+  "project_id": "PRJ-010",
+  "form": {
+   "expense_type": "CAR_RENTAL"
+  },
+  "new_rows": [
+   [
+    "manager_approvals",
+    {
+     "approval_id": "APR-9050",
+     "expense_id": "X3-050",
+     "employee_id": "E0013",
+     "manager_id": "M014",
+     "approval_type": "TRAVEL",
+     "status": "APPROVED",
+     "approver_level": "MANAGER",
+     "start_date": "2024-01-01",
+     "end_date": "2026-12-31",
+     "delegation_id": ""
+    }
+   ]
+  ],
+  "note_override": null,
+  "note": "Please find the receipt for a rented car from DriveEasy Rentals 2025 in Singapore attached. The transaction was made in Singapore Dollars.",
+  "style": "secondhand",
+  "attempts": 1,
+  "problems": [],
+  "cost": 0.0003495
+ }
+]

@@ -38,6 +38,9 @@ DOC_ALLOWLIST = {
     "docs/responsible_ai_risk_table.md", "docs/owasp_llm_top10_2025.md",
     "docs/synthetic_data_provenance.md", "docs/reproducibility_and_repo_map.md",
     "docs/demo_script.md", "docs/gate_override_audit.md",
+    "docs/exp53_approve_calibration.md", "docs/exp54_stronger_model_approve.md", "docs/exp55_fact_fixes.md",
+    "docs/exp56_hotel_ceiling_fix.md", "docs/exp57_hybrid_facts_hotel.md", "docs/exp58_full_agent_fix.md",
+    "docs/exp59_final_fix.md", "docs/exp60_fresh_holdout.md", "docs/exp61_v3_holdout.md",
 }
 
 

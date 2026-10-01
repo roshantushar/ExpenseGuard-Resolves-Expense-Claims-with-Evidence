@@ -1,0 +1,46 @@
+{
+  "run_id": "EXP57_AFTER-DEVELOPMENT-gpt-4o-mini-6efe51",
+  "model": "openai/gpt-4o-mini",
+  "n": 8,
+  "correct": 1,
+  "correct_disposition_rate": 0.125,
+  "wilson95": [
+    0.0224,
+    0.4709
+  ],
+  "false_approvals": 0,
+  "non_approvable": 4,
+  "false_approval_rate": 0.0,
+  "human_review_rate": 0.0,
+  "over_escalation": 0,
+  "missed_escalation": 2,
+  "missing_field_exact_match": "0/1",
+  "by_family": {
+    "DYNAMIC_HOTEL_DISCOVERY": "0/3",
+    "HOTEL_CEILING": "0/3",
+    "HOTEL_EXCEPTION": "1/1",
+    "HOTEL_CONFERENCE": "0/1"
+  },
+  "confusion": {
+    "REQUEST_INFORMATION->REJECT": 1,
+    "APPROVE->REJECT": 4,
+    "REJECT->REJECT": 1,
+    "ESCALATE->REJECT": 2
+  },
+  "errors": 0,
+  "median_latency_ms": 2017.0,
+  "p95_latency_ms": 4224,
+  "input_tokens": 43757,
+  "output_tokens": 677,
+  "total_tokens": 44434,
+  "total_cost_usd": 0.00697,
+  "decision_counts": {
+    "REJECT": 8
+  },
+  "schema_valid": 8,
+  "unsupported_policy_assertion_rate": 1.0,
+  "policy_assertion_in_text_rate": 1.0,
+  "nonexistent_clause_rate": 0.0,
+  "wrong_policy_version_cases": 0,
+  "cached_calls": 7
+}

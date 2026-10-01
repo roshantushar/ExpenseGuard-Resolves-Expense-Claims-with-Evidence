@@ -91,6 +91,47 @@ class GuardedCandidate(unittest.TestCase):
         self.assertEqual(out["validation"]["far_pct"], 0.0)
 
 
+class Exp60Holdout(unittest.TestCase):
+    """Locks in the exact numbers docs/exp60_fresh_holdout.md reports by hand, computed here from the
+    same saved comparison_result.json -- so the two can never silently drift apart."""
+    def test_matches_the_published_exp60_numbers(self):
+        out = export_project_story.exp60_holdout()
+        self.assertEqual(out["n"], 50)
+        self.assertEqual(out["frozen"]["correct"], 22)
+        self.assertEqual(out["frozen"]["accuracy_pct"], 44.0)
+        self.assertEqual(out["frozen"]["false_approvals"], 0)
+        self.assertEqual(out["frozen"]["approve_recall"], {"correct": 0, "n": 20})
+        self.assertEqual(out["frozen"]["false_rejections"], 20)
+        self.assertEqual(out["frozen"]["false_rejections_pct"], 40.0)
+        self.assertEqual(out["candidate_mini"]["correct"], 34)
+        self.assertEqual(out["candidate_mini"]["accuracy_pct"], 68.0)
+        self.assertEqual(out["candidate_mini"]["false_approvals"], 0)
+        self.assertEqual(out["candidate_mini"]["approve_recall"], {"correct": 12, "n": 20})
+        self.assertEqual(out["candidate_mini"]["false_rejections"], 2)
+        self.assertEqual(out["candidate_mini"]["false_rejections_pct"], 4.0)
+        self.assertEqual(out["candidate_gpt4o"]["correct"], 39)
+        self.assertEqual(out["candidate_gpt4o"]["accuracy_pct"], 78.0)
+        self.assertEqual(out["candidate_gpt4o"]["false_approvals"], 2)
+        self.assertEqual(out["candidate_gpt4o"]["far_pct"], 6.7)
+        self.assertEqual(out["candidate_gpt4o"]["approve_recall"], {"correct": 13, "n": 20})
+
+class Exp61Holdout(unittest.TestCase):
+    """Locks in the exact numbers docs/exp61_v3_holdout.md reports by hand, including the candidate's
+    first observed false approval on fresh data -- this test must NOT be adjusted to make a 0% FAR claim
+    pass if the underlying saved predictions still show 1."""
+    def test_matches_the_published_exp61_numbers(self):
+        out = export_project_story.exp61_holdout()
+        self.assertEqual(out["n"], 30)
+        self.assertEqual(out["frozen"]["correct"], 11)
+        self.assertEqual(out["frozen"]["false_approvals"], 0)
+        self.assertEqual(out["frozen"]["approve_recall"], {"correct": 0, "n": 15})
+        self.assertEqual(out["candidate"]["correct"], 20)
+        self.assertEqual(out["candidate"]["accuracy_pct"], 66.7)
+        self.assertEqual(out["candidate"]["false_approvals"], 1)
+        self.assertEqual(out["candidate"]["far_pct"], 6.7)
+        self.assertEqual(out["candidate"]["approve_recall"], {"correct": 9, "n": 15})
+
+
 class GeneratedExportFile(unittest.TestCase):
     """Confirms the exporter can run end to end and produce the file the UI actually fetches, and that
     it never touches or requires write access to the frozen final-test artifacts."""
@@ -101,6 +142,8 @@ class GeneratedExportFile(unittest.TestCase):
         data = json.loads(out_path.read_text())
         self.assertEqual(data["dataset"]["total"], 150)
         self.assertEqual(data["exp32_official"]["correct"], 30)
+        self.assertEqual(data["exp60_holdout"]["candidate_mini"]["correct"], 34)
+        self.assertEqual(data["exp61_holdout"]["candidate"]["false_approvals"], 1)
 
     def test_frozen_final_test_artifacts_are_never_written_by_this_module(self):
         src = (ROOT / "scripts/export_project_story.py").read_text()

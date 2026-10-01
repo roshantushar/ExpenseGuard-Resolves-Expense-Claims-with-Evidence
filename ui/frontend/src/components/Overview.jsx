@@ -32,12 +32,12 @@ const StatCard = ({ label, s, tone }) => (
 );
 
 const BADGES = [
-  { n: "52+", l: "experiments run" },
+  { n: "61", l: "experiments run" },
   { n: "150", l: "claims, 22+ policies, 11 tables" },
-  { n: "7", l: "real live-found bugs, fixed" },
-  { n: "0", l: "observed false approvals (official)" },
+  { n: "7", l: "real live-found bugs, fixed in the guarded-agent build (Exp 40-52)" },
+  { n: "0", l: "observed false approvals (official frozen resolver)" },
   { n: "10/10", l: "OWASP LLM categories tested" },
-  { n: "$4.65", l: "total API spend, all of it" }
+  { n: "$7.38", l: "total API spend, all of it" }
 ];
 
 function ActCard({ act, index }) {
@@ -171,9 +171,18 @@ export default function Overview({ cases }) {
         <div className="about-card">
           <h4>The twist — and a correction</h4>
           <ul className="bullets">
-            <li>A guarded agent scored higher on accuracy at matching safety</li>
-            <li>It escalates far more often — a first cost model found this made it more expensive to operate</li>
-            <li>Corrected: that cost model had a bug; fixed, it's actually cheaper at every scale — but it's still never been tested on held-out data, so it stays a candidate</li>
+            <li>A guarded agent scored higher on accuracy at matching safety on dev/validation</li>
+            <li>It escalates more often — a first cost model found this made it more expensive; that model had a bug, fixed</li>
+            <li>But a diagnostic run on (no-longer-independent) final-test data showed real degradation, including false approvals — not promoted</li>
+          </ul>
+        </div>
+        <div className="about-card">
+          <h4>What happened next — root-cause, fix, fresh test</h4>
+          <ul className="bullets">
+            <li>Found why: the model doesn't reliably ground its answer in facts unless a tool computes the disposition <b>and</b> something enforces the tool was actually used</li>
+            <li>Fixed live: a missing policy circular, an unenforced conflict check, a skippable tool call</li>
+            <li>Tested once on a fresh, never-seen 50-case holdout: <b>0% false approvals, matching the frozen resolver</b>, at roughly double its accuracy and APPROVE recall</li>
+            <li>A stronger model (gpt-4o) traded that safety margin for accuracy — disclosed, not smoothed over</li>
           </ul>
         </div>
       </div>
@@ -245,8 +254,56 @@ export default function Overview({ cases }) {
       </div>
       <p className="lede" style={{ fontSize: 13 }}>
         The frozen design is the one actually shipped — tested once, officially, against the real
-        held-out final test. Open any case in <b>Case Explorer</b> to see exactly how each one arrived at
-        its answer.
+        held-out final test. The fixed guarded-agent candidate was separately tested once against a fresh,
+        independently-labeled 50-case holdout neither design had seen: <b>0% false approvals, 68% accuracy</b>
+        — real evidence its fixes generalize, not yet an independently validated replacement (full result in{" "}
+        <code>docs/exp60_fresh_holdout.md</code>). Open any case in <b>Case Explorer</b> to see exactly how
+        each one arrived at its answer.
+      </p>
+
+      <h1 style={{ marginTop: 36 }}>Why "0% false approvals, 44% accuracy" hides the real story</h1>
+      <p className="lede" style={{ fontSize: 13 }}>
+        Four-way accuracy blends a false approval (a safety failure) with a false rejection (a real
+        approvable claim wrongly blocked — a cost, not a danger) into one number. Broken apart, on the same
+        Exp 60 fresh holdout, at $0 — recomputed from saved predictions, no new calls:
+      </p>
+      <div style={{ overflowX: "auto" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+          <thead>
+            <tr style={{ textAlign: "left", borderBottom: "1px solid var(--border, #333)" }}>
+              <th style={{ padding: "8px 10px" }}></th>
+              <th style={{ padding: "8px 10px" }}>Safely automated & correct, no human</th>
+              <th style={{ padding: "8px 10px" }}>False approvals</th>
+              <th style={{ padding: "8px 10px" }}>False rejections</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style={{ borderBottom: "1px solid var(--border, #222)" }}>
+              <td style={{ padding: "8px 10px" }}>Frozen resolver (official)</td>
+              <td style={{ padding: "8px 10px" }}>21/50 = 42%</td>
+              <td style={{ padding: "8px 10px" }}>0</td>
+              <td style={{ padding: "8px 10px", fontWeight: 600 }}>20/50 = 40%</td>
+            </tr>
+            <tr style={{ borderBottom: "1px solid var(--border, #222)" }}>
+              <td style={{ padding: "8px 10px" }}>Candidate, gpt-4o-mini + gate</td>
+              <td style={{ padding: "8px 10px", fontWeight: 600 }}>33/50 = 66%</td>
+              <td style={{ padding: "8px 10px" }}>0</td>
+              <td style={{ padding: "8px 10px" }}>2/50 = 4%</td>
+            </tr>
+            <tr>
+              <td style={{ padding: "8px 10px" }}>Candidate, gpt-4o + gate</td>
+              <td style={{ padding: "8px 10px" }}>38/50 = 76%</td>
+              <td style={{ padding: "8px 10px" }}>2</td>
+              <td style={{ padding: "8px 10px" }}>3/50 = 6%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p className="lede" style={{ fontSize: 13 }}>
+        The frozen resolver's 0% FAR conceals its actual biggest weakness: on this fresh sample, <b>2 of
+        every 5 claims that should have been approved were wrongly blocked.</b> The fixed candidate cuts
+        that false-rejection rate by 10x while holding false approvals at zero — a larger, clearer
+        improvement in real automation value than "68% vs 44% accuracy" conveys alone.
       </p>
 
       <h1 style={{ marginTop: 44 }}>The full story, from data to decision</h1>

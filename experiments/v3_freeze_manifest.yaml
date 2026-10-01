@@ -1,0 +1,86 @@
+# "Selective Automation V3" freeze manifest — committed before the new holdout cases below are generated
+# or scored. This formalizes, with Exp-32-grade pre-registration rigor, what Exp 60 already showed
+# informally: that the guarded candidate (Exp 59 tool fixes + Exp 60's require-tool gate) generalizes to
+# unseen data. Nothing below may change after this run's predictions are viewed. If a bug or desired
+# change is found, it is documented as a finding for a future experiment, not applied retroactively here.
+
+frozen_at: "2026-10-01"
+purpose: >
+  Pre-register the guarded candidate as a named, version-pinned architecture ("Selective Automation V3")
+  before generating or scoring a brand-new, never-before-seen holdout, so this run has the same
+  report-once discipline as Exp 32's official final test — not just Exp 60's honest-but-informal version
+  of the same claim.
+
+architecture_under_test:
+  name: "Selective Automation V3"
+  description: >
+    Identical decision architecture to the official frozen resolver (deterministic-first, ESCALATE and
+    REQUEST_INFORMATION as first-class safe outcomes, never forced to decide) for the deterministic path.
+    For claims the deterministic layer cannot conclusively resolve, control passes to a bounded,
+    guarded agent (not the single-shot LLM residual step) whose domain-specific compliance tools compute
+    the disposition in code; the disposition gate (Exp 41) and the require-category-tool gate (Exp 60)
+    together mean the model can gather and explain evidence but cannot award an APPROVE the tool layer
+    did not actually support.
+  baseline_for_comparison: "Frozen selective resolver (Exp 30 / Exp 32) — official, unmodified, run side by side on the same cases."
+
+frozen_code (sha256, first 16 hex chars, of the file as it stands right now):
+  scripts/exp59_final_fix.py:           bea75ac0cc646ec8   # Exp 53-59's tool fixes: hotel ceiling, mileage, software, gift, evidence-consistency
+  scripts/exp60_require_tool_gate.py:   d83ac62a179ab37b   # Exp 60's require-category-tool gate, reused unmodified (run_candidate())
+  src/agent.py:                         9ebe683d8fc94b5c   # bounded ReAct loop, step cap, budget cap
+  src/agent_variants.py:                12a23b90a8832a5c   # gate_disposition (Exp 41), gate_approve (Exp 40)
+  src/rules_text.py:                    f3d64c5fc5460d9d   # note-parsing (unchanged since Exp 32's own freeze)
+  src/resolver.py:                      dde370e83c6a1330   # deterministic path, identical to the official frozen resolver
+  src/config.py:                        2929bb7e1b6b658b   # ENTERPRISE table path (redirected to the isolated copy below, never mutated in place)
+
+git:
+  head_sha: 619a9d9f1bfef7de2cbeb06d8550722843b331ce
+  working_tree: uncommitted, by the user's own standing instruction (Claude does not commit/push on their behalf).
+    Freeze is therefore by file content hash above, not by a clean git commit — same accepted limitation
+    Exp 32's own manifest disclosed.
+
+frozen_policy_corpus:
+  reused_unchanged_from: ExpenseGuard_DATASET/01_policy_corpus/ — the SAME 22 documents Exp 32 and Exp 60
+    ran against. This run tests new claims against the existing company policy, not a new company; the
+    corpus, its chunking/embeddings, and the retriever are not regenerated.
+  git_status_at_freeze: clean (no local modifications since the last commit)
+
+frozen_enterprise_data:
+  base: an ISOLATED COPY of ExpenseGuard_DATASET/03_enterprise_data/, under experiments/v3_holdout/enterprise_data/
+    — new supporting rows for the new cases are appended only to this copy. src.config.ENTERPRISE is
+    redirected to it before any resolver/agent import, exactly as Exp 60 did; the real dataset is verified
+    byte-for-byte unchanged before and after this experiment via sha256sum diffing.
+
+frozen_case_generation:
+  method: hand-authored cases (dataset_generator.engine.evaluate() as the independent reference ground
+    truth, dataset_generator.semantic for real note-drafting) — the same validated pipeline Exp 60 used,
+    not the full seeded dataset_generator.build.main() pipeline (which would also regenerate a new policy
+    corpus incompatible with the frozen resolver's existing embeddings index).
+  planned_n: 30
+  size_rationale: >
+    Smaller than Exp 60's 50 by deliberate choice: each case requires careful, individually-authored
+    enterprise-table rows and ground truth cross-validation, and a rushed 50-case set carries real risk of
+    the same kind of ground-truth bug Exp 60 itself found and had to correct (X3-049). 30 cases, authored
+    and reviewed carefully, is judged a better tradeoff than 50 authored under time pressure. This is
+    disclosed as a real limitation on the statistical precision of this result, not hidden.
+  case_ids: "X4-001 through X4-030 (genuinely new case_ids, new bill/approval/travel/delegation ids — no case content reused from Exp 60's X3-* set)"
+
+frozen_model:
+  decision_model: openai/gpt-4o-mini
+  temperature: 0 (via src/llm_exp.run defaults)
+  disclosed_caveat: same OpenRouter provider-routing non-reproducibility caveat as Exp 32's manifest.
+
+cache_policy:
+  llm_calls: cached on disk (results/cache/); a fresh case's exact prompt has not been seen before, so this
+    run is expected to be mostly live, not a cache replay.
+  budget_cap: MAX_BUDGET_USD=8.00 (.env); spend before this run's case generation: $7.28 (session total
+    through Exp 60). Projected additional cost: comparable to Exp 60's full pipeline ($0.13 for 50 cases'
+    generation + both model comparisons) scaled down for 30 cases and one model only (gpt-4o-mini) —
+    projected well under $0.20.
+
+process_rule:
+  statement: >
+    No code, prompt, tool, gate, or case content listed above may change after this run's predictions are
+    produced and viewed. The full batch completes, predictions are written to disk before ground truth is
+    ever opened for scoring, and only then is any analysis performed. If this run reveals a bug, it is
+    documented as a finding for a future experiment — not fixed and silently re-run under this same
+    manifest.

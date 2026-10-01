@@ -1,0 +1,40 @@
+{
+  "run_id": "RESOLVER-EXP60_HOLDOUT-gpt-4o-mini-c55ac0",
+  "model": "openai/gpt-4o-mini",
+  "n": 1,
+  "correct": 0,
+  "correct_disposition_rate": 0.0,
+  "wilson95": [
+    0.0,
+    0.7935
+  ],
+  "false_approvals": 0,
+  "non_approvable": 0,
+  "false_approval_rate": null,
+  "human_review_rate": 0.0,
+  "over_escalation": 0,
+  "missed_escalation": 0,
+  "missing_field_exact_match": "0/0",
+  "by_family": {
+    "CAR_RENTAL": "0/1"
+  },
+  "confusion": {
+    "APPROVE->REJECT": 1
+  },
+  "errors": 0,
+  "median_latency_ms": 4189,
+  "p95_latency_ms": 4189,
+  "input_tokens": 5258,
+  "output_tokens": 77,
+  "total_tokens": 5335,
+  "total_cost_usd": 0.000835,
+  "decision_counts": {
+    "REJECT": 1
+  },
+  "schema_valid": 1,
+  "unsupported_policy_assertion_rate": 1.0,
+  "policy_assertion_in_text_rate": 1.0,
+  "nonexistent_clause_rate": 1.0,
+  "wrong_policy_version_cases": 0,
+  "cached_calls": 1
+}

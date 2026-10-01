@@ -51,6 +51,11 @@ const DOCS = [
   ["OWASP 2025 Evaluation", "docs/owasp_llm_top10_2025.md"], ["Synthetic Data Provenance", "docs/synthetic_data_provenance.md"],
   ["Reproducibility Guide", "docs/reproducibility_and_repo_map.md"], ["Demo Script", "docs/demo_script.md"],
   ["Gate Override Audit", "docs/gate_override_audit.md"], ["CHANGELOG_FINAL", "CHANGELOG_FINAL.md"],
+  ["Exp 53 — Approve Calibration", "docs/exp53_approve_calibration.md"], ["Exp 54 — Stronger Model", "docs/exp54_stronger_model_approve.md"],
+  ["Exp 55 — Fact Fixes", "docs/exp55_fact_fixes.md"], ["Exp 56 — Hotel Ceiling Fix", "docs/exp56_hotel_ceiling_fix.md"],
+  ["Exp 57 — Hybrid Facts, No Gate", "docs/exp57_hybrid_facts_hotel.md"], ["Exp 58 — Full Agent Fix", "docs/exp58_full_agent_fix.md"],
+  ["Exp 59 — Final Fix", "docs/exp59_final_fix.md"], ["Exp 60 — Fresh Holdout", "docs/exp60_fresh_holdout.md"],
+  ["Exp 61 — Pre-Registered V3 Holdout", "docs/exp61_v3_holdout.md"],
 ];
 
 const EXP_PHASES_7 = [
@@ -69,6 +74,10 @@ const EXP_PHASES_7 = [
     findings: [], highlight: "More prompting, a larger model and better retrieval did not solve the decision problem." },
   { name: "Phase 7 — Guarded Agent", range: "Exp 40–52", ns: ["40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52"],
     findings: [], highlight: "Reliable deterministic authority helped only when tool inputs and applicability boundaries were also reliable." },
+  { name: "Phase 8 — Root-cause the APPROVE blind spot, fix it, fresh-holdout test it", range: "Exp 53–60", ns: ["53", "54", "55", "56", "57", "58", "59", "60"],
+    findings: [], highlight: "A fact handed to the model changes nothing unless something in the architecture enforces its use — the disposition gate, not the fact itself, is what made every later fix work." },
+  { name: "Phase 9 — Pre-register the candidate, test it a second, independent time", range: "Exp 61", ns: ["61"],
+    findings: [], highlight: "A 0% observed false-approval rate on one holdout is not the same claim as 0% true risk — the second, pre-registered holdout found the candidate's first real false approval." },
 ];
 
 function ExperimentPhase({ phase }) {
@@ -384,12 +393,42 @@ export default function ProjectStory() {
         <Section id="s13" title="Guarded Agent">
           <GuardedArchDiagram />
           <div className="callout-card" style={{ marginTop: 10 }}>
-            <b>Post-final development/validation-selected candidate — not independently final-tested.</b>
+            <b>Leading development candidate — validated on a fresh holdout (Exp 60), not yet an independently
+            pre-registered final test.</b> Its early design (through Exp 52) was development/validation-selected;
+            Exp 53–59 then root-caused and fixed why it had never once produced a correct APPROVE, and Exp 60
+            tested the fix on 50 cases neither architecture had ever seen.
           </div>
           <div className="stat-grid" style={{ marginTop: 12 }}>
-            <div className="stat-card good"><div className="value"><Metric value={d.guarded_candidate?.development?.correct} suffix={`/${d.guarded_candidate?.development?.n ?? ""}`} /></div><div className="label">Dev — <Metric value={d.guarded_candidate?.development?.accuracy_pct} suffix="%" />, <Metric value={d.guarded_candidate?.development?.human_review_rate_pct} suffix="% HRR" /></div></div>
-            <div className="stat-card good"><div className="value"><Metric value={d.guarded_candidate?.validation?.correct} suffix={`/${d.guarded_candidate?.validation?.n ?? ""}`} /></div><div className="label">Validation — <Metric value={d.guarded_candidate?.validation?.accuracy_pct} suffix="%" />, <Metric value={d.guarded_candidate?.validation?.human_review_rate_pct} suffix="% HRR" /></div></div>
+            <div className="stat-card good"><div className="value"><Metric value={d.guarded_candidate?.development?.correct} suffix={`/${d.guarded_candidate?.development?.n ?? ""}`} /></div><div className="label">Dev (Exp 52) — <Metric value={d.guarded_candidate?.development?.accuracy_pct} suffix="%" />, <Metric value={d.guarded_candidate?.development?.human_review_rate_pct} suffix="% HRR" /></div></div>
+            <div className="stat-card good"><div className="value"><Metric value={d.guarded_candidate?.validation?.correct} suffix={`/${d.guarded_candidate?.validation?.n ?? ""}`} /></div><div className="label">Validation (Exp 52) — <Metric value={d.guarded_candidate?.validation?.accuracy_pct} suffix="%" />, <Metric value={d.guarded_candidate?.validation?.human_review_rate_pct} suffix="% HRR" /></div></div>
           </div>
+          <h3 className="sub-h" style={{ marginTop: 24 }}>Exp 60 — fresh, never-before-seen 50-case holdout</h3>
+          <FreshHoldoutTable
+            holdout={d.exp60_holdout}
+            rows={[
+              { key: "frozen", name: "Frozen resolver (official)" },
+              { key: "candidate_mini", name: "Fixed candidate, gpt-4o-mini" },
+              { key: "candidate_gpt4o", name: "Fixed candidate, gpt-4o" },
+            ]}
+            summaryTop="The fixed candidate (gpt-4o-mini) matched the frozen design's 0% observed false-approval rate at roughly double its accuracy on this sample. Swapping to gpt-4o is not a clean upgrade — higher accuracy, but 2 new false approvals the gate did not catch."
+            summaryBottom="The frozen resolver's 0% FAR and 44% accuracy conceal its biggest real weakness on this fresh data: 2 of every 5 claims that should have been approved were wrongly blocked. The fixed candidate cuts that false-rejection rate 10x (40% → 4%)."
+          />
+
+          <h3 className="sub-h" style={{ marginTop: 28 }}>Exp 61 — a second, pre-registered holdout: the "0% FAR" claim did not hold</h3>
+          <p className="lede" style={{ fontSize: 13 }}>
+            Exp 60 was honest but not formally pre-registered. Exp 61 named and froze the exact candidate
+            architecture ("Selective Automation V3") in a manifest committed before a single one of 30 new
+            holdout cases was generated — closer to Exp 32's own rigor than Exp 60's.
+          </p>
+          <FreshHoldoutTable
+            holdout={d.exp61_holdout}
+            rows={[
+              { key: "frozen", name: "Frozen resolver (official)" },
+              { key: "candidate", name: "V3 candidate (gpt-4o-mini)" },
+            ]}
+            summaryTop="This time the candidate did NOT hold 0% false approvals: X4-020, a gift paid as a 'prepaid e-voucher redeemable at various outlets,' was wrongly approved. Traced live — the require-tool gate worked correctly (the tool was consulted), but check_gift_compliance's free-text parsing did not recognize that phrasing as a cash-equivalent gift form. No fix was applied, per the manifest's own process rule: documented as a finding for a future experiment, not patched and silently re-run."
+            summaryBottom="Combined across Exp 60 and Exp 61, the candidate has 1 false approval in 45 non-approvable cases (~2.2% observed, not 0%) — a materially more honest statement of its risk. The frozen resolver's own 0% FAR claim is unaffected: 0 false approvals across Exp 32, Exp 60, and Exp 61 combined (82 non-approvable cases)."
+          />
         </Section>
 
         <Section id="s14" title="Higher Accuracy ≠ Better Operating Architecture">
@@ -431,15 +470,17 @@ export default function ProjectStory() {
         <Section id="s19" title="Limitations">
           <ul className="bullets">
             <li>Synthetic benchmark — not production financial data</li>
-            <li>Official blind evidence is Exp 32 only</li>
-            <li>Validation influenced later guarded-agent development</li>
-            <li>Guarded candidate therefore lacks independent final evaluation</li>
+            <li>Official blind evidence is Exp 32 only — that result cannot be re-earned and still governs the shipped architecture</li>
+            <li>Validation influenced both the Exp 52 candidate design and, later, the Exp 53–59 fixes built to close its APPROVE blind spot</li>
+            <li>Exp 60 is a real, independently-labeled fresh holdout, but not a formally pre-registered freeze-and-final-test in the same sense as Exp 32</li>
+            <li>A narrower, related gap was found in a smaller follow-up check after Exp 60 (a tool consulted but given content that only superficially satisfies its check, not never consulted at all) — disclosed, not yet fixed</li>
             <li>Prompt/retrieval injection remains a residual risk</li>
             <li>Residual LLM path remains weak</li>
+            <li>The live demo's "agent" endpoint still runs the pre-Exp53 tool set, not the fixed candidate</li>
             <li>Real deployment requires shadow evaluation, access controls, privacy controls and monitoring</li>
           </ul>
-          <p className="lede" style={{ marginTop: 10 }}>"A new held-out set would be required if the guarded candidate were ever promoted to a new official architecture."</p>
-          <p className="lede">"That evaluation was deliberately not performed because cost analysis showed that the candidate did not currently justify promotion."</p>
+          <p className="lede" style={{ marginTop: 10 }}>"A formal, pre-registered freeze-and-larger-holdout would be required before the guarded candidate could be called a validated replacement for the official architecture."</p>
+          <p className="lede">"The frozen resolver still ships officially — not because it is cheaper (a sensitivity check found that advantage does not survive diagnostic final-run safety numbers), but because it is the only design with an authorized, frozen final-test result."</p>
         </Section>
 
         <Section id="s20" title="Final Takeaways">
@@ -545,6 +586,44 @@ function FailureChart({ categories, total }) {
   );
 }
 
+function FreshHoldoutTable({ holdout, rows, summaryTop, summaryBottom }) {
+  if (!holdout) return <p className="lede">{MV}</p>;
+  return (
+    <div>
+      <div className="stat-grid">
+        {rows.map((r) => (
+          <div className={`stat-card ${holdout[r.key].false_approvals === 0 ? "good" : "bad"}`} key={r.key}>
+            <div className="value"><Metric value={holdout[r.key].correct} suffix={`/${holdout[r.key].n}`} /></div>
+            <div className="label">{r.name} — <Metric value={holdout[r.key].accuracy_pct} suffix="%" />, <Metric value={holdout[r.key].false_approvals} /> false approvals (<Metric value={holdout[r.key].far_pct} suffix="%" /> FAR), APPROVE recall <Metric value={holdout[r.key].approve_recall.correct} suffix={`/${holdout[r.key].approve_recall.n}`} /></div>
+          </div>
+        ))}
+      </div>
+      {summaryTop && <p className="lede" style={{ fontWeight: 700, marginTop: 10 }}>{summaryTop}</p>}
+      <h4 style={{ marginTop: 18 }}>Accuracy alone understates what changed — the safe-automation breakdown</h4>
+      <div className="build-table" style={{ marginTop: 8 }}>
+        <div className="build-row" style={{ gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr" }}>
+          {["", "Safely automated, correct", "False approvals", "False rejections (real approvable, wrongly blocked)", "Unnecessary escalations"].map((h) => (
+            <div key={h} style={{ fontWeight: 700, fontSize: 11, color: "var(--text-dim)" }}>{h}</div>
+          ))}
+        </div>
+        {rows.map((r) => {
+          const h = holdout[r.key];
+          return (
+            <div className="build-row" style={{ gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr" }} key={r.key}>
+              <div>{r.name}</div>
+              <div style={{ fontWeight: 700 }}>{h.safely_automated}/{h.n} = {h.safely_automated_pct}%</div>
+              <div style={{ color: h.false_approvals > 0 ? "var(--bad)" : "inherit", fontWeight: h.false_approvals > 0 ? 700 : 400 }}>{h.false_approvals}</div>
+              <div style={{ color: h.false_rejections_pct >= 20 ? "var(--bad)" : "inherit", fontWeight: h.false_rejections_pct >= 20 ? 700 : 400 }}>{h.false_rejections}/{h.n} = {h.false_rejections_pct}%</div>
+              <div>{h.unnecessary_escalations}</div>
+            </div>
+          );
+        })}
+      </div>
+      {summaryBottom && <p className="lede" style={{ marginTop: 10 }}>{summaryBottom}</p>}
+    </div>
+  );
+}
+
 function CostTwist({ scenarios }) {
   const [scenario, setScenario] = useState("base");
   if (!scenarios) return <p className="lede">{MV}</p>;
@@ -646,7 +725,7 @@ function DecisionMatrix({ arch, d }) {
     { name: "Fixed Workflow", acc: arch.fixed_workflow ? `${arch.fixed_workflow.accuracy_pct}%` : MV, far: arch.fixed_workflow ? `${arch.fixed_workflow.far_pct}%` : MV, esc: "14.3%", cost: "$0", complexity: "Medium", status: "Rejected" },
     { name: "Bounded Agent", acc: "53.8%", far: "30.0%", esc: "23.1%", cost: "Med", complexity: "High", status: "Rejected" },
     { name: "Frozen Selective Resolver", acc: arch.selective_resolver ? `${arch.selective_resolver.accuracy_pct}%` : MV, far: "0.0%", esc: "18.6–22%", cost: "Lowest", complexity: "Medium", status: "Official — Preferred Operating Architecture" },
-    { name: "Guarded Agent", acc: d.guarded_candidate ? `${d.guarded_candidate.development.accuracy_pct}%` : MV, far: "0.0%", esc: "~34%", cost: "Higher", complexity: "Highest", status: "Candidate — Operationally Rejected" },
+    { name: "Guarded Agent (fixed, Exp 53–61)", acc: d.exp60_holdout ? `${d.exp60_holdout.candidate_mini.accuracy_pct}%` : MV, far: (d.exp60_holdout && d.exp61_holdout) ? `~${Math.round(1000 * (d.exp60_holdout.candidate_mini.false_approvals + d.exp61_holdout.candidate.false_approvals) / (d.exp60_holdout.n - d.exp60_holdout.candidate_mini.approve_recall.n + d.exp61_holdout.n - d.exp61_holdout.candidate.approve_recall.n)) / 10}% combined` : MV, esc: "~34%", cost: "Higher", complexity: "Highest", status: "Leading development candidate — not promoted to official" },
   ];
   return (
     <div className="build-table">
