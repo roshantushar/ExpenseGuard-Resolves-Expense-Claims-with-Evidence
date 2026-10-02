@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 // Maya's persona dashboard: "here's today's queue, here's what actually needs you." Uses the frozen
 // (official, shipped) design's decision for every one of the 150 cases as a stand-in for "today's claims" --
@@ -6,6 +6,7 @@ import React, { useMemo, useState } from "react";
 // not invented.
 
 const FLAG_PRIORITY = { ESCALATE: 0, REQUEST_INFORMATION: 1, REJECT: 2, APPROVE: 3 };
+const STORAGE_KEY = "expenseguard_reviewer_actions_v1";
 
 function flagsFor(c) {
   const d = c.frozen;
@@ -19,16 +20,43 @@ function flagsFor(c) {
   return flags;
 }
 
-function reasonFor(c) {
-  const d = c.frozen;
-  if (d.explanation) return d.explanation;
-  if (d.policy_evidence?.length) return `Resolved under ${d.policy_evidence.join(", ")}.`;
-  return "No further detail recorded for this decision.";
+function loadActions() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveActions(actions) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(actions));
+  } catch {
+    /* private window / storage blocked — review actions just won't persist across reloads */
+  }
 }
 
 export default function ReviewDashboard({ cases }) {
   const [filter, setFilter] = useState("ALL");
   const [openId, setOpenId] = useState(null);
+  const [actions, setActions] = useState(() => loadActions());
+
+  useEffect(() => {
+    saveActions(actions);
+  }, [actions]);
+
+  function setStatus(caseId, status) {
+    setActions((prev) => {
+      const current = prev[caseId] || {};
+      const next = { ...current, status: current.status === status ? null : status };
+      return { ...prev, [caseId]: next };
+    });
+  }
+
+  function setComment(caseId, comment) {
+    setActions((prev) => ({ ...prev, [caseId]: { ...(prev[caseId] || {}), comment } }));
+  }
 
   const todays = useMemo(
     () => [...cases].sort((a, b) => FLAG_PRIORITY[a.frozen.decision] - FLAG_PRIORITY[b.frozen.decision] || a.case_id.localeCompare(b.case_id)),
@@ -103,6 +131,8 @@ export default function ReviewDashboard({ cases }) {
           {filtered.map((c) => {
             const flags = flagsFor(c);
             const open = openId === c.case_id;
+            const d = c.frozen;
+            const action = actions[c.case_id] || {};
             return (
               <div key={c.case_id} className={`dash-row ${c.frozen.decision === "ESCALATE" ? "priority" : ""}`}>
                 <div className="dash-row-head" onClick={() => setOpenId(open ? null : c.case_id)}>
@@ -115,6 +145,12 @@ export default function ReviewDashboard({ cases }) {
                       {flags.map((f, i) => (
                         <span key={i} className={`flag-chip ${f.tone}`}>{f.label}</span>
                       ))}
+                      {action.status && (
+                        <span className={`flag-chip ${action.status === "ACCEPTED" ? "good" : "bad"}`}>
+                          You {action.status === "ACCEPTED" ? "accepted" : "rejected"} this
+                        </span>
+                      )}
+                      {action.comment && <span className="flag-chip neutral">Comment added</span>}
                     </div>
                   </div>
                   <span className="dash-row-toggle">{open ? "▾" : "▸"}</span>
@@ -122,7 +158,67 @@ export default function ReviewDashboard({ cases }) {
                 {open && (
                   <div className="dash-row-detail">
                     <div className="claim-note">"{c.claim.employee_description}"</div>
-                    <p style={{ fontSize: 13, color: "#d6dae3", marginTop: 8 }}>{reasonFor(c)}</p>
+
+                    <div className="why-block">
+                      <div className="why-title">Why the system reached this conclusion</div>
+                      <dl className="why-grid">
+                        <dt>Decision</dt>
+                        <dd>{d.decision}</dd>
+                        <dt>Resolution path</dt>
+                        <dd>
+                          {d.path === "deterministic"
+                            ? "Deterministic code rule — no LLM call, $0, instant"
+                            : "LLM-residual reasoning — retrieved policy evidence + enterprise facts"}
+                        </dd>
+                        <dt>Policy clauses cited</dt>
+                        <dd>
+                          {d.policy_evidence?.length ? (
+                            d.policy_evidence.map((p) => (
+                              <span key={p} className="mono-cell" style={{ marginRight: 6 }}>{p}</span>
+                            ))
+                          ) : (
+                            <span style={{ color: "var(--text-dim)" }}>None cited for this decision</span>
+                          )}
+                        </dd>
+                        <dt>Missing fields</dt>
+                        <dd>
+                          {d.missing_fields?.length ? d.missing_fields.join(", ") : <span style={{ color: "var(--text-dim)" }}>None</span>}
+                        </dd>
+                        <dt>Full explanation</dt>
+                        <dd>{d.explanation || <span style={{ color: "var(--text-dim)" }}>No free-text explanation recorded — deterministic rules decide by clause, not narration.</span>}</dd>
+                        <dt>Claim details</dt>
+                        <dd>
+                          {c.claim.bill.merchant_category || "—"} · submitted {c.claim.submission_date || "—"} ·
+                          transaction {c.claim.transaction_date || "—"} · employee {c.claim.employee_id || "—"} ·
+                          project {c.claim.project_id || "—"}
+                        </dd>
+                      </dl>
+                    </div>
+
+                    <div className="review-actions">
+                      <div className="why-title">Your review</div>
+                      <div className="review-buttons">
+                        <button
+                          className={`review-btn accept ${action.status === "ACCEPTED" ? "active" : ""}`}
+                          onClick={() => setStatus(c.case_id, "ACCEPTED")}
+                        >
+                          ✓ Accept system's decision
+                        </button>
+                        <button
+                          className={`review-btn reject ${action.status === "REJECTED" ? "active" : ""}`}
+                          onClick={() => setStatus(c.case_id, "REJECTED")}
+                        >
+                          ✗ Reject / override
+                        </button>
+                      </div>
+                      <textarea
+                        className="review-comment"
+                        placeholder="Add a comment (reason for override, note for the employee, anything worth recording)…"
+                        value={action.comment || ""}
+                        onChange={(e) => setComment(c.case_id, e.target.value)}
+                      />
+                      <div className="review-note">Saved to this browser only — not sent anywhere, not a write to any enterprise system.</div>
+                    </div>
                   </div>
                 )}
               </div>

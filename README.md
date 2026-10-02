@@ -10,6 +10,23 @@ reasoning, and explicit human escalation.*
 
 *PE6201 (Emerging AI Technologies) end-of-course project.*
 
+## Who this is for
+
+**Maya — finance operations analyst.** It's 4pm on the last day of the month, and her queue has 60 expense
+claims in it. She already knows the policy corpus cold and roughly which categories tend to cause trouble
+(hotel ceilings, mileage math); what she doesn't have is time to re-verify every routine claim against
+every record by hand, or visibility into which few of the 60 actually need her judgment.
+
+| Before ExpenseGuard | After ExpenseGuard |
+|---|---|
+| Manually reads every claim, travel record, approval, exception, prior claim | Only sees claims with missing evidence, conflicting evidence, or policy-mandated human review |
+| Spends equal time on routine and hard cases | Attention concentrated on the hard cases |
+| Decisions and reasoning vary reviewer to reviewer | Routine claims resolved consistently, with cited evidence |
+
+Employees benefit too: faster resolution, specific requests for missing information instead of silence,
+and evidence-backed reasons for a rejection — not just "denied." ExpenseGuard is what makes that possible.
+Here's the problem it's solving underneath that.
+
 ## Problem
 
 Finance reviewers must decide whether an employee expense is ready for reimbursement using a bill, a
@@ -32,13 +49,49 @@ judgment.
 | 150 claims · 22 policies · 11 systems | 55 | 60%, 0/37 FAR | 68% / 66.7% on fresh holdouts | $7.38 / $8.00 |
 
 ## Table of contents
-[Problem](#problem) · [At a glance](#at-a-glance) · [Product overview](#product-overview) · [Primary user](#primary-user-and-what-changes) ·
+[Who this is for](#who-this-is-for) · [Problem](#problem) · [At a glance](#at-a-glance) ·
+[Product documentation](#product-documentation-one-page-summary) · [Product overview](#product-overview) ·
 [Why AI, and why not everywhere](#why-ai-and-why-not-ai-everywhere) · [Closest alternatives](#closest-alternatives-and-the-gap) ·
 [Build vs. buy](#build-vs-buy) · [Dataset & evaluation](#dataset-and-evaluation-design) · [Architecture](#architecture) ·
 [Metrics](#metrics-target-and-baseline) · [Results](#results) · [Business impact](#business-impact-and-cost) ·
 [Experiments](#experiments) · [Responsible AI & security](#responsible-ai-security-and-guardrails) ·
 [Limitations](#limitations-and-evaluation-critique) · [Quick start](#quick-start) · [Reproducibility](#reproducibility) ·
 [Repo map](#repository-map) · [Demo](#demo--ui) · [Documentation index](#deliverables-and-documentation-index)
+
+---
+
+## Product documentation (one-page summary)
+
+*Persona, input/output, architecture and metrics in one place — standalone version with no cross-links:
+[`docs/product_documentation.md`](docs/product_documentation.md).*
+
+**Persona — Maya, finance operations analyst.** End of month, 60 expense claims in her queue. She knows the
+policy corpus cold but doesn't have time to re-verify every routine claim against every enterprise record
+by hand, and has no way to tell upfront which of the 60 actually need her judgment. Intended use: decision
+support and selective automation for a human reviewer. Explicit non-use: no payment execution, no
+autonomous reimbursement, no fraud/employee-risk scoring — every enterprise tool is read-only.
+
+**Input** — a claim is two fields, nothing pre-extracted: a bill (merchant, amount, currency, category) and
+a free-text employee note, which is the only place most decision-critical facts live (nights stayed,
+attendee counts, exception references, even the real expense category). Everything else — applicable
+policy, approvals, delegations, travel requests, budget, prior claims — is looked up, not supplied.
+
+**Output** — one of **APPROVE / REJECT / REQUEST_INFORMATION / ESCALATE**, plus the policy clauses and
+resolved facts behind the decision — no answer without cited evidence.
+
+**Architecture (high level)** — see the [Architecture](#architecture) section below for the full diagram.
+
+**Metrics: targeted vs. reached**
+
+| Metric | Target | Reached (frozen, Exp 32, 50-claim held-out) |
+|---|---|---|
+| Accuracy | ≥ 60% | **30/50 = 60%** (vs. 26% majority-class baseline) |
+| Observed FAR | 0% (hard constraint) | **0/37 = 0%** |
+| Deterministic-path accuracy | — | **22/22 = 100%** |
+| LLM-residual-path accuracy | — | **8/28 = 28.6%** (dominant weakness, drove 28 further experiments) |
+
+Full detail, including the guarded-agent candidate's fresh-holdout results, is in the sections below
+([Architecture](#architecture), [Metrics](#metrics-target-and-baseline), [Results](#results)).
 
 ---
 
@@ -88,23 +141,6 @@ of guessing.
 non-use:** no payment execution, no autonomous reimbursement, no fraud accusation or employee-risk
 scoring, no irreversible action — every enterprise tool is read-only, and `ESCALATE`/
 `REQUEST_INFORMATION` are safe, first-class outcomes, never forced guesses.
-
-## Primary user and what changes
-
-**Maya — finance operations analyst**, reviewing expense claims against company policy. It's 4pm on the
-last day of the month, and her queue has 60 claims in it. She already knows the policy corpus cold and
-roughly which categories tend to cause trouble (hotel ceilings, mileage math); what she doesn't have is
-time to re-verify every routine claim against every record by hand, or visibility into which few of the 60
-actually need her judgment.
-
-| Before ExpenseGuard | After ExpenseGuard |
-|---|---|
-| Manually reads every claim, travel record, approval, exception, prior claim | Only sees claims with missing evidence, conflicting evidence, or policy-mandated human review |
-| Spends equal time on routine and hard cases | Attention concentrated on the hard cases |
-| Decisions and reasoning vary reviewer to reviewer | Routine claims resolved consistently, with cited evidence |
-
-Employees benefit too: faster resolution, specific requests for missing information instead of silence,
-and evidence-backed reasons for a rejection — not just "denied."
 
 ## Why AI, and why not AI everywhere
 
@@ -215,17 +251,17 @@ higher on development/validation but has no authorized frozen final-test result 
 The metric family used for every architecture decision: **accuracy, observed False Approval Rate, Safe
 Automation Rate, Human Review Rate, cost per 1,000 claims, and latency** — never accuracy alone
 (`docs/cost_and_business_impact.md`). The majority-class baseline (always predicting the most common
-ground-truth outcome) scores 26–27% — a floor, not a competitor.
+ground-truth outcome) scores **26–27%** — a floor, not a competitor.
 
-**Target:** observed FAR = 0% is a hard constraint, never traded off; subject to that constraint, accuracy
-is maximized. This is why Exp 18's fixed workflow (64.3% dev accuracy, the highest raw accuracy of any
-architecture tested) was rejected in favor of Exp 30's selective resolver (61.4% dev accuracy, observed FAR
-= 0%).
+**Target:** observed FAR = **0%** is a hard constraint, never traded off; subject to that constraint,
+accuracy is maximized. This is why Exp 18's fixed workflow (**64.3%** dev accuracy, the highest raw
+accuracy of any architecture tested) was rejected in favor of Exp 30's selective resolver (**61.4%** dev
+accuracy, observed FAR = **0%**).
 
-**The accuracy floor stated numerically** — accuracy ≥ 60%, the bar Exp 32 actually cleared — is a
-**post-Exp-32 operational acceptance criterion**, fixed *after* seeing that result and applied to every
-later candidate since (Exp 45–61). It is not claimed as a target pre-registered ahead of the original
-freeze decision.
+**The accuracy floor stated numerically** — accuracy ≥ **60%**, the bar Exp 32 actually cleared — is a
+post-Exp-32 operational acceptance criterion, fixed *after* seeing that result and applied to every later
+candidate since (Exp 45–61). It is not claimed as a target pre-registered ahead of the original freeze
+decision.
 
 ## Results
 
@@ -259,40 +295,44 @@ against the frozen baseline on two separate, independent fresh holdouts:
 
 ![Frozen resolver vs. guarded candidate accuracy on Exp 60 and Exp 61](results/current/plots/exp60_61_comparison.png)
 
-The improvement reproduced across two independently generated synthetic holdouts, making a single-sample
-explanation less plausible — Exp 61's holdout is the methodologically stronger of the two: its evaluation
-protocol was named and frozen in a committed manifest *before* any holdout case was generated. Both
-holdouts' claim notes were drafted by the same model family used for inference (see
-[Limitations](#limitations-and-evaluation-critique)), so transfer to human-authored production claims
-remains untested. The candidate also held up on the splits it was built against: 44/70 dev (62.9%), 21/30
-validation (70.0%).
+- The improvement reproduced across **two independently generated synthetic holdouts** — a single-sample
+  explanation is less plausible with two.
+- **Exp 61 is the methodologically stronger holdout:** its evaluation protocol was named and frozen in a
+  committed manifest *before* any holdout case was generated.
+- Both holdouts' claim notes were drafted by the same model family used for inference (see
+  [Limitations](#limitations-and-evaluation-critique)) — transfer to human-authored production claims
+  remains untested.
+- The candidate also held up on the splits it was built against: **44/70 dev (62.9%)**, **21/30 validation
+  (70.0%)**.
 
 **Why Exp 61 is pre-registered but the candidate still isn't "formally validated":** Exp 61 is a
 pre-registered *stress-test* holdout, built to try to break the fix, not to serve as the project's
 replacement final-test protocol. Promotion to official status would require a separately frozen evaluation
 specifically designed for that decision, at Exp 32's scale — not a re-use of a stress test, however rigorous.
 
-The baseline's weakness wasn't noise — it had never once produced a correct APPROVE, on any split, ever
-(0/13 final test, 0/20 Exp 60, 0/15 Exp 61). The candidate recovers real APPROVE recall (12/20, 9/15),
-each one backed by a tool result, not a model's free-form judgment.
+The baseline's weakness wasn't noise — it had **never once produced a correct APPROVE**, on any split, ever
+(**0/13** final test, **0/20** Exp 60, **0/15** Exp 61). The candidate recovers real APPROVE recall
+(**12/20**, **9/15**), each one backed by a tool result, not a model's free-form judgment.
 
 ### Why it isn't the official architecture yet
 
-A higher number alone isn't the bar this project uses — observed FAR = 0% is. **Independent stress testing
-of the candidate** found it held that bar on its first fresh test (Exp 60) but not on a second,
+A higher number alone isn't the bar this project uses — **observed FAR = 0%** is. Independent stress
+testing of the candidate found it held that bar on its first fresh test (Exp 60) but not on a second,
 deliberately harder, pre-registered one (Exp 61):
 
 | | Official frozen architecture | Guarded-agent candidate |
 |---|---|---|
 | Tested on | 50-claim final test (official, one-shot) | 70 dev + 30 validation (authorized), + 2 fresh holdouts above |
-| False approvals, ever | 0 (82 non-approvable cases across 3 independent evaluations) | 1 (45 non-approvable cases across both fresh holdouts, ~2.2%) |
+| False approvals, ever | **0** (82 non-approvable cases across 3 independent evaluations) | **1** (45 non-approvable cases across both fresh holdouts, ~**2.2%**) |
 | Status | **Official, frozen architecture** | **Leading development candidate** — not promoted |
 
-That one false approval (Exp 61, a gift-form parsing gap, [diagnosed and disclosed](docs/exp61_v3_holdout.md))
-is the actual reason the candidate isn't official yet — not a lack of accuracy. A stronger model (gpt-4o)
-pushed accuracy to 78% on Exp 60 but introduced 2 false approvals there — accuracy and safety move
-independently, not together. Full detail: [`docs/exp60_fresh_holdout.md`](docs/exp60_fresh_holdout.md),
-[`docs/exp61_v3_holdout.md`](docs/exp61_v3_holdout.md).
+- That one false approval (Exp 61, a gift-form parsing gap,
+  [diagnosed and disclosed](docs/exp61_v3_holdout.md)) is the actual reason the candidate isn't official
+  yet — not a lack of accuracy.
+- A stronger model (gpt-4o) pushed accuracy to **78%** on Exp 60 but introduced **2** false approvals there
+  — accuracy and safety move independently, not together.
+- Full detail: [`docs/exp60_fresh_holdout.md`](docs/exp60_fresh_holdout.md),
+  [`docs/exp61_v3_holdout.md`](docs/exp61_v3_holdout.md).
 
 **In one sentence:** the guarded architecture appears to solve substantially more of the original business
 problem than the frozen baseline, but it has not yet met this project's safety threshold consistently
@@ -319,14 +359,25 @@ cases." The candidate cuts the same rate to 1 in 10 while holding false approval
 Per `problem.md` §36: **measured** system quantities and **assumed/modeled** business inputs are never
 blended into one number.
 
-**Baseline, how a reviewer does this today (industry figures, assumed, [GBTA Foundation](https://gbta.org/new-study-reveals-pain-points-in-expense-reporting/)):**
-~20 minutes and ~$11.67 reviewer time per claim; ~19% of reports contain errors or missing information.
+**Baseline, how a reviewer does this today** (industry figures, assumed,
+[GBTA Foundation](https://gbta.org/new-study-reveals-pain-points-in-expense-reporting/)):
+- **~20 minutes** and **~$11.67** reviewer time per claim
+- **~19%** of reports contain errors or missing information
 
-**Three cost layers, priced separately rather than blended:** direct AI inference cost → human-fallback
-cost (escalation rate × assumed review cost) → error cost (false approval / false rejection, priced per
-incident). Token cost alone is not the business decision — false approvals, false rejections, and
-unnecessary escalation dominate the economics once priced, which is why a corrected cost model changed
-which architecture looked cheaper (full model: [`docs/cost_and_business_impact.md`](docs/cost_and_business_impact.md)).
+**Three cost layers, priced separately rather than blended** (never collapsed into one number):
+1. Direct AI inference cost
+2. Human-fallback cost (escalation rate × assumed review cost)
+3. Error cost (false approval / false rejection, priced per incident)
+
+Token cost alone is not the business decision — false approvals, false rejections, and unnecessary
+escalation dominate the economics once priced, which is why a corrected cost model changed which
+architecture looked cheaper (full model: [`docs/cost_and_business_impact.md`](docs/cost_and_business_impact.md)).
+
+![Expected cost per 1,000 claims, broken into AI inference, human review, and each error type, per architecture](results/current/plots/analysis_cost_breakdown_by_architecture.png)
+*Base scenario (10k claims/mo, $35/hr reviewer). The frozen resolver's $0 false-approval cost is bought
+with a large false-rejection cost; the guarded candidate cuts total cost ~40% by recovering legitimate
+approvals instead of cutting corners on safety — the same tradeoff as the [Results](#results) section,
+priced.*
 
 | Metric | Value | Measured or assumed |
 |---|---|---|
@@ -342,14 +393,14 @@ once those are priced, they decide which architecture is actually cheaper, not r
 scenario modeling (low/base/high volume, full cost-per-1,000-claims range):
 [`docs/cost_and_business_impact.md`](docs/cost_and_business_impact.md).
 
-**The argument this supports:** *if* a real deployment's manual-review time resembles the ~20-minute
-industry baseline, resolving 78% of final-test claims without a human, at sub-3-second residual-path
+**The argument this supports:** *if* a real deployment's manual-review time resembles the **~20-minute**
+industry baseline, resolving **78%** of final-test claims without a human, at **sub-3-second** residual-path
 latency, reduces avoidable review effort. No claim of measured production savings is made — that requires
 a real deployment, not this synthetic benchmark.
 
 ## Experiments
 
-**55 experiments, numbered 0–61, 7 phases** — numbers 21–27 were deliberately skipped (the agent-value
+**55 experiments, numbered 0–61, 7 phases.** Numbers **21–27** were deliberately skipped (the agent-value
 gate closed before those were needed; see [Limitations](#limitations-and-evaluation-critique)). Every
 number traces to a file under `results/current/`; full write-ups: [`docs/README.md`](docs/README.md#full-experiment-index).
 Every experiment with its description, why it was run, what was inferred, and why it led to the next one:
@@ -364,6 +415,13 @@ Every experiment with its description, why it was run, what was inferred, and wh
 | 5. Guarded-agent build | 40–52 | 44/70 dev, 21/30 validation, 0% FAR — promising, not yet held-out tested |
 | 6. Root-cause, fix, fresh holdout | 53–60 | Diagnosed 3 root causes live, fixed each: 0% FAR, 68% accuracy on a fresh, never-seen holdout |
 | 7. Pre-registered second holdout | 61 | Found "0% FAR" did not survive — a real false approval, disclosed, not fixed |
+
+![The experiment journey: five design gates, 57 named test entries, each gate's accuracy/cost/safety numbers and decision](docs/img/experiment_journey_poster.png)
+*Five gates the architecture had to clear, in order — each one re-tested on the same 70 development claims
+(Gate 5 on two separate fresh holdouts). "57 named test entries" counts every individually reported run,
+including lettered sub-variants (e.g. Exp 35a/35b/35c) — the headline "55 experiments, numbered 0–61"
+above counts distinct experiment numbers instead; both are accurate, counted differently. Every number on
+this poster was checked against its source `summary.json` before publishing.*
 
 ## Responsible AI, security, and guardrails
 
@@ -475,7 +533,7 @@ Six files worth reading first, runtime behavior in order of what decides a claim
 
 ## Demo / UI
 
-**Recorded demo:** [Watch the 5-minute project walkthrough](#) *(link pending — add once recorded)*.
+**Recorded demo:** [Watch the project walkthrough](https://youtu.be/1MLsn86GLyY).
 
 ```bash
 python -m ui.backend.server && cd ui/frontend && npm install && npm run dev   # see Quick start above
@@ -505,9 +563,11 @@ Easiest path: run the demo above and screenshot the Case Explorer tab with a cas
   result files.
 - **Local demo application** — React frontend + Python backend, browse all 150 cases or run either design
   live against a free or paid model.
-- **Final report** — [`docs/FINAL_REPORT.md`](docs/FINAL_REPORT.md), ~1,200 words.
+- **Final report** — [`ExpenseGuard_Report.pdf`](ExpenseGuard_Report.pdf), exhibit-driven evidence-led design story.
 
 **Documentation index:**
+- Final report, exhibit-driven: [`ExpenseGuard_Report.pdf`](ExpenseGuard_Report.pdf)
+- One-page product summary (persona, input/output, architecture, metrics): [`docs/product_documentation.md`](docs/product_documentation.md)
 - Full diagnostic story, every experiment, extended flowcharts: [`docs/README.md`](docs/README.md)
 - Business problem and scope: [`problem.md`](problem.md)
 - Cost and operating-cost model: [`docs/cost_and_business_impact.md`](docs/cost_and_business_impact.md)
