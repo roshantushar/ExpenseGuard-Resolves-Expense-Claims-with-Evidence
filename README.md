@@ -563,9 +563,11 @@ Easiest path: run the demo above and screenshot the Case Explorer tab with a cas
   result files.
 - **Local demo application** — React frontend + Python backend, browse all 150 cases or run either design
   live against a free or paid model.
-- **Final report** — [`docs/FINAL_REPORT.md`](docs/FINAL_REPORT.md), ~1,200 words.
+- **Final report** — [`ExpenseGuard_Report.pdf`](ExpenseGuard_Report.pdf), exhibit-driven evidence-led design story.
 
 **Documentation index:**
+- Final report, exhibit-driven: [`ExpenseGuard_Report.pdf`](ExpenseGuard_Report.pdf)
+- One-page product summary (persona, input/output, architecture, metrics): [`docs/product_documentation.md`](docs/product_documentation.md)
 - Full diagnostic story, every experiment, extended flowcharts: [`docs/README.md`](docs/README.md)
 - Business problem and scope: [`problem.md`](problem.md)
 - Cost and operating-cost model: [`docs/cost_and_business_impact.md`](docs/cost_and_business_impact.md)
