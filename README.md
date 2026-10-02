@@ -497,7 +497,7 @@ Six files worth reading first, runtime behavior in order of what decides a claim
 
 ## Demo / UI
 
-**Recorded demo:** [Watch the 5-minute project walkthrough](#) *(link pending — add once recorded)*.
+**Recorded demo:** [Watch the project walkthrough](https://youtu.be/1MLsn86GLyY).
 
 ```bash
 python -m ui.backend.server && cd ui/frontend && npm install && npm run dev   # see Quick start above
