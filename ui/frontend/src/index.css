@@ -238,6 +238,21 @@ body {
 .dash-row-toggle { color: var(--text-dim); font-size: 14px; }
 .dash-row-detail { padding: 0 16px 14px; border-top: 1px solid var(--border); padding-top: 12px; }
 
+.why-block { background: var(--panel-2); border-radius: 8px; padding: 12px 14px; margin-top: 10px; }
+.why-title { font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-dim); margin-bottom: 8px; }
+.why-grid { display: grid; grid-template-columns: 150px 1fr; gap: 6px 12px; margin: 0; font-size: 13px; }
+.why-grid dt { color: var(--text-dim); }
+.why-grid dd { margin: 0; color: #d6dae3; line-height: 1.5; }
+
+.review-actions { margin-top: 14px; }
+.review-buttons { display: flex; gap: 8px; margin-bottom: 8px; }
+.review-btn { flex: 1; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel); color: #d6dae3; font-size: 13px; cursor: pointer; }
+.review-btn:hover { background: var(--panel-2); }
+.review-btn.accept.active { background: color-mix(in srgb, var(--good) 20%, transparent); border-color: var(--good); color: var(--good); }
+.review-btn.reject.active { background: color-mix(in srgb, var(--bad) 20%, transparent); border-color: var(--bad); color: var(--bad); }
+.review-comment { width: 100%; min-height: 60px; resize: vertical; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; color: #d6dae3; font-size: 13px; font-family: inherit; }
+.review-note { font-size: 11px; color: var(--text-dim); margin-top: 6px; }
+
 /* ---- horizontal found/fixed story strip ---- */
 .story-strip { display: flex; align-items: stretch; gap: 10px; margin-top: 16px; overflow-x: auto; padding-bottom: 6px; }
 .story-step {
