@@ -49,13 +49,49 @@ judgment.
 | 150 claims · 22 policies · 11 systems | 55 | 60%, 0/37 FAR | 68% / 66.7% on fresh holdouts | $7.38 / $8.00 |
 
 ## Table of contents
-[Who this is for](#who-this-is-for) · [Problem](#problem) · [At a glance](#at-a-glance) · [Product overview](#product-overview) ·
+[Who this is for](#who-this-is-for) · [Problem](#problem) · [At a glance](#at-a-glance) ·
+[Product documentation](#product-documentation-one-page-summary) · [Product overview](#product-overview) ·
 [Why AI, and why not everywhere](#why-ai-and-why-not-ai-everywhere) · [Closest alternatives](#closest-alternatives-and-the-gap) ·
 [Build vs. buy](#build-vs-buy) · [Dataset & evaluation](#dataset-and-evaluation-design) · [Architecture](#architecture) ·
 [Metrics](#metrics-target-and-baseline) · [Results](#results) · [Business impact](#business-impact-and-cost) ·
 [Experiments](#experiments) · [Responsible AI & security](#responsible-ai-security-and-guardrails) ·
 [Limitations](#limitations-and-evaluation-critique) · [Quick start](#quick-start) · [Reproducibility](#reproducibility) ·
 [Repo map](#repository-map) · [Demo](#demo--ui) · [Documentation index](#deliverables-and-documentation-index)
+
+---
+
+## Product documentation (one-page summary)
+
+*Persona, input/output, architecture and metrics in one place — standalone version with no cross-links:
+[`docs/product_documentation.md`](docs/product_documentation.md).*
+
+**Persona — Maya, finance operations analyst.** End of month, 60 expense claims in her queue. She knows the
+policy corpus cold but doesn't have time to re-verify every routine claim against every enterprise record
+by hand, and has no way to tell upfront which of the 60 actually need her judgment. Intended use: decision
+support and selective automation for a human reviewer. Explicit non-use: no payment execution, no
+autonomous reimbursement, no fraud/employee-risk scoring — every enterprise tool is read-only.
+
+**Input** — a claim is two fields, nothing pre-extracted: a bill (merchant, amount, currency, category) and
+a free-text employee note, which is the only place most decision-critical facts live (nights stayed,
+attendee counts, exception references, even the real expense category). Everything else — applicable
+policy, approvals, delegations, travel requests, budget, prior claims — is looked up, not supplied.
+
+**Output** — one of **APPROVE / REJECT / REQUEST_INFORMATION / ESCALATE**, plus the policy clauses and
+resolved facts behind the decision — no answer without cited evidence.
+
+**Architecture (high level)** — see the [Architecture](#architecture) section below for the full diagram.
+
+**Metrics: targeted vs. reached**
+
+| Metric | Target | Reached (frozen, Exp 32, 50-claim held-out) |
+|---|---|---|
+| Accuracy | ≥ 60% | **30/50 = 60%** (vs. 26% majority-class baseline) |
+| Observed FAR | 0% (hard constraint) | **0/37 = 0%** |
+| Deterministic-path accuracy | — | **22/22 = 100%** |
+| LLM-residual-path accuracy | — | **8/28 = 28.6%** (dominant weakness, drove 28 further experiments) |
+
+Full detail, including the guarded-agent candidate's fresh-holdout results, is in the sections below
+([Architecture](#architecture), [Metrics](#metrics-target-and-baseline), [Results](#results)).
 
 ---
 
